@@ -7,7 +7,13 @@ public class PlayerMovement : MonoBehaviour
     public SkillActionManager skillActionManager;
     public PlayerAbility playerAbility;
 
-    private float horizontal;
+
+
+
+
+
+
+
 
     private void Awake()
     {
@@ -32,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerAbility.isDashing) return;
 
-        float moveDir = horizontal;
+        float moveDir = playerAbility.horizontal;
 
         if (IsWalled())
         {
@@ -51,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleInput()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        playerAbility.horizontal = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -93,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        if (IsWalled() && !IsGrounded() && horizontal != 0f)
+        if (IsWalled() && !IsGrounded() && playerAbility.horizontal != 0f)
         {
             playerAbility.isWallSliding = true;
 
@@ -109,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallJump()
     {
-        bool isOnWall = playerAbility.isWallSliding && Mathf.Abs(horizontal) > 0.1f;
+        bool isOnWall = playerAbility.isWallSliding && Mathf.Abs(playerAbility.horizontal) > 0.1f;
 
         if (isOnWall)
         {
@@ -160,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Flip()
     {
-        if ((playerAbility.isFacingRight && horizontal < 0f) || (!playerAbility.isFacingRight && horizontal > 0f))
+        if ((playerAbility.isFacingRight && playerAbility.horizontal < 0f) || (!playerAbility.isFacingRight && playerAbility.horizontal > 0f))
         {
             playerAbility.isFacingRight = !playerAbility.isFacingRight;
             Vector3 localScale = transform.localScale;

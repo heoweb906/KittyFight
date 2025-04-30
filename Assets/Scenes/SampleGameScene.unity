@@ -1093,17 +1093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbf745be616d6647b58e0368f1f1072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid: {fileID: 479664846}
-  groundCheck: {fileID: 589711012}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  wallCheck: {fileID: 1474186789}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 768
-  sSkillName_1: 
-  sSkillName_2: 
+  skillActionManager: {fileID: 0}
+  playerAbility: {fileID: 0}
 --- !u!114 &479664848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1119,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88ec58a86c2056448765c45c878a7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 1
+  attackCooldown: 1
+  horizontal: 0
+  speed: 8
+  jumpingPower: 16
+  isFacingRight: 1
+  isWallSliding: 0
+  wallSlidingSpeed: 2
+  isWallJumping: 0
+  wallJumpingDirection: 0
+  wallJumpingTime: 0.2
+  wallJumpingCounter: 0
+  wallJumpingDuration: 0.4
+  wallJumpingPower: {x: 8, y: 16, z: 0}
+  canDash: 1
+  isDashing: 0
+  dashingPower: 24
+  dashingTime: 0.2
+  dashingCooldown: 1
+  rigid: {fileID: 479664846}
+  groundCheck: {fileID: 589711012}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  wallCheck: {fileID: 1474186789}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 768
+  sSkillName_1: 
+  sSkillName_2: 
 --- !u!1 &526133266
 GameObject:
   m_ObjectHideFlags: 0
