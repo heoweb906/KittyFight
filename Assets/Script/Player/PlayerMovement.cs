@@ -12,9 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
-
-
     private void Awake()
     {
         skillActionManager = GetComponent<SkillActionManager>();
@@ -85,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             skillActionManager.ExecuteAction(PlayerActionType.SkillE);
+
+
     }
 
     private bool IsGrounded()
