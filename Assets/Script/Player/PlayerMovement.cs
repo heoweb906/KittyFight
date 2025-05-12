@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public SkillActionManager skillActionManager;
+    public SkillWorker skillWorekr;
     public PlayerAbility playerAbility;
-
-
-
-
 
 
     private void Awake()
     {
-        skillActionManager = GetComponent<SkillActionManager>();
+        skillWorekr = GetComponent<SkillWorker>();
         playerAbility = GetComponent<PlayerAbility>();
     }
 
@@ -77,12 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && playerAbility.canDash)
             StartCoroutine(Dash());
 
-        if (Input.GetKeyDown(KeyCode.Q))
-            skillActionManager.ExecuteAction(PlayerActionType.SkillQ);
-
-        if (Input.GetKeyDown(KeyCode.E))
-            skillActionManager.ExecuteAction(PlayerActionType.SkillE);
-
+    
 
     }
 
