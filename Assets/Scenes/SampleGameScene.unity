@@ -1203,7 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbf745be616d6647b58e0368f1f1072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillActionManager: {fileID: 0}
+  skillWorekr: {fileID: 0}
   playerAbility: {fileID: 0}
 --- !u!114 &479664848
 MonoBehaviour:
@@ -1217,6 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666de66cf7337204d9c46ce22de38fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAbility: {fileID: 0}
 --- !u!114 &479664849
 MonoBehaviour:
   m_ObjectHideFlags: 0
