@@ -27,20 +27,20 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            MoveCameraToTarget(targetObject);
-        }
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    MoveCameraToTarget(targetObject);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReturnToOrigin();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    ReturnToOrigin();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShakeCamera();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    ShakeCamera();
+        //}
     }
 
     // 목표위치로 카메라를 이동, 회전 값은 위치에 따라 함수 내에서 설정됨
