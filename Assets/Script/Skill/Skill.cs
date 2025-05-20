@@ -12,7 +12,7 @@ public interface ISKILL
 public abstract class Skill : ISKILL
 {
     public PlayerAbility playerAbilty;
-    public PlayerSkillAbilty skillAbilty;
+    public SkillWorker skillWorker;
 
     public float coolTime;
     public GameObject objSkillEntity;
@@ -21,10 +21,10 @@ public abstract class Skill : ISKILL
     private float lastUseTime = -Mathf.Infinity; // 최소 값으로 초기화 하는 코드임 
 
     // 생성자 명시
-    public Skill(PlayerAbility playerAbilty, PlayerSkillAbilty skillAbilty)
+    public Skill(PlayerAbility playerAbilty, SkillWorker skillWorker)
     {
         this.playerAbilty = playerAbilty;
-        this.skillAbilty = skillAbilty;
+        this.skillWorker = skillWorker;
     }
 
     public void Activate()

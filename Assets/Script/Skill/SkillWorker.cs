@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// PlayerSkillAbilty
 public class SkillWorker : MonoBehaviour
 {
     private Dictionary<SkillSlotType, Skill> mySkills = new();
+
+
 
     void Update()
     {
@@ -17,8 +20,11 @@ public class SkillWorker : MonoBehaviour
         Debug.Log($"[SkillWorker] Skill set in slot {slot}: {skill.GetType().Name}");
     }
 
-    public void UseSkill(SkillSlotType slot)
+    public void UseSkill(SkillSlotType slot) 
     {
+
+
+
         if (mySkills.TryGetValue(slot, out Skill skill) && skill != null)
         {
             skill.Activate();

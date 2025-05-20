@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class IceArrow : Skill
 {
-    public IceArrow(PlayerAbility playerAbilty, PlayerSkillAbilty skillAbilty)
-    : base(playerAbilty, skillAbilty)
+    public IceArrow(PlayerAbility playerAbilty, SkillWorker skillWorker)
+    : base(playerAbilty, skillWorker)
     {
 
 

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FireBall : Skill
 {
-    public FireBall(PlayerAbility playerAbilty, PlayerSkillAbilty skillAbilty)
-     : base(playerAbilty, skillAbilty)
+    public FireBall(PlayerAbility playerAbilty, SkillWorker skillWorker)
+     : base(playerAbilty, skillWorker)
     {
 
 
