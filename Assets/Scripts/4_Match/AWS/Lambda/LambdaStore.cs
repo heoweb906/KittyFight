@@ -8,9 +8,16 @@ using UnityEngine;
 
 public class LambdaStore : LambdaManager
 {
-    public static async Task StorePlayerInfo(string playerId, string ip, int port, string nickname)
+    public static async Task StorePlayerInfo(string playerId, string ip, int port, string localIp, int localPort, string nickname)
     {
-        string jsonBody = $"{{\"playerId\":\"{playerId}\",\"ip\":\"{ip}\",\"port\":{port},\"nickname\":\"{nickname}\"}}";
+        string jsonBody = $"{{" +
+            $"\"playerId\":\"{playerId}\"," +
+            $"\"ip\":\"{ip}\"," +
+            $"\"port\":{port}," +
+            $"\"localIp\":\"{localIp}\"," +
+            $"\"localPort\":{localPort}," +
+            $"\"nickname\":\"{nickname}\"" +
+        $"}}";
 
         var request = new InvokeRequest
         {
