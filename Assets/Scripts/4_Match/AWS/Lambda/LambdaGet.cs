@@ -11,7 +11,10 @@ public class OpponentInfo
 {
     public string ip;
     public int port;
+    public string localIp;
+    public int localPort;
     public string nickname;
+    public int myPlayerNumber;
 }
 
 [Serializable]

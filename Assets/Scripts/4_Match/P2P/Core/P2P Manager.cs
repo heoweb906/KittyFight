@@ -9,7 +9,7 @@ public class P2PManager
     protected static IPEndPoint remoteEndPoint;
     protected static int localPort;
 
-    public static Action<string> OnRawMessageReceived;
+    //public static Action<string> OnRawMessageReceived;
 
     public static void Init(int port, UdpClient socket = null)
     {
@@ -47,7 +47,8 @@ public class P2PManager
         byte[] data = udpClient.EndReceive(result, ref sender);
         string msg = Encoding.UTF8.GetString(data);
 
-        OnRawMessageReceived?.Invoke(msg);
+        //OnRawMessageReceived?.Invoke(msg);
+        P2PMessageDispatcher.Dispatch(msg);
         udpClient.BeginReceive(OnReceive, null);
     }
 }
