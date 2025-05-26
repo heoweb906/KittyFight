@@ -19,6 +19,9 @@ public class MatchManager : MonoBehaviour
     private string localIp;
     private int localPort;
 
+    private string ticketId;
+    private bool isMatching = false;
+
     public async void OnMatchButtonClicked()
     {
         // 1. 플레이어 ID 생성
@@ -43,13 +46,12 @@ public class MatchManager : MonoBehaviour
         myIp = stunResult.PublicEndPoint.Address.ToString();
         myPort = stunResult.PublicEndPoint.Port;
 
-
         // 4. 내 정보 Lambda에 저장
         await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, myNickname);
 
         // 5. GameLift 매칭 시작
         AppendLog("Match Search Start!");
-        string ticketId = await GameLiftStartMatch.StartMatchmaking(myPlayerId);
+        ticketId = await GameLiftStartMatch.StartMatchmaking(myPlayerId);
 
         if (ticketId == null)
         {
@@ -58,6 +60,7 @@ public class MatchManager : MonoBehaviour
         }
 
         // 6. 매칭 완료까지 대기
+        isMatching = true;
         AppendLog("Match Searching...");
         bool matchCompleted = await GameLiftWait.WaitForMatchCompletion(ticketId);
 
@@ -81,44 +84,6 @@ public class MatchManager : MonoBehaviour
         string targetIp = (opponent.ip == myIp) ? opponent.localIp : opponent.ip;
         int targetPort = (opponent.ip == myIp) ? opponent.localPort : opponent.port;
         int myPlayerNumber = opponent.myPlayerNumber;
-
-        //GameObject myPlayer = (myPlayerNumber == 1) ? player1Object : player2Object;
-        //GameObject opponentPlayer = (myPlayerNumber == 1) ? player2Object : player1Object;
-
-        //P2PManager.Init(myPort, udp);
-        //P2PManager.ConnectToOpponent(targetIp, targetPort);
-
-        //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponent.nickname));
-        //P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myPlayerNumber));
-        //P2PMessageDispatcher.RegisterHandler(new ObjectSpawnHandler(player1Object, player2Object));
-
-        // AppendLog("P2P 연결 완료, 채팅 시작 가능");
-
-        // 9. 채팅 UI 버튼 연결
-        //chatSendButton.onClick.RemoveAllListeners();
-        //chatSendButton.onClick.AddListener(() =>
-        //{
-        //    string msg = chatInputField.text;
-        //    if (string.IsNullOrWhiteSpace(msg)) return;
-
-        //    chatInputField.text = "";
-        //    logText.text += $"[{myNickname}] {msg}\n";
-
-        //    // 전송: Chat 메시지 → Builder → Sender
-        //    string chatMsg = ChatMessageBuilder.Build(msg);
-        //    P2PMessageSender.SendMessage(chatMsg);
-        //});
-
-        //// 10. 동기화 설정
-
-        //// PlayerMover에게 번호 할당
-        //player1Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
-        //player2Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
-
-        //// UpdateManager에 통째로 넘김
-        //updateManager.Initialize(myPlayer, opponentPlayer, myPlayerNumber);
-        //updateManager.enabled = true;
-        //AppendLog($"게임 동기화 시작 (내 번호: Player {myPlayerNumber}, UpdateManager 활성화됨)");
 
         MatchResultStore.myPlayerNumber = myPlayerNumber;
         MatchResultStore.myNickname = myNickname;
@@ -159,5 +124,27 @@ public class MatchManager : MonoBehaviour
         Debug.Log(msg);
         if (logText != null)
             logText.text += msg + "\n";
+    }
+
+    public async void OnCancelMatchButtonClicked()
+    {
+        if (!isMatching || string.IsNullOrEmpty(ticketId))
+        {
+            AppendLog("현재 매칭 중이 아닙니다.");
+            return;
+        }
+
+        AppendLog("매칭 취소 시도 중...");
+        bool success = await GameLiftCancelMatch.CancelMatchmaking(ticketId);
+
+        if (success)
+        {
+            AppendLog("매칭이 취소되었습니다.");
+            isMatching = false;
+        }
+        else
+        {
+            AppendLog("매칭 취소 실패");
+        }
     }
 }
