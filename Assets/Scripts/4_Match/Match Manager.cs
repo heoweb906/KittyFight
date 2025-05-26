@@ -1,27 +1,17 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MatchManager : MonoBehaviour
 {
-    public UpdateManager updateManager;
+    public TMP_InputField nicknameInput;
+    public TMP_Text logText;
 
-    public GameObject player1Object;
-    public GameObject player2Object;
-    public GameObject spawnPrefab;
-
-    public InputField nicknameInput;
-    public Text logText;
-
-    public InputField chatInputField;
-    public Button chatSendButton;
-
-    public string myPlayerId;
-    public string opponentId;
-
+    private string myPlayerId;
     private string myIp;
     private int myPort;
     private string myNickname;
@@ -39,7 +29,6 @@ public class MatchManager : MonoBehaviour
         myPort = GetAvailablePort();
         localPort = myPort;
         localIp = GetLocalIPAddress();
-        //AppendLog("내 로컬 Port: " + myPort);
 
         // 3. STUN 서버 통해 공인 IP/포트 확인
         var udp = new UdpClient(myPort);
@@ -54,12 +43,9 @@ public class MatchManager : MonoBehaviour
         myIp = stunResult.PublicEndPoint.Address.ToString();
         myPort = stunResult.PublicEndPoint.Port;
 
-        //AppendLog("공인 IP: " + myIp);
-        //AppendLog("공인 Port: " + myPort);
 
         // 4. 내 정보 Lambda에 저장
         await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, myNickname);
-        //AppendLog("내 정보 저장 완료");
 
         // 5. GameLift 매칭 시작
         AppendLog("Match Search Start!");
@@ -72,7 +58,7 @@ public class MatchManager : MonoBehaviour
         }
 
         // 6. 매칭 완료까지 대기
-       AppendLog("Match Searching...");
+        AppendLog("Match Searching...");
         bool matchCompleted = await GameLiftWait.WaitForMatchCompletion(ticketId);
 
         if (!matchCompleted)
@@ -91,52 +77,59 @@ public class MatchManager : MonoBehaviour
             return;
         }
 
-        //AppendLog($"상대 IP: {opponent.ip}, Port: {opponent.port}, Nickname: {opponent.nickname}");
-        //AppendLog($"Nickname: {opponent.nickname}");
-
         // 8. P2P 연결 및 채팅 초기화
         string targetIp = (opponent.ip == myIp) ? opponent.localIp : opponent.ip;
         int targetPort = (opponent.ip == myIp) ? opponent.localPort : opponent.port;
-
         int myPlayerNumber = opponent.myPlayerNumber;
-        GameObject myPlayer = (myPlayerNumber == 1) ? player1Object : player2Object;
-        GameObject opponentPlayer = (myPlayerNumber == 1) ? player2Object : player1Object;
 
-        P2PManager.Init(myPort, udp);
-        P2PManager.ConnectToOpponent(targetIp, targetPort);
+        //GameObject myPlayer = (myPlayerNumber == 1) ? player1Object : player2Object;
+        //GameObject opponentPlayer = (myPlayerNumber == 1) ? player2Object : player1Object;
 
-        P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponent.nickname));
-        P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myPlayerNumber));
-        P2PMessageDispatcher.RegisterHandler(new ObjectSpawnHandler(player1Object, player2Object));
+        //P2PManager.Init(myPort, udp);
+        //P2PManager.ConnectToOpponent(targetIp, targetPort);
+
+        //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponent.nickname));
+        //P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myPlayerNumber));
+        //P2PMessageDispatcher.RegisterHandler(new ObjectSpawnHandler(player1Object, player2Object));
 
         // AppendLog("P2P 연결 완료, 채팅 시작 가능");
 
         // 9. 채팅 UI 버튼 연결
-        chatSendButton.onClick.RemoveAllListeners();
-        chatSendButton.onClick.AddListener(() =>
-        {
-            string msg = chatInputField.text;
-            if (string.IsNullOrWhiteSpace(msg)) return;
+        //chatSendButton.onClick.RemoveAllListeners();
+        //chatSendButton.onClick.AddListener(() =>
+        //{
+        //    string msg = chatInputField.text;
+        //    if (string.IsNullOrWhiteSpace(msg)) return;
 
-            chatInputField.text = "";
-            logText.text += $"[{myNickname}] {msg}\n";
+        //    chatInputField.text = "";
+        //    logText.text += $"[{myNickname}] {msg}\n";
 
-            // 전송: Chat 메시지 → Builder → Sender
-            string chatMsg = ChatMessageBuilder.Build(msg);
-            P2PMessageSender.SendMessage(chatMsg);
-        });
+        //    // 전송: Chat 메시지 → Builder → Sender
+        //    string chatMsg = ChatMessageBuilder.Build(msg);
+        //    P2PMessageSender.SendMessage(chatMsg);
+        //});
 
-        // 10. 동기화 설정
+        //// 10. 동기화 설정
 
-        // PlayerMover에게 번호 할당
-        player1Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
-        player2Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
+        //// PlayerMover에게 번호 할당
+        //player1Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
+        //player2Object.GetComponent<PlayerMove>().SetMyPlayerNumber(myPlayerNumber);
 
-        // UpdateManager에 통째로 넘김
-        updateManager.Initialize(myPlayer, opponentPlayer, myPlayerNumber);
-        updateManager.enabled = true;
+        //// UpdateManager에 통째로 넘김
+        //updateManager.Initialize(myPlayer, opponentPlayer, myPlayerNumber);
+        //updateManager.enabled = true;
         //AppendLog($"게임 동기화 시작 (내 번호: Player {myPlayerNumber}, UpdateManager 활성화됨)");
+
+        MatchResultStore.myPlayerNumber = myPlayerNumber;
+        MatchResultStore.myNickname = myNickname;
+        MatchResultStore.opponentNickname = opponent.nickname;
+        MatchResultStore.opponentIp = targetIp;
+        MatchResultStore.opponentPort = targetPort;
+        MatchResultStore.myPort = myPort;
+        MatchResultStore.udpClient = udp;
+
         AppendLog("Game Start!!");
+        // SceneManager.LoadScene("GameScene");
     }
 
     private int GetAvailablePort()
