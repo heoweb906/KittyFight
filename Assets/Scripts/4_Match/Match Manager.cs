@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class MatchManager : MonoBehaviour
 {
@@ -21,9 +22,11 @@ public class MatchManager : MonoBehaviour
 
     private string ticketId;
     private bool isMatching = false;
+    private float matchStartTime = 0f;
 
     public async void OnMatchButtonClicked()
     {
+        if (isMatching) return;
         // 1. 플레이어 ID 생성
         myPlayerId = Guid.NewGuid().ToString();
         myNickname = nicknameInput.text;
@@ -61,7 +64,10 @@ public class MatchManager : MonoBehaviour
 
         // 6. 매칭 완료까지 대기
         isMatching = true;
+        matchStartTime = Time.time;
         AppendLog("Match Searching...");
+        StartCoroutine(UpdateMatchElapsedTime());
+
         bool matchCompleted = await GameLiftWait.WaitForMatchCompletion(ticketId);
 
         if (!matchCompleted)
@@ -70,6 +76,7 @@ public class MatchManager : MonoBehaviour
             return;
         }
 
+        isMatching = false;
         AppendLog("Match Completed");
 
         // 7. 상대방 정보 조회
@@ -122,29 +129,39 @@ public class MatchManager : MonoBehaviour
     private void AppendLog(string msg)
     {
         Debug.Log(msg);
-        if (logText != null)
-            logText.text += msg + "\n";
+        //if (logText != null)
+        //    logText.text += msg + "\n";
+        logText.text = msg;
+    }
+    private IEnumerator UpdateMatchElapsedTime()
+    {
+        while (isMatching)
+        {
+            float elapsed = Time.time - matchStartTime;
+            AppendLog($"Match Searching... {Mathf.FloorToInt(elapsed)}s...");
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     public async void OnCancelMatchButtonClicked()
     {
         if (!isMatching || string.IsNullOrEmpty(ticketId))
         {
-            AppendLog("현재 매칭 중이 아닙니다.");
+            AppendLog("Currently not matching");
             return;
         }
 
-        AppendLog("매칭 취소 시도 중...");
+        AppendLog("try to cancel matching...");
         bool success = await GameLiftCancelMatch.CancelMatchmaking(ticketId);
 
         if (success)
         {
-            AppendLog("매칭이 취소되었습니다.");
+            AppendLog("Match Canceled.");
             isMatching = false;
         }
         else
         {
-            AppendLog("매칭 취소 실패");
+            AppendLog("Matching cancellation failed");
         }
     }
 }
