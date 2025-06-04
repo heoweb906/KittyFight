@@ -17,11 +17,17 @@ public abstract class Skill : ISKILL
     public float coolTime;
     public GameObject objSkillEntity;
 
-
-    private float lastUseTime = -Mathf.Infinity; // 최소 값으로 초기화 하는 코드임 
+    private float lastUseTime = -Mathf.Infinity; // 최소 값으로 초기화
 
     // 생성자 명시
     public Skill(PlayerAbility playerAbilty, SkillWorker skillWorker)
+    {
+        this.playerAbilty = playerAbilty;
+        this.skillWorker = skillWorker;
+    }
+
+    // 프리팹 기반으로 생성 시 호출하는 초기화 함수
+    public void Initialize(PlayerAbility playerAbilty, SkillWorker skillWorker)
     {
         this.playerAbilty = playerAbilty;
         this.skillWorker = skillWorker;
@@ -31,12 +37,12 @@ public abstract class Skill : ISKILL
     {
         if (Time.time < lastUseTime + coolTime)
         {
-            Debug.Log($" 남은 스킬 쿨타임: {Mathf.Ceil(lastUseTime + coolTime - Time.time)}");
+            Debug.Log($"남은 스킬 쿨타임: {Mathf.Ceil(lastUseTime + coolTime - Time.time)}");
             return;
         }
 
         lastUseTime = Time.time;
-        ExecuteSkill(); 
+        ExecuteSkill();
     }
 
     protected abstract void ExecuteSkill();

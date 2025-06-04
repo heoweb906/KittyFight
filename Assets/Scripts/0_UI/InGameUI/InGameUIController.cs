@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class InGameUIController : MonoBehaviour
 {
-    [Header("½ºÅ³ Ä«µå ÄÁÆ®·Ñ·¯")]
+    [Header("UI Conrollers")]
     [SerializeField] SkillCardController skillCardController;
 
     private Canvas canvasMain;
@@ -11,13 +11,9 @@ public class InGameUIController : MonoBehaviour
     private void Awake()
     {
         canvasMain = FindObjectOfType<Canvas>();
-        if (canvasMain == null)
-        {
-            Debug.LogError("[InGameUIController] Canvas°¡ ¾À¿¡ ¾ø½À´Ï´Ù.");
-            return;
-        }
+        if (canvasMain == null) return;
 
-        if (skillCardController == null) Debug.LogError("[InGameUIController] SkillCardController°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+        if (skillCardController == null) Debug.LogError("[InGameUIController] SkillCardControllerï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½.");
         else skillCardController.Initialize(this, canvasMain.transform);
     }
 

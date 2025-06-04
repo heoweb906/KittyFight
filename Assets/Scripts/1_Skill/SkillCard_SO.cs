@@ -14,7 +14,7 @@ public class SkillCard_SO : ScriptableObject
     public int skillIndex;
 
     [TextArea(5, 20)]
-    public string description; // <color=#FF0000>이런 식의 강조 태그 삽입 가능
+    public string description; 
 
 
 }
