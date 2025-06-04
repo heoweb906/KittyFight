@@ -81,10 +81,11 @@ public class MatchManager : MonoBehaviour
 
         // 7. 상대방 정보 조회
         var opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
-        if (opponent == null)
+        while (opponent == null)
         {
             //AppendLog("상대 정보 조회 실패");
-            return;
+            opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
+            //return;
         }
 
         // 8. P2P 연결 및 채팅 초기화
@@ -101,7 +102,7 @@ public class MatchManager : MonoBehaviour
         MatchResultStore.udpClient = udp;
 
         AppendLog("Game Start!!");
-        // SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("example");
     }
 
     private int GetAvailablePort()
