@@ -2,29 +2,28 @@ using UnityEngine;
 
 public class ObjectSpawnHandler : IP2PMessageHandler
 {
-    private GameObject player1;
-    private GameObject player2;
+    readonly GameObject hitboxPrefab;
+    readonly float life;
+    readonly int myPlayerNumber;
 
-    public ObjectSpawnHandler(GameObject player1Obj, GameObject player2Obj)
+    public ObjectSpawnHandler(GameObject localPlayer,
+                              GameObject opponentPlayer)
     {
-        player1 = player1Obj;
-        player2 = player2Obj;
+        hitboxPrefab = localPlayer.GetComponent<PlayerAttack>().hitboxPrefab;
+        life = localPlayer.GetComponent<PlayerAbility>().AttackHitboxDuration;
+        myPlayerNumber = MatchResultStore.myPlayerNumber;
     }
 
     public bool CanHandle(string msg) => msg.StartsWith("[SPAWN]");
 
     public void Handle(string msg)
     {
-        string json = msg.Substring(7);
-        var data = JsonUtility.FromJson<SpawnMessage>(json);
+        var data = JsonUtility.FromJson<SpawnMessage>(msg.Substring(7));
+        if (data.player == myPlayerNumber) return;
+
         Vector3 pos = new Vector3(data.x, data.y, data.z);
+        Quaternion rot = new Quaternion(data.qx, data.qy, data.qz, data.qw);
 
-        GameObject senderPlayer = (data.player == 1) ? player1 : player2;
-        if (senderPlayer == null) return;
-
-        var moveScript = senderPlayer.GetComponent<PlayerMove>();
-        if (moveScript == null || moveScript.spawnPrefab == null) return;
-
-        GameObject spawned = Object.Instantiate(moveScript.spawnPrefab, pos, Quaternion.identity);
+        Object.Destroy(Object.Instantiate(hitboxPrefab, pos, rot), life);
     }
 }
