@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class MatchManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class MatchManager : MonoBehaviour
     public async void OnMatchButtonClicked()
     {
         if (isMatching) return;
+        isMatching = true;
         // 1. 플레이어 ID 생성
         myPlayerId = Guid.NewGuid().ToString();
         myNickname = nicknameInput.text;
@@ -63,7 +65,6 @@ public class MatchManager : MonoBehaviour
         }
 
         // 6. 매칭 완료까지 대기
-        isMatching = true;
         matchStartTime = Time.time;
         AppendLog("Match Searching...");
         StartCoroutine(UpdateMatchElapsedTime());
@@ -76,15 +77,15 @@ public class MatchManager : MonoBehaviour
             return;
         }
 
-        isMatching = false;
         AppendLog("Match Completed");
 
         // 7. 상대방 정보 조회
         var opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
-        while (opponent == null)
+        while (opponent == null || string.IsNullOrEmpty(opponent.ip))
         {
             //AppendLog("상대 정보 조회 실패");
             opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
+            await Task.Delay(500);
             //return;
         }
 
@@ -102,6 +103,7 @@ public class MatchManager : MonoBehaviour
         MatchResultStore.udpClient = udp;
 
         AppendLog("Game Start!!");
+        isMatching = false;
         SceneManager.LoadScene("example");
     }
 
