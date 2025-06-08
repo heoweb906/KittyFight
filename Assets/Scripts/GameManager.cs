@@ -18,12 +18,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeGame();
+        P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
+        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+    }
+    void Update()
+    {
+        // 백그라운드 스레드에서 세운 플래그를 메인 루프에서 감지
+        if (P2PManager.IsReadyToStartGame)
+        {
+            // 한 번만 처리하도록 플래그 리셋
+            P2PManager.IsReadyToStartGame = false;
+            InitializeGame();
+        }
     }
 
     private void InitializeGame()
     {
-        int myNum = MatchResultStore.myPlayerNumber;
         //string myNickname = MatchResultStore.myNickname;
         //string opponentNickname = MatchResultStore.opponentNickname;
 
@@ -36,6 +46,14 @@ public class GameManager : MonoBehaviour
         Debug.Log($"myPort: {MatchResultStore.myPort}");
         Debug.Log($"udpClient is null: {MatchResultStore.udpClient == null}");
         Debug.Log("=============================");
+
+        Debug.Log($"player1Prefab null? {player1Prefab == null}");
+        Debug.Log($"player2Prefab null? {player2Prefab == null}");
+        Debug.Log($"spawnPoint1 null? {spawnPoint1 == null}");
+        Debug.Log($"spawnPoint2 null? {spawnPoint2 == null}");
+
+        int myNum = MatchResultStore.myPlayerNumber;
+        Debug.Log($"myNum: {myNum}");
 
         GameObject myPlayerPrefab = (myNum == 1) ? player1Prefab : player2Prefab;
         GameObject opponentPrefab = (myNum == 1) ? player2Prefab : player1Prefab;
@@ -53,10 +71,6 @@ public class GameManager : MonoBehaviour
         myPlayer.GetComponent<PlayerAttack>().myPlayerNumber = myNum;
         myPlayer.GetComponent<PlayerHealth>().playerNumber = myNum;
         opponentPlayer.GetComponent<PlayerHealth>().playerNumber = (myNum == 1) ? 2 : 1;
-
-        // P2P 연결
-        P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient);
-        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
 
         // 핸들러 등록
         //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponentNickname));
