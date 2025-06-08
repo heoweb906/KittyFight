@@ -8,27 +8,28 @@ using DG.Tweening;
 
 public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+
+
+
     public SkillCardController skillCardController { get; set; }
     public bool bCanInteract = false;
 
-    [Header("UI °ü·Ã")]
+    [Header("UI ï¿½ï¿½ï¿½ï¿½")]
     public Image image_BackGround;
     public Image image_SkillIcon;
     public TextMeshProUGUI text_SkillName;
     public TextMeshProUGUI text_SkilDescription;
 
-    [Header("½ºÅ³")]
+    [Header("ï¿½ï¿½Å³")]
     public SkillCard_SO skillCard_SO;
 
-    // ¿øº» °ª º¸°ü¿ë
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private Vector3 originalScale;
     private Color originalBGColor;
 
-    // Æ®À© ¼³Á¤
+    // Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float tweenDuration = 0.08f;
     private float scaleFactor = 0.95f;
-
-
 
     private void Awake()
     {
@@ -42,7 +43,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
     /// <summary>
-    /// SO µ¥ÀÌÅÍ ±â¹İÀ¸·Î UI ¿ä¼Ò ÃÊ±âÈ­
+    /// SO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
     /// </summary>
     public void ApplyData(SkillCard_SO data)
     {
@@ -50,15 +51,15 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         skillCard_SO = data;
 
-        // Background ÀÌ¹ÌÁö ¼³Á¤
+        // Background ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (data.image_BackGround != null && data.image_BackGround.sprite != null)
             image_BackGround.sprite = data.image_BackGround.sprite;
 
-        // Skill Icon ¼³Á¤
+        // Skill Icon ï¿½ï¿½ï¿½ï¿½
         if (data.image_SkillIcon != null && data.image_SkillIcon.sprite != null)
             image_SkillIcon.sprite = data.image_SkillIcon.sprite;
 
-        // ÅØ½ºÆ® ¼³Á¤
+        // ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         text_SkillName.text = data.sSkillName;
         text_SkilDescription.text = data.sSkillDescription;
     }
@@ -66,19 +67,19 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
-    // ¸¶¿ì½º ¿Ã¸²
+    // ï¿½ï¿½ï¿½ì½º ï¿½Ã¸ï¿½
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!bCanInteract) return;
 
-        // ±âÁ¸ Æ®À© ÁßÁö
+        // ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         transform.DOKill();
         image_BackGround.DOKill();
 
-        // ºÎµå·¯¿î Å©±â Ãà¼Ò
+        // ï¿½Îµå·¯ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
-        // ¹è°æ Ã¤µµ ³·Ãß±â(È¸»öÅæ°ú ºí·»µå)
+        // ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½(È¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
         Color targetColor = Color.Lerp(originalBGColor, Color.gray, 0.5f);
         image_BackGround.DOColor(targetColor, tweenDuration);
 
@@ -86,16 +87,16 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-    // ¸¶¿ì½º Ä¿¼­ ³»¸²
+    // ï¿½ï¿½ï¿½ì½º Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!bCanInteract) return;
 
-        // ±âÁ¸ Æ®À© ÁßÁö
+        // ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         transform.DOKill();
         image_BackGround.DOKill();
 
-        // ¿ø·¡ Å©±â, ÄÃ·¯·Î º¹±Í
+        // ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½, ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         transform.DOScale(originalScale, tweenDuration);
         image_BackGround.DOColor(originalBGColor, tweenDuration);
 
@@ -106,27 +107,46 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
-    // ¸¶¿ì½º Ä¿¼­ Å¬¸¯
+    // ï¿½ï¿½ï¿½ì½º Ä¿ï¿½ï¿½ Å¬ï¿½ï¿½
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!bCanInteract) return;
+
+        var matchManager = FindObjectOfType<MatchManager>();
+        if (matchManager == null)
+        {
+            Debug.LogError("[SkillCard_UI] MatchManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        // ë‚´ í”Œë ˆì´ì–´ ê°ì²´ ê°€ì ¸ì˜¤ê¸° (ì‹¤ì œ ë¡œì§ì— ë§ê²Œ ìˆ˜ì •)
+        GameObject myPlayer = matchManager.player1Object;
+        var mySkillWorker = myPlayer.GetComponent<SkillWorker>();
+        if (mySkillWorker == null)
+        {
+            Debug.LogError("[SkillCard_UI] ë‚´ ìºë¦­í„°ì—ì„œ SkillWorkerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        SkillSlotType selectedSlot = SkillSlotType.Q;
+
+        // ìˆ˜ì •ëœ ë¶€ë¶„: sSkillName ëŒ€ì‹  SkillCard_SO ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì „ë‹¬
+        mySkillWorker.EquipSkillByCard(selectedSlot, skillCard_SO);
+
+        // ë„¤íŠ¸ì›Œí¬ ì „ì†¡, ì¸í„°ë™ì…˜ ë¹„í™œì„±í™” ë“± ë‚˜ë¨¸ì§€ ë¡œì§ì€ ë™ì¼
+        string slot = selectedSlot.ToString();
+        string msg = SkillBuilder.Build(skillCard_SO.sSkillName, /*playerNumber*/ 1, slot);
+        P2PSkillSender.SendMessage(msg);
+
         skillCardController.SetAllCanInteract(false);
-
-
-
-        // Debug.Log($"[SkillCard_UI] Clicked '{text_SkillName.text}'");
-
-        // Å¬¸¯ÇÏ¸é Exit È¿°ú ½ÇÇà
         OnPointerExit(eventData);
 
-        // Å¬¸¯ ¾Ö´Ï¸ŞÀÌ¼Ç: ÆİÄ¡ ÈÄ HideAll È£Ãâ
         transform.DOKill();
         Sequence clickSeq = DOTween.Sequence();
         clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
         clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
         clickSeq.OnComplete(() =>
         {
-            // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³­ µÚ¿¡¾ß ¼±ÅÃ »óÅÂ ÇØÁ¦
             skillCardController.HideAll();
         });
     }

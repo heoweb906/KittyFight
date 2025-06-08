@@ -2,12 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SkillSlotType
-{
-    Q,
-    E
-}
-
 public class SkillManager : MonoBehaviour
 {
     public SkillWorker targetWorker_1;
@@ -17,7 +11,7 @@ public class SkillManager : MonoBehaviour
     public PlayerAbility playerAbility_2;
 
 
-  
+
 
     //void Update()
     //{
@@ -47,7 +41,7 @@ public class SkillManager : MonoBehaviour
     //    }
 
 
-    //    if(iPlayerID == 1 && targetWorker_1) targetWorker_1.SetSkill(slot, newSkill);
+    //    if (iPlayerID == 1 && targetWorker_1) targetWorker_1.SetSkill(slot, newSkill);
     //    else if (iPlayerID == 2 && targetWorker_2) targetWorker_2.SetSkill(slot, newSkill);
 
     //    Debug.Log($"[SkillManager] Skill '{skillName}' equipped to slot {slot}");
