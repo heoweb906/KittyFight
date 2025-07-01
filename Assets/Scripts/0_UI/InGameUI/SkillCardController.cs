@@ -3,12 +3,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class SkillCardController : MonoBehaviour
+public class SkillCardController : MonoBehaviour 
 {
     public InGameUIController InGameUiController { get; set; }
 
     // 애니메이션 및 선택 상태 체크
     public bool IsAnimating { get; private set; }
+
 
     [Header("리소스 설정")]
     [Tooltip("Resources/SkillCards 폴더 경로")]
@@ -24,11 +25,6 @@ public class SkillCardController : MonoBehaviour
     [SerializeField] Transform[] targetPoints = new Transform[4];
     
 
-   
-
-    /// <summary>
-    /// 스킬 카드 컨트롤러 초기화
-    /// </summary>
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
