@@ -12,9 +12,13 @@ public class PlayerInputRouter : MonoBehaviour
 
     private void SetInputActive(bool active)
     {
+        var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = !active;
+
         GetComponent<PlayerController>().enabled = active;
         GetComponent<PlayerMovement>().enabled = active;
         GetComponent<PlayerJump>().enabled = active;
         GetComponent<PlayerAttack>().enabled = active;
+        GetComponent<PlayerDash>().enabled = active;
     }
 }

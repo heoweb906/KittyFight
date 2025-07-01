@@ -9,8 +9,8 @@ public class ObjectSpawnHandler : IP2PMessageHandler
     public ObjectSpawnHandler(GameObject localPlayer,
                               GameObject opponentPlayer)
     {
-        hitboxPrefab = localPlayer.GetComponent<PlayerAttack>().hitboxPrefab;
-        life = localPlayer.GetComponent<PlayerAbility>().AttackHitboxDuration;
+        hitboxPrefab = opponentPlayer.GetComponent<PlayerAttack>().hitboxPrefab;
+        life = opponentPlayer.GetComponent<PlayerAbility>().AttackHitboxDuration;
         myPlayerNumber = MatchResultStore.myPlayerNumber;
     }
 

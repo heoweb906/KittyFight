@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public UpdateManager updateManager;
 
+    public GameTimer gameTimer;
     //public Button chatSendButton;
     //public TMP_InputField chatInputField;
     //public TMP_Text logText;
@@ -68,9 +69,23 @@ public class GameManager : MonoBehaviour
         myPlayer.GetComponent<PlayerInputRouter>().SetOwnership(true);
         opponentPlayer.GetComponent<PlayerInputRouter>().SetOwnership(false);
 
+        var opponentRb = opponentPlayer.GetComponent<Rigidbody>();
+        opponentRb.isKinematic = true;
+
         myPlayer.GetComponent<PlayerAttack>().myPlayerNumber = myNum;
         myPlayer.GetComponent<PlayerHealth>().playerNumber = myNum;
         opponentPlayer.GetComponent<PlayerHealth>().playerNumber = (myNum == 1) ? 2 : 1;
+
+        PlayerHealth myHealth = myPlayer.GetComponent<PlayerHealth>();
+        myHealth.playerNumber = myNum;
+
+        // 씬에 있는 내 HPBar UI를 찾아 연결
+        GameObject hpBarUIObj = GameObject.Find("HPBar");
+        if (hpBarUIObj != null)
+        {
+            PlayerHealthUI hpUI = hpBarUIObj.GetComponent<PlayerHealthUI>();
+            myHealth.hpUI = hpUI;
+        }
 
         // 핸들러 등록
         //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponentNickname));
@@ -82,5 +97,10 @@ public class GameManager : MonoBehaviour
         // 실시간 업데이트
         updateManager.Initialize(myPlayer, opponentPlayer, myNum);
         updateManager.enabled = true;
+
+        if (gameTimer != null)
+        {
+            gameTimer.StartTimer(90f);
+        }
     }
 }
