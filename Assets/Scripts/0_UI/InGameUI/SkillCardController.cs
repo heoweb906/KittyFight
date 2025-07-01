@@ -60,6 +60,7 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// 모든 스킬 카드를 활성화하고 이동
     /// </summary>
@@ -96,6 +97,7 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// 모든 스킬 카드를 숨기고 생성 위치로 이동
     /// </summary>
@@ -129,7 +131,6 @@ public class SkillCardController : MonoBehaviour
                 });
         }
     }
-
 
 
     public void SetAllCanInteract(bool canInteract)
