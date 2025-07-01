@@ -6,8 +6,9 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHP = 5;
     public float invincibleTime = 1.0f;
-    public TMP_Text hpText;
     public int playerNumber;
+
+    public PlayerHealthUI hpUI;
 
     private int currentHP;
     private bool isInvincible = false;
@@ -22,6 +23,10 @@ public class PlayerHealth : MonoBehaviour
         currentHP = maxHP;
         rend = GetComponent<Renderer>();
         originalColor = rend.material.color;
+
+        if (hpUI != null)
+            hpUI.Initialize(maxHP);
+
         UpdateHPUI();
     }
 
@@ -56,8 +61,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void UpdateHPUI()
     {
-        if (hpText != null)
-            hpText.text = currentHP.ToString();
+        if (hpUI != null)
+            hpUI.SetHP(currentHP);
     }
     public void RemoteSetHP(int hp)
     {
@@ -67,9 +72,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (hpUITransform != null)
-        {
-            hpUITransform.rotation = Quaternion.LookRotation(hpUITransform.position - Camera.main.transform.position);
-        }
+        //if (hpUITransform != null)
+        //{
+        //    hpUITransform.rotation = Quaternion.LookRotation(hpUITransform.position - Camera.main.transform.position);
+        //}
     }
 }
