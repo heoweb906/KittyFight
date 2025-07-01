@@ -120,34 +120,34 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         // 내 플레이어 객체 가져오기 (실제 로직에 맞게 수정)
-        GameObject myPlayer = matchManager.player1Object;
-        var mySkillWorker = myPlayer.GetComponent<SkillWorker>();
-        if (mySkillWorker == null)
-        {
-            Debug.LogError("[SkillCard_UI] 내 캐릭터에서 SkillWorker를 찾을 수 없습니다.");
-            return;
-        }
+        //GameObject myPlayer = matchManager.player1Object;
+        //var mySkillWorker = myPlayer.GetComponent<SkillWorker>();
+        //if (mySkillWorker == null)
+        //{
+        //    Debug.LogError("[SkillCard_UI] 내 캐릭터에서 SkillWorker를 찾을 수 없습니다.");
+        //    return;
+        //}
 
-        SkillSlotType selectedSlot = SkillSlotType.Q;
+        //SkillSlotType selectedSlot = SkillSlotType.Q;
 
-        // 수정된 부분: sSkillName 대신 SkillCard_SO 인스턴스를 전달
-        mySkillWorker.EquipSkillByCard(selectedSlot, skillCard_SO);
+        //// 수정된 부분: sSkillName 대신 SkillCard_SO 인스턴스를 전달
+        //mySkillWorker.EquipSkillByCard(selectedSlot, skillCard_SO);
 
         // 네트워크 전송, 인터랙션 비활성화 등 나머지 로직은 동일
-        string slot = selectedSlot.ToString();
-        string msg = SkillBuilder.Build(skillCard_SO.sSkillName, /*playerNumber*/ 1, slot);
-        P2PSkillSender.SendMessage(msg);
+        //string slot = selectedSlot.ToString();
+        //string msg = SkillBuilder.Build(skillCard_SO.sSkillName, /*playerNumber*/ 1, slot);
+        //P2PSkillSender.SendMessage(msg);
 
-        skillCardController.SetAllCanInteract(false);
-        OnPointerExit(eventData);
+        //skillCardController.SetAllCanInteract(false);
+        //OnPointerExit(eventData);
 
-        transform.DOKill();
-        Sequence clickSeq = DOTween.Sequence();
-        clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
-        clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
-        clickSeq.OnComplete(() =>
-        {
-            skillCardController.HideAll();
-        });
+        //transform.DOKill();
+        //Sequence clickSeq = DOTween.Sequence();
+        //clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
+        //clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
+        //clickSeq.OnComplete(() =>
+        //{
+        //    skillCardController.HideAll();
+        //});
     }
 }
