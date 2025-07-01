@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameUIController : MonoBehaviour
+public class InGameUIController : MonoBehaviour 
 {
     [Header("UI Conrollers")]
     [SerializeField] SkillCardController skillCardController;
 
+
+
     private Canvas canvasMain;
+
+
 
     private void Awake()
     {
@@ -16,6 +20,7 @@ public class InGameUIController : MonoBehaviour
         if (skillCardController == null) Debug.LogError("[InGameUIController] SkillCardController�� �Ҵ���� �ʾҽ��ϴ�.");
         else skillCardController.Initialize(this, canvasMain.transform);
     }
+
 
     private void Update()
     {
