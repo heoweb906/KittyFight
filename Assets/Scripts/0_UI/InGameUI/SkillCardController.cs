@@ -15,10 +15,12 @@ public class SkillCardController : MonoBehaviour
     [Tooltip("Resources/SkillCards 폴더 경로")]
     [SerializeField] string skillCardResourceFolder = "SkillCards";
 
+
     [Header("스킬 카드 프리팹")]
     [SerializeField] GameObject objSkillCard;
     private List<SkillCard_SO> skillDataList = new List<SkillCard_SO>();
     private SkillCard_UI[] instances = new SkillCard_UI[4];
+
 
     [Header("카드 생성 위치 배열")]
     [SerializeField] Transform[] spawnPoints = new Transform[4];
@@ -57,14 +59,10 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 모든 스킬 카드를 활성화하고 이동
-    /// </summary>
-    public void ShowAll()
+    public void ShowSkillCardList()
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
         IsAnimating = true;
-
 
         int completed = 0;
         int total = instances.Length;
@@ -94,10 +92,8 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 모든 스킬 카드를 숨기고 생성 위치로 이동
-    /// </summary>
-    public void HideAll()
+
+    public void HideSkillCardList()
     {
         if (IsAnimating) return;
         IsAnimating = true;

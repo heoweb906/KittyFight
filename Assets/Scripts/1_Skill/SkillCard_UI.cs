@@ -8,28 +8,25 @@ using DG.Tweening;
 
 public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-
-
-
     public SkillCardController skillCardController { get; set; }
     public bool bCanInteract = false;
 
-    [Header("UI ����")]
+    [Header("UI Card에 표시할 내용들")]
     public Image image_BackGround;
     public Image image_SkillIcon;
     public TextMeshProUGUI text_SkillName;
     public TextMeshProUGUI text_SkilDescription;
 
-    [Header("��ų")]
+    [Header("Skill 스크립터블")]
     public SkillCard_SO skillCard_SO;
+     
 
-    // ���� �� ������
+    // 트위닝 관리용
     private Vector3 originalScale;
     private Color originalBGColor;
-
-    // Ʈ�� ����
     private float tweenDuration = 0.08f;
     private float scaleFactor = 0.95f;
+
 
     private void Awake()
     {
@@ -38,76 +35,51 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
 
 
-
-
-
-
-    /// <summary>
-    /// SO ������ ������� UI ��� �ʱ�ȭ
-    /// </summary>
+    // Card에 표현할 내용 적용
     public void ApplyData(SkillCard_SO data)
     {
         if (data == null) return;
 
         skillCard_SO = data;
-
-        // Background �̹��� ����
         if (data.image_BackGround != null && data.image_BackGround.sprite != null)
             image_BackGround.sprite = data.image_BackGround.sprite;
 
-        // Skill Icon ����
         if (data.image_SkillIcon != null && data.image_SkillIcon.sprite != null)
             image_SkillIcon.sprite = data.image_SkillIcon.sprite;
 
-        // �ؽ�Ʈ ����
         text_SkillName.text = data.sSkillName;
         text_SkilDescription.text = data.sSkillDescription;
     }
 
 
-
-
-    // ���콺 �ø�
+    // 마우스 올렸을 때 나오는 애니메이션 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!bCanInteract) return;
 
-        // ���� Ʈ�� ����
         transform.DOKill();
         image_BackGround.DOKill();
 
-        // �ε巯�� ũ�� ���
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
-        // ��� ä�� ���߱�(ȸ����� ������)
         Color targetColor = Color.Lerp(originalBGColor, Color.gray, 0.5f);
         image_BackGround.DOColor(targetColor, tweenDuration);
-
-        // Debug.Log($"[SkillCard_UI] Enter '{text_SkillName.text}'");
     }
 
-
-    // ���콺 Ŀ�� ����
+    // 마우스 내렸을 때 나오는 애니메이션 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!bCanInteract) return;
 
-        // ���� Ʈ�� ����
         transform.DOKill();
         image_BackGround.DOKill();
 
-        // ���� ũ��, �÷��� ����
         transform.DOScale(originalScale, tweenDuration);
         image_BackGround.DOColor(originalBGColor, tweenDuration);
-
-        // Debug.Log($"[SkillCard_UI] Exit '{text_SkillName.text}'");
     }
 
 
 
-
-
-    // ���콺 Ŀ�� Ŭ��
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!bCanInteract) return;

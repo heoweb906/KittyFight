@@ -23,11 +23,10 @@ public class GameTimer : MonoBehaviour
             remainingTime = 0f;
             isRunning = false;
 
+            GameObject.FindObjectOfType<GameManager>().EndGame();
             Debug.Log("게임 종료!");
         }
 
-        int minutes = Mathf.FloorToInt(remainingTime / 60f);
-        int seconds = Mathf.FloorToInt(remainingTime % 60f);
-        timerText.text = $"{minutes:D2}:{seconds:D2}";
+        timerText.text = $"{Mathf.FloorToInt(remainingTime)}";
     }
 }

@@ -3,14 +3,10 @@ using UnityEngine.UI;
 
 public class InGameUIController : MonoBehaviour 
 {
-    [Header("UI Conrollers")]
+    [Header("UI Conrollers")]   // 다양한 기능을 가지고 있는 각각의 UI들을 개별로 관리할 거임
     [SerializeField] SkillCardController skillCardController;
 
-
-
     private Canvas canvasMain;
-
-
 
     private void Awake()
     {
@@ -22,11 +18,13 @@ public class InGameUIController : MonoBehaviour
     }
 
 
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Y))
-            skillCardController.ShowAll();
+            skillCardController.ShowSkillCardList();
         if (Input.GetKeyDown(KeyCode.R))
-            skillCardController.HideAll();
+            skillCardController.HideSkillCardList();
     }
+
 }

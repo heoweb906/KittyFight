@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PlayerHealthUI : MonoBehaviour
 {
     //[SerializeField] private TMP_Text hpText;
-    [SerializeField] private Image hpFillImage;
+    [SerializeField] private Slider hpSlider;
 
     private int maxHP;
     private int currentHP;
@@ -14,21 +13,19 @@ public class PlayerHealthUI : MonoBehaviour
     {
         maxHP = max;
         currentHP = max;
-        UpdateUI();
+
+        if (hpSlider != null)
+        {
+            hpSlider.maxValue = maxHP;
+            hpSlider.minValue = 0;
+            hpSlider.value = maxHP;
+        }
     }
 
     public void SetHP(int hp)
     {
         currentHP = Mathf.Clamp(hp, 0, maxHP);
-        UpdateUI();
-    }
-
-    private void UpdateUI()
-    {
-        //if (hpText != null)
-        //    hpText.text = $"{currentHP} / {maxHP}";
-
-        if (hpFillImage != null)
-            hpFillImage.fillAmount = (float)currentHP / maxHP;
+        if (hpSlider != null)
+            hpSlider.value = currentHP;
     }
 }
