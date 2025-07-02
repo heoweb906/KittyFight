@@ -22,13 +22,13 @@ public class InGameUIController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
-        //{
-        //    skillCardController.ShowSkillCardList(2);
-        //    P2PMessageSender.SendMessage(
-        //        BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
+        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
+        {
+            skillCardController.ShowSkillCardList(2);
+            P2PMessageSender.SendMessage(
+                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
 
-        //}
+        }
 
     }
 
