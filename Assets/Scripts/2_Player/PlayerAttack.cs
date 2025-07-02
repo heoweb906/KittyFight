@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour
     public float maxAttackRange = 3.5f;   // 최대 사거리
 
     public int myPlayerNumber;
+    public SkillCooldownUI cooldownUI;
 
     private PlayerAbility ability;
     private bool canAttack = true;
@@ -59,6 +60,9 @@ public class PlayerAttack : MonoBehaviour
         // 5) P2P 동기화
         P2PMessageSender.SendMessage(
             ObjectSpawnMessageBuilder.Build(spawnPos, rot, myPlayerNumber));
+
+        if (cooldownUI != null)
+            cooldownUI.StartCooldown();
 
         // 6) 지속시간 & 쿨타임
         yield return new WaitForSeconds(ability.AttackHitboxDuration);

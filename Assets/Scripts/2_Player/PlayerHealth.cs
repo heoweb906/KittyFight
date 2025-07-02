@@ -16,24 +16,24 @@ public class PlayerHealth : MonoBehaviour
     private Renderer rend;
     private Color originalColor;
 
-    public Transform hpUITransform;
-
     private void Awake()
     {
         currentHP = maxHP;
         rend = GetComponent<Renderer>();
         originalColor = rend.material.color;
+    }
 
+    public void InjectUI(PlayerHealthUI ui)
+    {
+        hpUI = ui;
         if (hpUI != null)
             hpUI.Initialize(maxHP);
-
         UpdateHPUI();
     }
 
     public void TakeDamage(int damage)
     {
         if (isInvincible) return;
-
         currentHP -= damage;
         UpdateHPUI();
 
@@ -43,6 +43,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
+            GameObject.FindObjectOfType<GameManager>().EndGame();
         }
 
         StartCoroutine(DamageEffectCoroutine());
@@ -69,12 +70,9 @@ public class PlayerHealth : MonoBehaviour
         currentHP = hp;
         UpdateHPUI();
     }
-
-    private void LateUpdate()
+    public void ResetHealth()
     {
-        //if (hpUITransform != null)
-        //{
-        //    hpUITransform.rotation = Quaternion.LookRotation(hpUITransform.position - Camera.main.transform.position);
-        //}
+        currentHP = maxHP;
+        UpdateHPUI();
     }
 }
