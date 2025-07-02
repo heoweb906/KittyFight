@@ -12,31 +12,35 @@ public class SkillWorker : MonoBehaviour
     public PlayerAbility playerAbility;
     private Dictionary<SkillSlotType, Skill> mySkills = new Dictionary<SkillSlotType, Skill>();
 
-    [Header("스킬 프리팹 리스트")]
-    public List<GameObject> skillPrefabs;
-    public List<SkillCard_SO> skillCards;
+    public bool bCantInput { get; set; }
 
-    public void EquipSkillByCard(SkillCard_SO card)
+    private void Awake()
     {
-        if (card == null)
+        playerAbility = GetComponent<PlayerAbility>();
+    }
+    private void Update()
+    {
+        if (bCantInput) return;
+
+        if (Input.GetKeyDown(KeyCode.Q)) UseSkill(SkillSlotType.Q);
+        if (Input.GetKeyDown(KeyCode.E)) UseSkill(SkillSlotType.E);
+    }
+
+
+
+    public void EquipSkillByCard(GameObject skillObj)
+    {
+        if (skillObj == null)
         {
-            Debug.LogWarning("[SkillWorker] SkillCard_SO가 null입니다.");
+            Debug.LogWarning("[SkillWorker] Tried to equip a null skill object.");
             return;
         }
 
-        int idx = card.skillIndex;
-        if (idx < 0 || idx >= skillPrefabs.Count)
-        {
-            Debug.LogError($"[SkillWorker] skillIndex({idx})가 skillPrefabs 범위를 벗어났습니다.");
-            return;
-        }
-
-        GameObject objSkill = Instantiate(skillPrefabs[idx]);
-        Skill skillInstance = objSkill.GetComponent<Skill>();
+        Skill skillInstance = skillObj.GetComponent<Skill>();
         if (skillInstance == null)
         {
-            Debug.LogError($"[SkillWorker] 할당된 프리팹에 Skill 컴포넌트가 없습니다. Index: {idx}");
-            Destroy(objSkill);
+            Debug.LogError("[SkillWorker] Provided object has no Skill component.");
+            Destroy(skillObj);
             return;
         }
 
@@ -48,18 +52,15 @@ public class SkillWorker : MonoBehaviour
                 : SkillSlotType.E;
 
         mySkills[slotToUse] = skillInstance;
-        Debug.Log($"[SkillWorker] '{card.sSkillName}'을(를) 슬롯 {slotToUse}에 장착했습니다.");
+
+        Debug.Log($"[SkillWorker] Skill '{skillInstance.name}' has been equipped to slot {slotToUse}.");
     }
-
-
-
-
 
 
     public void UseSkill(SkillSlotType slot)
     {
         if (mySkills.TryGetValue(slot, out Skill skill) && skill != null) skill.Activate();
-        else Debug.Log($"[SkillWorker] 슬롯 {slot}에 스킬이 없습니다.");
+        else Debug.Log($"[SkillWorker] No skill assigned in slot {slot}.");
         return;
     }
 }

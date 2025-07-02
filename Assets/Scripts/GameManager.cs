@@ -10,9 +10,15 @@ public class GameManager : MonoBehaviour
     public Transform spawnPoint1;
     public Transform spawnPoint2;
 
+    public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
     public GameTimer gameTimer;
+
+    public PlayerAbility playerAbility_1;
+    public PlayerAbility playerAbility_2;
+    public SkillWorker skillWorker_1;
+    public SkillWorker skillWorker_2;
 
     private void Start()
     {
@@ -84,11 +90,46 @@ public class GameManager : MonoBehaviour
             myHealth.hpUI = hpUI;
         }
 
+
+        // 양측 플레이어들의 정보를 가져옴
+        if (myNum == 1)
+        {
+            playerAbility_1 = myPlayer.GetComponent<PlayerAbility>();
+            skillWorker_1 = myPlayer.GetComponent<SkillWorker>();
+            playerAbility_2 = opponentPlayer.GetComponent<PlayerAbility>();
+            skillWorker_2 = opponentPlayer.GetComponent<SkillWorker>();
+        }
+        else
+        {
+            playerAbility_2 = myPlayer.GetComponent<PlayerAbility>();
+            skillWorker_2 = myPlayer.GetComponent<SkillWorker>();
+            playerAbility_1 = opponentPlayer.GetComponent<PlayerAbility>();
+            skillWorker_1 = opponentPlayer.GetComponent<SkillWorker>();
+        }
+
+        opponentPlayer.GetComponent<SkillWorker>().bCantInput = true;
+
+
+
+
+        // ################
         // 핸들러 등록
-        //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponentNickname));
+        // ################
+
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));
         P2PMessageDispatcher.RegisterHandler(new ObjectSpawnHandler(myPlayer, opponentPlayer));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myNum));
+
+
+
+        P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(opponentPlayer.GetComponent<SkillWorker>(), ingameUIController.skillCardController, myNum));
+        P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
+
+ 
+
+
+
+
         // 채팅은 나중에
 
         // 실시간 업데이트
@@ -100,4 +141,7 @@ public class GameManager : MonoBehaviour
             gameTimer.StartTimer(90f);
         }
     }
+
+
+
 }

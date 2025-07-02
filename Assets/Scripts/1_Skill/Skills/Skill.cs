@@ -7,7 +7,7 @@ public interface ISKILL
     void Activate();
 }
 
-public abstract class Skill : ISKILL
+public abstract class Skill : MonoBehaviour, ISKILL 
 {
     [Header("기본적으로 사용하는 것들")]
     public PlayerAbility playerAbilty;
@@ -18,8 +18,7 @@ public abstract class Skill : ISKILL
     public float coolTime;
     public GameObject objSkillEntity;
 
-    private float lastUseTime = -Mathf.Infinity; // 최소 값으로 초기화
-
+    private float lastUseTime = -Mathf.Infinity;
 
 
 
@@ -37,11 +36,13 @@ public abstract class Skill : ISKILL
     }
 
 
+
+
     public void Activate()
     {
         if (Time.time < lastUseTime + coolTime)
         {
-            Debug.Log($"남은 스킬 쿨타임: {Mathf.Ceil(lastUseTime + coolTime - Time.time)}");
+            Debug.Log($"Cool Time: {Mathf.Ceil(lastUseTime + coolTime - Time.time)}");
             return;
         }
 
