@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 1025364721985060975}
   - component: {fileID: 5027548309808887401}
   - component: {fileID: 9158386384449153461}
+  - component: {fileID: 463129566402574095}
   m_Layer: 0
   m_Name: Player 2 1 1
   m_TagString: Untagged
@@ -188,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88ec58a86c2056448765c45c878a7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityData: {fileID: 11400000, guid: e1d900cb6ac6bed409f3b62479bd94ea, type: 2}
+  abilityData: {fileID: 11400000, guid: 1b4854a786333464bacb10d158456207, type: 2}
 --- !u!114 &648162707323479575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,8 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 5
   invincibleTime: 1
-  hpText: {fileID: 2157991089581870735}
   playerNumber: 2
+  hpUI: {fileID: 0}
   hpUITransform: {fileID: 7378459933603239362}
 --- !u!114 &5027548309808887401
 MonoBehaviour:
@@ -295,6 +296,21 @@ MonoBehaviour:
   dashDuration: 0.1
   dashCooldown: 1
   myPlayerNumber: 2
+--- !u!114 &463129566402574095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935919425372871960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834719053c835c2488a900352f31f878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAbility: {fileID: 0}
+  skillPrefabs: []
+  skillCards: []
 --- !u!1 &6744285802424479167
 GameObject:
   m_ObjectHideFlags: 0

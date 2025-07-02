@@ -41,7 +41,7 @@ public class P2PSkillHandler : IP2PMessageHandler
                 return;
             }
 
-            skillWorker.EquipSkillByCard(slotType, card);
+            // skillWorker.EquipSkillByCard(slotType, card);
         }
         catch (System.Exception e)
         {

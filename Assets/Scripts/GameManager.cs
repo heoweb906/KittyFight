@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     public UpdateManager updateManager;
 
     public GameTimer gameTimer;
-    //public Button chatSendButton;
-    //public TMP_InputField chatInputField;
-    //public TMP_Text logText;
 
     private void Start()
     {
