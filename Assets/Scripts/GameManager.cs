@@ -10,15 +10,24 @@ public class GameManager : MonoBehaviour
     public Transform spawnPoint1;
     public Transform spawnPoint2;
 
-    public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
     public GameTimer gameTimer;
 
-    public PlayerAbility playerAbility_1;
-    public PlayerAbility playerAbility_2;
-    public SkillWorker skillWorker_1;
-    public SkillWorker skillWorker_2;
+    public GameObject player1HUD;
+    public GameObject player2HUD;
+
+    private GameObject player1;
+    private GameObject player2;
+    private int myNum;
+    
+    public GameObject backgroundPlane;
+
+    private bool gameEnded = false;
+
+    //public Button chatSendButton;
+    //public TMP_InputField chatInputField;
+    //public TMP_Text logText;
 
     private void Start()
     {
@@ -56,7 +65,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"spawnPoint1 null? {spawnPoint1 == null}");
         Debug.Log($"spawnPoint2 null? {spawnPoint2 == null}");
 
-        int myNum = MatchResultStore.myPlayerNumber;
+        myNum = MatchResultStore.myPlayerNumber;
         Debug.Log($"myNum: {myNum}");
 
         GameObject myPlayerPrefab = (myNum == 1) ? player1Prefab : player2Prefab;
@@ -67,6 +76,9 @@ public class GameManager : MonoBehaviour
 
         GameObject myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, Quaternion.identity);
         GameObject opponentPlayer = Instantiate(opponentPrefab, opponentSpawn.position, Quaternion.identity);
+
+        player1 = (myNum == 1) ? myPlayer : opponentPlayer;
+        player2 = (myNum == 1) ? opponentPlayer : myPlayer;
 
         // 입력 권한 설정
         myPlayer.GetComponent<PlayerInputRouter>().SetOwnership(true);
@@ -79,57 +91,14 @@ public class GameManager : MonoBehaviour
         myPlayer.GetComponent<PlayerHealth>().playerNumber = myNum;
         opponentPlayer.GetComponent<PlayerHealth>().playerNumber = (myNum == 1) ? 2 : 1;
 
-        PlayerHealth myHealth = myPlayer.GetComponent<PlayerHealth>();
-        myHealth.playerNumber = myNum;
+        InjectHUDUI(myPlayer, myNum);
+        InjectHUDUI(opponentPlayer, (myNum == 1) ? 2 : 1);
 
-        // 씬에 있는 내 HPBar UI를 찾아 연결
-        GameObject hpBarUIObj = GameObject.Find("HPBar");
-        if (hpBarUIObj != null)
-        {
-            PlayerHealthUI hpUI = hpBarUIObj.GetComponent<PlayerHealthUI>();
-            myHealth.hpUI = hpUI;
-        }
-
-
-        // 양측 플레이어들의 정보를 가져옴
-        if (myNum == 1)
-        {
-            playerAbility_1 = myPlayer.GetComponent<PlayerAbility>();
-            skillWorker_1 = myPlayer.GetComponent<SkillWorker>();
-            playerAbility_2 = opponentPlayer.GetComponent<PlayerAbility>();
-            skillWorker_2 = opponentPlayer.GetComponent<SkillWorker>();
-        }
-        else
-        {
-            playerAbility_2 = myPlayer.GetComponent<PlayerAbility>();
-            skillWorker_2 = myPlayer.GetComponent<SkillWorker>();
-            playerAbility_1 = opponentPlayer.GetComponent<PlayerAbility>();
-            skillWorker_1 = opponentPlayer.GetComponent<SkillWorker>();
-        }
-
-        opponentPlayer.GetComponent<SkillWorker>().bCantInput = true;
-
-
-
-
-        // ################
         // 핸들러 등록
-        // ################
-
+        //P2PMessageDispatcher.RegisterHandler(new P2PChatHandler(logText, opponentNickname));
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));
         P2PMessageDispatcher.RegisterHandler(new ObjectSpawnHandler(myPlayer, opponentPlayer));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myNum));
-
-
-
-        P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(opponentPlayer.GetComponent<SkillWorker>(), ingameUIController.skillCardController, myNum));
-        P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
-
- 
-
-
-
-
         // 채팅은 나중에
 
         // 실시간 업데이트
@@ -141,7 +110,63 @@ public class GameManager : MonoBehaviour
             gameTimer.StartTimer(90f);
         }
     }
+    private void InjectHUDUI(GameObject player, int playerNum)
+    {
+        HUDController hud = (playerNum == 1) ? player1HUD.GetComponent<HUDController>() : player2HUD.GetComponent<HUDController>();
+        if (hud == null) return;
 
+        var myHealth = player.GetComponent<PlayerHealth>();
+        myHealth.playerNumber = playerNum;
+        myHealth.InjectUI(hud.GetHealthUI());
 
+        var myAttack = player.GetComponent<PlayerAttack>();
+        myAttack.cooldownUI = hud.GetSkillUI();
+    }
 
+    public void EndGame()
+    {
+        if (gameEnded) return;
+        gameEnded = true;
+
+        Debug.Log("Game Over");
+
+        player1.GetComponent<PlayerInputRouter>().SetOwnership(false);
+        player2.GetComponent<PlayerInputRouter>().SetOwnership(false);
+
+        Invoke(nameof(ResetGame), 3f);
+    }
+
+    private void ResetGame()
+    {
+        Debug.Log("Resetting Game");
+
+        RandomizePlaneColor();
+
+        player1.transform.position = spawnPoint1.position;
+        player2.transform.position = spawnPoint2.position;
+
+        player1.GetComponent<PlayerHealth>().ResetHealth();
+        player2.GetComponent<PlayerHealth>().ResetHealth();
+
+        player1.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 1);
+        player2.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 2);
+
+        gameEnded = false;
+        gameTimer.StartTimer(90f);
+    }
+
+    private void RandomizePlaneColor()
+    {
+        if (backgroundPlane == null) return;
+
+        Renderer rend = backgroundPlane.GetComponent<Renderer>();
+        if (rend == null) return;
+
+        Color randomColor = Random.ColorHSV();
+
+        if (rend.material.HasProperty("_BaseColor"))
+            rend.material.SetColor("_BaseColor", randomColor);
+        else if (rend.material.HasProperty("_Color"))
+            rend.material.SetColor("_Color", randomColor);
+    }
 }
