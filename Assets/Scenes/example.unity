@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16076788}
+  - component: {fileID: 16076789}
   m_Layer: 5
   m_Name: Skill 2_1
   m_TagString: Untagged
@@ -160,6 +161,20 @@ RectTransform:
   m_AnchoredPosition: {x: -130, y: -120}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &16076789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16076787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30820a59c8421994faa40a76f5120fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownOverlay: {fileID: 302569080}
+  cooldownTime: 5
 --- !u!1 &124736582
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fb2e64fc8473d42ba7baf186eeb9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFillImage: {fileID: 2099991461}
+  hpSlider: {fileID: 124736585}
 --- !u!114 &124736585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,9 +273,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 5
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -481,6 +496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 186811137}
+  - component: {fileID: 186811138}
   m_Layer: 5
   m_Name: Player1HUD
   m_TagString: Untagged
@@ -510,6 +526,20 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &186811138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186811136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd1f83284cf9ef4fbb61f305ac71626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpUI: {fileID: 1323422536}
+  skillUI: {fileID: 1352140217}
 --- !u!1 &216239283
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 762045381}
+  - component: {fileID: 762045382}
   m_Layer: 5
   m_Name: Player2HUD
   m_TagString: Untagged
@@ -2417,6 +2448,20 @@ RectTransform:
   m_AnchoredPosition: {x: -20, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &762045382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762045380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd1f83284cf9ef4fbb61f305ac71626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpUI: {fileID: 124736584}
+  skillUI: {fileID: 16076789}
 --- !u!1 &762465054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3790,7 +3835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fb2e64fc8473d42ba7baf186eeb9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpFillImage: {fileID: 1950979495}
+  hpSlider: {fileID: 1323422537}
 --- !u!114 &1323422537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3836,9 +3881,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 5
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4052,7 +4097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1:30
+  m_text: 90
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4225,6 +4270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1352140216}
+  - component: {fileID: 1352140217}
   m_Layer: 5
   m_Name: Skill 1_1
   m_TagString: Untagged
@@ -4253,6 +4299,20 @@ RectTransform:
   m_AnchoredPosition: {x: 130, y: -120}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1352140217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352140215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30820a59c8421994faa40a76f5120fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownOverlay: {fileID: 2041101185}
+  cooldownTime: 5
 --- !u!1 &1421344991
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,6 +4365,9 @@ MonoBehaviour:
   spawnPoint2: {fileID: 663726106}
   updateManager: {fileID: 1102403079}
   gameTimer: {fileID: 1336604041}
+  player1HUD: {fileID: 186811136}
+  player2HUD: {fileID: 762045380}
+  backgroundPlane: {fileID: 350654000}
 --- !u!1 &1498492073
 GameObject:
   m_ObjectHideFlags: 0
