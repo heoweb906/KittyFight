@@ -32,6 +32,15 @@ public class GameManager : MonoBehaviour
     //public TMP_InputField chatInputField;
     //public TMP_Text logText;
 
+    private readonly Color[] backgroundColorCandidates = new Color[]
+    {
+        new Color(0.8f, 0.9f, 1f),
+        new Color(0.95f, 0.95f, 0.95f),
+        new Color(0.9f, 0.8f, 0.8f),
+        new Color(0.75f, 1f, 0.75f),
+        new Color(1f, 1f, 0.6f),
+    };
+
     private void Start()
     {
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
@@ -126,6 +135,7 @@ public class GameManager : MonoBehaviour
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(opponentPlayer.GetComponent<SkillWorker>(), ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
+        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
         // 채팅은 나중에
 
         // 실시간 업데이트
@@ -152,7 +162,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Game");
 
-        RandomizePlaneColor();
+        if (MatchResultStore.myPlayerNumber == 1)
+        {
+            int index = Random.Range(0, backgroundColorCandidates.Length);
+            Color selectedColor = backgroundColorCandidates[index];
+
+            P2PMessageSender.SendMessage(
+                BackgroundColorMessageBuilder.Build(selectedColor)
+            );
+
+            ApplyBackgroundColor(selectedColor);
+        }
 
         player1.transform.position = spawnPoint1.position;
         player2.transform.position = spawnPoint2.position;
@@ -167,18 +187,16 @@ public class GameManager : MonoBehaviour
         ingameUIController.StartGameTimer(90f);
     }
 
-    private void RandomizePlaneColor()
+    public void ApplyBackgroundColor(Color color)
     {
         if (backgroundPlane == null) return;
 
         Renderer rend = backgroundPlane.GetComponent<Renderer>();
         if (rend == null) return;
 
-        Color randomColor = Random.ColorHSV();
-
         if (rend.material.HasProperty("_BaseColor"))
-            rend.material.SetColor("_BaseColor", randomColor);
+            rend.material.SetColor("_BaseColor", color);
         else if (rend.material.HasProperty("_Color"))
-            rend.material.SetColor("_Color", randomColor);
+            rend.material.SetColor("_Color", color);
     }
 }
