@@ -13,17 +13,11 @@ public class GameManager : MonoBehaviour
     public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
-    public GameTimer gameTimer;
-
-    public GameObject player1HUD;
-    public GameObject player2HUD;
-
     private GameObject player1;
     private GameObject player2;
     private int myNum;
     
     public GameObject backgroundPlane;
-
     private bool gameEnded = false;
 
 
@@ -52,6 +46,8 @@ public class GameManager : MonoBehaviour
             P2PManager.IsReadyToStartGame = false;
             InitializeGame();
         }
+
+        ingameUIController.TickGameTimer();
     }
 
     private void InitializeGame()
@@ -93,18 +89,11 @@ public class GameManager : MonoBehaviour
         myPlayer.GetComponent<PlayerInputRouter>().SetOwnership(true);
         opponentPlayer.GetComponent<PlayerInputRouter>().SetOwnership(false);
 
-        var opponentRb = opponentPlayer.GetComponent<Rigidbody>();
-        opponentRb.isKinematic = true;
+        opponentPlayer.GetComponent<Rigidbody>().isKinematic = true;
 
         myPlayer.GetComponent<PlayerAttack>().myPlayerNumber = myNum;
         myPlayer.GetComponent<PlayerHealth>().playerNumber = myNum;
         opponentPlayer.GetComponent<PlayerHealth>().playerNumber = (myNum == 1) ? 2 : 1;
-
-        InjectHUDUI(myPlayer, myNum);
-        InjectHUDUI(opponentPlayer, (myNum == 1) ? 2 : 1);
-
-
-
 
         if (myNum == 1)
         {
@@ -143,22 +132,7 @@ public class GameManager : MonoBehaviour
         updateManager.Initialize(myPlayer, opponentPlayer, myNum);
         updateManager.enabled = true;
 
-        if (gameTimer != null)
-        {
-            gameTimer.StartTimer(90f);
-        }
-    }
-    private void InjectHUDUI(GameObject player, int playerNum)
-    {
-        HUDController hud = (playerNum == 1) ? player1HUD.GetComponent<HUDController>() : player2HUD.GetComponent<HUDController>();
-        if (hud == null) return;
-
-        var myHealth = player.GetComponent<PlayerHealth>();
-        myHealth.playerNumber = playerNum;
-        myHealth.InjectUI(hud.GetHealthUI());
-
-        var myAttack = player.GetComponent<PlayerAttack>();
-        myAttack.cooldownUI = hud.GetSkillUI();
+        ingameUIController.StartGameTimer(90f);
     }
 
     public void EndGame()
@@ -190,7 +164,7 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 2);
 
         gameEnded = false;
-        gameTimer.StartTimer(90f);
+        ingameUIController.StartGameTimer(90f);
     }
 
     private void RandomizePlaneColor()

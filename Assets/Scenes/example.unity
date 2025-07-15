@@ -4725,9 +4725,6 @@ MonoBehaviour:
   spawnPoint2: {fileID: 663726106}
   ingameUIController: {fileID: 2097744494}
   updateManager: {fileID: 1102403079}
-  gameTimer: {fileID: 1336604041}
-  player1HUD: {fileID: 186811136}
-  player2HUD: {fileID: 762045380}
   backgroundPlane: {fileID: 350654000}
   playerAbility_1: {fileID: 0}
   playerAbility_2: {fileID: 0}
@@ -6581,6 +6578,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1421344993}
+  hpUI_Player1: {fileID: 1323422536}
+  hpUI_Player2: {fileID: 124736584}
+  skillUI_Player1: {fileID: 1352140217}
+  skillUI_Player2: {fileID: 16076789}
+  gameTimer: {fileID: 1336604041}
   skillCardController: {fileID: 2097744493}
 --- !u!4 &2097744495
 Transform:
