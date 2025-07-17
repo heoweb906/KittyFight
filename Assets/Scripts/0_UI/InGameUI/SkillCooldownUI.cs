@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class SkillCooldownUI : MonoBehaviour
 {
     public Image cooldownOverlay;
-    public float cooldownTime = 5f;
+    public float cooldownTime = 3f;
 
     private float remaining = 0f;
 

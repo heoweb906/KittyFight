@@ -10,9 +10,12 @@ public class InGameUIController : MonoBehaviour
     public GameManager gameManager;
 
     public PlayerHealthUI hpUI_Player1;
-    public PlayerHealthUI hpUI_Player2;
     public SkillCooldownUI skillUI_Player1;
+    public SkillCooldownUI skillUI2_Player1;
+
+    public PlayerHealthUI hpUI_Player2;
     public SkillCooldownUI skillUI_Player2;
+    public SkillCooldownUI skillUI2_Player2;
     public GameTimer gameTimer;
 
     public SkillCardController skillCardController;
@@ -60,10 +63,18 @@ public class InGameUIController : MonoBehaviour
         else hpUI_Player2?.SetHP(hp);
     }
 
-    public void StartSkillCooldown(int playerNum)
+    public void StartSkillCooldown(int playerNum, int skill)
     {
-        if (playerNum == 1) skillUI_Player1?.StartCooldown();
-        else skillUI_Player2?.StartCooldown();
+        if(skill == 1)
+        {
+            if (playerNum == 1) skillUI_Player1?.StartCooldown();
+            else skillUI_Player2?.StartCooldown();
+        }
+        else
+        {
+            if (playerNum == 1) skillUI2_Player1?.StartCooldown();
+            else skillUI2_Player2?.StartCooldown();
+        }
     }
 
     public void StartGameTimer(float duration)
