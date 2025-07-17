@@ -28,13 +28,17 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isInvincible) return;
 
+        Debug.Log(playerNumber + " : " + currentHP);
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
 
         InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
 
-        P2PMessageSender.SendMessage(
-            DamageMessageBuilder.Build(playerNumber, currentHP));
+        if (playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            P2PMessageSender.SendMessage(
+                DamageMessageBuilder.Build(playerNumber, currentHP));
+        }
 
         if (currentHP <= 0)
         {

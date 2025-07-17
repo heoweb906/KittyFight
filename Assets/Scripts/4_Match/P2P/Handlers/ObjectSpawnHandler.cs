@@ -25,6 +25,6 @@ public class ObjectSpawnHandler : IP2PMessageHandler
         Quaternion rot = new Quaternion(data.qx, data.qy, data.qz, data.qw);
 
         Object.Destroy(Object.Instantiate(hitboxPrefab, pos, rot), life);
-        InGameUIController.Instance?.StartSkillCooldown(data.player);
+        InGameUIController.Instance?.StartSkillCooldown(data.player, 1);
     }
 }

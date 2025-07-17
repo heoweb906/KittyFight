@@ -136,6 +136,8 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(opponentPlayer.GetComponent<SkillWorker>(), ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
+        P2PMessageDispatcher.RegisterHandler(new ProjectileHandler(opponentPlayer));
+
         // 채팅은 나중에
 
         // 실시간 업데이트
