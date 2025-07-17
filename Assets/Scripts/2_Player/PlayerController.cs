@@ -30,24 +30,20 @@ public class PlayerController : MonoBehaviour
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         jumpInput = Input.GetKeyDown(KeyCode.Space);
         attackInput = Input.GetMouseButtonDown(0);
-        dashInput = Input.GetMouseButtonDown(1);
+        bool rangedInput = Input.GetMouseButtonDown(1);
+        dashInput = Input.GetKeyDown(KeyCode.LeftShift);
 
         // 점프 입력 처리
         if (jumpInput)
-        {
             jump.TryJump();
-        }
 
         // 공격 입력 처리
         if (attackInput)
-        {
-            attack.TryAttack();
-        }
-
+            attack.TryMeleeAttack();
+        if (rangedInput)
+            attack.TryRangedAttack();
         if (dashInput)
-        {
             dash.TryDash();
-        }
     }
 
     private void FixedUpdate()

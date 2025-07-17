@@ -442,7 +442,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &5748841140207312122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,8 +502,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxPrefab: {fileID: 551775367249106992, guid: a9eda9be5c9955f4fa362914639b7c02,
     type: 3}
-  minSpawnDistance: 0.5
+  projectilePrefab: {fileID: 551775367249106992, guid: cdd9383be71d8f348ac11a721dd40b84,
+    type: 3}
   maxAttackRange: 3.5
+  projectileSpeed: 10
+  meleeCooldown: 1
+  rangedCooldown: 2.5
   myPlayerNumber: 1
 --- !u!114 &3377074102636020777
 MonoBehaviour:
@@ -532,8 +536,6 @@ MonoBehaviour:
   maxHP: 5
   invincibleTime: 1
   playerNumber: 1
-  hpUI: {fileID: 0}
-  hpUITransform: {fileID: 8665106610024341890}
 --- !u!114 &-26225733701770512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,9 +577,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  skillPrefabs:
-  - {fileID: 5783421907839214963, guid: b0aa088c3f8cb90408c4b1370dd8203b, type: 3}
-  - {fileID: 2211560603425008042, guid: b2bf42e02d348cd49ae14eba9409c98d, type: 3}
-  - {fileID: 2211560603425008042, guid: ba49f80f046414845b10ad6d696e18d4, type: 3}
-  - {fileID: 2211560603425008042, guid: 12460300808431c459c43e2e44555fee, type: 3}
-  - {fileID: 2211560603425008042, guid: 977269595aca49b4fb3d4325ce5d4169, type: 3}
