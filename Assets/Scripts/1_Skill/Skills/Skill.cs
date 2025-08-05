@@ -20,13 +20,12 @@ public abstract class Skill : MonoBehaviour, ISKILL
 
     private float lastUseTime = -Mathf.Infinity;
 
-
-
     public Skill(PlayerAbility playerAbilty, SkillWorker skillWorker)
     {
         this.playerAbilty = playerAbilty;
         this.skillWorker = skillWorker;
     }
+
 
     // 프리팹 기반으로 생성 시 호출하는 초기화 함수
     public void SetNewBasicValue(PlayerAbility playerAbilty, SkillWorker skillWorker)
@@ -34,8 +33,6 @@ public abstract class Skill : MonoBehaviour, ISKILL
         this.playerAbilty = playerAbilty;
         this.skillWorker = skillWorker;
     }
-
-
 
 
     public void Activate()
@@ -51,4 +48,5 @@ public abstract class Skill : MonoBehaviour, ISKILL
     }
 
     protected abstract void ExecuteSkill();
+
 }
