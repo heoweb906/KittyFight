@@ -50,5 +50,6 @@ public class PlayerController : MonoBehaviour
     {
         // 이동 실행
         movement.Move(moveInput);
+        jump.HandleWallSlide();
     }
 }
