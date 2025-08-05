@@ -8,7 +8,7 @@ public class InGameUIController : MonoBehaviour
 {
     public static InGameUIController Instance { get; private set; }
 
-    private Canvas canvasMain;
+    public Canvas canvasMain;
     public GameManager gameManager;
 
     public PlayerHealthUI hpUI_Player1;
@@ -45,13 +45,28 @@ public class InGameUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
+        //if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
+        //{
+        //    skillCardController.ShowSkillCardList(2);
+        //    P2PMessageSender.SendMessage(
+        //        BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
+
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             skillCardController.ShowSkillCardList(2);
-            P2PMessageSender.SendMessage(
-                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
 
+            Debug.Log("스킬 카드 보이게 하기");
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            skillCardController.HideSkillCardList();
+
+            Debug.Log("스킬 카드 숨기기");
+        }
+
 
     }
 
