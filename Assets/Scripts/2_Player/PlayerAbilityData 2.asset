@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97aa28f47e3a74d429fe02f48b1c0a14, type: 3}
   m_Name: PlayerAbilityData 2
   m_EditorClassIdentifier: 
+  playerNumber: 2
   moveSpeed: 5
   jumpForce: 5
   dashDistance: 5
