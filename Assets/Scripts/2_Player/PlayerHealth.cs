@@ -4,7 +4,7 @@ using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 5;
+    public int maxHP = 9;
     public float invincibleTime = 1.0f;
     public int playerNumber;
 
@@ -28,9 +28,9 @@ public class PlayerHealth : MonoBehaviour
     {
         if (isInvincible) return;
 
-        Debug.Log(playerNumber + " : " + currentHP);
         currentHP -= damage;
         currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        //Debug.Log(playerNumber + " : " + currentHP);
 
         InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
 
