@@ -13,17 +13,11 @@ public class GameManager : MonoBehaviour
     public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
-    public GameTimer gameTimer;
-
-    public GameObject player1HUD;
-    public GameObject player2HUD;
-
     private GameObject player1;
     private GameObject player2;
     private int myNum;
     
     public GameObject backgroundPlane;
-
     private bool gameEnded = false;
 
 
@@ -37,6 +31,15 @@ public class GameManager : MonoBehaviour
     //public Button chatSendButton;
     //public TMP_InputField chatInputField;
     //public TMP_Text logText;
+
+    private readonly Color[] backgroundColorCandidates = new Color[]
+    {
+        new Color(0.8f, 0.9f, 1f),
+        new Color(0.95f, 0.95f, 0.95f),
+        new Color(0.9f, 0.8f, 0.8f),
+        new Color(0.75f, 1f, 0.75f),
+        new Color(1f, 1f, 0.6f),
+    };
 
     private void Start()
     {
@@ -52,6 +55,8 @@ public class GameManager : MonoBehaviour
             P2PManager.IsReadyToStartGame = false;
             InitializeGame();
         }
+
+        ingameUIController.TickGameTimer();
     }
 
     private void InitializeGame()
@@ -93,18 +98,11 @@ public class GameManager : MonoBehaviour
         myPlayer.GetComponent<PlayerInputRouter>().SetOwnership(true);
         opponentPlayer.GetComponent<PlayerInputRouter>().SetOwnership(false);
 
-        var opponentRb = opponentPlayer.GetComponent<Rigidbody>();
-        opponentRb.isKinematic = true;
+        opponentPlayer.GetComponent<Rigidbody>().isKinematic = true;
 
         myPlayer.GetComponent<PlayerAttack>().myPlayerNumber = myNum;
         myPlayer.GetComponent<PlayerHealth>().playerNumber = myNum;
         opponentPlayer.GetComponent<PlayerHealth>().playerNumber = (myNum == 1) ? 2 : 1;
-
-        InjectHUDUI(myPlayer, myNum);
-        InjectHUDUI(opponentPlayer, (myNum == 1) ? 2 : 1);
-
-
-
 
         if (myNum == 1)
         {
@@ -137,28 +135,16 @@ public class GameManager : MonoBehaviour
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(opponentPlayer.GetComponent<SkillWorker>(), ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
+        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
+        P2PMessageDispatcher.RegisterHandler(new ProjectileHandler(opponentPlayer));
+
         // 채팅은 나중에
 
         // 실시간 업데이트
         updateManager.Initialize(myPlayer, opponentPlayer, myNum);
         updateManager.enabled = true;
 
-        if (gameTimer != null)
-        {
-            gameTimer.StartTimer(90f);
-        }
-    }
-    private void InjectHUDUI(GameObject player, int playerNum)
-    {
-        HUDController hud = (playerNum == 1) ? player1HUD.GetComponent<HUDController>() : player2HUD.GetComponent<HUDController>();
-        if (hud == null) return;
-
-        var myHealth = player.GetComponent<PlayerHealth>();
-        myHealth.playerNumber = playerNum;
-        myHealth.InjectUI(hud.GetHealthUI());
-
-        var myAttack = player.GetComponent<PlayerAttack>();
-        myAttack.cooldownUI = hud.GetSkillUI();
+        ingameUIController.StartGameTimer(90f);
     }
 
     public void EndGame()
@@ -178,7 +164,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Game");
 
-        RandomizePlaneColor();
+        if (MatchResultStore.myPlayerNumber == 1)
+        {
+            int index = Random.Range(0, backgroundColorCandidates.Length);
+            Color selectedColor = backgroundColorCandidates[index];
+
+            P2PMessageSender.SendMessage(
+                BackgroundColorMessageBuilder.Build(selectedColor)
+            );
+
+            ApplyBackgroundColor(selectedColor);
+        }
 
         player1.transform.position = spawnPoint1.position;
         player2.transform.position = spawnPoint2.position;
@@ -190,21 +186,19 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 2);
 
         gameEnded = false;
-        gameTimer.StartTimer(90f);
+        ingameUIController.StartGameTimer(90f);
     }
 
-    private void RandomizePlaneColor()
+    public void ApplyBackgroundColor(Color color)
     {
         if (backgroundPlane == null) return;
 
         Renderer rend = backgroundPlane.GetComponent<Renderer>();
         if (rend == null) return;
 
-        Color randomColor = Random.ColorHSV();
-
         if (rend.material.HasProperty("_BaseColor"))
-            rend.material.SetColor("_BaseColor", randomColor);
+            rend.material.SetColor("_BaseColor", color);
         else if (rend.material.HasProperty("_Color"))
-            rend.material.SetColor("_Color", randomColor);
+            rend.material.SetColor("_Color", color);
     }
 }

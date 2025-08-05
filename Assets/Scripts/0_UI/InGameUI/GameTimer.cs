@@ -7,26 +7,26 @@ public class GameTimer : MonoBehaviour
     private float remainingTime = 0f;
     private bool isRunning = false;
 
-    public void StartTimer(float duration)
+    public void SetDuration(float duration)
     {
         remainingTime = duration;
         isRunning = true;
     }
 
-    private void Update()
+    public bool Tick(float deltaTime)
     {
-        if (!isRunning) return;
+        if (!isRunning) return false;
 
-        remainingTime -= Time.deltaTime;
+        remainingTime -= deltaTime;
         if (remainingTime <= 0f)
         {
             remainingTime = 0f;
             isRunning = false;
-
-            GameObject.FindObjectOfType<GameManager>().EndGame();
-            Debug.Log("게임 종료!");
+            timerText.text = "0";
+            return true;
         }
 
         timerText.text = $"{Mathf.FloorToInt(remainingTime)}";
+        return false;
     }
 }

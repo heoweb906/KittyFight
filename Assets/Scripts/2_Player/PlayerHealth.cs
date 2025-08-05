@@ -4,11 +4,9 @@ using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 5;
+    public int maxHP = 9;
     public float invincibleTime = 1.0f;
     public int playerNumber;
-
-    public PlayerHealthUI hpUI;
 
     private int currentHP;
     private bool isInvincible = false;
@@ -21,24 +19,26 @@ public class PlayerHealth : MonoBehaviour
         currentHP = maxHP;
         rend = GetComponent<Renderer>();
         originalColor = rend.material.color;
-    }
 
-    public void InjectUI(PlayerHealthUI ui)
-    {
-        hpUI = ui;
-        if (hpUI != null)
-            hpUI.Initialize(maxHP);
-        UpdateHPUI();
+        InGameUIController.Instance?.InitializeHP(playerNumber, maxHP);
+        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
     }
 
     public void TakeDamage(int damage)
     {
         if (isInvincible) return;
-        currentHP -= damage;
-        UpdateHPUI();
 
-        P2PMessageSender.SendMessage(
-            DamageMessageBuilder.Build(playerNumber, currentHP));
+        currentHP -= damage;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+        //Debug.Log(playerNumber + " : " + currentHP);
+
+        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
+
+        if (playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            P2PMessageSender.SendMessage(
+                DamageMessageBuilder.Build(playerNumber, currentHP));
+        }
 
         if (currentHP <= 0)
         {
@@ -60,19 +60,15 @@ public class PlayerHealth : MonoBehaviour
         isInvincible = false;
     }
 
-    private void UpdateHPUI()
-    {
-        if (hpUI != null)
-            hpUI.SetHP(currentHP);
-    }
     public void RemoteSetHP(int hp)
     {
         currentHP = hp;
-        UpdateHPUI();
+        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
     }
+
     public void ResetHealth()
     {
         currentHP = maxHP;
-        UpdateHPUI();
+        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
     }
 }

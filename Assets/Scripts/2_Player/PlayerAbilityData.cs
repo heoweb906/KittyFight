@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerAbilityData", menuName = "ScriptableObjects/PlayerAbilityData", order = 1)]
 public class PlayerAbilityData : ScriptableObject
 {
+    [Header("Player Num")]
+    public int playerNumber;
+
     [Header("Movement")]
     public float moveSpeed = 5f;
 
