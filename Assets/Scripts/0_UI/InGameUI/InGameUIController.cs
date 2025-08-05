@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI.Table;
 
@@ -17,6 +19,8 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownUI skillUI_Player2;
     public SkillCooldownUI skillUI2_Player2;
     public GameTimer gameTimer;
+
+    public GameObject blindOverlay;
 
     public SkillCardController skillCardController;
 
@@ -88,5 +92,18 @@ public class InGameUIController : MonoBehaviour
         {
             GameObject.FindObjectOfType<GameManager>()?.EndGame();
         }
+    }
+    public void ShowBlindOverlay(float duration)
+    {
+        if (blindOverlay == null) return;
+
+        blindOverlay.SetActive(true);
+        StartCoroutine(HideBlindAfterDelay(duration));
+    }
+
+    private IEnumerator HideBlindAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        blindOverlay.SetActive(false);
     }
 }
