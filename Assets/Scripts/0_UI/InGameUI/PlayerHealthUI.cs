@@ -24,7 +24,8 @@ public class PlayerHealthUI : MonoBehaviour
 
     public void SetHP(int hp)
     {
-        currentHP = Mathf.Clamp(hp, 0, maxHP);
+        currentHP = Mathf.Clamp(hp, 0, 9);
+        //currentHP = Mathf.Clamp(hp, 0, maxHP);
         if (hpSlider != null)
             hpSlider.value = currentHP;
     }

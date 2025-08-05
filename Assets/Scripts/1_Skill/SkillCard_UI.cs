@@ -55,7 +55,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // 마우스 올렸을 때 나오는 애니메이션 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
 
         transform.DOKill();
         image_BackGround.DOKill();
@@ -69,7 +69,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // 마우스 내렸을 때 나오는 애니메이션 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
 
         transform.DOKill();
         image_BackGround.DOKill();
@@ -82,44 +82,44 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
 
-        var matchManager = FindObjectOfType<MatchManager>();
-        if (matchManager == null)
+        // 프리팹 생성
+        GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
+        if (skillObj == null)
         {
-            Debug.LogError("[SkillCard_UI] MatchManager를 찾을 수 없습니다.");
+            Debug.LogError("[SkillCard_UI] Failed to create skill prefab.");
             return;
         }
 
-        // 내 플레이어 객체 가져오기 (실제 로직에 맞게 수정)
-        //GameObject myPlayer = matchManager.player1Object;
-        //var mySkillWorker = myPlayer.GetComponent<SkillWorker>();
-        //if (mySkillWorker == null)
-        //{
-        //    Debug.LogError("[SkillCard_UI] 내 캐릭터에서 SkillWorker를 찾을 수 없습니다.");
-        //    return;
-        //}
+        // 내 번호에 따라 대상 SkillWorker 선택
+        SkillWorker targetWorker = (MatchResultStore.myPlayerNumber == 1)
+            ? skillCardController.InGameUiController.gameManager.skillWorker_1
+            : skillCardController.InGameUiController.gameManager.skillWorker_2;
 
-        //SkillSlotType selectedSlot = SkillSlotType.Q;
+        // 장착 시도 (슬롯은 SkillWorker 내부에서 자동 결정)
+        targetWorker.EquipSkillByCard(skillObj);
 
-        //// 수정된 부분: sSkillName 대신 SkillCard_SO 인스턴스를 전달
-        //mySkillWorker.EquipSkillByCard(selectedSlot, skillCard_SO);
+        Debug.Log("I selected " + skillCard_SO.sSkillName);
 
-        // 네트워크 전송, 인터랙션 비활성화 등 나머지 로직은 동일
-        //string slot = selectedSlot.ToString();
-        //string msg = SkillBuilder.Build(skillCard_SO.sSkillName, /*playerNumber*/ 1, slot);
-        //P2PSkillSender.SendMessage(msg);
+        // 메시지 전송
+        P2PMessageSender.SendMessage(
+            SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName)
+        );
 
-        //skillCardController.SetAllCanInteract(false);
-        //OnPointerExit(eventData);
+        // UI 처리
+        skillCardController.SetAllCanInteract(false);
+        skillCardController.iAuthorityPlayerNum = 0;
 
-        //transform.DOKill();
-        //Sequence clickSeq = DOTween.Sequence();
-        //clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
-        //clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
-        //clickSeq.OnComplete(() =>
-        //{
-        //    skillCardController.HideAll();
-        //});
+        OnPointerExit(eventData);
+        transform.DOKill();
+
+        Sequence clickSeq = DOTween.Sequence();
+        clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
+        clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
+        clickSeq.OnComplete(() =>
+        {
+            skillCardController.HideSkillCardList();
+        });
     }
 }

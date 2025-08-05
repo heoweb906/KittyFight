@@ -14,10 +14,6 @@ public class FireBall : Skill
     protected override void ExecuteSkill()
     {
         Debug.Log("Fireball launched!");
-        if (objSkillEntity != null)
-        {
 
-            GameObject.Instantiate(objSkillEntity);
-        }
     }
 }

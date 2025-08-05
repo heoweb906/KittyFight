@@ -5,10 +5,13 @@ using DG.Tweening;
 
 public class SkillCardController : MonoBehaviour 
 {
-    public InGameUIController InGameUiController { get; set; }
+    [Header("중요한 정보들")]
+    public int iAuthorityPlayerNum = 0;
 
+    public InGameUIController InGameUiController { get; set; }
     // 애니메이션 및 선택 상태 체크
     public bool IsAnimating { get; private set; }
+    
 
 
     [Header("리소스 설정")]
@@ -16,9 +19,13 @@ public class SkillCardController : MonoBehaviour
     [SerializeField] string skillCardResourceFolder = "SkillCards";
 
 
+    [Header("스킬 프리팹 리스트")]
+    public List<GameObject> skillPrefabs;
+
+
     [Header("스킬 카드 프리팹")]
     [SerializeField] GameObject objSkillCard;
-    private List<SkillCard_SO> skillDataList = new List<SkillCard_SO>();
+    public List<SkillCard_SO> skillDataList = new List<SkillCard_SO>();
     private SkillCard_UI[] instances = new SkillCard_UI[4];
 
 
@@ -30,7 +37,6 @@ public class SkillCardController : MonoBehaviour
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
-
 
         var datas = Resources.LoadAll<SkillCard_SO>(skillCardResourceFolder);
         skillDataList.AddRange(datas);
@@ -59,9 +65,13 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-    public void ShowSkillCardList()
+
+    public void ShowSkillCardList(int iPlayernum = 0)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
+        iAuthorityPlayerNum = iPlayernum;
+
+
         IsAnimating = true;
 
         int completed = 0;
@@ -90,8 +100,6 @@ public class SkillCardController : MonoBehaviour
                 });
         }
     }
-
-
 
     public void HideSkillCardList()
     {
@@ -122,7 +130,13 @@ public class SkillCardController : MonoBehaviour
  
                 });
         }
+
+        iAuthorityPlayerNum = 0;
     }
+
+
+
+
 
 
     public void SetAllCanInteract(bool canInteract)
@@ -136,5 +150,28 @@ public class SkillCardController : MonoBehaviour
             else
                 card.bCanInteract = false;
         }
+    }
+
+    public SkillCard_SO FindSkillCardByName(string skillName)
+    {
+        return skillDataList.Find(card => card.sSkillName == skillName);
+    }
+
+    public GameObject CreateSkillInstance(SkillCard_SO card)
+    {
+        if (card == null)
+        {
+            Debug.LogWarning("[SkillCardController] SkillCard_SO is null.");
+            return null;
+        }
+
+        int idx = card.skillIndex;
+        if (idx < 0 || idx >= skillPrefabs.Count)
+        {
+            Debug.LogError($"[SkillCardController] skillIndex({idx}) is out of range.");
+            return null;
+        }
+
+        return Instantiate(skillPrefabs[idx]);
     }
 }

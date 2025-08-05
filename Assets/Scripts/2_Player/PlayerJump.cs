@@ -7,11 +7,10 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody rb;
     private PlayerAbility ability;
 
-    public LayerMask groundLayer;
-    public LayerMask wallLayer;
+    private bool isGrounded = false;
+    private bool isTouchingWall = false;
 
-    public Transform groundCheck;
-    public float checkDistance = 0.6f;
+    public float wallSlideSpeed = 0.5f;
 
     private void Awake()
     {
@@ -21,8 +20,7 @@ public class PlayerJump : MonoBehaviour
 
     public void TryJump()
     {
-        if (IsGrounded() || IsTouchingWall())
-        //if(true)
+        if (isGrounded || isTouchingWall)
         {
             Vector3 velocity = rb.velocity;
             velocity.y = ability.JumpForce;
@@ -30,19 +28,23 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
+    public void HandleWallSlide()
     {
-        Ray ray = new Ray(groundCheck.position, Vector3.down);
-        bool hit = Physics.Raycast(ray, checkDistance, groundLayer);
-        Debug.DrawRay(groundCheck.position, Vector3.down * checkDistance, hit ? Color.green : Color.red);
-        return hit;
+        if (isTouchingWall && !isGrounded && rb.velocity.y < -wallSlideSpeed)
+        {
+            Vector3 velocity = rb.velocity;
+            velocity.y = -wallSlideSpeed;
+            rb.velocity = velocity;
+        }
     }
 
-    private bool IsTouchingWall()
+    public void SetGrounded(bool value)
     {
-        Ray ray = new Ray(groundCheck.position, transform.forward);
-        bool hit = Physics.Raycast(ray, checkDistance, wallLayer);
-        Debug.DrawRay(groundCheck.position, transform.forward * checkDistance, hit ? Color.green : Color.red);
-        return hit;
+        isGrounded = value;
+    }
+
+    public void SetTouchingWall(bool value)
+    {
+        isTouchingWall = value;
     }
 }

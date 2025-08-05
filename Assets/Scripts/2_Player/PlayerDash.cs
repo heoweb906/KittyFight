@@ -29,18 +29,25 @@ public class PlayerDash : MonoBehaviour
     {
         canDash = false;
 
-        // 화면 좌표 → 월드 좌표 변환 (z축만 카메라-플레이어 거리)
-        Vector3 mp = Input.mousePosition;
-        mp.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
-        Vector3 worldClick = Camera.main.ScreenToWorldPoint(mp);
-
-        // 커서 방향으로 벡터 계산 (3D 대각선 포함)
-        Vector3 dir = (worldClick - transform.position).normalized;
-        if (dir == Vector3.zero)
-            dir = transform.forward;
+        // 마우스 방향 계산
+        Vector3 aimPos, dir;
+        AttackUtils.GetAimPointAndDirection(transform, dashDistance, out aimPos, out dir);
 
         Vector3 startPos = transform.position;
-        Vector3 targetPos = startPos + dir * dashDistance;
+        float maxDistance = dashDistance;
+
+        // BoxCast 충돌 검사
+        RaycastHit hit;
+        Vector3 boxHalfExtents = new Vector3(0.4f, 0.4f, 0.4f);
+        Quaternion orientation = Quaternion.identity;
+        LayerMask layerMask = LayerMask.GetMask("Ground"); // 충돌 레이어
+
+        if (Physics.BoxCast(startPos, boxHalfExtents, dir, out hit, orientation, dashDistance, layerMask))
+        {
+            maxDistance = hit.distance;
+        }
+
+        Vector3 targetPos = startPos + dir * maxDistance;
 
         // 대쉬 중 중력 해제
         bool origGravity = rb.useGravity;
@@ -58,6 +65,7 @@ public class PlayerDash : MonoBehaviour
 
         // 대쉬 완료 후 중력 복원
         rb.useGravity = origGravity;
+        rb.velocity = Vector3.zero;
 
         // 쿨타임
         yield return new WaitForSeconds(dashCooldown);
