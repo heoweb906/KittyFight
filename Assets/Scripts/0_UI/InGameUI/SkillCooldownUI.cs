@@ -3,30 +3,28 @@ using UnityEngine.UI;
 
 public class SkillCooldownUI : MonoBehaviour
 {
+    [Header("표시 대상")]
+    public PlayerAbility abilityRef;
+    public SkillType slot;
+
+    [Header("UI")]
     public Image cooldownOverlay;
-    public float cooldownTime = 3f;
-
-    private float remaining = 0f;
-
-    public void StartCooldown()
-    {
-        remaining = cooldownTime;
-        cooldownOverlay.fillAmount = 1f;
-        cooldownOverlay.enabled = true;
-    }
 
     private void Update()
     {
-        if (remaining > 0f)
-        {
-            remaining -= Time.deltaTime;
-            cooldownOverlay.fillAmount = remaining / cooldownTime;
+        if (abilityRef == null || cooldownOverlay == null) return;
 
-            if (remaining <= 0f)
-            {
-                cooldownOverlay.fillAmount = 0f;
-                cooldownOverlay.enabled = false;
-            }
+        var st = abilityRef.GetCooldown(slot);
+
+        if (st.active)
+        {
+            cooldownOverlay.enabled = true;
+            cooldownOverlay.fillAmount = st.Normalized; // 남은 비율
+        }
+        else
+        {
+            cooldownOverlay.fillAmount = 0f;
+            cooldownOverlay.enabled = false;
         }
     }
 }

@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class SK_StoneSheild : Skill
 {
-    public SK_StoneSheild(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    : base(playerAbilty, skillWorker)
-    {
-
-
-    }
-
-    protected override void ExecuteSkill()
+    public override void Execute(Vector3 origin, Vector3 direction)
     {
         Debug.Log("StoneSheild launched!");
-
     }
 }

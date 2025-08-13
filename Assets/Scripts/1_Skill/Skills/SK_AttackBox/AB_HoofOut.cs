@@ -1,47 +1,36 @@
 using UnityEngine;
-using System.Collections;
 
-public class AB_HoofOut : MonoBehaviour
+public class AB_HoofOut : AB_HitboxBase
 {
     public int damage = 4;
     public float knockbackForce = 10f;
-    public int ownerPlayerNumber;
+    public float disableControlSeconds = 0.5f;
 
-    private bool hasHit = false;
-
-    private void OnTriggerEnter(Collider other)
+    protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
-        //if (hasHit) return;
-
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
-        if (health == null || health.playerNumber == ownerPlayerNumber) return;
-        //if (health.playerNumber != MatchResultStore.myPlayerNumber) return;
-
-        hasHit = true;
-
         // 넉백
-        Rigidbody rb = other.GetComponent<Rigidbody>();
+        var rb = victim.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 dir = (other.transform.position - transform.position).normalized;
+            Vector3 dir = (victim.transform.position - transform.position).normalized;
             rb.velocity = Vector3.zero;
             rb.AddForce(dir * knockbackForce, ForceMode.Impulse);
         }
 
-        // 조작 차단
-        MonoBehaviour controller = other.GetComponent<PlayerController>();
+        // 컨트롤 차단
+        var controller = victim.GetComponent<PlayerController>();
         if (controller != null)
         {
             controller.enabled = false;
-            StartCoroutine(EnableControlAfterDelay(controller, 0.5f));
+            StartCoroutine(ReenableAfter(controller, disableControlSeconds));
         }
 
-        health.TakeDamage(damage);
+        victim.TakeDamage(damage);
     }
 
-    private IEnumerator EnableControlAfterDelay(MonoBehaviour controller, float delay)
+    private System.Collections.IEnumerator ReenableAfter(MonoBehaviour m, float delay)
     {
         yield return new WaitForSeconds(delay);
-        controller.enabled = true;
+        if (m != null) m.enabled = true;
     }
 }

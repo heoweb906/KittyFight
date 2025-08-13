@@ -14,7 +14,7 @@ public class AB_FangShot : MonoBehaviour
         //if (hasHit) return;
 
         var health = other.GetComponent<PlayerHealth>();
-        if (health == null || health.playerNumber == ownerPlayerNumber) return;
+        //if (health == null || health.playerNumber == ownerPlayerNumber) return;
         //if (health.playerNumber != MatchResultStore.myPlayerNumber) return;
 
         hasHit = true;

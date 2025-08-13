@@ -18,7 +18,6 @@ public class PlayerInputRouter : MonoBehaviour
         GetComponent<PlayerController>().enabled = active;
         GetComponent<PlayerMovement>().enabled = active;
         GetComponent<PlayerJump>().enabled = active;
-        GetComponent<PlayerAttack>().enabled = active;
         GetComponent<PlayerDash>().enabled = active;
     }
 }

@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class SK_FeatherShot : Skill
 {
-    public SK_FeatherShot(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    : base(playerAbilty, skillWorker)
-    {
-
-
-    }
-
-    protected override void ExecuteSkill()
+    public override void Execute(Vector3 origin, Vector3 direction)
     {
         Debug.Log("SK_FeatherShot!");
-
     }
 }

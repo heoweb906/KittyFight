@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 input)
     {
-        moveDirection = new Vector3(input.x * ability.MoveSpeed, rb.velocity.y, 0);
+        moveDirection = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0);
         rb.velocity = moveDirection;
 
         if (input.x != 0)

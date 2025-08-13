@@ -1,12 +1,17 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHP = 9;
-    public float invincibleTime = 1.0f;
-    public int playerNumber;
+    [Header("HP (유일 소유자)")]
+    [SerializeField] private int maxHP = 9;
+    [SerializeField] private float invincibleTime = 1.0f;
+
+    public int MaxHP => maxHP;
+    public int CurrentHP => currentHP;
+
+    public event Action<int, int> OnHPChanged; // (current, max)
 
     private int currentHP;
     private bool isInvincible = false;
@@ -14,36 +19,41 @@ public class PlayerHealth : MonoBehaviour
     private Renderer rend;
     private Color originalColor;
 
+    // Ability를 통해 playerNumber를 조회
+    private PlayerAbility ability;
+
     private void Awake()
     {
         currentHP = maxHP;
-        rend = GetComponent<Renderer>();
-        originalColor = rend.material.color;
 
-        InGameUIController.Instance?.InitializeHP(playerNumber, maxHP);
-        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
+        rend = GetComponent<Renderer>();
+        if (rend != null) originalColor = rend.material.color;
+
+        ability = GetComponent<PlayerAbility>();
+
+        // 초기값 알림
+        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 
     public void TakeDamage(int damage)
     {
         if (isInvincible) return;
 
-        currentHP -= damage;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        //Debug.Log(playerNumber + " : " + currentHP);
+        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        OnHPChanged?.Invoke(currentHP, maxHP);
 
-        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
-
-        if (playerNumber == MatchResultStore.myPlayerNumber)
+        // 권위 판정: Ability.playerNumber 기준
+        int pn = ability != null ? ability.playerNumber : 0;
+        if (pn == MatchResultStore.myPlayerNumber)
         {
             P2PMessageSender.SendMessage(
-                DamageMessageBuilder.Build(playerNumber, currentHP));
+                DamageMessageBuilder.Build(pn, currentHP));
         }
 
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
-            GameObject.FindObjectOfType<GameManager>().EndGame();
+            FindObjectOfType<GameManager>()?.EndGame();
         }
 
         StartCoroutine(DamageEffectCoroutine());
@@ -52,23 +62,24 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator DamageEffectCoroutine()
     {
         isInvincible = true;
-        rend.material.color = Color.red;
+        if (rend != null) rend.material.color = Color.red;
 
         yield return new WaitForSeconds(invincibleTime);
 
-        rend.material.color = originalColor;
+        if (rend != null) rend.material.color = originalColor;
         isInvincible = false;
     }
 
+    // 원격 HP 확정값 반영
     public void RemoteSetHP(int hp)
     {
-        currentHP = hp;
-        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
+        currentHP = Mathf.Clamp(hp, 0, maxHP);
+        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 
     public void ResetHealth()
     {
         currentHP = maxHP;
-        InGameUIController.Instance?.UpdateHP(playerNumber, currentHP);
+        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 }
