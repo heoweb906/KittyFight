@@ -1,52 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISKILL
 {
-    void Activate();
+    void Execute(Vector3 origin, Vector3 direction);
 }
 
-public abstract class Skill : MonoBehaviour, ISKILL 
+public abstract class Skill : MonoBehaviour, ISKILL
 {
-    [Header("기본적으로 사용하는 것들")]
-    public PlayerAbility playerAbilty;
-    public SkillWorker skillWorker;
+    [Header("기본 연결")]
+    public PlayerAbility playerAbility;
 
-
-    [Header("하나의 스킬이기 위해서 공통적으로 가지고 있는 것들")]
-    public float coolTime;
+    [Header("스킬 설정(데이터)")]
+    public float coolTime;   // Ability가 참조하는 데이터
     public GameObject objSkillEntity;
+    public Sprite skillIcon;
 
-    private float lastUseTime = -Mathf.Infinity;
+    protected SkillType assignedSlot;
 
-    public Skill(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    {
-        this.playerAbilty = playerAbilty;
-        this.skillWorker = skillWorker;
-    }
+    public void SetNewBasicValue(PlayerAbility ability) => playerAbility = ability;
+    public void SetAssignedSlot(SkillType slot) => assignedSlot = slot;
 
-
-    // 프리팹 기반으로 생성 시 호출하는 초기화 함수
-    public void SetNewBasicValue(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    {
-        this.playerAbilty = playerAbilty;
-        this.skillWorker = skillWorker;
-    }
-
-
-    public void Activate()
-    {
-        if (Time.time < lastUseTime + coolTime)
-        {
-            Debug.Log($"Cool Time: {Mathf.Ceil(lastUseTime + coolTime - Time.time)}");
-            return;
-        }
-
-        lastUseTime = Time.time;
-        ExecuteSkill();
-    }
-
-    protected abstract void ExecuteSkill();
-
+    // 래퍼 없이 순수 추상, 각 스킬은 이걸 구현
+    public abstract void Execute(Vector3 origin, Vector3 direction);
 }
