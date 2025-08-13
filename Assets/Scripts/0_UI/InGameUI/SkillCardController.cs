@@ -6,6 +6,30 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;
 
+
+
+// 메세지 종류 3개만 보내면 될듯
+
+// 점수판 보여주기
+// 스킬 선택창 보여주기
+// 스킬 골랐음
+
+// 점수판 보여주기
+// 스킬 선택창 보여주기
+// 스킬 골랐음
+
+// 점수판 보여주기
+// 스킬 선택창 보여주기
+// 스킬 골랐음
+
+// 점수판 보여주기
+// 스킬 선택창 보여주기
+// 스킬 골랐음
+
+
+
+
+
 public class SkillCardController : MonoBehaviour 
 {
     [Header("중요한 정보들")]
@@ -35,7 +59,6 @@ public class SkillCardController : MonoBehaviour
     public Image image_FadeOut_White;
     public GameObject[] objs_AnimalSkillCardEffects;
     
-
 
 
     public void Initialize(InGameUIController temp, Transform parent)
@@ -85,11 +108,11 @@ public class SkillCardController : MonoBehaviour
     public void ShowSkillCardList(int iPlayernum = 0)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
-
         iAuthorityPlayerNum = iPlayernum;
         IsAnimating = true;
         int completed = 0;
         int total = instances.Length;
+
         for (int i = 0; i < total; i++)
         {
             var card = instances[i];
@@ -98,27 +121,39 @@ public class SkillCardController : MonoBehaviour
                 completed++;
                 continue;
             }
-            int idx = Random.Range(0, skillDataList.Count);
-            card.ApplyData(skillDataList[idx]);
+
+            int idx = 5 + i;
             card.ApplyData(skillDataList[idx]);
             card.ResetCardAnim();
-
-
             card.gameObject.SetActive(true);
-            var currentCard = card;
+
+            // 애니메이션을 바로 시작 (이동 전에!)
+            card.StartCardAnimation();
+
+            var currentCard = card; // 클로저 문제 해결
             card.transform.DOMove(targetPoints[i].position, 0.3f)
-    .OnComplete(() =>
-    {
-        completed++;
-        if (completed >= total)
+                .OnComplete(() =>
+                {
+                    // floating 애니메이션 시작
+                    currentCard.StartFloatingAnimation();
+                    completed++;
+                    if (completed >= total)
+                    {
+                        IsAnimating = false;
+                        SetAllCanInteract(true);
+                    }
+                });
+        }
+
+        FadeImage(1f, 0f).OnComplete(() =>
         {
-            IsAnimating = false;
-            SetAllCanInteract(true);
-        }
-        currentCard.StartFloatingAnimation(); // 흔들림 시작
-    });
-        }
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
+                FadeImage(0f, 1f);
+            });
+        });
     }
+
 
 
 
@@ -127,6 +162,17 @@ public class SkillCardController : MonoBehaviour
         if (IsAnimating) return;
         IsAnimating = true;
         SetAllCanInteract(false);
+
+        // floating 애니메이션 정지
+        for (int i = 0; i < instances.Length; i++)
+        {
+            var card = instances[i];
+            if (card != null)
+            {
+                card.StopFloatingAnimation();
+            }
+        }
+
         FadeImage(1f, 0f).OnComplete(() =>
         {
             DOVirtual.DelayedCall(0.1f, () =>
@@ -142,7 +188,6 @@ public class SkillCardController : MonoBehaviour
             {
                 continue;
             }
-            card.StopFloatingAnimation(); // 흔들림 중지
             card.transform.position = spawnPoints[i].position; // 즉시 이동
             card.gameObject.SetActive(false);
         }
@@ -168,6 +213,10 @@ public class SkillCardController : MonoBehaviour
                         {
                             FadeImage(0f, 1f);
                             IsAnimating = false;
+                            DOVirtual.DelayedCall(1.2f, () =>
+                            {
+                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                            });
                         });
                     });
                     Destroy(effectObj);
@@ -177,9 +226,12 @@ public class SkillCardController : MonoBehaviour
         else
         {
             IsAnimating = false;
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                InGameUiController.scoreBoardUIController.OpenScorePanel();
+            });
         }
     }
-
 
 
 

@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 5_Rend
+  m_EditorClassIdentifier: 
+  sSkillName: 
+  iAnimalNum: 3
+  iSkillIndex: 5
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: c796fcd2d3f5d8b4389f1026a5e29f2e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: df5c6264316858e47b79692bc92d9e90,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 86bd63224a61d5a4cace999adeb0591b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e88dba299e58410489fdba2e6064a1a3,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0911a84792c1e554a9452e78c1863ae0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: f842da130281aff47bc21daa0afab316,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4f79cf2f4818b144289e30da01d06bb1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c4c43549693a25746bb32a137335f6f9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 50164f2dc929f8c41be684953a32afbd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 07f9446806bc01b43b423d569890d188,
+      type: 3}
+    margins:
+      m_Left: -884
+      m_Right: 884
+      m_Top: -221
+      m_Bottom: 221
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3f4953d399891fd42b24f6444299719d,
+      type: 3}
+    margins:
+      m_Left: 783
+      m_Right: -783
+      m_Top: -136
+      m_Bottom: 136
+  - sprite_Cardillustration: {fileID: 21300000, guid: a75ff5e9dfa426d4189f4bd4e1713a9e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 44791c9968c15a6488b69d7361a4ca06,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 15dd030a78c530c49aa8a008626c2011,
+      type: 3}
+    margins:
+      m_Left: -863
+      m_Right: 863
+      m_Top: 362
+      m_Bottom: -362
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5240e33db3bbf2a4f8b798d7b4401076,
+      type: 3}
+    margins:
+      m_Left: -418
+      m_Right: 418
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9a42c4fcfe5dc774b87e464c9b154482,
+      type: 3}
+    margins:
+      m_Left: 309
+      m_Right: -309
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4394b63beadb42e4899d72e76f524424,
+      type: 3}
+    margins:
+      m_Left: 651
+      m_Right: -651
+      m_Top: 442
+      m_Bottom: -442
+  sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+    type: 3}
+  animationType: 0
+  description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
+    hit take <color=#FF0000>3.5</color> damage</color>
