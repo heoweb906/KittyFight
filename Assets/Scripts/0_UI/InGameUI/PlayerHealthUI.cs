@@ -3,30 +3,50 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    //[SerializeField] private TMP_Text hpText;
+    public PlayerAbility abilityRef;
     [SerializeField] private Slider hpSlider;
 
-    private int maxHP;
-    private int currentHP;
+    private PlayerHealth healthRef;
 
-    public void Initialize(int max)
+    public void Bind(PlayerAbility ability)
     {
-        maxHP = max;
-        currentHP = max;
+        // 기존 구독 해제
+        if (healthRef != null) healthRef.OnHPChanged -= OnHPChanged;
 
-        if (hpSlider != null)
-        {
-            hpSlider.maxValue = maxHP;
-            hpSlider.minValue = 0;
-            hpSlider.value = maxHP;
-        }
+        abilityRef = ability;
+        healthRef = abilityRef != null ? abilityRef.Health : null;
+
+        if (hpSlider == null || healthRef == null) return;
+
+        hpSlider.minValue = 0;
+        hpSlider.maxValue = healthRef.MaxHP;
+        hpSlider.value = healthRef.CurrentHP;
+
+        // 이벤트 구독
+        healthRef.OnHPChanged += OnHPChanged;
     }
 
-    public void SetHP(int hp)
+    private void OnDisable()
     {
-        currentHP = Mathf.Clamp(hp, 0, 9);
-        //currentHP = Mathf.Clamp(hp, 0, maxHP);
-        if (hpSlider != null)
-            hpSlider.value = currentHP;
+        if (healthRef != null) healthRef.OnHPChanged -= OnHPChanged;
+    }
+
+    private void OnHPChanged(int cur, int max)
+    {
+        if (hpSlider == null) return;
+        if ((int)hpSlider.maxValue != max) hpSlider.maxValue = max;
+        hpSlider.value = cur;
+    }
+
+    // 이벤트 누락 프레임 대비 폴링(선택)
+    private void Update()
+    {
+        if (healthRef == null || hpSlider == null) return;
+
+        if ((int)hpSlider.maxValue != healthRef.MaxHP)
+            hpSlider.maxValue = healthRef.MaxHP;
+
+        if ((int)hpSlider.value != healthRef.CurrentHP)
+            hpSlider.value = healthRef.CurrentHP;
     }
 }
