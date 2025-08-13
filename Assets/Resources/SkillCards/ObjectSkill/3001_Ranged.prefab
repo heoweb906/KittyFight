@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657814523355016355}
-  - component: {fileID: -7408899166155909078}
+  - component: {fileID: -4546785363898826399}
   m_Layer: 0
-  m_Name: 6_Melee
+  m_Name: 3001_Ranged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7408899166155909078
+--- !u!114 &-4546785363898826399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +41,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2211560603425008042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d525116466d3f5449ee6e16dbdd815c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f59af44e21e2d4439dfb7339d981e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
   coolTime: 3
-  objSkillEntity: {fileID: 551775367249106992, guid: 26aa161f5635a124faef0e533040b076,
+  objSkillEntity: {fileID: 551775367249106992, guid: cdd9383be71d8f348ac11a721dd40b84,
     type: 3}
   skillIcon: {fileID: 0}
-  maxRange: 1
+  maxRange: 3.5
+  projectileSpeed: 10
   p1Material: {fileID: 2100000, guid: 9155458aed9b38848b6949d5c0f7a960, type: 2}
   p2Material: {fileID: 2100000, guid: 5cc840b250e862846914600b1801463f, type: 2}

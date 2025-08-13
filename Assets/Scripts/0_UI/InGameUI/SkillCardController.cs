@@ -215,7 +215,7 @@ public class SkillCardController : MonoBehaviour
                             IsAnimating = false;
                             DOVirtual.DelayedCall(1.2f, () =>
                             {
-                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                // InGameUiController.scoreBoardUIController.OpenScorePanel();
                             });
                         });
                     });
@@ -228,7 +228,7 @@ public class SkillCardController : MonoBehaviour
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
             {
-                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                // InGameUiController.scoreBoardUIController.OpenScorePanel();
             });
         }
     }

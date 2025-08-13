@@ -197,7 +197,7 @@ public class ScoreBoardUIController : MonoBehaviour
     public void ActiveFalseBones(int iExceptionPlayerNum = 0)
     {
         // Player1의 뼈를 Player2 점수만큼 비활성화 (예외 처리)
-        int player1DisableCount = InGameUiController.iPlayer2Score;
+        int player1DisableCount = 2; //InGameUiController.iPlayer2Score;
         if (iExceptionPlayerNum == 1) player1DisableCount--;
 
         for (int i = 0; i < player1DisableCount; i++)
@@ -209,7 +209,7 @@ public class ScoreBoardUIController : MonoBehaviour
         }
 
         // Player2의 뼈를 Player1 점수만큼 비활성화 (예외 처리)
-        int player2DisableCount = InGameUiController.iPlayer1Score;
+        int player2DisableCount = 2; // InGameUiController.iPlayer1Score;
         if (iExceptionPlayerNum == 2) player2DisableCount--;
 
         for (int i = 0; i < player2DisableCount; i++)
