@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class SK_FlameBurst : Skill
 {
-    public SK_FlameBurst(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    : base(playerAbilty, skillWorker)
-    {
-
-
-    }
-
-    protected override void ExecuteSkill()
+    public override void Execute(Vector3 origin, Vector3 direction)
     {
         Debug.Log("FlameBurst launched!");
-
     }
 }

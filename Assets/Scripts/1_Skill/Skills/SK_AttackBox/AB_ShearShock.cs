@@ -12,7 +12,7 @@ public class AB_ShearShock : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         PlayerHealth health = other.GetComponent<PlayerHealth>();
-        if (health == null || health.playerNumber == ownerPlayerNumber) return;
+        //if (health == null || health.playerNumber == ownerPlayerNumber) return;
         //if (health.playerNumber != MatchResultStore.myPlayerNumber) return;
 
         // 기절 상태 부여

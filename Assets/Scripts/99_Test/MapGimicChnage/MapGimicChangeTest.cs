@@ -24,8 +24,8 @@ public class MapGimicChangeTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y) && !isSpinning)
-            StartSpin();
+         // if (Input.GetKeyDown(KeyCode.Y) && !isSpinning) StartSpin();
+
     }
 
     private void StartSpin()

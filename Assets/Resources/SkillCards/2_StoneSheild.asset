@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 2_StoneSheild
   m_EditorClassIdentifier: 
-  skillIndex: 2
-  image_BackGround: {fileID: 0}
-  image_SkillIcon: {fileID: 0}
   sSkillName: StoneSheild
-  sSkillDescription: Test_2
+  iAnimalNum: 3
+  iSkillIndex: 0
+  sprite_Cardillustration: {fileID: 0}
+  sprite_CardBorderLine: {fileID: 0}
+  sprite_CardTitle: {fileID: 0}
+  sprite_CardKeyWord: {fileID: 0}
   description: TextTextTextTextTextTextText

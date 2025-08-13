@@ -1,27 +1,25 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class InGameUIController : MonoBehaviour
 {
     public static InGameUIController Instance { get; private set; }
 
-    private Canvas canvasMain;
+    public Canvas canvasMain;
     public GameManager gameManager;
 
+    [Header("Player1 UI")]
     public PlayerHealthUI hpUI_Player1;
-    public SkillCooldownUI skillUI_Player1;
-    public SkillCooldownUI skillUI2_Player1;
+    public SkillCooldownUI skillUI_Player1;     // Player1 - Melee
+    public SkillCooldownUI skillUI2_Player1;    // Player1 - Ranged
 
+    [Header("Player2 UI")]
     public PlayerHealthUI hpUI_Player2;
-    public SkillCooldownUI skillUI_Player2;
-    public SkillCooldownUI skillUI2_Player2;
+    public SkillCooldownUI skillUI_Player2;     // Player2 - Melee
+    public SkillCooldownUI skillUI2_Player2;    // Player2 - Ranged
+    // HP, DASH, Skill1~2 추후 다 매핑할 예정
+    
     public GameTimer gameTimer;
-
     public GameObject blindOverlay;
-
     public SkillCardController skillCardController;
 
     private void Awake()
@@ -37,48 +35,7 @@ public class InGameUIController : MonoBehaviour
         canvasMain = FindObjectOfType<Canvas>();
         if (canvasMain == null) return;
 
-       
         skillCardController.Initialize(this, canvasMain.transform);
-    }
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
-        {
-            skillCardController.ShowSkillCardList(2);
-            P2PMessageSender.SendMessage(
-                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
-
-        }
-
-    }
-
-    public void InitializeHP(int playerNum, int maxHP)
-    {
-        if (playerNum == 1) hpUI_Player1?.Initialize(maxHP);
-        else hpUI_Player2?.Initialize(maxHP);
-    }
-
-    public void UpdateHP(int playerNum, int hp)
-    {
-        if (playerNum == 1) hpUI_Player1?.SetHP(hp);
-        else hpUI_Player2?.SetHP(hp);
-    }
-
-    public void StartSkillCooldown(int playerNum, int skill)
-    {
-        if(skill == 1)
-        {
-            if (playerNum == 1) skillUI_Player1?.StartCooldown();
-            else skillUI_Player2?.StartCooldown();
-        }
-        else
-        {
-            if (playerNum == 1) skillUI2_Player1?.StartCooldown();
-            else skillUI2_Player2?.StartCooldown();
-        }
     }
 
     public void StartGameTimer(float duration)
@@ -93,6 +50,7 @@ public class InGameUIController : MonoBehaviour
             GameObject.FindObjectOfType<GameManager>()?.EndGame();
         }
     }
+
     public void ShowBlindOverlay(float duration)
     {
         if (blindOverlay == null) return;
@@ -101,9 +59,23 @@ public class InGameUIController : MonoBehaviour
         StartCoroutine(HideBlindAfterDelay(duration));
     }
 
-    private IEnumerator HideBlindAfterDelay(float duration)
+    private System.Collections.IEnumerator HideBlindAfterDelay(float duration)
     {
         yield return new WaitForSeconds(duration);
         blindOverlay.SetActive(false);
+    }
+
+    // 게임 시작 시 각 UI 위젯에 abilityRef/slot 할당 (GameManager에서 호출)
+    public void WireSkillUIs(PlayerAbility player1Ability, PlayerAbility player2Ability)
+    {
+        // Player1 (왼쪽)
+        hpUI_Player1?.Bind(player1Ability);
+        if (skillUI_Player1 != null) { skillUI_Player1.abilityRef = player1Ability; skillUI_Player1.slot = SkillType.Melee; }
+        if (skillUI2_Player1 != null) { skillUI2_Player1.abilityRef = player1Ability; skillUI2_Player1.slot = SkillType.Ranged; }
+
+        // Player2 (오른쪽)
+        hpUI_Player2?.Bind(player2Ability);
+        if (skillUI_Player2 != null) { skillUI_Player2.abilityRef = player2Ability; skillUI_Player2.slot = SkillType.Melee; }
+        if (skillUI2_Player2 != null) { skillUI2_Player2.abilityRef = player2Ability; skillUI2_Player2.slot = SkillType.Ranged; }
     }
 }

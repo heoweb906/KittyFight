@@ -4,20 +4,8 @@ using UnityEngine;
 
 public class IceArrow : Skill
 {
-    public IceArrow(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    : base(playerAbilty, skillWorker)
-    {
-
-
-    }
-
-    protected override void ExecuteSkill()
+    public override void Execute(Vector3 origin, Vector3 direction)
     {
         Debug.Log("IceArrow launched!");
-        if (objSkillEntity != null)
-        {
-
-            GameObject.Instantiate(objSkillEntity);
-        }
     }
 }

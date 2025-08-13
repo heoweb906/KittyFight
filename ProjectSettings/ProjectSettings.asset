@@ -813,7 +813,7 @@ PlayerSettings:
     PS5: DOTWEEN
     QNX: DOTWEEN
     Stadia: DOTWEEN
-    Standalone: DOTWEEN;AMPLIFY_SHADER_EDITOR
+    Standalone: DOTWEEN;AMPLIFY_SHADER_EDITOR;UNITY_PIPELINE_URP
     VisionOS: DOTWEEN
     WebGL: DOTWEEN
     Windows Store Apps: DOTWEEN

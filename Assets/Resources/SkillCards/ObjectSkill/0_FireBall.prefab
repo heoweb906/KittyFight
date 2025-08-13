@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAbilty: {fileID: 0}
   skillWorker: {fileID: 0}
-  coolTime: 0
+  coolTime: 1
   objSkillEntity: {fileID: 0}

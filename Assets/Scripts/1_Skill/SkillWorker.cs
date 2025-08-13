@@ -44,7 +44,7 @@ public class SkillWorker : MonoBehaviour
             return;
         }
 
-        skillInstance.SetNewBasicValue(playerAbility, this);
+        //skillInstance.SetNewBasicValue(playerAbility, this);
 
         SkillSlotType slotToUse =
             !mySkills.ContainsKey(SkillSlotType.Q) || mySkills[SkillSlotType.Q] == null
@@ -59,8 +59,8 @@ public class SkillWorker : MonoBehaviour
 
     public void UseSkill(SkillSlotType slot)
     {
-        if (mySkills.TryGetValue(slot, out Skill skill) && skill != null) skill.Activate();
-        else Debug.Log($"[SkillWorker] No skill assigned in slot {slot}.");
-        return;
+        //if (mySkills.TryGetValue(slot, out Skill skill) && skill != null) skill.Activate();
+        //else Debug.Log($"[SkillWorker] No skill assigned in slot {slot}.");
+        //return;
     }
 }

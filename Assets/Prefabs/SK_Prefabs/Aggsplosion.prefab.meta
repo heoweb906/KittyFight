@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/SK_Prefabs/Aggsplosion.prefab.meta
 guid: b9b9e83ea20d1cc46b386ad2351bb58c
+========
+guid: 7671d1727d07f5a4d98f7e99621f1edd
+>>>>>>>> 44d470571c8af3a422b3b1aca42692f29d900af1:Assets/Prefabs/SK_Prefabs/HoofOut.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
