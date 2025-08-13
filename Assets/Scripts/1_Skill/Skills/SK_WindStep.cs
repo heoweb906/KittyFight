@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class SK_WindStep : Skill
 {
-    public SK_WindStep(PlayerAbility playerAbilty, SkillWorker skillWorker)
-    : base(playerAbilty, skillWorker)
-    {
-
-
-    }
-
-    protected override void ExecuteSkill()
+    public override void Execute(Vector3 origin, Vector3 direction)
     {
         Debug.Log("WindStep launched!");
-
     }
 }
