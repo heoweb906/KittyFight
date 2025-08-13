@@ -170,7 +170,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // 마우스 올렸을 때 나오는 애니메이션 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        // if (!bCanInteract) return;
 
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
@@ -193,7 +194,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        // if (!bCanInteract) return;
 
         transform.DOScale(originalScale, tweenDuration);
 
@@ -228,27 +230,25 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
-        if (!bCanInteract) return;
+        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        // if (!bCanInteract) return;
 
-        //GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
-        //if (skillObj == null)
-        //{
-        //    Debug.LogError("[SkillCard_UI] Failed to create skill prefab.");
-        //    return;
-        //}
+        GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
+ 
+        PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
+            ? skillCardController.InGameUiController.gameManager.playerAbility_1
+            : skillCardController.InGameUiController.gameManager.playerAbility_2;
 
-        //SkillWorker targetWorker = (MatchResultStore.myPlayerNumber == 1)
-        //    ? skillCardController.InGameUiController.gameManager.skillWorker_1
-        //    : skillCardController.InGameUiController.gameManager.skillWorker_2;
+        Skill skillComponent = skillObj.GetComponent<Skill>();
+        if (skillComponent != null)
+        {
+            SkillType targetSlot = targetPlayerAbility.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
+            targetPlayerAbility.SetSkill(targetSlot, skillComponent);
+        }
 
-        //targetWorker.EquipSkillByCard(skillObj);
-
-        //Debug.Log("I selected " + skillCard_SO.sSkillName);
-
-        //P2PMessageSender.SendMessage(
-        //    SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName)
-        //);
+        P2PMessageSender.SendMessage(
+            SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName)
+        );
 
         // UI 처리
         skillCardController.SetAllCanInteract(false);
@@ -256,6 +256,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         transform.DOKill();
 
         skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, rectTransformMine.anchoredPosition);
+
 
         //OnPointerExit(eventData);
 

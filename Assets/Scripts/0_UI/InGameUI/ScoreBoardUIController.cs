@@ -76,7 +76,10 @@ public class ScoreBoardUIController : MonoBehaviour
 
         scoreImageElement_Player1.StoreInitialPosition();
         scoreImageElement_Player2.StoreInitialPosition();
+
         OpenScorePanel();
+
+        // OnOffCheering(false);
     }
 
 
@@ -196,8 +199,13 @@ public class ScoreBoardUIController : MonoBehaviour
 
     public void ActiveFalseBones(int iExceptionPlayerNum = 0)
     {
-        // Player1의 뼈를 Player2 점수만큼 비활성화 (예외 처리)
-        int player1DisableCount = 2; //InGameUiController.iPlayer2Score;
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        int player1DisableCount = InGameUiController.iPlayer2Score;
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+       
+
         if (iExceptionPlayerNum == 1) player1DisableCount--;
 
         for (int i = 0; i < player1DisableCount; i++)
@@ -208,8 +216,18 @@ public class ScoreBoardUIController : MonoBehaviour
             }
         }
 
-        // Player2의 뼈를 Player1 점수만큼 비활성화 (예외 처리)
-        int player2DisableCount = 2; // InGameUiController.iPlayer1Score;
+
+
+
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        int player2DisableCount = InGameUiController.iPlayer1Score;
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+
+
+
+
         if (iExceptionPlayerNum == 2) player2DisableCount--;
 
         for (int i = 0; i < player2DisableCount; i++)

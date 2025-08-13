@@ -118,6 +118,10 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
         P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum));
 
+        P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
+        P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
+        
+
         // 상태 동기화 시작
         updateManager?.Initialize(myPlayer, opponentPlayer, myNum);
         if (updateManager != null) updateManager.enabled = true;
