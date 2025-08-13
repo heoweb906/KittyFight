@@ -23,7 +23,7 @@ public class PlayerJump : MonoBehaviour
         if (isGrounded || isTouchingWall)
         {
             Vector3 velocity = rb.velocity;
-            velocity.y = ability.JumpForce;
+            velocity.y = ability.jumpForce;
             rb.velocity = velocity;
         }
     }
