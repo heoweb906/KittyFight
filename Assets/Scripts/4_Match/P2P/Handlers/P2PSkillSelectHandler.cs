@@ -27,7 +27,6 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             Debug.LogError("[P2PSkillSelectHandler] Failed to create skill prefab.");
             return;
         }
-
         Skill skillComponent = objSkill.GetComponent<Skill>();
         if (skillComponent != null)
         {
@@ -35,7 +34,6 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             SkillType targetSlot = playerAbilityOpponent.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
             playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
         }
-
-        skillCardController.HideSkillCardList();
+        skillCardController.HideSkillCardList(so_SkillCard.iAnimalNum, model.selectedCardPosition); 
     }
 }

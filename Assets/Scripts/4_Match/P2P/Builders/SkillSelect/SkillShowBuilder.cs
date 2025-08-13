@@ -1,16 +1,14 @@
 using UnityEngine;
-
 public static class SkillShowBuilder
 {
-    public static string Build(int iPlayerNum, string sSkillName)
+    public static string Build(int iPlayerNum, string sSkillName, int[] _arraySkilNumbers)
     {
-        Model_SkillSelect msg = new Model_SkillSelect
+        Model_SkillShow msg = new Model_SkillShow
         {
             iPlayer = iPlayerNum,
-            sSkillCardName = sSkillName
+            sSkillCardName = sSkillName,
+            arraySkilNumbers = _arraySkilNumbers
         };
-
-        return "[SKILL_SELECT]" + JsonUtility.ToJson(msg);
+        return "[SKILL_SHOW]" + JsonUtility.ToJson(msg);
     }
-
 }

@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     public PlayerAbility playerAbility_1;
     public PlayerAbility playerAbility_2;
 
+    [Header("양측 플레이어 점수")]
+    public int iPlayerScore_1;
+    public int iPlayerScore_2;
+
     private readonly Color[] backgroundColorCandidates = new Color[]
     {
         new Color(0.8f, 0.9f, 1f),
@@ -120,7 +124,12 @@ public class GameManager : MonoBehaviour
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
-        
+
+
+
+        iPlayerScore_1 = 0;
+        iPlayerScore_2 = 0;
+
 
         // 상태 동기화 시작
         updateManager?.Initialize(myPlayer, opponentPlayer, myNum);
@@ -148,17 +157,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void EndGame()
     {
         if (gameEnded) return;
         gameEnded = true;
-
         Debug.Log("Game Over");
 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
-        Invoke(nameof(ResetGame), 3f);
+        int winnerPlayerNum = 0;
+        int iWinnerPlayerScore = 0;
+        var player1Health = player1.GetComponent<PlayerHealth>();
+        var player2Health = player2.GetComponent<PlayerHealth>();
+
+        if (player1Health.CurrentHP <= 0)
+        {
+            iPlayerScore_2++;
+            winnerPlayerNum = 2; // 1번이 죽었으므로 2번이 승리
+            iWinnerPlayerScore = iPlayerScore_2;
+        }
+        else if (player2Health.CurrentHP <= 0)
+        {
+            iPlayerScore_1++;
+            winnerPlayerNum = 1; // 2번이 죽었으므로 1번이 승리
+            iWinnerPlayerScore = iPlayerScore_1;
+        }
+           
+
+        ingameUIController.ComeToTheEndGame(winnerPlayerNum, iWinnerPlayerScore);
+
+        Invoke(nameof(ResetGame), 1f);
     }
 
     private void ResetGame()

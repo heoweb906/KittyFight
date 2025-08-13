@@ -32,6 +32,7 @@ using System.Collections;
 
 public class SkillCardController : MonoBehaviour 
 {
+
     [Header("중요한 정보들")]
     public int iAuthorityPlayerNum = 0;
     public InGameUIController InGameUiController { get; set; }
@@ -110,8 +111,7 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-
-    public void ShowSkillCardList(int iPlayernum = 0)
+    public void ShowSkillCardList(int iPlayernum = 0, int[] specificSkillIndices = null)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
         iAuthorityPlayerNum = iPlayernum;
@@ -120,19 +120,47 @@ public class SkillCardController : MonoBehaviour
         int total = instances.Length;
 
         List<int> randomIndices = new List<int>();
-        for (int i = 0; i < skillDataList.Count; i++)
+
+        if (specificSkillIndices != null && specificSkillIndices.Length >= total)
         {
-            randomIndices.Add(i);
+            // 정해진 스킬들이 있으면 그것 사용
+            for (int i = 0; i < total; i++)
+            {
+                randomIndices.Add(specificSkillIndices[i]);
+            }
+        }
+        else
+        {
+            // 없으면 랜덤 생성
+            for (int i = 0; i < skillDataList.Count; i++)
+            {
+                randomIndices.Add(i);
+            }
+
+            for (int i = randomIndices.Count - 1; i > 0; i--)
+            {
+                int randomIndex = Random.Range(0, i + 1);
+                int temp = randomIndices[i];
+                randomIndices[i] = randomIndices[randomIndex];
+                randomIndices[randomIndex] = temp;
+            }
+        }
+
+        // 실제 표시될 4개 스킬의 인덱스를 배열로 준비
+        int[] skillsToShow = new int[total];
+        for (int i = 0; i < total; i++)
+        {
+            skillsToShow[i] = randomIndices[i];
         }
 
 
-        for (int i = randomIndices.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            int temp = randomIndices[i];
-            randomIndices[i] = randomIndices[randomIndex];
-            randomIndices[randomIndex] = temp;
-        }
+
+        P2PMessageSender.SendMessage(
+            SkillShowBuilder.Build(MatchResultStore.myPlayerNumber,
+            "[SKILL_SHOW]",
+            skillsToShow));
+
+
 
         for (int i = 0; i < total; i++)
         {
@@ -143,7 +171,7 @@ public class SkillCardController : MonoBehaviour
                 continue;
             }
 
-            int idx = randomIndices[i]; // 랜덤 인덱스 사용
+            int idx = randomIndices[i];
             card.ApplyData(skillDataList[idx]);
             card.ResetCardAnim();
             card.gameObject.SetActive(true);
@@ -174,7 +202,6 @@ public class SkillCardController : MonoBehaviour
             });
         });
     }
-
 
 
 
@@ -236,6 +263,8 @@ public class SkillCardController : MonoBehaviour
                             IsAnimating = false;
                             DOVirtual.DelayedCall(1.2f, () =>
                             {
+                                Debug.Log("1번이 작동하고 있음");
+
                                 InGameUiController.scoreBoardUIController.OpenScorePanel();
                             });
                         });
@@ -249,6 +278,7 @@ public class SkillCardController : MonoBehaviour
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
             {
+                Debug.Log("2번이 작동하고 있음");
                 InGameUiController.scoreBoardUIController.OpenScorePanel();
             });
         }

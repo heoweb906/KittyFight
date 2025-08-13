@@ -6,4 +6,5 @@ public class Model_SkillShow
 {
     public int iPlayer;
     public string sSkillCardName;
+    public int[] arraySkilNumbers;
 }

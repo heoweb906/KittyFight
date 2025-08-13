@@ -75,8 +75,12 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        if (currentHP <= 0)
+        {
+            Debug.Log("Lose");
+            FindObjectOfType<GameManager>()?.EndGame();
+        }
     }
-
     public void ResetHealth()
     {
         currentHP = maxHP;

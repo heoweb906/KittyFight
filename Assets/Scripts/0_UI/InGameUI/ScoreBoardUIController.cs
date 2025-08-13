@@ -199,12 +199,7 @@ public class ScoreBoardUIController : MonoBehaviour
 
     public void ActiveFalseBones(int iExceptionPlayerNum = 0)
     {
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        int player1DisableCount = InGameUiController.iPlayer2Score;
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-       
+        int player1DisableCount = InGameUiController.gameManager.iPlayerScore_2;
 
         if (iExceptionPlayerNum == 1) player1DisableCount--;
 
@@ -216,17 +211,7 @@ public class ScoreBoardUIController : MonoBehaviour
             }
         }
 
-
-
-
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        int player2DisableCount = InGameUiController.iPlayer1Score;
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-
-
-
+        int player2DisableCount = InGameUiController.gameManager.iPlayerScore_1;
 
         if (iExceptionPlayerNum == 2) player2DisableCount--;
 

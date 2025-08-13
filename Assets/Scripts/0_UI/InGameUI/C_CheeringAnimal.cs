@@ -17,9 +17,7 @@ public class C_CheeringAnimal : MonoBehaviour
 
 
     public void On()
-    {
-        Debug.Log("응원 시작!!!");
-
+    { 
         gameObject.SetActive(true);
 
         if (rectTransform_Origin == null || rectTransform_Target == null) return;
@@ -34,7 +32,6 @@ public class C_CheeringAnimal : MonoBehaviour
     }
     public void Off()
     {
-        Debug.Log("응원 종료@@@");
         isFloating = false;
         rectTransform_Origin.DOKill();
         // 원래 위치로 돌아가기

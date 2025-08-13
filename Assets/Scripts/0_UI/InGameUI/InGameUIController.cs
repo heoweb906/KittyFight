@@ -34,10 +34,6 @@ public class InGameUIController : MonoBehaviour
     public Image image_FadeOut_White;
 
 
-    // #. 테스트용 변수들
-    public int iPlayer1Score;     // 테스트용 나중에 삭제 요망
-    public int iPlayer2Score;     // 테스트용 나중에 삭제 요망
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -57,45 +53,7 @@ public class InGameUIController : MonoBehaviour
         scoreBoardUIController.Initialize(this, canvasMain.transform);
 
 
-    
-        iPlayer1Score = 0;
-        iPlayer2Score = 0;
     }
-
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
-        {
-            skillCardController.ShowSkillCardList(2);
-            P2PMessageSender.SendMessage(
-                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
-
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ComeToTheEndGame(1);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ComeToTheEndGame(2);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            skillCardController.ShowSkillCardList(2);
-        }
-
-
-
-    }
-
-
 
 
     public void StartGameTimer(float duration)
@@ -143,67 +101,65 @@ public class InGameUIController : MonoBehaviour
 
 
 
-
-
-
-
-
     // #. 허재승이 추가한 함수들
 
-    public void ComeToTheEndGame(int winnerPlayerNum)
+    public void ComeToTheEndGame(int iWinnerPlayerNum, int iWinnerPlayerScore)
     {
-        scoreBoardUIController.CloseScorePanel(winnerPlayerNum, winnerPlayerNum == 1 ? ++iPlayer1Score : ++iPlayer2Score);
+        scoreBoardUIController.CloseScorePanel(iWinnerPlayerNum, iWinnerPlayerScore);
         scoreBoardUIController.OnOffCheering(true);
 
-        int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
+        int iLosePlayerNum = iWinnerPlayerNum == 1 ? 2 : 1;
 
-        StartCoroutine(OpenScorePanelAfterDelay(iLosePlayerNum));
-    }
-
-    private IEnumerator OpenScorePanelAfterDelay(int iLosePlyerNum)
-    {
-        yield return new WaitForSeconds(2f);
-
-        int currentScore = iLosePlyerNum == 1 ? iPlayer2Score : iPlayer1Score;
-
-        if (currentScore % 2 == 0)
+        DOVirtual.DelayedCall(2f, () =>
         {
-            MovePlayerImageToCenter(iLosePlyerNum);
-            yield return new WaitForSeconds(float.MaxValue);
-        }
-
-        scoreBoardUIController.OpenScorePanel();
+            if (iWinnerPlayerScore % 2 == 0)
+            {
+                MovePlayerImageToCenter(iLosePlayerNum);
+            }
+            else
+            {
+                Debug.Log("3번이 작동하고 있음");
+                scoreBoardUIController.OpenScorePanel();
+            }
+        });
     }
 
-    // #. 패배한 플레이어를 화면 중앙으로 오도록 배치하는 함수
-    private void MovePlayerImageToCenter(int playerNum)
+    private void MovePlayerImageToCenter(int iLoseplayerNum)
     {
         scoreBoardUIController.OnOffCheering(false);
-
-        C_ScoreImageElement targetPlayer = playerNum == 1 ?
+        C_ScoreImageElement targetPlayer = iLoseplayerNum == 1 ?
             scoreBoardUIController.scoreImageElement_Player1 :
             scoreBoardUIController.scoreImageElement_Player2;
-
         Vector2 targetPlayerImagePos = targetPlayer.rectTransform_PlayerImage.anchoredPosition;
         Vector2 targetBackgroundPos = targetPlayer.rectTransform_BackGround.anchoredPosition;
-
         float playerImageWorldPosX = targetBackgroundPos.x + targetPlayerImagePos.x;
         float offsetX = -playerImageWorldPosX;
 
         scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.DOAnchorPosX(
-   scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
-   .SetEase(Ease.OutQuart);
+            scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+            .SetEase(Ease.OutQuart);
         scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.DOAnchorPosX(
-           scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
-           .SetEase(Ease.OutQuart)
-                    .OnComplete(() =>
+            scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+            .SetEase(Ease.OutQuart)
+            .OnComplete(() =>
+            {
+                DOVirtual.DelayedCall(0.8f, () =>
+                {
+                    scoreBoardUIController.ActiveFalseBones();
+
+                    if (iLoseplayerNum == MatchResultStore.myPlayerNumber)
                     {
-                        DOVirtual.DelayedCall(0.8f, () =>
-                        {
-                            int loserPlayerNum = playerNum == 1 ? 2 : 1;
-                            scoreBoardUIController.ActiveFalseBones();
-                            skillCardController.ShowSkillCardList(loserPlayerNum);
-                        });
-                    });
+                        skillCardController.ShowSkillCardList(iLoseplayerNum);
+                    }
+                });
+            });
     }
 }
+
+
+
+// 게임에서 패배한 플레이어가 점수판을 염
+// 게임에서 패배한 플레이어가 점수판을 닫음
+
+// 점수판을 열고, 스킬 카드 리스트를 보여주는 로직에서 자신이 연 점수판이 아닌 경우에는 스킬 소환 연출을 하지 안도록 처리해야 함
+// 혹은 상대방이 패널을 열었을 때 대응하는 함수를 따로 만들기

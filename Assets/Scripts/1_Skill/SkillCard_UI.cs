@@ -230,11 +230,11 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        if(!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
         // if (!bCanInteract) return;
 
         GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
- 
+
         PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
             ? skillCardController.InGameUiController.gameManager.playerAbility_1
             : skillCardController.InGameUiController.gameManager.playerAbility_2;
@@ -247,8 +247,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         P2PMessageSender.SendMessage(
-            SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName)
-        );
+     SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition)
+     );
 
         // UI 처리
         skillCardController.SetAllCanInteract(false);
