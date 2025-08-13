@@ -56,9 +56,8 @@ public class SkillCardController : MonoBehaviour
     [SerializeField] Transform[] targetPoints = new Transform[4];
 
     [Header("연출에 사용할 것들")]
-    public Image image_FadeOut_White;
     public GameObject[] objs_AnimalSkillCardEffects;
-    
+
 
 
     public void Initialize(InGameUIController temp, Transform parent)
@@ -78,7 +77,14 @@ public class SkillCardController : MonoBehaviour
 
         var sortedDatas = datas.OrderBy(d => ExtractLeadingNumber(d.name)).ToArray();
 
-        skillDataList.AddRange(sortedDatas);
+        // 0번 데이터 제외하고 추가
+        foreach (var data in sortedDatas)
+        {
+            if (ExtractLeadingNumber(data.name) != 0)
+            {
+                skillDataList.Add(data);
+            }
+        }
 
         for (int i = 0; i < instances.Length; i++)
         {
@@ -113,6 +119,21 @@ public class SkillCardController : MonoBehaviour
         int completed = 0;
         int total = instances.Length;
 
+        List<int> randomIndices = new List<int>();
+        for (int i = 0; i < skillDataList.Count; i++)
+        {
+            randomIndices.Add(i);
+        }
+
+
+        for (int i = randomIndices.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            int temp = randomIndices[i];
+            randomIndices[i] = randomIndices[randomIndex];
+            randomIndices[randomIndex] = temp;
+        }
+
         for (int i = 0; i < total; i++)
         {
             var card = instances[i];
@@ -122,7 +143,7 @@ public class SkillCardController : MonoBehaviour
                 continue;
             }
 
-            int idx = 5 + i;
+            int idx = randomIndices[i]; // 랜덤 인덱스 사용
             card.ApplyData(skillDataList[idx]);
             card.ResetCardAnim();
             card.gameObject.SetActive(true);
@@ -198,7 +219,7 @@ public class SkillCardController : MonoBehaviour
             RectTransform effectRect = effectObj.GetComponent<RectTransform>();
 
             // image_FadeOut_White보다 뒤에 보이게 설정
-            effectRect.SetSiblingIndex(image_FadeOut_White.transform.GetSiblingIndex() - 1);
+            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
 
             // 클릭한 카드 위치 사용
             effectRect.anchoredPosition = clickedCardPosition;
@@ -215,7 +236,7 @@ public class SkillCardController : MonoBehaviour
                             IsAnimating = false;
                             DOVirtual.DelayedCall(1.2f, () =>
                             {
-                                // InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                InGameUiController.scoreBoardUIController.OpenScorePanel();
                             });
                         });
                     });
@@ -228,7 +249,7 @@ public class SkillCardController : MonoBehaviour
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
             {
-                // InGameUiController.scoreBoardUIController.OpenScorePanel();
+                InGameUiController.scoreBoardUIController.OpenScorePanel();
             });
         }
     }
@@ -265,16 +286,22 @@ public class SkillCardController : MonoBehaviour
             return null;
         }
 
-        int idx = card.iSkillIndex;
-        if (idx < 0 || idx >= skillPrefabs.Count)
+        // skillDataList에서 해당 카드의 실제 인덱스 찾기
+        int actualIndex = skillDataList.IndexOf(card);
+        if (actualIndex < 0)
         {
-            Debug.LogError($"[SkillCardController] skillIndex({idx}) is out of range.");
+            Debug.LogError($"[SkillCardController] Card '{card.name}' not found in skillDataList.");
             return null;
         }
 
-        return Instantiate(skillPrefabs[idx]);
-    }
+        if (actualIndex >= skillPrefabs.Count)
+        {
+            Debug.LogError($"[SkillCardController] actualIndex({actualIndex}) is out of range. skillPrefabs.Count = {skillPrefabs.Count}");
+            return null;
+        }
 
+        return Instantiate(skillPrefabs[actualIndex]);
+    }
 
 
 
@@ -283,17 +310,17 @@ public class SkillCardController : MonoBehaviour
         // 시작할 때, 목표 알파값이 0이 아니라면 활성화
         if (fTargetAlpha != 0f)
         {
-            image_FadeOut_White.gameObject.SetActive(true);
+            InGameUIController.Instance.image_FadeOut_White.gameObject.SetActive(true);
         }
 
-        image_FadeOut_White.transform.SetAsLastSibling();
-        return image_FadeOut_White.DOFade(fTargetAlpha, duration)
+        InGameUIController.Instance.image_FadeOut_White.transform.SetAsLastSibling();
+        return InGameUIController.Instance.image_FadeOut_White.DOFade(fTargetAlpha, duration)
             .OnComplete(() =>
             {
                 // 마지막 알파값이 0이라면 비활성화
                 if (fTargetAlpha == 0f)
                 {
-                    image_FadeOut_White.gameObject.SetActive(false);
+                    InGameUIController.Instance.image_FadeOut_White.gameObject.SetActive(false);
                 }
             });
     }

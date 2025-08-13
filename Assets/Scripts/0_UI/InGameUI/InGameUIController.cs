@@ -1,4 +1,8 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class InGameUIController : MonoBehaviour
 {
@@ -20,7 +24,19 @@ public class InGameUIController : MonoBehaviour
     
     public GameTimer gameTimer;
     public GameObject blindOverlay;
+    
+
+    [Header("관리하는 UI 컨트롤러들")]
     public SkillCardController skillCardController;
+    public ScoreBoardUIController scoreBoardUIController;
+
+    [Header("연출용")]
+    public Image image_FadeOut_White;
+
+
+    // #. 테스트용 변수들
+    public int iPlayer1Score;     // 테스트용 나중에 삭제 요망
+    public int iPlayer2Score;     // 테스트용 나중에 삭제 요망
 
     private void Awake()
     {
@@ -32,11 +48,55 @@ public class InGameUIController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        canvasMain = FindObjectOfType<Canvas>();
-        if (canvasMain == null) return;
+        //canvasMain = FindObjectOfType<Canvas>();
+        //if (canvasMain == null) return;
 
         skillCardController.Initialize(this, canvasMain.transform);
+
+        scoreBoardUIController = this.GetComponent<ScoreBoardUIController>();
+        scoreBoardUIController.Initialize(this, canvasMain.transform);
+
+
+    
+        iPlayer1Score = 0;
+        iPlayer2Score = 0;
     }
+
+
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
+        {
+            skillCardController.ShowSkillCardList(2);
+            P2PMessageSender.SendMessage(
+                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
+
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            ComeToTheEndGame(1);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ComeToTheEndGame(2);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            skillCardController.ShowSkillCardList(2);
+        }
+
+
+
+    }
+
+
+
 
     public void StartGameTimer(float duration)
     {
@@ -77,5 +137,73 @@ public class InGameUIController : MonoBehaviour
         hpUI_Player2?.Bind(player2Ability);
         if (skillUI_Player2 != null) { skillUI_Player2.abilityRef = player2Ability; skillUI_Player2.slot = SkillType.Melee; }
         if (skillUI2_Player2 != null) { skillUI2_Player2.abilityRef = player2Ability; skillUI2_Player2.slot = SkillType.Ranged; }
+    }
+
+
+
+
+
+
+
+
+
+
+    // #. 허재승이 추가한 함수들
+
+    public void ComeToTheEndGame(int winnerPlayerNum)
+    {
+        scoreBoardUIController.CloseScorePanel(winnerPlayerNum, winnerPlayerNum == 1 ? ++iPlayer1Score : ++iPlayer2Score);
+        scoreBoardUIController.OnOffCheering(true);
+
+        int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
+
+        StartCoroutine(OpenScorePanelAfterDelay(iLosePlayerNum));
+    }
+
+    private IEnumerator OpenScorePanelAfterDelay(int iLosePlyerNum)
+    {
+        yield return new WaitForSeconds(2f);
+
+        int currentScore = iLosePlyerNum == 1 ? iPlayer2Score : iPlayer1Score;
+
+        if (currentScore % 2 == 0)
+        {
+            MovePlayerImageToCenter(iLosePlyerNum);
+            yield return new WaitForSeconds(float.MaxValue);
+        }
+
+        scoreBoardUIController.OpenScorePanel();
+    }
+
+    // #. 패배한 플레이어를 화면 중앙으로 오도록 배치하는 함수
+    private void MovePlayerImageToCenter(int playerNum)
+    {
+        scoreBoardUIController.OnOffCheering(false);
+
+        C_ScoreImageElement targetPlayer = playerNum == 1 ?
+            scoreBoardUIController.scoreImageElement_Player1 :
+            scoreBoardUIController.scoreImageElement_Player2;
+
+        Vector2 targetPlayerImagePos = targetPlayer.rectTransform_PlayerImage.anchoredPosition;
+        Vector2 targetBackgroundPos = targetPlayer.rectTransform_BackGround.anchoredPosition;
+
+        float playerImageWorldPosX = targetBackgroundPos.x + targetPlayerImagePos.x;
+        float offsetX = -playerImageWorldPosX;
+
+        scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.DOAnchorPosX(
+   scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+   .SetEase(Ease.OutQuart);
+        scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.DOAnchorPosX(
+           scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+           .SetEase(Ease.OutQuart)
+                    .OnComplete(() =>
+                    {
+                        DOVirtual.DelayedCall(0.8f, () =>
+                        {
+                            int loserPlayerNum = playerNum == 1 ? 2 : 1;
+                            scoreBoardUIController.ActiveFalseBones();
+                            skillCardController.ShowSkillCardList(loserPlayerNum);
+                        });
+                    });
     }
 }

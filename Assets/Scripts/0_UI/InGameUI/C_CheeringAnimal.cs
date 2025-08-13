@@ -15,9 +15,13 @@ public class C_CheeringAnimal : MonoBehaviour
         originalPosition = rectTransform_Origin.anchoredPosition;
     }
 
-   
+
     public void On()
     {
+        Debug.Log("응원 시작!!!");
+
+        gameObject.SetActive(true);
+
         if (rectTransform_Origin == null || rectTransform_Target == null) return;
         isFloating = false;
         rectTransform_Origin.DOKill();
@@ -28,14 +32,17 @@ public class C_CheeringAnimal : MonoBehaviour
                 StartFloating();
             });
     }
-
-
     public void Off()
     {
+        Debug.Log("응원 종료@@@");
         isFloating = false;
         rectTransform_Origin.DOKill();
-        // 원래 위치로 복귀
-        rectTransform_Origin.DOAnchorPos(originalPosition, 0.8f).SetEase(Ease.OutQuart);
+        // 원래 위치로 돌아가기
+        rectTransform_Origin.DOAnchorPos(originalPosition, 0.8f).SetEase(Ease.OutQuart)
+            .OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
     }
 
 
