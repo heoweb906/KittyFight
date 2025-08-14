@@ -15,13 +15,16 @@ public class InGameUIController : MonoBehaviour
     public PlayerHealthUI hpUI_Player1;
     public SkillCooldownUI skillUI_Player1;     // Player1 - Melee
     public SkillCooldownUI skillUI2_Player1;    // Player1 - Ranged
+    public SkillCooldownUI skillUI3_Player1;    // Player1 - Dash
 
     [Header("Player2 UI")]
     public PlayerHealthUI hpUI_Player2;
     public SkillCooldownUI skillUI_Player2;     // Player2 - Melee
     public SkillCooldownUI skillUI2_Player2;    // Player2 - Ranged
-    // HP, DASH, Skill1~2 추후 다 매핑할 예정
-    
+    public SkillCooldownUI skillUI3_Player2;    // Player2 - Dash
+                                                // HP, DASH, Skill1~2 추후 다 매핑할 예정
+
+    [Header("Game UI etc")]
     public GameTimer gameTimer;
     public GameObject blindOverlay;
     
@@ -132,11 +135,13 @@ public class InGameUIController : MonoBehaviour
         hpUI_Player1?.Bind(player1Ability);
         if (skillUI_Player1 != null) { skillUI_Player1.abilityRef = player1Ability; skillUI_Player1.slot = SkillType.Melee; }
         if (skillUI2_Player1 != null) { skillUI2_Player1.abilityRef = player1Ability; skillUI2_Player1.slot = SkillType.Ranged; }
+        if (skillUI3_Player1 != null) { skillUI3_Player1.abilityRef = player1Ability; skillUI3_Player1.slot = SkillType.Dash; }
 
         // Player2 (오른쪽)
         hpUI_Player2?.Bind(player2Ability);
         if (skillUI_Player2 != null) { skillUI_Player2.abilityRef = player2Ability; skillUI_Player2.slot = SkillType.Melee; }
         if (skillUI2_Player2 != null) { skillUI2_Player2.abilityRef = player2Ability; skillUI2_Player2.slot = SkillType.Ranged; }
+        if (skillUI3_Player2 != null) { skillUI3_Player2.abilityRef = player2Ability; skillUI3_Player2.slot = SkillType.Dash; }
     }
 
 
