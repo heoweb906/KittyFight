@@ -285,7 +285,6 @@ GameObject:
   - component: {fileID: 6425919051089458608}
   - component: {fileID: 8667721077074239387}
   - component: {fileID: 898473161637626695}
-  - component: {fileID: 5595983915203913585}
   - component: {fileID: 1559159667772888511}
   m_Layer: 0
   m_Name: Player 1
@@ -427,6 +426,7 @@ MonoBehaviour:
   jumpForce: 5
   meleeSkill: {fileID: 0}
   rangedSkill: {fileID: 0}
+  dash: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   playerNumber: 1
@@ -481,22 +481,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 9
   invincibleTime: 1
---- !u!114 &5595983915203913585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5001395786464291979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd72bce77c219034d95ea0dad39e9e3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashDistance: 5
-  dashDuration: 0.1
-  dashCooldown: 1
-  myPlayerNumber: 2
 --- !u!114 &1559159667772888511
 MonoBehaviour:
   m_ObjectHideFlags: 0
