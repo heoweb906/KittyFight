@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
   coolTime: 3
-  objSkillEntity: {fileID: 551775367249106992, guid: cdd9383be71d8f348ac11a721dd40b84,
+  objSkillEntity: {fileID: 551775367249106992, guid: 2c71e5733f1fb8249a39a222029c96fd,
     type: 3}
   skillIcon: {fileID: 0}
   maxRange: 3.5

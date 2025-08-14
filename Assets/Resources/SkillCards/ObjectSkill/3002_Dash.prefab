@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657814523355016355}
-  - component: {fileID: -7408899166155909078}
+  - component: {fileID: 3102405268382342704}
   m_Layer: 0
-  m_Name: 3000_Melee
+  m_Name: 3002_Dash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7408899166155909078
+--- !u!114 &3102405268382342704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2211560603425008042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d525116466d3f5449ee6e16dbdd815c, type: 3}
+  m_Script: {fileID: 11500000, guid: 486e187bfede6c0448bc98fb91ba350c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 3
-  objSkillEntity: {fileID: 551775367249106992, guid: c41e6769c4c75854f9331459f4404bba,
-    type: 3}
+  coolTime: 1
+  objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 0}
-  maxRange: 1
-  p1Material: {fileID: 2100000, guid: 9155458aed9b38848b6949d5c0f7a960, type: 2}
-  p2Material: {fileID: 2100000, guid: 5cc840b250e862846914600b1801463f, type: 2}
+  dashDistance: 3.5
+  dashDuration: 0.08
+  boxHalfExtents: {x: 0.4, y: 0.4, z: 0.4}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 768
+  disableGravityDuringDash: 1
