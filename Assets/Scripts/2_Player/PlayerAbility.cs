@@ -21,6 +21,7 @@ public class PlayerAbility : MonoBehaviour
     [Header("ÀåÂøµÈ ½ºÅ³")]
     public Skill meleeSkill;
     public Skill rangedSkill;
+    public Skill dash;
     public Skill skill1;
     public Skill skill2;
 
@@ -43,6 +44,7 @@ public class PlayerAbility : MonoBehaviour
         {
             { SkillType.Melee,  new CooldownState() },
             { SkillType.Ranged, new CooldownState() },
+            { SkillType.Dash, new CooldownState() },
             { SkillType.Skill1, new CooldownState() },
             { SkillType.Skill2, new CooldownState() },
         };
@@ -65,6 +67,7 @@ public class PlayerAbility : MonoBehaviour
         {
             case SkillType.Melee: meleeSkill = skill; break;
             case SkillType.Ranged: rangedSkill = skill; break;
+            case SkillType.Dash: dash = skill; break;
             case SkillType.Skill1: skill1 = skill; break;
             case SkillType.Skill2: skill2 = skill; break;
         }
@@ -119,6 +122,7 @@ public class PlayerAbility : MonoBehaviour
     {
         SkillType.Melee => meleeSkill,
         SkillType.Ranged => rangedSkill,
+        SkillType.Dash => dash,
         SkillType.Skill1 => skill1,
         SkillType.Skill2 => skill2,
         _ => null

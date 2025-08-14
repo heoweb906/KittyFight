@@ -2,12 +2,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerJump))]
-[RequireComponent(typeof(PlayerDash))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerMovement movement;
     private PlayerJump jump;
-    private PlayerDash dash;
     private PlayerAbility ability;
 
     private Vector2 moveInput;
@@ -20,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
         movement = GetComponent<PlayerMovement>();
         jump = GetComponent<PlayerJump>();
-        dash = GetComponent<PlayerDash>();
         ability = GetComponent<PlayerAbility>();
     }
 
@@ -33,10 +30,10 @@ public class PlayerController : MonoBehaviour
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);
 
         if (jumpInput) jump.TryJump();
-        if (dashInput) dash.TryDash();
 
         if (meleeInput) TryExecuteAimedSkill(SkillType.Melee);
         if (rangedInput) TryExecuteAimedSkill(SkillType.Ranged);
+        if (dashInput) TryExecuteAimedSkill(SkillType.Dash);
     }
 
     private void FixedUpdate()
