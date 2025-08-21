@@ -286,7 +286,6 @@ GameObject:
   - component: {fileID: 8667721077074239387}
   - component: {fileID: 898473161637626695}
   - component: {fileID: 1559159667772888511}
-  - component: {fileID: 5595983915203913585}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -427,6 +426,7 @@ MonoBehaviour:
   jumpForce: 5
   meleeSkill: {fileID: 0}
   rangedSkill: {fileID: 0}
+  dash: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
   playerNumber: 2
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bbeb8c885322c4da777fc60a71f50c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 9
+  maxHP: 90
   invincibleTime: 1
 --- !u!114 &1559159667772888511
 MonoBehaviour:
@@ -493,22 +493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58b2729e2ff85b478c864a7822f81e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5595983915203913585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5001395786464291979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd72bce77c219034d95ea0dad39e9e3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashDistance: 5
-  dashDuration: 0.1
-  dashCooldown: 1
-  myPlayerNumber: 2
 --- !u!1 &6256541957834101067
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using System;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("HP (유일 소유자)")]
-    [SerializeField] private int maxHP = 9;
+    [SerializeField] private int maxHP = 90;
     [SerializeField] private float invincibleTime = 1.0f;
 
     public int MaxHP => maxHP;
@@ -75,6 +75,11 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        if (currentHP <= 0)
+        {
+            Debug.Log("Lose");
+            FindObjectOfType<GameManager>()?.EndGame();
+        }
     }
 
     public void ResetHealth()

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3365488371481765013}
-  - component: {fileID: 8924008846010735798}
+  - component: {fileID: 1459588585795688472}
   m_Layer: 0
   m_Name: 12_Fangshot
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8924008846010735798
+--- !u!114 &1459588585795688472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5783421907839214963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc2441709e8c171499e689d4e699a4e1, type: 3}
+  m_Script: {fileID: 11500000, guid: f81712566cef9f4459e3b899e83a3f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAbilty: {fileID: 0}
-  skillWorker: {fileID: 0}
-  coolTime: 1
-  objSkillEntity: {fileID: 0}
+  playerAbility: {fileID: 0}
+  coolTime: 6
+  objSkillEntity: {fileID: 6777267630284458099, guid: 56b9e01a7956a9446b1a4f18cc532c47,
+    type: 3}
+  skillIcon: {fileID: 0}
+  aimRange: 2.5
+  projectileSpeed: 12

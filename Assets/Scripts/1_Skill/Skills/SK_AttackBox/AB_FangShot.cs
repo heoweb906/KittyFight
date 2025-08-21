@@ -1,28 +1,26 @@
 using UnityEngine;
 
-public class AB_FangShot : MonoBehaviour
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
+public class AB_FangShot : AB_HitboxBase
 {
-    public int ownerPlayerNumber;
-    public float duration = 3.0f;
-    public float tickInterval = 1.0f;
-    public int damagePerTick = 2;
+    [Header("독(DoT) 파라미터")]
+    public float duration = 3f;
+    public float tickInterval = 1f;
+    public int damagePerTick = 7;
 
-    private bool hasHit = false;
+    [Header("동작")]
+    public bool destroyOnHit = true;
 
-    private void OnTriggerEnter(Collider other)
+    protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
-        //if (hasHit) return;
+        // PoisonDoT가 붙어있지 않으면 추가하고, 수치 적용
+        var poison = victim.GetComponent<PoisonDoT>();
+        if (!poison) poison = victim.gameObject.AddComponent<PoisonDoT>();
 
-        var health = other.GetComponent<PlayerHealth>();
-        //if (health == null || health.playerNumber == ownerPlayerNumber) return;
-        //if (health.playerNumber != MatchResultStore.myPlayerNumber) return;
-
-        hasHit = true;
-
-        // 도트 데미지 부착
-        var poison = other.gameObject.AddComponent<PoisonDoT>();
+        // PoisonDoT 쪽에서 중첩/갱신 전략을 처리
         poison.ApplyPoison(duration, tickInterval, damagePerTick);
 
-        //Destroy(gameObject);
+        if (destroyOnHit && this) Destroy(gameObject);
     }
 }

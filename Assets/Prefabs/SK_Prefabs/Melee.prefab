@@ -120,4 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleHit: 1
   lifeTime: 5
-  damage: 4
+  damage: 40

@@ -1,22 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AB_ShearShock : MonoBehaviour
+public class AB_ShearShock : AB_HitboxBase
 {
+    [Header("스턴 수치")]
     public float stunDuration = 2f;
-    public int ownerPlayerNumber;
 
-    private bool hasHit = false;
-
-    private void OnTriggerEnter(Collider other)
+    protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
-        //if (health == null || health.playerNumber == ownerPlayerNumber) return;
-        //if (health.playerNumber != MatchResultStore.myPlayerNumber) return;
+        var stun = victim.GetComponent<StunStatus>();
+        if (!stun) stun = victim.gameObject.AddComponent<StunStatus>();
 
-        // 기절 상태 부여
-        var stun = other.gameObject.AddComponent<StunStatus>();
         stun.ApplyStun(stunDuration);
     }
 }
