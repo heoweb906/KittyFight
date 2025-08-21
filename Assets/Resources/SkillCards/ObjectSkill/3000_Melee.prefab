@@ -49,6 +49,7 @@ MonoBehaviour:
   objSkillEntity: {fileID: 551775367249106992, guid: c41e6769c4c75854f9331459f4404bba,
     type: 3}
   skillIcon: {fileID: 0}
+  aimRange: 2.5
   maxRange: 1
   p1Material: {fileID: 2100000, guid: 9155458aed9b38848b6949d5c0f7a960, type: 2}
   p2Material: {fileID: 2100000, guid: 5cc840b250e862846914600b1801463f, type: 2}

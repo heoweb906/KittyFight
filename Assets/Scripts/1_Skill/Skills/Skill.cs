@@ -15,11 +15,14 @@ public abstract class Skill : MonoBehaviour, ISKILL
     public GameObject objSkillEntity;
     public Sprite skillIcon;
 
+    [Header("조준/사거리")]
+    public float aimRange = 2.5f;
+
     protected SkillType assignedSlot;
 
     public void SetNewBasicValue(PlayerAbility ability) => playerAbility = ability;
     public void SetAssignedSlot(SkillType slot) => assignedSlot = slot;
-
+    public virtual float GetAimRange() => aimRange;
     // 래퍼 없이 순수 추상, 각 스킬은 이걸 구현
     public abstract void Execute(Vector3 origin, Vector3 direction);
 }
