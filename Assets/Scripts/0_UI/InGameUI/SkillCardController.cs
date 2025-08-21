@@ -110,8 +110,8 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-
-    public void ShowSkillCardList(int iPlayernum = 0)
+    // #. 스킬 보여주는 함수
+    public void ShowSkillCardList(int iPlayernum = 0, bool bActivePassive = true, int[] iCardArray = null)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
         iAuthorityPlayerNum = iPlayernum;
@@ -119,21 +119,69 @@ public class SkillCardController : MonoBehaviour
         int completed = 0;
         int total = instances.Length;
 
-        List<int> randomIndices = new List<int>();
-        for (int i = 0; i < skillDataList.Count; i++)
+        // 현재 플레이어의 PlayerAbility 가져오기
+        PlayerAbility currentPlayerAbility = null;
+        if (InGameUiController?.gameManager != null)
         {
-            randomIndices.Add(i);
+            if (iPlayernum == 1)
+                currentPlayerAbility = InGameUiController.gameManager.playerAbility_1;
+            else if (iPlayernum == 2)
+                currentPlayerAbility = InGameUiController.gameManager.playerAbility_2;
         }
 
+        List<int> selectedIndices = new List<int>();
 
-        for (int i = randomIndices.Count - 1; i > 0; i--)
+        // iCardArray가 있으면 그 값들을 사용
+        if (iCardArray != null && iCardArray.Length > 0)
         {
-            int randomIndex = Random.Range(0, i + 1);
-            int temp = randomIndices[i];
-            randomIndices[i] = randomIndices[randomIndex];
-            randomIndices[randomIndex] = temp;
+            for (int i = 0; i < total && i < iCardArray.Length; i++)
+            {
+                selectedIndices.Add(iCardArray[i]);
+            }
+        }
+        else
+        {
+            // 조건에 맞는 스킬만 필터링
+            List<int> filteredIndices = new List<int>();
+            for (int i = 0; i < skillDataList.Count; i++)
+            {
+                bool isActive = skillDataList[i].iSkillIndex < 100;
+                if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+                {
+                    filteredIndices.Add(i);
+                }
+            }
+
+            // 사용 가능한 스킬이 없으면 종료
+            if (filteredIndices.Count == 0)
+            {
+                IsAnimating = false;
+                return;
+            }
+
+            // 랜덤 선택 로직
+            for (int i = 0; i < total; i++)
+            {
+                int idx = -1;
+                int attempts = 0;
+                do
+                {
+                    int randomFilteredIndex = Random.Range(0, filteredIndices.Count);
+                    idx = filteredIndices[randomFilteredIndex];
+                    attempts++;
+                }
+                while ((selectedIndices.Contains(idx) || IsSkillOwned(currentPlayerAbility, idx)) && attempts < 100);
+
+                selectedIndices.Add(idx);
+            }
+
+            // 메시지 전송 (랜덤 생성했을 때만)
+            P2PMessageSender.SendMessage(
+                SkillShowBuilder.Build(MatchResultStore.myPlayerNumber, selectedIndices.ToArray())
+            );
         }
 
+        // 카드 표시
         for (int i = 0; i < total; i++)
         {
             var card = instances[i];
@@ -143,27 +191,31 @@ public class SkillCardController : MonoBehaviour
                 continue;
             }
 
-            int idx = randomIndices[i]; // 랜덤 인덱스 사용
-            card.ApplyData(skillDataList[idx]);
-            card.ResetCardAnim();
-            card.gameObject.SetActive(true);
+            if (i < selectedIndices.Count)
+            {
+                int idx = selectedIndices[i];
+                card.ApplyData(skillDataList[idx]);
+                card.ResetCardAnim();
+                card.gameObject.SetActive(true);
+                card.StartCardAnimation();
 
-            // 애니메이션을 바로 시작 (이동 전에!)
-            card.StartCardAnimation();
-
-            var currentCard = card; // 클로저 문제 해결
-            card.transform.DOMove(targetPoints[i].position, 0.3f)
-                .OnComplete(() =>
-                {
-                    // floating 애니메이션 시작
-                    currentCard.StartFloatingAnimation();
-                    completed++;
-                    if (completed >= total)
+                var currentCard = card;
+                card.transform.DOMove(targetPoints[i].position, 0.3f)
+                    .OnComplete(() =>
                     {
-                        IsAnimating = false;
-                        SetAllCanInteract(true);
-                    }
-                });
+                        currentCard.StartFloatingAnimation();
+                        completed++;
+                        if (completed >= total)
+                        {
+                            IsAnimating = false;
+                            SetAllCanInteract(true);
+                        }
+                    });
+            }
+            else
+            {
+                completed++;
+            }
         }
 
         FadeImage(1f, 0f).OnComplete(() =>
@@ -173,6 +225,20 @@ public class SkillCardController : MonoBehaviour
                 FadeImage(0f, 1f);
             });
         });
+    }
+
+
+    // #. 이미 보유하고 있는 스킬인지 판단하는 함수
+    private bool IsSkillOwned(PlayerAbility playerAbility, int skillIndex)
+    {
+        if (playerAbility == null) return false;
+
+        if (playerAbility.skill1 != null && playerAbility.skill1.SkillIndex == skillIndex)
+            return true;
+        if (playerAbility.skill2 != null && playerAbility.skill2.SkillIndex == skillIndex)
+            return true;
+
+        return false;
     }
 
 
@@ -215,11 +281,11 @@ public class SkillCardController : MonoBehaviour
         iAuthorityPlayerNum = 0;
         if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
         {
-            GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
+            GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform); 
             RectTransform effectRect = effectObj.GetComponent<RectTransform>();
 
             // image_FadeOut_White보다 뒤에 보이게 설정
-            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1); 
 
             // 클릭한 카드 위치 사용
             effectRect.anchoredPosition = clickedCardPosition;
@@ -300,7 +366,14 @@ public class SkillCardController : MonoBehaviour
             return null;
         }
 
-        return Instantiate(skillPrefabs[actualIndex]);
+        GameObject skillObj = Instantiate(skillPrefabs[actualIndex]);
+        Skill skill = skillObj.GetComponent<Skill>();
+        if (skill != null)
+        {
+            skill.SkillIndex = actualIndex;  // 인덱스 설정
+        }
+
+        return skillObj;
     }
 
 

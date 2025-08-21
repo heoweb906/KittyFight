@@ -203,8 +203,8 @@ public class InGameUIController : MonoBehaviour
         float offsetX = -playerImageWorldPosX;
 
         scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.DOAnchorPosX(
-   scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
-   .SetEase(Ease.OutQuart);
+     scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+     .SetEase(Ease.OutQuart);
         scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.DOAnchorPosX(
            scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
            .SetEase(Ease.OutQuart)
@@ -214,7 +214,12 @@ public class InGameUIController : MonoBehaviour
                         {
                             int loserPlayerNum = playerNum == 1 ? 2 : 1;
                             scoreBoardUIController.ActiveFalseBones();
-                            skillCardController.ShowSkillCardList(loserPlayerNum);
+
+                            // 승자의 점수에 따라 액티브/패시브 결정
+                            int winnerScore = playerNum == 1 ? iPlayer1Score : iPlayer2Score;
+                            bool bActivePassive = (winnerScore == 2 || winnerScore == 6); // 2,6점: 액티브, 4,8,10점: 패시브
+
+                            skillCardController.ShowSkillCardList(loserPlayerNum, bActivePassive);
                         });
                     });
     }
