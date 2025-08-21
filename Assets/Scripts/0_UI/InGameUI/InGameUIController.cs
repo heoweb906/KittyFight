@@ -16,13 +16,16 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownUI skillUI_Player1;     // Player1 - Melee
     public SkillCooldownUI skillUI2_Player1;    // Player1 - Ranged
     public SkillCooldownUI skillUI3_Player1;    // Player1 - Dash
+    public SkillCooldownUI skillUI4_Player1;    // Player1 - Skill1
+    public SkillCooldownUI skillUI5_Player1;    // Player1 - Skill2
 
     [Header("Player2 UI")]
     public PlayerHealthUI hpUI_Player2;
     public SkillCooldownUI skillUI_Player2;     // Player2 - Melee
     public SkillCooldownUI skillUI2_Player2;    // Player2 - Ranged
     public SkillCooldownUI skillUI3_Player2;    // Player2 - Dash
-                                                // HP, DASH, Skill1~2 추후 다 매핑할 예정
+    public SkillCooldownUI skillUI4_Player2;    // Player1 - Skill1
+    public SkillCooldownUI skillUI5_Player2;    // Player1 - Skill2
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
@@ -136,12 +139,16 @@ public class InGameUIController : MonoBehaviour
         if (skillUI_Player1 != null) { skillUI_Player1.abilityRef = player1Ability; skillUI_Player1.slot = SkillType.Melee; }
         if (skillUI2_Player1 != null) { skillUI2_Player1.abilityRef = player1Ability; skillUI2_Player1.slot = SkillType.Ranged; }
         if (skillUI3_Player1 != null) { skillUI3_Player1.abilityRef = player1Ability; skillUI3_Player1.slot = SkillType.Dash; }
+        if (skillUI4_Player1 != null) { skillUI4_Player1.abilityRef = player1Ability; skillUI4_Player1.slot = SkillType.Skill1; }
+        if (skillUI5_Player1 != null) { skillUI5_Player1.abilityRef = player1Ability; skillUI5_Player1.slot = SkillType.Skill2; }
 
         // Player2 (오른쪽)
         hpUI_Player2?.Bind(player2Ability);
         if (skillUI_Player2 != null) { skillUI_Player2.abilityRef = player2Ability; skillUI_Player2.slot = SkillType.Melee; }
         if (skillUI2_Player2 != null) { skillUI2_Player2.abilityRef = player2Ability; skillUI2_Player2.slot = SkillType.Ranged; }
         if (skillUI3_Player2 != null) { skillUI3_Player2.abilityRef = player2Ability; skillUI3_Player2.slot = SkillType.Dash; }
+        if (skillUI4_Player2 != null) { skillUI4_Player2.abilityRef = player2Ability; skillUI4_Player2.slot = SkillType.Skill1; }
+        if (skillUI5_Player2 != null) { skillUI5_Player2.abilityRef = player2Ability; skillUI5_Player2.slot = SkillType.Skill2; }
     }
 
 
