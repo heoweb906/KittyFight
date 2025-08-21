@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657814523355016355}
-  - component: {fileID: 2603732942333192479}
+  - component: {fileID: 3575292399935434211}
   m_Layer: 0
   m_Name: 5_Rend
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2603732942333192479
+--- !u!114 &3575292399935434211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2211560603425008042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b8577b9f15b0e418dc1391b3ed5531, type: 3}
+  m_Script: {fileID: 11500000, guid: cff56873d41ab1a4da537f2a555ab180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAbilty: {fileID: 0}
-  skillWorker: {fileID: 0}
+  playerAbility: {fileID: 0}
   coolTime: 0
-  objSkillEntity: {fileID: 0}
+  objSkillEntity: {fileID: 6777267630284458099, guid: 45f04c828c5335946aaacb6284b2fd99,
+    type: 3}
+  skillIcon: {fileID: 0}
+  aimRange: 2.5
