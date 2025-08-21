@@ -28,6 +28,10 @@ public class PlayerAbility : MonoBehaviour
     [Header("식별")]
     public int playerNumber;
 
+    // Re-peek 용
+    private bool _hasLastActionType;
+    private SkillType _lastActionType;
+
     // Health 참조 (HP의 유일한 소유자)
     public PlayerHealth Health { get; private set; }
 
@@ -78,6 +82,13 @@ public class PlayerAbility : MonoBehaviour
         var s = GetSkill(type);
         if (s == null) return;
 
+        if (s is SK_Repeek && TryGetLastActionType(out var lastType))
+        {
+            var target = GetSkill(lastType);
+            if (target != null)
+                overrideDuration = target.coolTime;
+        }
+
         var st = GetCooldown(type);
         bool onCooldown = st.active && st.Remaining > 0f;
         if (!force && onCooldown) return;
@@ -87,6 +98,9 @@ public class PlayerAbility : MonoBehaviour
 
         // 바로 효과 실행
         s.Execute(origin, direction);
+
+        if (!(s is SK_Repeek))
+            RecordLastActionType(type);
 
         if (!force)
         {
@@ -127,4 +141,16 @@ public class PlayerAbility : MonoBehaviour
         SkillType.Skill2 => skill2,
         _ => null
     };
+
+    public void RecordLastActionType(SkillType type)
+    {
+        _hasLastActionType = true;
+        _lastActionType = type;
+    }
+
+    public bool TryGetLastActionType(out SkillType type)
+    {
+        type = _lastActionType;
+        return _hasLastActionType;
+    }
 }
