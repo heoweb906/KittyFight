@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657814523355016355}
-  - component: {fileID: 2603732942333192479}
+  - component: {fileID: -2114761899117296521}
   m_Layer: 0
   m_Name: 15_HoofOut
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2603732942333192479
+--- !u!114 &-2114761899117296521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2211560603425008042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b8577b9f15b0e418dc1391b3ed5531, type: 3}
+  m_Script: {fileID: 11500000, guid: f568fb418d75d5746abf10c6865757b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAbilty: {fileID: 0}
-  skillWorker: {fileID: 0}
-  coolTime: 0
-  objSkillEntity: {fileID: 0}
+  playerAbility: {fileID: 0}
+  coolTime: 8
+  objSkillEntity: {fileID: 6777267630284458099, guid: 7671d1727d07f5a4d98f7e99621f1edd,
+    type: 3}
+  skillIcon: {fileID: 0}
+  aimRange: 2.5

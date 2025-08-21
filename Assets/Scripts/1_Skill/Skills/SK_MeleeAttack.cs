@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class SK_MeleeAttack : Skill
 {
-    public float maxRange = 2.5f;
-
     [Header("Visuals")]
     [SerializeField] private Material p1Material;
     [SerializeField] private Material p2Material;
 
     private void Awake()
     {
-        coolTime = 3.0f; // 근접 쿨타임 3초
+        coolTime = 3.0f;
+        aimRange = 2.5f;
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)

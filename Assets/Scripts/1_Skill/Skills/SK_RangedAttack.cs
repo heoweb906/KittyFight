@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SK_RangedAttack : Skill
 {
-    public float maxRange = 3.5f;
     public float projectileSpeed = 10f;
 
     [Header("Visuals")]
@@ -12,6 +11,7 @@ public class SK_RangedAttack : Skill
     private void Awake()
     {
         coolTime = 3.0f;
+        aimRange = 2.5f;
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("기본 스킬 프리팹 (Skill 컴포넌트 포함)")]
     public GameObject meleeSkillPrefab;
     public GameObject rangedSkillPrefab;
+    public GameObject dashPrefab;
 
     private GameObject player1;
     private GameObject player2;
@@ -145,6 +146,14 @@ public class GameManager : MonoBehaviour
             GameObject rangedObj = Instantiate(rangedSkillPrefab, ability.transform);
             Skill ranged = rangedObj.GetComponent<Skill>();
             if (ranged != null) ability.SetSkill(SkillType.Ranged, ranged);
+        }
+
+        // 대쉬
+        if (dashPrefab != null)
+        {
+            GameObject dashObj = Instantiate(dashPrefab, ability.transform);
+            Skill dash = dashObj.GetComponent<Skill>();
+            if (dash != null) ability.SetSkill(SkillType.Dash, dash);
         }
     }
 

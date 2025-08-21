@@ -2,12 +2,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerJump))]
-[RequireComponent(typeof(PlayerDash))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerMovement movement;
     private PlayerJump jump;
-    private PlayerDash dash;
     private PlayerAbility ability;
 
     private Vector2 moveInput;
@@ -15,12 +13,13 @@ public class PlayerController : MonoBehaviour
     private bool meleeInput;
     private bool rangedInput;
     private bool dashInput;
+    private bool skill1Input;
+    private bool skill2Input;
 
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
         jump = GetComponent<PlayerJump>();
-        dash = GetComponent<PlayerDash>();
         ability = GetComponent<PlayerAbility>();
     }
 
@@ -31,12 +30,16 @@ public class PlayerController : MonoBehaviour
         meleeInput = Input.GetMouseButtonDown(0);
         rangedInput = Input.GetMouseButtonDown(1);
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);
+        skill1Input = Input.GetKeyDown(KeyCode.Q);
+        skill2Input = Input.GetKeyDown(KeyCode.E);
 
         if (jumpInput) jump.TryJump();
-        if (dashInput) dash.TryDash();
 
         if (meleeInput) TryExecuteAimedSkill(SkillType.Melee);
         if (rangedInput) TryExecuteAimedSkill(SkillType.Ranged);
+        if (dashInput) TryExecuteAimedSkill(SkillType.Dash);
+        if (skill1Input) TryExecuteAimedSkill(SkillType.Skill1);
+        if (skill2Input) TryExecuteAimedSkill(SkillType.Skill2);
     }
 
     private void FixedUpdate()
@@ -50,12 +53,10 @@ public class PlayerController : MonoBehaviour
         var s = ability.GetSkill(type);
         if (s == null) return;
 
-        float range = 3.5f;
-        if (s is SK_MeleeAttack sm) range = sm.maxRange;
-        else if (s is SK_RangedAttack sr) range = sr.maxRange;
-
+        float range = s.GetAimRange();
         Vector3 origin, dir;
         AttackUtils.GetAimPointAndDirection(transform, range, out origin, out dir);
+
         ability.TryExecuteSkill(type, origin, dir);
     }
 }

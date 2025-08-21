@@ -148,4 +148,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleHit: 1
   lifeTime: 5
-  damage: 2
+  damage: 40
