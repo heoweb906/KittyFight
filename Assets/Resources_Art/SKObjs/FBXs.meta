@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources_Art/SKObjs/FBXs.meta
 guid: 0eb793b5f08e3664ea51057e7d6dd289
 folderAsset: yes
 DefaultImporter:
+========
+guid: df0ecc19bb7e4324cb9ce190349a348c
+PrefabImporter:
+>>>>>>>> Park_2:Assets/Prefabs/SK_Prefabs/FeatherShot.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
