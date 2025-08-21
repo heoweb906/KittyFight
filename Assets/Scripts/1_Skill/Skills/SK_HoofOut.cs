@@ -1,36 +1,40 @@
-// SK_HoofOut.cs
 using UnityEngine;
 
 public class SK_HoofOut : Skill
 {
-    public float maxRange = 3.0f;
-    public float hitboxLifeTime = 1.0f;
-
     private void Awake()
     {
-        // 필요시 쿨타임 설정 (Ability가 조회만 함)
-        coolTime = 3.0f; 
+        coolTime = 8.0f;
+        aimRange = 2.5f;
     }
 
-    // 좌표/방향은 호출자가 계산해서 넘겨줌
     public override void Execute(Vector3 origin, Vector3 direction)
     {
-        Vector3 spawnPos = origin + direction * maxRange;
-        Quaternion rot   = Quaternion.LookRotation(direction);
+        if (objSkillEntity == null) return;
 
-        if (objSkillEntity != null)
+        Vector3 spawnPos = origin;
+        Quaternion rot = Quaternion.LookRotation(direction, Vector3.up);
+
+        GameObject hitbox = Instantiate(objSkillEntity, spawnPos, rot);
+
+        var ab = hitbox.GetComponent<AB_HitboxBase>();
+        if (ab != null) ab.Init(playerAbility);
+
+        // HoofOut 전용: 스폰 시점에 좌/우 부호 확정해서 넘김
+        var hoof = hitbox.GetComponent<AB_HoofOut>();
+        if (hoof != null)
         {
-            GameObject hitbox = Instantiate(objSkillEntity, spawnPos, rot);
+            // 1) 기본: 조준 방향의 x 성분으로 좌/우 판정
+            float sign = Mathf.Abs(direction.x) > 0.0001f ? Mathf.Sign(direction.x) : 0f;
 
-            // 공통 베이스에 소유자 주입 (playerNumber 포함)
-            var ab = hitbox.GetComponent<AB_HitboxBase>();
-            if (ab != null)
-            {
-                // 수명 커스터마이즈가 필요하면 캐스트해서 lifeTime도 세팅 가능
-                ab.Init(playerAbility);
-            }
+            // 2) 만약 x가 거의 0이면(정면 조준 등), 스폰 위치가 owner의 어느 쪽인지로 보정
+            if (sign == 0f && playerAbility != null)
+                sign = Mathf.Sign(spawnPos.x - playerAbility.transform.position.x);
 
-            if (hitboxLifeTime > 0f) Destroy(hitbox, hitboxLifeTime);
+            // 3) 그래도 0이면 기본 우측(+1)
+            if (sign == 0f) sign = 1f;
+
+            hoof.SetLateralSign(sign);
         }
     }
 }
