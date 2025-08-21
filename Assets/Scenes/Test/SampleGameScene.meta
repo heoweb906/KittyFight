@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Test/SampleGameScene.meta
 guid: dc41d5260ffb2f3489d5bf8f3818c083
 folderAsset: yes
 DefaultImporter:
+========
+guid: 45f04c828c5335946aaacb6284b2fd99
+PrefabImporter:
+>>>>>>>> Park_2:Assets/Prefabs/SK_Prefabs/Rend.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

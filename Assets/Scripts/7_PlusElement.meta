@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/7_PlusElement.meta
 guid: 6e3a81e0b99a56540804a3c2075880d3
 folderAsset: yes
 DefaultImporter:
+========
+guid: df0ecc19bb7e4324cb9ce190349a348c
+PrefabImporter:
+>>>>>>>> Park_2:Assets/Prefabs/SK_Prefabs/FeatherShot.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
