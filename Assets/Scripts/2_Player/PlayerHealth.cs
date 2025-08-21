@@ -5,7 +5,7 @@ using System;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("HP (유일 소유자)")]
-    [SerializeField] private int maxHP = 9;
+    [SerializeField] private int maxHP = 90;
     [SerializeField] private float invincibleTime = 1.0f;
 
     public int MaxHP => maxHP;
