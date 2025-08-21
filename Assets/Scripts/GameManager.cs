@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
             if (ranged != null) ability.SetSkill(SkillType.Ranged, ranged);
         }
 
-        // 원거리
+        // 대쉬
         if (dashPrefab != null)
         {
             GameObject dashObj = Instantiate(dashPrefab, ability.transform);

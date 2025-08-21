@@ -4,7 +4,6 @@ using System.Collections;
 public class SK_Dash : Skill
 {
     [Header("Dash Params")]
-    public float dashDistance = 3.5f;                 // 조준 방향으로 이동할 최대 거리
     public float dashDuration = 0.08f;
     public Vector3 boxHalfExtents = new Vector3(0.4f, 0.4f, 0.4f);
     public LayerMask obstacleMask;                    // 충돌 레이어(비어있으면 Ground)
@@ -16,6 +15,7 @@ public class SK_Dash : Skill
     private void Awake()
     {
         coolTime = 1.0f;
+        aimRange = 3.5f;
         if (playerAbility != null)
             rb = playerAbility.GetComponent<Rigidbody>();
         if (!rb) rb = GetComponentInParent<Rigidbody>();
@@ -24,8 +24,9 @@ public class SK_Dash : Skill
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         // 로컬 소유자만 실제 이동 (원격은 쿨타임/UI만), 개발 확인 시에는 주석바람
-        //if (playerAbility == null || playerAbility.playerNumber != MatchResultStore.myPlayerNumber)
-        //    return;
+        if (playerAbility == null || playerAbility.playerNumber != MatchResultStore.myPlayerNumber)
+            return;
+
         if (!rb)
         {
             rb = playerAbility ? playerAbility.GetComponent<Rigidbody>() : GetComponentInParent<Rigidbody>();
@@ -34,12 +35,12 @@ public class SK_Dash : Skill
 
 
         Vector3 startPos = rb.position;
-        float maxDistance = dashDistance;
+        float maxDistance = aimRange;
 
         if (obstacleMask == 0) obstacleMask = LayerMask.GetMask("Ground");
 
         RaycastHit hit;
-        if (Physics.BoxCast(startPos, boxHalfExtents, direction, out hit, Quaternion.identity, dashDistance, obstacleMask))
+        if (Physics.BoxCast(startPos, boxHalfExtents, direction, out hit, Quaternion.identity, maxDistance, obstacleMask))
             maxDistance = hit.distance;
 
         Vector3 targetPos = startPos + direction * maxDistance;
