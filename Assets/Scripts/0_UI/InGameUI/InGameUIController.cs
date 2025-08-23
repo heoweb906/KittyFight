@@ -39,11 +39,6 @@ public class InGameUIController : MonoBehaviour
     [Header("연출용")]
     public Image image_FadeOut_White;
 
-
-    // #. 테스트용 변수들
-    public int iPlayer1Score;     // 테스트용 나중에 삭제 요망
-    public int iPlayer2Score;     // 테스트용 나중에 삭제 요망
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -62,47 +57,7 @@ public class InGameUIController : MonoBehaviour
         scoreBoardUIController = this.GetComponent<ScoreBoardUIController>();
         scoreBoardUIController.Initialize(this, canvasMain.transform);
 
-
-    
-        iPlayer1Score = 0;
-        iPlayer2Score = 0;
     }
-
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y) && MatchResultStore.myPlayerNumber == 2)
-        {
-            skillCardController.ShowSkillCardList(2);
-            P2PMessageSender.SendMessage(
-                BasicBuilder.Build(MatchResultStore.myPlayerNumber, "[SKILL_SHOW]"));
-
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ComeToTheEndGame(1);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ComeToTheEndGame(2);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            skillCardController.ShowSkillCardList(2);
-        }
-
-
-
-    }
-
-
-
 
     public void StartGameTimer(float duration)
     {
@@ -113,7 +68,7 @@ public class InGameUIController : MonoBehaviour
     {
         if (gameTimer != null && gameTimer.Tick(Time.deltaTime))
         {
-            GameObject.FindObjectOfType<GameManager>()?.EndGame();
+            // GameObject.FindObjectOfType<GameManager>()?.EndGame();
         }
     }
 
@@ -154,33 +109,25 @@ public class InGameUIController : MonoBehaviour
 
 
 
-
-
-
-
-
-
     // #. 허재승이 추가한 함수들
-
     public void ComeToTheEndGame(int winnerPlayerNum)
     {
-        scoreBoardUIController.CloseScorePanel(winnerPlayerNum, winnerPlayerNum == 1 ? ++iPlayer1Score : ++iPlayer2Score);
+        scoreBoardUIController.CloseScorePanel(winnerPlayerNum, winnerPlayerNum == 1 ? ++gameManager.IntScorePlayer_1 : ++gameManager.IntScorePlayer_2);
         scoreBoardUIController.OnOffCheering(true);
 
-        int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
-
-        StartCoroutine(OpenScorePanelAfterDelay(iLosePlayerNum));
+        StartCoroutine(OpenScorePanelAfterDelay(winnerPlayerNum));
     }
 
-    private IEnumerator OpenScorePanelAfterDelay(int iLosePlyerNum)
+    private IEnumerator OpenScorePanelAfterDelay(int winnerPlayerNum)
     {
         yield return new WaitForSeconds(2f);
 
-        int currentScore = iLosePlyerNum == 1 ? iPlayer2Score : iPlayer1Score;
+        int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
+        int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
 
-        if (currentScore % 2 == 0)
+        if (winPlayerCurrentScore % 2 == 0)
         {
-            MovePlayerImageToCenter(iLosePlyerNum);
+            MovePlayerImageToCenter(iLosePlayerNum);
             yield return new WaitForSeconds(float.MaxValue);
         }
 
@@ -188,11 +135,11 @@ public class InGameUIController : MonoBehaviour
     }
 
     // #. 패배한 플레이어를 화면 중앙으로 오도록 배치하는 함수
-    private void MovePlayerImageToCenter(int playerNum)
+    private void MovePlayerImageToCenter(int iLosePlayerNum)
     {
         scoreBoardUIController.OnOffCheering(false);
 
-        C_ScoreImageElement targetPlayer = playerNum == 1 ?
+        C_ScoreImageElement targetPlayer = iLosePlayerNum == 1 ?
             scoreBoardUIController.scoreImageElement_Player1 :
             scoreBoardUIController.scoreImageElement_Player2;
 
@@ -212,14 +159,14 @@ public class InGameUIController : MonoBehaviour
                     {
                         DOVirtual.DelayedCall(0.8f, () =>
                         {
-                            int loserPlayerNum = playerNum == 1 ? 2 : 1;
+                            if (iLosePlayerNum != MatchResultStore.myPlayerNumber) return;
+
                             scoreBoardUIController.ActiveFalseBones();
 
-                            // 승자의 점수에 따라 액티브/패시브 결정
-                            int winnerScore = playerNum == 1 ? iPlayer1Score : iPlayer2Score;
-                            bool bActivePassive = (winnerScore == 2 || winnerScore == 6); // 2,6점: 액티브, 4,8,10점: 패시브
+                            int iWinnerScore = iLosePlayerNum == 1 ? gameManager.IntScorePlayer_2 : gameManager.IntScorePlayer_1;
+                            bool bActivePassive = (iWinnerScore == 2 || iWinnerScore == 6); 
 
-                            skillCardController.ShowSkillCardList(loserPlayerNum, bActivePassive);
+                            skillCardController.ShowSkillCardList(iLosePlayerNum, bActivePassive);
                         });
                     });
     }

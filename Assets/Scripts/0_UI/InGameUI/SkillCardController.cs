@@ -136,7 +136,8 @@ public class SkillCardController : MonoBehaviour
         {
             for (int i = 0; i < total && i < iCardArray.Length; i++)
             {
-                selectedIndices.Add(iCardArray[i]);
+                int cardIndex = Mathf.Clamp(iCardArray[i], 0, skillDataList.Count - 1);
+                selectedIndices.Add(cardIndex);
             }
         }
         else

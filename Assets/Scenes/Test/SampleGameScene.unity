@@ -21103,7 +21103,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1393840319}
-  - {fileID: 1238884654}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &921720559
@@ -21119,10 +21118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objCamaera: {fileID: 1393840317}
-  targetObject: {fileID: 0}
-  targetRotationEuler_1: {x: 90, y: -90, z: 0}
-  targetRotationEuler_2: {x: 90, y: 90, z: 0}
-  moveDuration: 1
 --- !u!1001 &924828594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27896,38 +27891,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1235436436}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1238884653
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1238884654}
-  m_Layer: 0
-  m_Name: Positions
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1238884654
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238884653}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1933892304}
-  m_Father: {fileID: 921720558}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1239110053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28484,16 +28447,20 @@ MonoBehaviour:
   hpUI_Player1: {fileID: 0}
   skillUI_Player1: {fileID: 0}
   skillUI2_Player1: {fileID: 0}
+  skillUI3_Player1: {fileID: 0}
+  skillUI4_Player1: {fileID: 0}
+  skillUI5_Player1: {fileID: 0}
   hpUI_Player2: {fileID: 0}
   skillUI_Player2: {fileID: 0}
   skillUI2_Player2: {fileID: 0}
+  skillUI3_Player2: {fileID: 0}
+  skillUI4_Player2: {fileID: 0}
+  skillUI5_Player2: {fileID: 0}
   gameTimer: {fileID: 0}
   blindOverlay: {fileID: 0}
   skillCardController: {fileID: 1279384191}
   scoreBoardUIController: {fileID: 1279384192}
   image_FadeOut_White: {fileID: 0}
-  iPlayer1Score: 0
-  iPlayer2Score: 0
 --- !u!114 &1279384191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43091,37 +43058,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1929329452}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1933892303
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1933892304}
-  m_Layer: 0
-  m_Name: Origin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1933892304
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933892303}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1238884654}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1937979218
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -86,6 +86,8 @@ public class ScoreBoardUIController : MonoBehaviour
     // #. Score 패널 닫기
     public void CloseScorePanel(int iWinnerPlayerNum, int iWinnerPlayerScore)
     {
+        UpdateScoreText();
+
         scoreImageElement_Player1.objMine.SetActive(true);
         scoreImageElement_Player2.objMine.SetActive(true);
 
@@ -199,11 +201,9 @@ public class ScoreBoardUIController : MonoBehaviour
 
     public void ActiveFalseBones(int iExceptionPlayerNum = 0)
     {
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        int player1DisableCount = InGameUiController.iPlayer2Score;
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
+
+        int player1DisableCount = InGameUiController.gameManager.IntScorePlayer_2;
+
        
 
         if (iExceptionPlayerNum == 1) player1DisableCount--;
@@ -217,15 +217,7 @@ public class ScoreBoardUIController : MonoBehaviour
         }
 
 
-
-
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        int player2DisableCount = InGameUiController.iPlayer1Score;
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-        // 나중에 GameManager에서 점수를 불러오도록 수정해야 함
-
-
+        int player2DisableCount = InGameUiController.gameManager.IntScorePlayer_1;
 
 
         if (iExceptionPlayerNum == 2) player2DisableCount--;
@@ -254,6 +246,13 @@ public class ScoreBoardUIController : MonoBehaviour
                 cheeringAnimals[i].Off();
             }
         }
+    }
+
+
+    public void UpdateScoreText()
+    {
+        scoreImageElement_Player1.text_Score.text = InGameUiController.gameManager.IntScorePlayer_1.ToString();
+        scoreImageElement_Player2.text_Score.text = InGameUiController.gameManager.IntScorePlayer_2.ToString();
     }
 
 
