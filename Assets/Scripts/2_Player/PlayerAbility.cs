@@ -25,6 +25,14 @@ public class PlayerAbility : MonoBehaviour
     public Skill skill1;
     public Skill skill2;
 
+    [Header("패시브 스킬")]
+    public AbilityEvents events;
+    public List<Passive> passives = new();
+
+    // 개발용
+    [Header("Passives (Inspector Auto-Equip)")]
+    public List<Passive> initialPassives = new List<Passive>();   // 인스펙터에 드래그
+
     [Header("식별")]
     public int playerNumber;
 
@@ -58,6 +66,34 @@ public class PlayerAbility : MonoBehaviour
     private void Awake()
     {
         Health = GetComponent<PlayerHealth>();
+        if (!events) events = GetComponent<AbilityEvents>();
+    }
+
+    void Start()
+    {
+        AutoEquipInitialPassives(); // 개발용
+    }
+
+    void AutoEquipInitialPassives()
+    {
+        foreach (var prefab in initialPassives)
+        {
+            if (!prefab) continue;
+
+            var inst = (prefab.transform.root == transform.root)
+                ? prefab
+                : Instantiate(prefab, transform);
+            if (!passives.Contains(inst))
+            {
+                inst.OnEquip(this);
+                passives.Add(inst);
+            }
+        }
+    }
+
+    void Update()
+    {
+        events?.EmitTick(Time.deltaTime);
     }
 
     // ======= 스킬 장착/실행/쿨다운 ============
@@ -94,6 +130,7 @@ public class PlayerAbility : MonoBehaviour
         if (!force && onCooldown) return;
 
         float duration = Mathf.Max(0f, overrideDuration ?? s.coolTime);
+        events?.EmitModifyCooldown(type, ref duration);
         StartCooldown(type, duration);
 
         // 바로 효과 실행
@@ -152,5 +189,21 @@ public class PlayerAbility : MonoBehaviour
     {
         type = _lastActionType;
         return _hasLastActionType;
+    }
+
+    public Passive EquipPassive(Passive prefab)
+    {
+        var inst = Instantiate(prefab, transform);
+        inst.OnEquip(this);
+        passives.Add(inst);
+        return inst;
+    }
+
+    public void UnequipPassive(Passive p)
+    {
+        if (!p) return;
+        p.OnUnequip();
+        passives.Remove(p);
+        Destroy(p.gameObject);
     }
 }

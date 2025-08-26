@@ -429,6 +429,9 @@ MonoBehaviour:
   dash: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
+  events: {fileID: 0}
+  passives:
+  - {fileID: 0}
   playerNumber: 1
 --- !u!114 &5848055480860405593
 MonoBehaviour:
