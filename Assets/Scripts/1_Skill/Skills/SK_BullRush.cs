@@ -11,7 +11,7 @@ public class SK_BullRush : Skill
 {
     [Header("Rush ¿Ãµø")]
     [Min(0.01f)] public float dashDuration = 0.12f;
-    [Min(0.01f)] public float aimRange = 3.5f;
+    // [Min(0.01f)] public float aimRange = 3.5f;
     public Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, 0.5f);
     public LayerMask obstacleMask;
     public bool disableGravityDuringDash = true;

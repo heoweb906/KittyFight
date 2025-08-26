@@ -36,6 +36,6 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
         }
 
-        skillCardController.HideSkillCardList();
+        skillCardController.HideSkillCardList(so_SkillCard.iAnimalNum, model.cardPosition);
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,9 +17,14 @@ public class GameManager : MonoBehaviour
     public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
+    [Header("카메라")]
+    public CameraManager cameraManager;
+
+
     [Header("배경")]
     public GameObject backgroundPlane;
 
+    
     [Header("기본 스킬 프리팹 (Skill 컴포넌트 포함)")]
     public GameObject meleeSkillPrefab;
     public GameObject rangedSkillPrefab;
@@ -32,6 +38,10 @@ public class GameManager : MonoBehaviour
     [Header("양측 플레이어 Ability 참조")]
     public PlayerAbility playerAbility_1;
     public PlayerAbility playerAbility_2;
+    // #. 양측 플레이어 점수
+    public int IntScorePlayer_1 {  get; set; }
+    public int IntScorePlayer_2 {  get; set; }
+
 
     private readonly Color[] backgroundColorCandidates = new Color[]
     {
@@ -46,6 +56,9 @@ public class GameManager : MonoBehaviour
     {
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
         P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+
+        IntScorePlayer_1 = 0;
+        IntScorePlayer_2 = 0;
     }
 
     private void Update()
@@ -157,43 +170,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EndGame()
+    public void EndGame(int iLosePlayerNum)
     {
         if (gameEnded) return;
         gameEnded = true;
-
         Debug.Log("Game Over");
 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
-        Invoke(nameof(ResetGame), 3f);
+        // 즉시 실행하지 말고 코루틴으로 처리
+        StartCoroutine(EndGameSequence(iLosePlayerNum));
+    }
+
+    private IEnumerator EndGameSequence(int iLosePlayerNum)
+    {
+        yield return new WaitForSeconds(2f);
+
+        int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
+        ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
+
+        ResetGame();
     }
 
     private void ResetGame()
     {
         Debug.Log("Resetting Game");
-
         if (MatchResultStore.myPlayerNumber == 1)
         {
             int index = Random.Range(0, backgroundColorCandidates.Length);
             Color selectedColor = backgroundColorCandidates[index];
-
             P2PMessageSender.SendMessage(
                 BackgroundColorMessageBuilder.Build(selectedColor)
             );
             ApplyBackgroundColor(selectedColor);
         }
-
         if (player1 != null) player1.transform.position = spawnPoint1.position;
         if (player2 != null) player2.transform.position = spawnPoint2.position;
-
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
         player2.GetComponent<PlayerHealth>()?.ResetHealth();
-
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
-
         gameEnded = false;
         ingameUIController?.StartGameTimer(90f);
     }

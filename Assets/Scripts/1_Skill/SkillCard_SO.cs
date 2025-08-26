@@ -14,7 +14,7 @@ public class CardillustrationPivot
 {
     public Sprite sprite_Cardillustration;
     [Header("위치 조정")]
-    public RectOffset margins = new RectOffset();  // left, right, top, bottom
+    public RectOffset margins = new RectOffset(); 
 }
 [CreateAssetMenu(fileName = "NewSkillCard", menuName = "Skill System/Skill Card")]
 public class SkillCard_SO : ScriptableObject

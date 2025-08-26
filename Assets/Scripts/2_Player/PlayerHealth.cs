@@ -53,7 +53,8 @@ public class PlayerHealth : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
-            FindObjectOfType<GameManager>()?.EndGame();
+
+            FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
 
         StartCoroutine(DamageEffectCoroutine());
@@ -78,7 +79,9 @@ public class PlayerHealth : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
-            FindObjectOfType<GameManager>()?.EndGame();
+
+            int winnerPlayerNum = MatchResultStore.myPlayerNumber == 1 ? 2 : 1;
+            FindObjectOfType<GameManager>()?.EndGame(winnerPlayerNum);
         }
     }
 

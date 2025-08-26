@@ -7,6 +7,8 @@ public interface ISKILL
 
 public abstract class Skill : MonoBehaviour, ISKILL
 {
+    public int SkillIndex { get; set; }
+
     [Header("기본 연결")]
     public PlayerAbility playerAbility;
 
