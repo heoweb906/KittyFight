@@ -8,28 +8,6 @@ using System.Collections;
 
 
 
-// 메세지 종류 3개만 보내면 될듯
-
-// 점수판 보여주기
-// 스킬 선택창 보여주기
-// 스킬 골랐음
-
-// 점수판 보여주기
-// 스킬 선택창 보여주기
-// 스킬 골랐음
-
-// 점수판 보여주기
-// 스킬 선택창 보여주기
-// 스킬 골랐음
-
-// 점수판 보여주기
-// 스킬 선택창 보여주기
-// 스킬 골랐음
-
-
-
-
-
 public class SkillCardController : MonoBehaviour 
 {
     [Header("중요한 정보들")]
@@ -116,8 +94,6 @@ public class SkillCardController : MonoBehaviour
         if (skillDataList.Count == 0 || IsAnimating) return;
         iAuthorityPlayerNum = iPlayernum;
         IsAnimating = true;
-        int completed = 0;
-        int total = instances.Length;
 
         // 현재 플레이어의 PlayerAbility 가져오기
         PlayerAbility currentPlayerAbility = null;
@@ -134,11 +110,17 @@ public class SkillCardController : MonoBehaviour
         // iCardArray가 있으면 그 값들을 사용
         if (iCardArray != null && iCardArray.Length > 0)
         {
-            for (int i = 0; i < total && i < iCardArray.Length; i++)
+            for (int i = 0; i < instances.Length && i < iCardArray.Length; i++)
             {
                 int cardIndex = Mathf.Clamp(iCardArray[i], 0, skillDataList.Count - 1);
                 selectedIndices.Add(cardIndex);
             }
+
+            StartShowingCards(selectedIndices);
+            // 외부에서 받은 데이터라도 약간의 딜레이 추가
+            //DOVirtual.DelayedCall(0.05f, () => {
+               
+            //});
         }
         else
         {
@@ -160,67 +142,133 @@ public class SkillCardController : MonoBehaviour
                 return;
             }
 
-            // 랜덤 선택 로직
-            for (int i = 0; i < total; i++)
-            {
-                int idx = -1;
-                int attempts = 0;
-                do
-                {
-                    int randomFilteredIndex = Random.Range(0, filteredIndices.Count);
-                    idx = filteredIndices[randomFilteredIndex];
-                    attempts++;
-                }
-                while ((selectedIndices.Contains(idx) || IsSkillOwned(currentPlayerAbility, idx)) && attempts < 100);
 
-                selectedIndices.Add(idx);
+
+            List<int> availableIndices = new List<int>(filteredIndices);
+
+            // 이미 보유한 스킬 제거
+            for (int i = availableIndices.Count - 1; i >= 0; i--)
+            {
+                if (IsSkillOwned(currentPlayerAbility, availableIndices[i]))
+                {
+                    availableIndices.RemoveAt(i);
+                }
             }
 
-            // 메시지 전송 (랜덤 생성했을 때만)
+            // 사용 가능한 스킬이 부족하면 원래 리스트 사용
+            if (availableIndices.Count < instances.Length)
+            {
+                availableIndices = new List<int>(filteredIndices);
+            }
+
+            // 중복 없이 선택
+            for (int i = 0; i < instances.Length && availableIndices.Count > 0; i++)
+            {
+                int randomIndex = Random.Range(0, availableIndices.Count);
+                int selectedIdx = availableIndices[randomIndex];
+                selectedIndices.Add(selectedIdx);
+                availableIndices.RemoveAt(randomIndex); // 선택된 것은 제거
+            }
+
+
+
+            // 메시지 전송 후 약간의 딜레이를 두고 카드 표시
             P2PMessageSender.SendMessage(
                 SkillShowBuilder.Build(MatchResultStore.myPlayerNumber, selectedIndices.ToArray())
             );
+
+            StartShowingCards(selectedIndices);
+            // 메시지 전송 후 짧은 딜레이로 동기화 개선
+            //DOVirtual.DelayedCall(0.05f, () => {
+                
+            //});
         }
+    }
 
-        // 카드 표시
-        for (int i = 0; i < total; i++)
-        {
-            var card = instances[i];
-            if (card == null || targetPoints[i] == null)
-            {
-                completed++;
-                continue;
-            }
+    // 실제 카드 표시 로직을 분리한 함수
+    private void StartShowingCards(List<int> selectedIndices)
+    {
+        int completed = 0;
+        int total = instances.Length;
+        bool hasError = false;
 
-            if (i < selectedIndices.Count)
-            {
-                int idx = selectedIndices[i];
-                card.ApplyData(skillDataList[idx]);
-                card.ResetCardAnim();
-                card.gameObject.SetActive(true);
-                card.StartCardAnimation();
-
-                var currentCard = card;
-                card.transform.DOMove(targetPoints[i].position, 0.3f)
-                    .OnComplete(() =>
-                    {
-                        currentCard.StartFloatingAnimation();
-                        completed++;
-                        if (completed >= total)
-                        {
-                            IsAnimating = false;
-                            SetAllCanInteract(true);
-                        }
-                    });
-            }
-            else
-            {
-                completed++;
-            }
-        }
 
         FadeImage(1f, 0f).OnComplete(() =>
         {
+            InGameUiController.scoreBoardUIController.ActiveFalseBones();
+
+
+            for (int i = 0; i < total; i++)
+            {
+                var card = instances[i];
+                if (card == null || targetPoints[i] == null)
+                {
+                    completed++;
+                    if (completed >= total && !hasError)
+                    {
+                        CompleteCardShow();
+                    }
+                    continue;
+                }
+
+                if (i < selectedIndices.Count)
+                {
+                    int idx = selectedIndices[i];
+                    try
+                    {
+                        card.ApplyData(skillDataList[idx]);
+                        card.ResetCardAnim();
+                        card.gameObject.SetActive(true);
+                        card.StartCardAnimation();
+
+                        var currentCard = card;
+                        card.transform.DOMove(targetPoints[i].position, 0.3f)
+                            .OnComplete(() =>
+                            {
+                                if (!hasError)
+                                {
+                                    currentCard.StartFloatingAnimation();
+                                    completed++;
+                                    if (completed >= total)
+                                    {
+                                        CompleteCardShow();
+                                    }
+                                }
+                            })
+                            .OnKill(() =>
+                            {
+                                // Tween이 중단된 경우에도 completed 증가
+                                if (!hasError)
+                                {
+                                    completed++;
+                                    if (completed >= total)
+                                    {
+                                        CompleteCardShow();
+                                    }
+                                }
+                            });
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogError($"[SkillCardController] Error showing card {i}: {e.Message}");
+                        hasError = true;
+                        IsAnimating = false;
+                        return;
+                    }
+                }
+                else
+                {
+                    completed++;
+                    if (completed >= total && !hasError)
+                    {
+                        CompleteCardShow();
+                    }
+                }
+            }
+
+
+
+
             DOVirtual.DelayedCall(0.1f, () =>
             {
                 FadeImage(0f, 1f);
@@ -228,6 +276,12 @@ public class SkillCardController : MonoBehaviour
         });
     }
 
+    // 카드 표시 완료 처리를 별도 함수로 분리
+    private void CompleteCardShow()
+    {
+        IsAnimating = false;
+        SetAllCanInteract(true);
+    }
 
     // #. 이미 보유하고 있는 스킬인지 판단하는 함수
     private bool IsSkillOwned(PlayerAbility playerAbility, int skillIndex)
@@ -293,7 +347,7 @@ public class SkillCardController : MonoBehaviour
 
             DOVirtual.DelayedCall(1f, () =>
             {
-                effectRect.DOAnchorPos(Vector2.zero, 0.8f).SetEase(Ease.InBack).OnComplete(() =>
+                effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
                 {
                     FadeImage(1f, 0f).OnComplete(() =>
                     {
@@ -301,7 +355,7 @@ public class SkillCardController : MonoBehaviour
                         {
                             FadeImage(0f, 1f);
                             IsAnimating = false;
-                            DOVirtual.DelayedCall(1.2f, () =>
+                            DOVirtual.DelayedCall(0.9f, () =>
                             {
                                 InGameUiController.scoreBoardUIController.OpenScorePanel();
                             });

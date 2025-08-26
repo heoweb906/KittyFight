@@ -16,7 +16,7 @@ public class MatchManager : MonoBehaviour
     private string myPlayerId;
     private string myIp;
     private int myPort;
-    private string myNickname;
+    public string MyNickname { get; set; }
 
     private string localIp;
     private int localPort;
@@ -31,7 +31,7 @@ public class MatchManager : MonoBehaviour
         isMatching = true;
         // 1. 플레이어 ID 생성
         myPlayerId = Guid.NewGuid().ToString();
-        myNickname = nicknameInput.text;
+        MyNickname = nicknameInput.text;
 
         // 2. 로컬 포트 확보
         myPort = GetAvailablePort();
@@ -52,7 +52,7 @@ public class MatchManager : MonoBehaviour
         myPort = stunResult.PublicEndPoint.Port;
 
         // 4. 내 정보 Lambda에 저장
-        await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, myNickname);
+        await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, MyNickname);
 
         // 5. GameLift 매칭 시작
         AppendLog("Match Search Start!");
@@ -95,7 +95,7 @@ public class MatchManager : MonoBehaviour
         int myPlayerNumber = opponent.myPlayerNumber;
 
         MatchResultStore.myPlayerNumber = myPlayerNumber;
-        MatchResultStore.myNickname = myNickname;
+        MatchResultStore.myNickname = MyNickname;
         MatchResultStore.opponentNickname = opponent.nickname;
         MatchResultStore.opponentIp = targetIp;
         MatchResultStore.opponentPort = targetPort;

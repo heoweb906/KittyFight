@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sSkillName: 
   iAnimalNum: 0
-  iSkillIndex: 0
+  iSkillIndex: 133
   cardillustrationPivots: []
   sprite_Frame: {fileID: 0}
   sprite_SkillName: {fileID: 0}

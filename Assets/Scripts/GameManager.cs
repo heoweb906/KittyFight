@@ -179,32 +179,40 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
-        // 즉시 실행하지 말고 코루틴으로 처리
         StartCoroutine(EndGameSequence(iLosePlayerNum));
     }
 
     private IEnumerator EndGameSequence(int iLosePlayerNum)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
+        yield return new WaitForSeconds(0.5f);
+
         ResetGame();
     }
+
 
     private void ResetGame()
     {
         Debug.Log("Resetting Game");
+
+
         if (MatchResultStore.myPlayerNumber == 1)
         {
             int index = Random.Range(0, backgroundColorCandidates.Length);
             Color selectedColor = backgroundColorCandidates[index];
+
             P2PMessageSender.SendMessage(
                 BackgroundColorMessageBuilder.Build(selectedColor)
             );
             ApplyBackgroundColor(selectedColor);
         }
+
+
+
         if (player1 != null) player1.transform.position = spawnPoint1.position;
         if (player2 != null) player2.transform.position = spawnPoint2.position;
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
@@ -214,6 +222,7 @@ public class GameManager : MonoBehaviour
         gameEnded = false;
         ingameUIController?.StartGameTimer(90f);
     }
+
 
     public void ApplyBackgroundColor(Color color)
     {
