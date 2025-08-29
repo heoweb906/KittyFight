@@ -194,6 +194,9 @@ public class GameManager : MonoBehaviour
         ResetGame();
     }
 
+   
+    
+
 
     private void ResetGame()
     {

@@ -15,6 +15,7 @@ MonoBehaviour:
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 12
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots: []
   sprite_Frame: {fileID: 0}
   sprite_SkillName: {fileID: 0}

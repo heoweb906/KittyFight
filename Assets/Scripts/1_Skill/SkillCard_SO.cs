@@ -24,12 +24,20 @@ public class SkillCard_SO : ScriptableObject
     public int iSkillIndex;
     [Space(30)]
     [Header("스킬 기본 정보")]
+    public Sprite sprite_Icon;
+
+    [Header("스킬 기본 정보")]
     public CardillustrationPivot[] cardillustrationPivots;
     public Sprite sprite_Frame;
     public Sprite sprite_SkillName;
     public Sprite sprite_Keyword;
     public Sprite sprite_BorderLine_Left;
     public Sprite sprite_BorderLine_Right;
+
+
+
+
+
     [Space(10)]
     [Header("애니메이션 설정")]
     public CardAnimationType animationType = CardAnimationType.Number_5;
