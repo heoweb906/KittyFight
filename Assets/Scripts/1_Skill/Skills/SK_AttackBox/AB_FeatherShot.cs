@@ -12,7 +12,7 @@ public class AB_FeatherShot : AB_HitboxBase
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
-        victim.TakeDamage(damage);
+        victim.TakeDamage(damage, ownerAbility);
         if (destroyOnHit && this) Destroy(gameObject);
     }
 }
