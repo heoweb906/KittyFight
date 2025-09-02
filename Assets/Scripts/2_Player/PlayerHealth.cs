@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
 
     // Ability를 통해 playerNumber를 조회
     private PlayerAbility ability;
+    public AbilityEvents events;
 
     private void Awake()
     {
@@ -33,11 +34,24 @@ public class PlayerHealth : MonoBehaviour
 
         // 초기값 알림
         OnHPChanged?.Invoke(currentHP, maxHP);
+
+        if (!events && ability) events = ability.events;
+        if (!events) events = GetComponent<AbilityEvents>();  // 보강
     }
 
     public void TakeDamage(int damage)
     {
+        TakeDamage(damage, null);
+    }
+
+    public void TakeDamage(int damage, PlayerAbility attacker)
+    {
         if (isInvincible) return;
+
+        int amount = Mathf.Max(0, damage);
+
+        // 공격자
+        attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
 
         currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
@@ -89,5 +103,28 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHP = maxHP;
         OnHPChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void SetMaxHP(int newMax, bool keepCurrentRatio = false)
+    {
+        newMax = Mathf.Max(1, newMax);
+
+        if (keepCurrentRatio)
+        {
+            float ratio = maxHP > 0 ? (float)currentHP / maxHP : 1f;
+            currentHP = Mathf.Clamp(Mathf.RoundToInt(newMax * ratio), 0, newMax);
+        }
+        else
+        {
+            currentHP = Mathf.Clamp(currentHP, 0, newMax);
+        }
+
+        maxHP = newMax;
+        OnHPChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void AddMaxHP(int delta, bool keepCurrentRatio = false)
+    {
+        SetMaxHP(maxHP + delta, keepCurrentRatio);
     }
 }

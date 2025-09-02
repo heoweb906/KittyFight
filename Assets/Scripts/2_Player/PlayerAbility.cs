@@ -131,6 +131,7 @@ public class PlayerAbility : MonoBehaviour
 
         float duration = Mathf.Max(0f, overrideDuration ?? s.coolTime);
         events?.EmitModifyCooldown(type, ref duration);
+        events?.EmitCooldownFinalized(type, duration);
         StartCooldown(type, duration);
 
         // 바로 효과 실행
@@ -205,5 +206,31 @@ public class PlayerAbility : MonoBehaviour
         p.OnUnequip();
         passives.Remove(p);
         Destroy(p.gameObject);
+    }
+
+    // PS_KickStart 용
+    public void ReduceAllCooldowns(float seconds)
+    {
+        if (seconds <= 0f) return;
+
+        var now = Time.time;
+        var keys = new List<SkillType>(cooldowns.Keys);
+        foreach (var slot in keys)
+        {
+            var st = cooldowns[slot];
+            if (!st.active) continue;
+
+            st.endTime -= seconds;
+            st.duration = Mathf.Max(0f, st.endTime - now);
+
+            if (st.endTime <= now) // 쿨타임 종료
+            {
+                st.active = false;
+                st.duration = 0f;
+            }
+
+            cooldowns[slot] = st;
+            OnCooldownChanged?.Invoke(slot); // UI 갱신 등
+        }
     }
 }
