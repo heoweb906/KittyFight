@@ -118,5 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97f497f7934a1541a6c58c70c5a9c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerPlayerNumber: 0
+  singleHit: 1
+  lifeTime: 0.2
   blindnessDuration: 2.5

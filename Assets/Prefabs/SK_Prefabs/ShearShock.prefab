@@ -118,6 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10c9449d3b71444ab9f0bbe51025d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
-  knockbackForce: 10
-  ownerPlayerNumber: 0
+  singleHit: 1
+  lifeTime: 0.2
+  stunDuration: 2

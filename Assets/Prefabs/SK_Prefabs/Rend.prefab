@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleHit: 1
-  lifeTime: 1
+  lifeTime: 0.2
   damage: 35
