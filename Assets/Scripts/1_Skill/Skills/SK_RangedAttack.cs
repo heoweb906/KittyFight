@@ -11,7 +11,7 @@ public class SK_RangedAttack : Skill
     private void Awake()
     {
         coolTime = 3.0f;
-        aimRange = 2.5f;
+        aimRange = 1.0f;
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)

@@ -23,4 +23,9 @@ public class AB_FangShot : AB_HitboxBase
 
         if (destroyOnHit && this) Destroy(gameObject);
     }
+
+    protected override void OnEnvironmentHit(Collider other)
+    {
+        Destroy(gameObject);
+    }
 }

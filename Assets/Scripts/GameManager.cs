@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private GameObject player2;
     private int myNum;
     private bool gameEnded = false;
+    private PlayerAbility myAbility;
 
     [Header("양측 플레이어 Ability 참조")]
     public PlayerAbility playerAbility_1;
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (oppRb != null) oppRb.isKinematic = true;
 
         // Ability / Health 번호 세팅 (권위 일원화)
-        var myAbility = myPlayer.GetComponent<PlayerAbility>();
+        myAbility = myPlayer.GetComponent<PlayerAbility>();
         var oppAbility = opponentPlayer.GetComponent<PlayerAbility>();
 
         if (myAbility != null) myAbility.playerNumber = myNum;
@@ -179,32 +180,71 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
-        // 즉시 실행하지 말고 코루틴으로 처리
         StartCoroutine(EndGameSequence(iLosePlayerNum));
     }
 
     private IEnumerator EndGameSequence(int iLosePlayerNum)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
+        yield return new WaitForSeconds(0.5f);
+
         ResetGame();
     }
 
+    public void EndByTimer()
+    {
+        if (gameEnded) return;
+
+        int winner = GetWinnerByHP();
+        if (winner == -1)
+        {
+            // 동점 처리
+            return;
+        }
+
+        int loser = (winner == 1) ? 2 : 1;
+        EndGame(loser);
+    }
+
+    private int GetWinnerByHP()
+    {
+        int hp1 = GetHP(player1);
+        int hp2 = GetHP(player2);
+
+        if (hp1 == hp2) return -1; // 무승부
+        return (hp1 > hp2) ? 1 : 2;
+    }
+
+    private int GetHP(GameObject go)
+    {
+        if (go == null) return 0;
+        var ph = go.GetComponent<PlayerHealth>();
+        if (ph == null) return 0;
+
+        return ph.CurrentHP;
+    }
     private void ResetGame()
     {
         Debug.Log("Resetting Game");
+
+
         if (MatchResultStore.myPlayerNumber == 1)
         {
             int index = Random.Range(0, backgroundColorCandidates.Length);
             Color selectedColor = backgroundColorCandidates[index];
+
             P2PMessageSender.SendMessage(
                 BackgroundColorMessageBuilder.Build(selectedColor)
             );
             ApplyBackgroundColor(selectedColor);
         }
+
+
+
         if (player1 != null) player1.transform.position = spawnPoint1.position;
         if (player2 != null) player2.transform.position = spawnPoint2.position;
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
@@ -213,7 +253,10 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
         gameEnded = false;
         ingameUIController?.StartGameTimer(90f);
+
+        myAbility.events?.EmitRoundStart(0);
     }
+
 
     public void ApplyBackgroundColor(Color color)
     {

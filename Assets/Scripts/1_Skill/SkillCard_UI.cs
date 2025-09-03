@@ -171,7 +171,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
-        // if (!bCanInteract) return;
 
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
@@ -195,7 +194,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
-        // if (!bCanInteract) return;
 
         transform.DOScale(originalScale, tweenDuration);
 
@@ -216,6 +214,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         transform.DOScale(originalScale, tweenDuration);
 
+        image_GrayWall.DOFade(0f, tweenDuration);
+
         imageGroup_illustration.DOFade(1f, tweenDuration);
         image_CardTitle.rectTransform.DOAnchorPos(originalTitleAnchorPos, tweenDuration);
         image_CardKeyWord.DOColor(originalKeyWordColor, tweenDuration);
@@ -231,7 +231,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
-        // if (!bCanInteract) return;
 
         GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
  
@@ -247,8 +246,10 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         P2PMessageSender.SendMessage(
-     SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition)
+     SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition, skillCard_SO)
  );
+
+
 
         // UI 처리
         skillCardController.SetAllCanInteract(false);

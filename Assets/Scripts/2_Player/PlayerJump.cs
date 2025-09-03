@@ -25,6 +25,8 @@ public class PlayerJump : MonoBehaviour
             Vector3 velocity = rb.velocity;
             velocity.y = ability.jumpForce;
             rb.velocity = velocity;
+            // PS_KickStart
+            ability.events?.EmitJump();
         }
     }
 

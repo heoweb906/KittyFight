@@ -69,6 +69,7 @@ public class InGameUIController : MonoBehaviour
         if (gameTimer != null && gameTimer.Tick(Time.deltaTime))
         {
             // GameObject.FindObjectOfType<GameManager>()?.EndGame();
+            FindObjectOfType<GameManager>()?.EndByTimer();
         }
     }
 
@@ -120,7 +121,7 @@ public class InGameUIController : MonoBehaviour
 
     private IEnumerator OpenScorePanelAfterDelay(int winnerPlayerNum)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
         int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
         int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
@@ -133,6 +134,8 @@ public class InGameUIController : MonoBehaviour
 
         scoreBoardUIController.OpenScorePanel();
     }
+
+
 
     // #. 패배한 플레이어를 화면 중앙으로 오도록 배치하는 함수
     private void MovePlayerImageToCenter(int iLosePlayerNum)
@@ -150,24 +153,30 @@ public class InGameUIController : MonoBehaviour
         float offsetX = -playerImageWorldPosX;
 
         scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.DOAnchorPosX(
-     scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+     scoreBoardUIController.scoreImageElement_Player1.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.7f)
      .SetEase(Ease.OutQuart);
         scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.DOAnchorPosX(
-           scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.95f)
+           scoreBoardUIController.scoreImageElement_Player2.rectTransform_BackGround.anchoredPosition.x + offsetX, 0.7f)
            .SetEase(Ease.OutQuart)
-                    .OnComplete(() =>
-                    {
-                        DOVirtual.DelayedCall(0.8f, () =>
-                        {
-                            if (iLosePlayerNum != MatchResultStore.myPlayerNumber) return;
+                   .OnComplete(() =>
+                   {
+                       DOVirtual.DelayedCall(1f, () =>
+                       {
+                          
+                           int iWinnerScore = iLosePlayerNum == 1 ? gameManager.IntScorePlayer_2 : gameManager.IntScorePlayer_1;
+                           bool bActivePassive = (iWinnerScore == 2 || iWinnerScore == 6);
 
-                            scoreBoardUIController.ActiveFalseBones();
-
-                            int iWinnerScore = iLosePlayerNum == 1 ? gameManager.IntScorePlayer_2 : gameManager.IntScorePlayer_1;
-                            bool bActivePassive = (iWinnerScore == 2 || iWinnerScore == 6); 
-
-                            skillCardController.ShowSkillCardList(iLosePlayerNum, bActivePassive);
-                        });
-                    });
+                           // 패배한 플레이어만 권한을 가지고 스킬카드 생성하도록 수정
+                           if (iLosePlayerNum == MatchResultStore.myPlayerNumber)
+                           {
+                               skillCardController.ShowSkillCardList(iLosePlayerNum, bActivePassive);
+                           }
+                           else
+                           {
+                               // 승리한 플레이어는 대기 상태로 설정 (메시지 받을 준비)
+                               skillCardController.iAuthorityPlayerNum = iLosePlayerNum;
+                           }
+                       });
+                   });
     }
 }

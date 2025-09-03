@@ -9,14 +9,6 @@ public class CameraManager : MonoBehaviour
     [Header("Ä«¸Þ¶ó")]
     public GameObject objCamaera;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShakeCamera();
-        }
-    }
-
     private Sequence shakeSequence;
 
     public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
