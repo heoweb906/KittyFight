@@ -23,6 +23,9 @@ public class PlayerHealth : MonoBehaviour
     private PlayerAbility ability;
     public AbilityEvents events;
 
+
+    private bool hitEffectPending;   // 데미지 점멸
+
     private void Awake()
     {
         currentHP = maxHP;
@@ -37,6 +40,15 @@ public class PlayerHealth : MonoBehaviour
 
         if (!events && ability) events = ability.events;
         if (!events) events = GetComponent<AbilityEvents>();  // 보강
+    }
+
+    private void Update()
+    {
+        if (hitEffectPending && isActiveAndEnabled && gameObject.activeInHierarchy && !isInvincible)
+        {
+            hitEffectPending = false;
+            StartCoroutine(DamageEffectCoroutine()); // 메인 스레드에서 안전하게 시작
+        }
     }
 
     public void TakeDamage(int damage)
@@ -71,13 +83,14 @@ public class PlayerHealth : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
 
-        StartCoroutine(DamageEffectCoroutine());
+        //StartCoroutine(DamageEffectCoroutine());
+        hitEffectPending = true;
     }
 
     private IEnumerator DamageEffectCoroutine()
     {
         isInvincible = true;
-        if (rend != null) rend.material.color = Color.red;
+        if (rend != null) rend.material.color = Color.white;
 
         yield return new WaitForSeconds(invincibleTime);
 
@@ -88,8 +101,13 @@ public class PlayerHealth : MonoBehaviour
     // 원격 HP 확정값 반영
     public void RemoteSetHP(int hp)
     {
+        int prev = currentHP;
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+
+        if (currentHP < prev)
+            hitEffectPending = true;
+
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
