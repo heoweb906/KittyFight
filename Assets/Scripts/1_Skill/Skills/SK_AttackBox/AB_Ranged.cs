@@ -9,4 +9,9 @@ public class AB_Ranged : AB_HitboxBase
     {
         victim.TakeDamage(damage, ownerAbility);
     }
+
+    protected override void OnEnvironmentHit(Collider other)
+    {
+        Destroy(gameObject);
+    }
 }

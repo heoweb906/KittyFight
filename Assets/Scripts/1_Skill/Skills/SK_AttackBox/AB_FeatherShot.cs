@@ -15,4 +15,9 @@ public class AB_FeatherShot : AB_HitboxBase
         victim.TakeDamage(damage, ownerAbility);
         if (destroyOnHit && this) Destroy(gameObject);
     }
+
+    protected override void OnEnvironmentHit(Collider other)
+    {
+        Destroy(gameObject);
+    }
 }
