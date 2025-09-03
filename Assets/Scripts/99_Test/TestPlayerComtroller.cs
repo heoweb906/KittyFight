@@ -14,6 +14,8 @@ public class TestPlayerComtroller : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpInput;
     private bool dashInput;
+    private bool meleeInput;
+    private bool rangedInput;
 
 
     private void Awake()
@@ -30,9 +32,13 @@ public class TestPlayerComtroller : MonoBehaviour
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         jumpInput = Input.GetKeyDown(KeyCode.Space);
         dashInput = Input.GetKeyDown(KeyCode.LeftShift);
+        meleeInput = Input.GetMouseButtonDown(0);
+        rangedInput = Input.GetMouseButtonDown(1);
 
         if (jumpInput) jump.TryJump();
         if (dashInput) TryExecuteAimedSkill(SkillType.Dash);
+        if (meleeInput) TryExecuteAimedSkill(SkillType.Melee);
+        if (rangedInput) TryExecuteAimedSkill(SkillType.Ranged);
     }
 
     private void FixedUpdate()

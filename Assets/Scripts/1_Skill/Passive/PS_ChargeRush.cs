@@ -21,14 +21,14 @@ public class PS_ChargeRush : Passive
         e.OnDashWillExecute += OnDashWillExecute;
 
         // 3) 대쉬가 실행되어 쿨다운이 걸리면 리셋
-        e.OnModifyCooldown += OnModifyCooldown;
+        e.OnCooldownFinalized += OnCooldownFinalized;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnTick -= OnTick;
         e.OnDashWillExecute -= OnDashWillExecute;
-        e.OnModifyCooldown -= OnModifyCooldown;
+        e.OnCooldownFinalized -= OnCooldownFinalized;
     }
 
     void OnTick(float dt)
@@ -36,7 +36,7 @@ public class PS_ChargeRush : Passive
         idleSinceDash = Mathf.Min(maxChargeSeconds, idleSinceDash + dt);
     }
 
-    void OnModifyCooldown(SkillType slot, ref float seconds)
+    void OnCooldownFinalized(SkillType slot, float seconds)
     {
         if (slot != SkillType.Dash) return;
 

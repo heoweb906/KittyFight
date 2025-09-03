@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 8667721077074239387}
   - component: {fileID: 898473161637626695}
   - component: {fileID: 1559159667772888511}
+  - component: {fileID: -8924510803427197770}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -429,6 +430,9 @@ MonoBehaviour:
   dash: {fileID: 0}
   skill1: {fileID: 0}
   skill2: {fileID: 0}
+  events: {fileID: 0}
+  passives: []
+  initialPassives: []
   playerNumber: 2
 --- !u!114 &5848055480860405593
 MonoBehaviour:
@@ -454,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562f614446cf7a94aa2ba2f29b227662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualPivot: {fileID: 0}
 --- !u!114 &8667721077074239387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 90
   invincibleTime: 1
+  events: {fileID: 0}
 --- !u!114 &1559159667772888511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +497,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b58b2729e2ff85b478c864a7822f81e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8924510803427197770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001395786464291979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b42cbf84dee4b468bc62161b3605f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6256541957834101067

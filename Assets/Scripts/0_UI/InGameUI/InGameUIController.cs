@@ -69,6 +69,7 @@ public class InGameUIController : MonoBehaviour
         if (gameTimer != null && gameTimer.Tick(Time.deltaTime))
         {
             // GameObject.FindObjectOfType<GameManager>()?.EndGame();
+            FindObjectOfType<GameManager>()?.EndByTimer();
         }
     }
 

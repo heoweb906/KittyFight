@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8412478699033323130}
   - component: {fileID: 4443636851060309739}
   - component: {fileID: 4574550274525587615}
-  - component: {fileID: -1656436049708307982}
+  - component: {fileID: -1800038675427722978}
   m_Layer: 0
-  m_Name: Eggsplosion
+  m_Name: FuryBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1656436049708307982
+--- !u!114 &-1800038675427722978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,9 +115,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6777267630284458099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97f497f7934a1541a6c58c70c5a9c0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 47771a1c4c6119a47821608ee522006c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   singleHit: 1
   lifeTime: 0.2
-  blindnessDuration: 2.5
+  damageToOthers: 20

@@ -22,7 +22,7 @@ public class AB_BullRush : AB_HitboxBase
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
         // 피해
-        victim.TakeDamage(damage);
+        victim.TakeDamage(damage, ownerAbility);
 
         // 넉백: 돌진 방향 + 상향 성분
         var rb = victim.GetComponent<Rigidbody>();
