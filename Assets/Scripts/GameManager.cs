@@ -195,7 +195,38 @@ public class GameManager : MonoBehaviour
         ResetGame();
     }
 
+    public void EndByTimer()
+    {
+        if (gameEnded) return;
 
+        int winner = GetWinnerByHP();
+        if (winner == -1)
+        {
+            // 悼痢 贸府
+            return;
+        }
+
+        int loser = (winner == 1) ? 2 : 1;
+        EndGame(loser);
+    }
+
+    private int GetWinnerByHP()
+    {
+        int hp1 = GetHP(player1);
+        int hp2 = GetHP(player2);
+
+        if (hp1 == hp2) return -1; // 公铰何
+        return (hp1 > hp2) ? 1 : 2;
+    }
+
+    private int GetHP(GameObject go)
+    {
+        if (go == null) return 0;
+        var ph = go.GetComponent<PlayerHealth>();
+        if (ph == null) return 0;
+
+        return ph.CurrentHP;
+    }
     private void ResetGame()
     {
         Debug.Log("Resetting Game");
