@@ -26,6 +26,9 @@ public class PlayerHealth : MonoBehaviour
 
     private bool hitEffectPending;   // 데미지 점멸
 
+    [Header("Effects")]
+    [SerializeField] public GameObject hitEffectPrefab;
+
     private void Awake()
     {
         currentHP = maxHP;
@@ -51,6 +54,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    private void ShakeCamera(float strength)
+    {
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCamera(Mathf.Clamp01(strength), 0.2f);
+    }
+
     public void TakeDamage(int damage)
     {
         TakeDamage(damage, null);
@@ -65,7 +74,7 @@ public class PlayerHealth : MonoBehaviour
         // 공격자
         attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
 
-        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
 
         // 권위 판정: Ability.playerNumber 기준
@@ -85,12 +94,25 @@ public class PlayerHealth : MonoBehaviour
 
         //StartCoroutine(DamageEffectCoroutine());
         hitEffectPending = true;
+
+
+        float selfShake = 0.15f + Mathf.FloorToInt(amount/10) * 0.08f;
+        ShakeCamera(selfShake);
     }
 
     private IEnumerator DamageEffectCoroutine()
     {
         isInvincible = true;
         if (rend != null) rend.material.color = Color.white;
+
+        if (hitEffectPrefab != null)
+        {
+            Instantiate(
+                hitEffectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
+        }
 
         yield return new WaitForSeconds(invincibleTime);
 
@@ -114,6 +136,13 @@ public class PlayerHealth : MonoBehaviour
 
             int winnerPlayerNum = MatchResultStore.myPlayerNumber == 1 ? 2 : 1;
             FindObjectOfType<GameManager>()?.EndGame(winnerPlayerNum);
+        }
+
+        int dealt = Mathf.Max(0, prev - currentHP);
+        if (dealt > 0)
+        {
+            float oppHitShake = 0.09f + Mathf.FloorToInt(dealt/10f) * 0.08f;
+            ShakeCamera(oppHitShake);
         }
     }
 
