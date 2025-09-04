@@ -15,6 +15,7 @@ MonoBehaviour:
   sSkillName: FeatherShot
   iAnimalNum: 10
   iSkillIndex: 22
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots:
   - sprite_Cardillustration: {fileID: 21300000, guid: e67bc0256d07cff4fa10f006a86d40bc,
       type: 3}
@@ -58,6 +59,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
     type: 3}
-  animationType: 2
+  animationType: 0
   description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
     <color=#FF0000>0.5</color> damage</color>

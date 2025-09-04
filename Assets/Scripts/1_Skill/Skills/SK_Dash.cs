@@ -15,6 +15,9 @@ public class SK_Dash : Skill
     [Header("패시브")]
     public AbilityEvents events;                      // Charge Rush 등에서 거리/속도 보정용
 
+    [Header("카메라")]
+    public float shakeAmount = 0.09f;
+
     private void Awake()
     {
         coolTime = 1.0f;
@@ -78,6 +81,12 @@ public class SK_Dash : Skill
             duration = maxDistance / desiredSpeed;
 
         StartCoroutine(DashLerp(startPos, targetPos, duration));
+
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
+        }
     }
 
     private IEnumerator DashLerp(Vector3 startPos, Vector3 targetPos, float duration)

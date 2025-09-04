@@ -245,6 +245,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             targetPlayerAbility.SetSkill(targetSlot, skillComponent);
         }
 
+
         P2PMessageSender.SendMessage(
      SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition, skillCard_SO)
  );

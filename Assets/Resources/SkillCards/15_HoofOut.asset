@@ -15,6 +15,7 @@ MonoBehaviour:
   sSkillName: 
   iAnimalNum: 7
   iSkillIndex: 15
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots:
   - sprite_Cardillustration: {fileID: 21300000, guid: 28964125f42914748a4f1399bd53ebf9,
       type: 3}
@@ -121,6 +122,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: d2c4c755f4994ad46b264d765472aeed,
     type: 3}
-  animationType: 1
+  animationType: 0
   description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
     damage and launching them away</color>

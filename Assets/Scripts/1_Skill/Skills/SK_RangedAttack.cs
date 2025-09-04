@@ -8,6 +8,9 @@ public class SK_RangedAttack : Skill
     [SerializeField] private Material p1Material;
     [SerializeField] private Material p2Material;
 
+    [Header("카메라")]
+    public float shakeAmount = 0.06f;
+
     private void Awake()
     {
         coolTime = 3.0f;
@@ -32,6 +35,13 @@ public class SK_RangedAttack : Skill
         // 힘/속도 부여(그저 앞으로 날리기)
         var rb = proj.GetComponent<Rigidbody>();
         if (rb) rb.velocity = direction * projectileSpeed;
+
+
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
+        }
     }
 
     private void ApplyPerPlayerMaterial(GameObject go)

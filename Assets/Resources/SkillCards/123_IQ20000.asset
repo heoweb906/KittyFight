@@ -15,6 +15,7 @@ MonoBehaviour:
   sSkillName: 
   iAnimalNum: 9
   iSkillIndex: 123
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots:
   - sprite_Cardillustration: {fileID: 21300000, guid: 077ec680018c29240b67767ac20bb88f,
       type: 3}
@@ -93,6 +94,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 2950889d9540c7d4ebbd3966343d9926,
     type: 3}
-  animationType: 3
+  animationType: 0
   description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
     by <color=#00BFFF>2</color></color>
