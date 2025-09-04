@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class SK_MeleeAttack : Skill
 {
-    [Header("Visuals")]
-    [SerializeField] private Material p1Material;
-    [SerializeField] private Material p2Material;
-
     public AbilityEvents events;
+
+    [Header("Effects")]
+    [SerializeField] private GameObject meleeEffectPrefab;   // 근접공격 이펙트
+
+    [Header("카메라")]
+    public float shakeAmount = 0.24f;
+
     private void Awake()
     {
         coolTime = 3.0f;
@@ -39,18 +42,11 @@ public class SK_MeleeAttack : Skill
         var ab = hitbox.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
-        ApplyPerPlayerMaterial(hitbox);
-    }
 
-    private void ApplyPerPlayerMaterial(GameObject go)
-    {
-        var mat = (playerAbility.playerNumber == 1) ? p1Material : p2Material;
-        if (mat == null) return;
-
-        var renderers = go.GetComponentsInChildren<Renderer>(true);
-        foreach (var r in renderers)
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
-            r.sharedMaterial = mat;
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
         }
     }
 }
