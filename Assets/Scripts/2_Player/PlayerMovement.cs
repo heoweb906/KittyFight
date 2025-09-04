@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (visualPivot != null)
             {
-                float yaw = input.x > 0 ? 50f : -50f;
+                float yaw = input.x > 0 ? 230f : 130f;
                 visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
             }
         }

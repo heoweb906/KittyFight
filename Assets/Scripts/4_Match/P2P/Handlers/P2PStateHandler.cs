@@ -23,7 +23,31 @@ public class P2PStateHandler : IP2PMessageHandler
         opponentPlayer.transform.position = state.position;
         opponentPlayer.transform.rotation = Quaternion.Euler(0, state.rotationY, 0);
 
-        if (anim != null && !string.IsNullOrEmpty(state.anim))
-            anim.SetTrigger(state.anim);
+        var dir = Quaternion.Euler(0f, state.rotationY, 0f) * Vector3.forward;
+        bool facingRight = dir.x > 0f;
+
+        var pm = opponentPlayer.GetComponent<PlayerMovement>();
+        if (pm != null && pm.visualPivot != null)
+        {
+            float yaw = facingRight ? 230f : 130f;
+            pm.visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
+        }
+
+        // ¿Ã∆Â∆Æ √≥∏Æ
+        var pj = opponentPlayer.GetComponent<PlayerJump>();
+        if (pj != null)
+        {
+            pj.SetWalking(state.walking);
+
+            // Jump ø¯º¶ ¿Ã∆Â∆Æ
+            if (!string.IsNullOrEmpty(state.anim) && state.anim == "Jump" && pj.jumpEffectPrefab != null)
+            {
+                Object.Instantiate(
+                    pj.jumpEffectPrefab,
+                    opponentPlayer.transform.position,
+                    Quaternion.Euler(-90f, 0f, 0f)
+                );
+            }
+        }
     }
 }

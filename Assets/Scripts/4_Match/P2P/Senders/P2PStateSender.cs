@@ -17,12 +17,19 @@ public class P2PStateSender : P2PManager
     {
         if (myPlayer == null) return;
 
-        string animState = GetCurrentAnim();
+        string evtOnce = UpdateManager.ConsumeEventOnce(); // "Jump" ¶Ç´Â null
+        //string animState = GetCurrentAnim();
+        
+        bool walking = false;
+        var pj = myPlayer.GetComponent<PlayerJump>();
+        if (pj != null) walking = pj.IsWalking;
+
         var msg = PlayerStateMessageBuilder.Build(
             myPlayer.transform.position,
             myPlayer.transform.eulerAngles.y,
             myPlayerNumber,
-            animState
+            evtOnce,
+            walking
         );
 
         P2PMessageSender.SendMessage(msg);
