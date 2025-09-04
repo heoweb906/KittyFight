@@ -5295,9 +5295,9 @@ GameObject:
   - component: {fileID: 909865285}
   - component: {fileID: 909865284}
   - component: {fileID: 909865283}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: KillZone (2)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5310,8 +5310,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909865281}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15, y: 7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12, y: 7, z: 0}
   m_LocalScale: {x: 2, y: 30, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5330,6 +5330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethalDamage: 10000
+  explodeEffectPrefab: {fileID: 4933376540619601575, guid: 6f5bab4cb44cc464b989b91351c74fce,
+    type: 3}
 --- !u!54 &909865284
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5474,9 +5476,9 @@ GameObject:
   - component: {fileID: 927227048}
   - component: {fileID: 927227047}
   - component: {fileID: 927227046}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: KillZone (1)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5489,8 +5491,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 927227044}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12, y: 7, z: 0}
   m_LocalScale: {x: 2, y: 30, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5509,6 +5511,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethalDamage: 10000
+  explodeEffectPrefab: {fileID: 4933376540619601575, guid: 6f5bab4cb44cc464b989b91351c74fce,
+    type: 3}
 --- !u!54 &927227047
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8145,9 +8149,9 @@ GameObject:
   - component: {fileID: 1473579533}
   - component: {fileID: 1473579532}
   - component: {fileID: 1473579531}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: KillZone
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8160,8 +8164,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473579529}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -5.3, z: 0}
   m_LocalScale: {x: 30, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8180,6 +8184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lethalDamage: 10000
+  explodeEffectPrefab: {fileID: 4933376540619601575, guid: 6f5bab4cb44cc464b989b91351c74fce,
+    type: 3}
 --- !u!54 &1473579532
 Rigidbody:
   m_ObjectHideFlags: 0
