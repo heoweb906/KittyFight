@@ -14,11 +14,13 @@ public abstract class Passive : MonoBehaviour
         Subscribe(events);
     }
 
+
     public virtual void OnUnequip()
     {
         if (events != null) Unsubscribe(events);
         events = null; ability = null;
     }
+
 
     protected virtual void Subscribe(AbilityEvents e) { }
     protected virtual void Unsubscribe(AbilityEvents e) { }

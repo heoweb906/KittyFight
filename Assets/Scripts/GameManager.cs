@@ -183,6 +183,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(EndGameSequence(iLosePlayerNum));
     }
 
+
     private IEnumerator EndGameSequence(int iLosePlayerNum)
     {
         yield return new WaitForSeconds(1f);
@@ -190,10 +191,13 @@ public class GameManager : MonoBehaviour
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
-        yield return new WaitForSeconds(0.5f);
 
-        ResetGame();
+        //yield return new WaitForSeconds(0.5f);
+
+        //ResetGame();
     }
+
+
 
     public void EndByTimer()
     {
@@ -227,7 +231,7 @@ public class GameManager : MonoBehaviour
 
         return ph.CurrentHP;
     }
-    private void ResetGame()
+    public void ResetGame()
     {
         Debug.Log("Resetting Game");
 

@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
 
     private Sequence shakeSequence;
 
+
     public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
     {
         if (objCamaera == null) return;

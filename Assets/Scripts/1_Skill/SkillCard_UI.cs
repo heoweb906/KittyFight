@@ -233,16 +233,28 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
 
         GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
- 
         PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
             ? skillCardController.InGameUiController.gameManager.playerAbility_1
             : skillCardController.InGameUiController.gameManager.playerAbility_2;
 
-        Skill skillComponent = skillObj.GetComponent<Skill>();
-        if (skillComponent != null)
+        if (skillCard_SO.cardType == CardType.Active)
         {
-            SkillType targetSlot = targetPlayerAbility.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
-            targetPlayerAbility.SetSkill(targetSlot, skillComponent);
+            // 액티브 스킬 처리
+            Skill skillComponent = skillObj.GetComponent<Skill>();
+            if (skillComponent != null)
+            {
+                SkillType targetSlot = targetPlayerAbility.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
+                targetPlayerAbility.SetSkill(targetSlot, skillComponent);
+            }
+        }
+        else if (skillCard_SO.cardType == CardType.Passive)
+        {
+            // 패시브 스킬 처리
+            Passive passiveComponent = skillObj.GetComponent<Passive>();
+            if (passiveComponent != null)
+            {
+                targetPlayerAbility.EquipPassive(passiveComponent);
+            }
         }
 
 

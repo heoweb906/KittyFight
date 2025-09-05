@@ -79,7 +79,6 @@ public class PlayerHealth : MonoBehaviour
         if (currentHP <= 0)
         {
             Debug.Log("Lose");
-
             FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
 
