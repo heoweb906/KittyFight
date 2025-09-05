@@ -204,11 +204,6 @@ public class GameManager : MonoBehaviour
         if (gameEnded) return;
 
         int winner = GetWinnerByHP();
-        if (winner == -1)
-        {
-            // 悼痢 贸府
-            return;
-        }
 
         int loser = (winner == 1) ? 2 : 1;
         EndGame(loser);
@@ -219,7 +214,10 @@ public class GameManager : MonoBehaviour
         int hp1 = GetHP(player1);
         int hp2 = GetHP(player2);
 
-        if (hp1 == hp2) return -1; // 公铰何
+        if (hp1 == hp2)
+        {
+            return (hp1 % 2 == 1) ? 1 : 2;
+        }
         return (hp1 > hp2) ? 1 : 2;
     }
 

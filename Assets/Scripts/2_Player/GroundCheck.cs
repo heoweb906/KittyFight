@@ -13,11 +13,15 @@ public class GroundCheck : MonoBehaviour
     {
         if (other.CompareTag("Ground"))
             jumpScript.SetGrounded(true);
+        if (other.CompareTag("Wall"))
+            jumpScript.SetGrounded(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Ground"))
+            jumpScript.SetGrounded(false);
+        if (other.CompareTag("Wall"))
             jumpScript.SetGrounded(false);
     }
 }

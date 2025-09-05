@@ -7,5 +7,6 @@ public class PlayerState
     public Vector3 position;
     public float rotationY;
     public string anim;
+    public bool walking;
     public double time;
 }

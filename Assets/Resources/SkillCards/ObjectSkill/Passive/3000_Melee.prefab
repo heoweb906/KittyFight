@@ -53,3 +53,5 @@ MonoBehaviour:
   p1Material: {fileID: 2100000, guid: 9155458aed9b38848b6949d5c0f7a960, type: 2}
   p2Material: {fileID: 2100000, guid: 5cc840b250e862846914600b1801463f, type: 2}
   events: {fileID: 0}
+  meleeEffectPrefab: {fileID: 7243278475803563119, guid: 1a45ae6741eb29d4d99d4547ec940881,
+    type: 3}
