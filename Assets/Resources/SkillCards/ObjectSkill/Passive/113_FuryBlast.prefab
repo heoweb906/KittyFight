@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 10
   selfDamage: 10
-  selfDamageLocalOnly: 1
+  selfDamageLocalOnly: 0
   blastHitboxPrefab: {fileID: 6777267630284458099, guid: 4893bcb7972e8e341ae6afbd9daa19aa,
     type: 3}
   explosionFxPrefab: {fileID: 0}

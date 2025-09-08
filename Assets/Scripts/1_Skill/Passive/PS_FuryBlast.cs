@@ -5,7 +5,7 @@ public class PS_FuryBlast : Passive
     [Header("주기/자해")]
     public float interval = 10f;        // 10초마다
     public int selfDamage = 10;         // 본인은 1 데미지
-    public bool selfDamageLocalOnly = true;
+    public bool selfDamageLocalOnly = false;
 
     [Header("프리팹/연출")]
     public GameObject blastHitboxPrefab;    // AB_FuryBlast 프리팹
