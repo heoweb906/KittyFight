@@ -20,14 +20,26 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
         var model = JsonUtility.FromJson<Model_SkillSelect>(msg.Substring("[SKILL_SELECT]".Length));
         if (model.iPlayer == myPlayerNumber) return;
 
-  
         GameObject objSkill = skillCardController.CreateSkillInstance(model.skillCard_SO);
- 
-        Skill skillComponent = objSkill.GetComponent<Skill>();
-        if (skillComponent != null)
+
+        if (model.skillCard_SO.cardType == CardType.Active)
         {
-            SkillType targetSlot = playerAbilityOpponent.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
-            playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
+            // 액티브 스킬 처리
+            Skill skillComponent = objSkill.GetComponent<Skill>();
+            if (skillComponent != null)
+            {
+                SkillType targetSlot = playerAbilityOpponent.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
+                playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
+            }
+        }
+        else if (model.skillCard_SO.cardType == CardType.Passive)
+        {
+            // 패시브 스킬 처리
+            Passive passiveComponent = objSkill.GetComponent<Passive>();
+            if (passiveComponent != null)
+            {
+                playerAbilityOpponent.EquipPassive(passiveComponent);
+            }
         }
 
         skillCardController.SetAllCanInteract(false);

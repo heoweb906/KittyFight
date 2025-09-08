@@ -284,7 +284,7 @@ Shader "Toony Colors Pro 2/Examples URP/Cat Demo/Cat/Style 5"
 			float size = 1;
 		
 		#if !defined(SHADOWCASTER_PASS)
-			output.vertex = UnityObjectToClipPos(v.vertex.xyz + normal * __outlineWidth * size * 0.01);
+			output.vertex = UnityObjectToClipPos(v.vertex.xyz + normal * __outlineWidth * size * 0.1);
 		#else
 			v.vertex = v.vertex + float4(normal,0) * __outlineWidth * size * 0.01;
 		#endif

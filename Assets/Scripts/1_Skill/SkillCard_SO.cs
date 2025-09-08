@@ -9,6 +9,13 @@ public enum CardAnimationType
     Number_123,
 }
 
+public enum CardType
+{
+    Active,
+    Passive
+}
+
+
 [System.Serializable]
 public class CardillustrationPivot
 {
@@ -19,6 +26,7 @@ public class CardillustrationPivot
 [CreateAssetMenu(fileName = "NewSkillCard", menuName = "Skill System/Skill Card")]
 public class SkillCard_SO : ScriptableObject
 {
+    public CardType cardType = CardType.Active;
     public string sSkillName;
     public int iAnimalNum;
     public int iSkillIndex;

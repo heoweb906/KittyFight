@@ -31,8 +31,8 @@ public class SK_Dash : Skill
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         // 로컬 소유자만 실제 이동 (원격은 쿨타임/UI만), 개발 확인 시에는 주석바람
-        //if (playerAbility == null || playerAbility.playerNumber != MatchResultStore.myPlayerNumber)
-        //    return;
+        if (playerAbility == null || playerAbility.playerNumber != MatchResultStore.myPlayerNumber)
+            return;
 
         if (!rb)
         {

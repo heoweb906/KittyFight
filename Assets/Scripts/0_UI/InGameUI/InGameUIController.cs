@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class InGameUIController : MonoBehaviour
 {
@@ -121,7 +122,10 @@ public class InGameUIController : MonoBehaviour
 
     private IEnumerator OpenScorePanelAfterDelay(int winnerPlayerNum)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
+
+        gameManager.ResetGame();
+
 
         int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
         int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
@@ -129,12 +133,11 @@ public class InGameUIController : MonoBehaviour
         if (winPlayerCurrentScore % 2 == 0)
         {
             MovePlayerImageToCenter(iLosePlayerNum);
-            yield return new WaitForSeconds(float.MaxValue);
+            yield break; 
         }
 
         scoreBoardUIController.OpenScorePanel();
     }
-
 
 
     // #. 패배한 플레이어를 화면 중앙으로 오도록 배치하는 함수
@@ -160,7 +163,7 @@ public class InGameUIController : MonoBehaviour
            .SetEase(Ease.OutQuart)
                    .OnComplete(() =>
                    {
-                       DOVirtual.DelayedCall(1f, () =>
+                       DOVirtual.DelayedCall(1.5f, () =>
                        {
                           
                            int iWinnerScore = iLosePlayerNum == 1 ? gameManager.IntScorePlayer_2 : gameManager.IntScorePlayer_1;
@@ -179,4 +182,7 @@ public class InGameUIController : MonoBehaviour
                        });
                    });
     }
+
+
+
 }

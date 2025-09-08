@@ -215,18 +215,24 @@ public class PlayerAbility : MonoBehaviour
 
         var now = Time.time;
         var keys = new List<SkillType>(cooldowns.Keys);
+
         foreach (var slot in keys)
         {
             var st = cooldowns[slot];
             if (!st.active) continue;
 
-            st.endTime -= seconds;
-            st.duration = Mathf.Max(0f, st.endTime - now);
+            float remaining = Mathf.Max(0f, st.endTime - now);
 
-            if (st.endTime <= now) // ÄðÅ¸ÀÓ Á¾·á
+            remaining = Mathf.Max(0f, remaining - seconds);
+
+            if (remaining <= 0f)
             {
                 st.active = false;
-                st.duration = 0f;
+                st.endTime = now;
+            }
+            else
+            {
+                st.endTime = now + remaining;
             }
 
             cooldowns[slot] = st;
