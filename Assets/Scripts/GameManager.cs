@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using DG.Tweening.Core.Easing;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,10 +40,15 @@ public class GameManager : MonoBehaviour
     [Header("양측 플레이어 Ability 참조")]
     public PlayerAbility playerAbility_1;
     public PlayerAbility playerAbility_2;
+
     // #. 양측 플레이어 점수
     public int IntScorePlayer_1 {  get; set; }
     public int IntScorePlayer_2 {  get; set; }
 
+    // #. 맵 기믹 활용 -> 나중에 분리할 수도 있음
+    public int IntMapGimicnumber { get; set; }      // 현재 적용되어 있는 맵 미기 번호
+    public bool BoolAcitveMapGimic { get; set; }    // 현재 맵 기믹이 적용되어 있음
+    
 
     private readonly Color[] backgroundColorCandidates = new Color[]
     {
@@ -60,6 +66,9 @@ public class GameManager : MonoBehaviour
 
         IntScorePlayer_1 = 0;
         IntScorePlayer_2 = 0;
+
+        IntMapGimicnumber = 0;
+        BoolAcitveMapGimic = false;
     }
 
     private void Update()
@@ -191,9 +200,7 @@ public class GameManager : MonoBehaviour
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
-
         //yield return new WaitForSeconds(0.5f);
-
         //ResetGame();
     }
 
@@ -233,18 +240,25 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Game");
 
-
         if (MatchResultStore.myPlayerNumber == 1)
         {
             int index = Random.Range(0, backgroundColorCandidates.Length);
             Color selectedColor = backgroundColorCandidates[index];
 
-            P2PMessageSender.SendMessage(
-                BackgroundColorMessageBuilder.Build(selectedColor)
-            );
-            ApplyBackgroundColor(selectedColor);
-        }
+            // 맵 기믹 처리
+            int randomValue = 0;
+            if ((IntScorePlayer_1 + IntScorePlayer_2) % 1 == 0 && (IntScorePlayer_1 + IntScorePlayer_2) > 0)
+            {
+                randomValue = Random.Range(1, 13);
+                BoolAcitveMapGimic = true;
+            }
 
+            P2PMessageSender.SendMessage( 
+                BackgroundColorMessageBuilder.Build(selectedColor, randomValue) 
+            ); 
+
+            ApplyBackgroundColor(selectedColor); 
+        }
 
 
         if (player1 != null) player1.transform.position = spawnPoint1.position;

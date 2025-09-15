@@ -12,75 +12,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 123_IQ20000
   m_EditorClassIdentifier: 
+  cardType: 1
   sSkillName: 
   iAnimalNum: 9
   iSkillIndex: 123
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots:
-  - sprite_Cardillustration: {fileID: 21300000, guid: 077ec680018c29240b67767ac20bb88f,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 32406989b96cee040b0c816750f297f3,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: d088c94ddf9b56a40b8055c13d5c6fab,
+  - sprite_Cardillustration: {fileID: 21300000, guid: dc6b75a1caf5fe54eaaac4aae3f8d544,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 39290e686287b6b4d802edade9c9cc02,
+  - sprite_Cardillustration: {fileID: 21300000, guid: b6643698a4e0f2743a17d983d620eaf5,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 012f046807469404e810203217eaa91b,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3813d1ef00b90e44382a5f52b49dbbca,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 9beec55a458d77b46acf6ba5dd3ca46e,
+  - sprite_Cardillustration: {fileID: 21300000, guid: d3bcb566c33595d4194fb066d8a3b2a6,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 04a7bde4704134f49918a5a3d07ad5f8,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 31e6af0c1d54eab47914de09d5ed57e7,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: d2bcb1e869e6d5b4ea3076300440e127,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9ab5611985fcdfe49abab46fb163c1f3,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: ea6ebf545ee40634ebe837c2353efd22,
+  - sprite_Cardillustration: {fileID: 21300000, guid: f1ec3386ac3a4b34e96c74c19f50bfb7,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: -340
       m_Bottom: 340
-  - sprite_Cardillustration: {fileID: 21300000, guid: 6536d1e927399b846bc9e5f04aabc087,
+  - sprite_Cardillustration: {fileID: 21300000, guid: eec8bf0f5828f5d4b9e9a6aefaec49d1,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: -340
       m_Bottom: 340
-  - sprite_Cardillustration: {fileID: 21300000, guid: 404efea4097fd3f4bb3145213052a33f,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5e3ac85271065a941a20eee0e30d025a,
       type: 3}
     margins:
       m_Left: 0
@@ -88,12 +89,12 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 7113af02762a6f64e8d4b0f0cf788d3e, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 669b57a0dda5ae24c870646d231919b1, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: d3963f5bef274284795a88b9ab2f8823,
+  sprite_SkillName: {fileID: 21300000, guid: 71fc88325bfaf7e4c8c32a3a110b5f59, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: faa92d2693658934e8e11571ae209516, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 631603f98c3225042a9fc90c22846268,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 2950889d9540c7d4ebbd3966343d9926,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
     type: 3}
-  animationType: 0
+  animationType: 11
   description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
     by <color=#00BFFF>2</color></color>

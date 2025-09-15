@@ -36,6 +36,7 @@ public class InGameUIController : MonoBehaviour
     [Header("관리하는 UI 컨트롤러들")]
     public SkillCardController skillCardController;
     public ScoreBoardUIController scoreBoardUIController;
+    public MapBoardController mapBoardController;
 
     [Header("연출용")]
     public Image image_FadeOut_White;
@@ -57,7 +58,7 @@ public class InGameUIController : MonoBehaviour
 
         scoreBoardUIController = this.GetComponent<ScoreBoardUIController>();
         scoreBoardUIController.Initialize(this, canvasMain.transform);
-
+        mapBoardController.Initialize(this, canvasMain.transform);
     }
 
     public void StartGameTimer(float duration)
@@ -73,6 +74,17 @@ public class InGameUIController : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndByTimer();
         }
     }
+
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            mapBoardController.OpenMapBoardPanelVertical();
+        }
+    }
+
 
     public void ShowBlindOverlay(float duration)
     {
@@ -111,6 +123,8 @@ public class InGameUIController : MonoBehaviour
 
 
 
+
+
     // #. 허재승이 추가한 함수들
     public void ComeToTheEndGame(int winnerPlayerNum)
     {
@@ -135,6 +149,9 @@ public class InGameUIController : MonoBehaviour
             MovePlayerImageToCenter(iLosePlayerNum);
             yield break; 
         }
+
+
+        yield return new WaitForSeconds(1f);
 
         scoreBoardUIController.OpenScorePanel();
     }

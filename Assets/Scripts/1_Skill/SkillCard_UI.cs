@@ -286,7 +286,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
-
     private void StartBorderLineAnimation()
     {
         Vector2 leftOriginalPos = image_BorderLine_Left.rectTransform.anchoredPosition;

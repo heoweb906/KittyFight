@@ -38,7 +38,7 @@ Shader "Toony Colors Pro 2/Examples URP/Cat Demo/Cat/Style 5"
 		[TCP2Separator]
 		
 		[TCP2HeaderHelp(Outline)]
-		_OutlineWidth ("Width", Range(0.1,4)) = 1
+		_OutlineWidth ("Width", Range(0,4)) = 1
 		_OutlineColorVertex ("Color", Color) = (0,0,0,1)
 		// Outline Normals
 		[TCP2MaterialKeywordEnumNoPrefix(Regular, _, Vertex Colors, TCP2_COLORS_AS_NORMALS, Tangents, TCP2_TANGENT_AS_NORMALS, UV1, TCP2_UV1_AS_NORMALS, UV2, TCP2_UV2_AS_NORMALS, UV3, TCP2_UV3_AS_NORMALS, UV4, TCP2_UV4_AS_NORMALS)]

@@ -12,15 +12,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 113_FuryBlast
   m_EditorClassIdentifier: 
+  cardType: 1
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 113
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 36c943f4c2156a44fbf8a7ae3290e0a8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c83aea27ba4c1fe4da5009b590dd8676,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0a9418394894fab4a9efad784c0799da,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b15d6a6fbd090b444b24da48ea6fb349,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 32591f7e05510704c8ebe5dbdf5cc938,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6bb58743424acf84194659405df5e2ef,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: dfdf8a76ae0470949a4632369d5d45f3,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: cf5bb7182b4547444b4d9ec5f9f0dc0c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: e44f786580038144cbdded26ec2ea699, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 859ad0f32027ef74e8165eefc1cea5b7, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: eb484f9bf26142c4a949daecd7462319, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: f94e946188f5c2847ad63316fcf42fa6,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: ab62846c5c28aa244a02c3b52f2d0e89,
+    type: 3}
+  animationType: 10
+  description: "<color=#FFFFFF>Explosive fury erupts every <color=#0080FF>10</color>
+    seconds! <color=#FF0000>2</color> damage to all around you \u2014 yourself included!!</color>"

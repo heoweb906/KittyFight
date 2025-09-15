@@ -118,7 +118,24 @@ public class ScoreBoardUIController : MonoBehaviour
     // #. Score 패널 열기
     public void OpenScorePanel()
     {
-        // InGameUIController의 canvasMain 사용
+        int iSumPlayerScore = InGameUiController.gameManager.IntScorePlayer_1 + InGameUiController.gameManager.IntScorePlayer_2;
+
+        if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
+        {
+            InGameUiController.mapBoardController.CloseMapBoardPanelVertical();
+
+            DOVirtual.DelayedCall(1f, () => {
+                StartScoreBoardAnimation(iSumPlayerScore);
+            });
+        }
+        else
+        {
+            StartScoreBoardAnimation(iSumPlayerScore);
+        }
+    }
+
+    private void StartScoreBoardAnimation(int iSumPlayerScore)
+    {
         RectTransform canvasRect = InGameUiController.canvasMain.GetComponent<RectTransform>();
         float canvasWidth = canvasRect.rect.width;
         float imageWidth = scoreImageElement_Player1.rectTransform_BackGround.rect.width;
@@ -130,14 +147,18 @@ public class ScoreBoardUIController : MonoBehaviour
             .OnComplete(() => {
                 scoreImageElement_Player1.ResetToInitialPosition();
                 scoreImageElement_Player2.ResetToInitialPosition();
-
                 scoreImageElement_Player1.ChangePlayerImage(1);
                 scoreImageElement_Player2.ChangePlayerImage(1);
-
                 scoreImageElement_Player1.objMine.SetActive(false);
                 scoreImageElement_Player2.objMine.SetActive(false);
-
                 OnOffCheering(false);
+
+                if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
+                {
+                    DOVirtual.DelayedCall(1f, () => {
+                        InGameUiController.mapBoardController.OpenMapBoardPanelVertical();
+                    });
+                }
             });
     }
 

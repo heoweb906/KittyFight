@@ -12,15 +12,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 108_TalonsEdge
   m_EditorClassIdentifier: 
+  cardType: 1
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 108
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 54015427a0ebaa54ebbb94ac72089fd1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 45133ae379bd6a048ba4bddc39c6ed7c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: f462b7bc285d98846a0a670685b9d746,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 80b69b6171befc243a66e9a9d9f2c9f8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 084213b93da912540a160fd7fa4678f1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9ede9c327343bfd439856c8abbf03a4c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: bcb5c155b81c8774a8350360060b19ed,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e2266c680dda82f4a98c884898799729,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 7a68d57d3f01ef54aa1430b203b1244c, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: a5e38a89142f3734d8fb76db1e1bd0b1, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: d681ea0826136644081faf8cf1d67144,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 52472b36c09e2004d881dcac5f7f2228,
+    type: 3}
+  animationType: 8
+  description: <color=#FFFFFF>Your melee strikes start weak at <color=#FF0000>0.5</color>
+    damage but sharpen with every hit, gaining <color=#0080FF>0.2</color> damage
+    each time</color>

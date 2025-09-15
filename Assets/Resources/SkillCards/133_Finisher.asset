@@ -12,15 +12,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 133_Finisher
   m_EditorClassIdentifier: 
+  cardType: 1
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 133
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: dedae1789fbe32a488efbca3446fe1d9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5c949f217c4dcef49839cd26977e405b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a522ebab6f486e44ea35a26f1ff44a54,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ad89e1f2c488a884a8e8cd07c26626bb,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6c801771a6edd884a9cbee5af02a52c3,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 402be0b3c8c215240b4a41a89495d56f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce3e70acc091b0743b10bc597dc58647,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ffb8430faf5da3a42b4347711f07a29d,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: f37ae9b79c5b78748866c196b60fbdc2, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 06b7765bcce86d445b8b24c364e99348, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: e7a66917039cd274382e106cb3b7f180,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: d7c6c4e085c8c6a4680f84274786b9fc,
+    type: 3}
+  animationType: 12
+  description: <color=#FFFFFF>Got a weak prey? Snap it up immediately if under <color=#FF0000>10</color>%
+    health!</color>

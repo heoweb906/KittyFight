@@ -6,8 +6,6 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;
 
-
-
 public class SkillCardController : MonoBehaviour 
 {
     [Header("중요한 정보들")]
@@ -86,6 +84,97 @@ public class SkillCardController : MonoBehaviour
             instances[i] = card;
         }
     }
+
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            ShowSkillCardListWithSpecific(0, false, new int[] { 16, 103, 108, 24 });
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            ShowSkillCardList(0, false);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ShowSkillCardList(0, true);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            HideSkillCardList();
+        }
+    }
+    public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
+    {
+        if (skillDataList.Count == 0 || IsAnimating) return;
+        iAuthorityPlayerNum = iPlayernum;
+        IsAnimating = true;
+
+        List<int> selectedIndices = new List<int>();
+
+        // 조건에 맞는 스킬만 필터링
+        List<int> filteredIndices = new List<int>();
+        for (int i = 0; i < skillDataList.Count; i++)
+        {
+            bool isActive = skillDataList[i].iSkillIndex < 100;
+            if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+            {
+                filteredIndices.Add(i);
+            }
+        }
+
+        // 사용 가능한 스킬이 없으면 종료
+        if (filteredIndices.Count == 0)
+        {
+            IsAnimating = false;
+            return;
+        }
+
+        List<int> availableIndices = new List<int>(filteredIndices);
+
+        // 지정된 스킬들을 먼저 추가
+        if (specifiedSkillIndices != null && specifiedSkillIndices.Length > 0)
+        {
+            foreach (int skillIndex in specifiedSkillIndices)
+            {
+                if (selectedIndices.Count >= instances.Length) break;
+
+                // skillIndex로 실제 skillDataList에서 해당하는 인덱스 찾기
+                int foundIndex = -1;
+                for (int i = 0; i < skillDataList.Count; i++)
+                {
+                    if (skillDataList[i].iSkillIndex == skillIndex)
+                    {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex >= 0)
+                {
+                    selectedIndices.Add(foundIndex);
+                    availableIndices.Remove(foundIndex); // 중복 방지를 위해 제거
+                }
+            }
+        }
+
+        // 나머지 슬롯을 랜덤으로 채우기
+        for (int i = selectedIndices.Count; i < instances.Length && availableIndices.Count > 0; i++)
+        {
+            int randomIndex = Random.Range(0, availableIndices.Count);
+            int selectedIdx = availableIndices[randomIndex];
+            selectedIndices.Add(selectedIdx);
+            availableIndices.RemoveAt(randomIndex);
+        }
+
+        StartShowingCards(selectedIndices);
+    }
+
+
+
 
 
     // #. 스킬 보여주는 함수
