@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         // UI 와이어링 (쿨다운은 Ability pull 기반)
         ingameUIController?.WireSkillUIs(playerAbility_1, playerAbility_2);
-        ingameUIController?.StartGameTimer(90f);
+        ingameUIController?.StartGameTimer(60f);
 
         // 기본 스킬 장착 (근접/원거리)
         EquipDefaultSkills(myAbility);
@@ -268,7 +268,7 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
         gameEnded = false;
-        ingameUIController?.StartGameTimer(90f);
+        ingameUIController?.StartGameTimer(60f);
 
         myAbility.events?.EmitRoundStart(0);
     }
