@@ -608,7 +608,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
         if (images.Count > 1)
         {
             RectTransform element1 = images[1].GetComponent<RectTransform>();
-            element1.DOScale(1.1f, 2.6f)
+            element1.DOScale(1.05f, 2.6f)
                     .SetLoops(-1, LoopType.Yoyo)
                     .SetEase(Ease.InOutSine);
         }
@@ -616,7 +616,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
         if (images.Count > 2)
         {
             RectTransform element2 = images[2].GetComponent<RectTransform>();
-            element2.DOScale(1.1f, 2.3f)
+            element2.DOScale(1.05f, 2.3f)
                     .SetLoops(-1, LoopType.Yoyo)
                     .SetEase(Ease.InOutSine);
         }
@@ -818,7 +818,6 @@ public class CardAnimation_Num_16 : CardAnimationBase
         }
     }
 }
-
 
 
 

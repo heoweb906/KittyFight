@@ -5,6 +5,9 @@ using DG.Tweening;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;
+using TMPro;
+using UnityEngine.EventSystems;
+using DG.Tweening.Core.Easing;
 
 public class SkillCardController : MonoBehaviour 
 {
@@ -12,7 +15,13 @@ public class SkillCardController : MonoBehaviour
     public int iAuthorityPlayerNum = 0;
     public InGameUIController InGameUiController { get; set; }
     public bool IsAnimating { get; private set; }
-   
+
+    public TMP_Text text_Timer;
+    private float fTimerInternal;
+    public int iTimerForSelect;
+    public bool bTimerCheck;
+    
+
 
     [Header("리소스 설정")]
     [Tooltip("Resources/SkillCards 폴더 경로")]
@@ -39,7 +48,7 @@ public class SkillCardController : MonoBehaviour
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
-
+        
         var datas = Resources.LoadAll<SkillCard_SO>(skillCardResourceFolder);
 
         // 숫자 추출 함수
@@ -83,30 +92,59 @@ public class SkillCardController : MonoBehaviour
             card.gameObject.SetActive(false);
             instances[i] = card;
         }
-    }
 
+        text_Timer.gameObject.SetActive(false);
+        iTimerForSelect = 0;
+        fTimerInternal = 0f;
+        bTimerCheck = false;
+    }
 
 
     private void Update()
     {
+        if (iTimerForSelect > 0 && bTimerCheck)
+        {
+            fTimerInternal -= Time.deltaTime;  // 실제 시간 계산
+
+            int newTimerValue = Mathf.CeilToInt(fTimerInternal);  // 올림으로 정수 변환
+            if (newTimerValue != iTimerForSelect)
+            {
+                iTimerForSelect = newTimerValue;
+                text_Timer.text = iTimerForSelect.ToString();  // 정수로 표시
+            }
+
+            if (fTimerInternal <= 0 && iAuthorityPlayerNum == MatchResultStore.myPlayerNumber)
+            {
+                iTimerForSelect = 0;
+                fTimerInternal = 0;
+                bTimerCheck = false;
+
+                SelectRandomCard();
+            }
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             ShowSkillCardListWithSpecific(0, false, new int[] { 16, 103, 108, 24 });
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ShowSkillCardList(0, false);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            ShowSkillCardList(0, true);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            HideSkillCardList();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    ShowSkillCardList(0, false);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    ShowSkillCardList(0, true);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha0))
+        //{
+        //    HideSkillCardList();
+        //}
+
     }
+    // 애니메이션 구현 용으로 만들어 놓은 거임
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
@@ -184,9 +222,16 @@ public class SkillCardController : MonoBehaviour
         iAuthorityPlayerNum = iPlayernum;
         IsAnimating = true;
 
+        text_Timer.gameObject.SetActive(true);
+        iTimerForSelect = 15;
+        fTimerInternal = 15.0f;
+        text_Timer.text = iTimerForSelect.ToString();
+
+        bTimerCheck = true;
+
         // 현재 플레이어의 PlayerAbility 가져오기
         PlayerAbility currentPlayerAbility = null;
-        if (InGameUiController?.gameManager != null)
+        if (InGameUiController?.gameManager != null) 
         {
             if (iPlayernum == 1)
                 currentPlayerAbility = InGameUiController.gameManager.playerAbility_1;
@@ -392,6 +437,12 @@ public class SkillCardController : MonoBehaviour
     {
         if (IsAnimating) return;
         IsAnimating = true;
+
+        text_Timer.gameObject.SetActive(false);
+        iTimerForSelect = 0;
+        fTimerInternal = 0f;
+        bTimerCheck = false;
+
         SetAllCanInteract(false);
 
         // floating 애니메이션 정지
@@ -540,5 +591,29 @@ public class SkillCardController : MonoBehaviour
                     InGameUIController.Instance.image_FadeOut_White.gameObject.SetActive(false);
                 }
             });
+    }
+
+
+    private void SelectRandomCard()
+    {
+        List<SkillCard_UI> activeCards = new List<SkillCard_UI>();
+
+        for (int i = 0; i < instances.Length; i++)
+        {
+            if (instances[i] != null && instances[i].gameObject.activeInHierarchy)
+            {
+                activeCards.Add(instances[i]);
+            }
+        }
+
+        if (activeCards.Count > 0)
+        {
+            int randomIndex = Random.Range(0, activeCards.Count);
+            SkillCard_UI selectedCard = activeCards[randomIndex];
+
+            // 가짜 클릭 이벤트 생성해서 OnPointerClick 호출
+            PointerEventData fakeEventData = new PointerEventData(EventSystem.current);
+            selectedCard.OnPointerClick(fakeEventData);
+        }
     }
 }
