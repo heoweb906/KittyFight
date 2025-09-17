@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 5_Rend
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: 
   iAnimalNum: 3
   iSkillIndex: 5
@@ -38,7 +39,28 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: e88dba299e58410489fdba2e6064a1a3,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 56680392669e5d94e8aaaa0cd7bb655c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 23b43f26927ad704db99a9ed3a697aa7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1c50d282a638fdb4eabfed1efb456fe8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 043ea9516ce3def40b6b182b28416292,
       type: 3}
     margins:
       m_Left: 0
@@ -52,84 +74,84 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: f842da130281aff47bc21daa0afab316,
+  - sprite_Cardillustration: {fileID: 21300000, guid: f20ea2d75de33884eaa0faa28d5375af,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 4f79cf2f4818b144289e30da01d06bb1,
-      type: 3}
-    margins:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c4c43549693a25746bb32a137335f6f9,
-      type: 3}
-    margins:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 50164f2dc929f8c41be684953a32afbd,
-      type: 3}
-    margins:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 07f9446806bc01b43b423d569890d188,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 04a41c0f27281a84286b6ce122fb0f37,
       type: 3}
     margins:
       m_Left: -884
       m_Right: 884
       m_Top: -221
       m_Bottom: 221
-  - sprite_Cardillustration: {fileID: 21300000, guid: 3f4953d399891fd42b24f6444299719d,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9625d4830bee74b41be8a81173ff0014,
       type: 3}
     margins:
       m_Left: 783
       m_Right: -783
       m_Top: -136
       m_Bottom: 136
-  - sprite_Cardillustration: {fileID: 21300000, guid: a75ff5e9dfa426d4189f4bd4e1713a9e,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2d55125efe494114a898564ab2f806c4,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 44791c9968c15a6488b69d7361a4ca06,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4d934bca99ccc934c869d4b5fa44c3d3,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 15dd030a78c530c49aa8a008626c2011,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7c8ac2237f736da4ea515ba775c71b75,
       type: 3}
     margins:
       m_Left: -863
       m_Right: 863
       m_Top: 362
       m_Bottom: -362
-  - sprite_Cardillustration: {fileID: 21300000, guid: 5240e33db3bbf2a4f8b798d7b4401076,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4f79cf2f4818b144289e30da01d06bb1,
       type: 3}
     margins:
       m_Left: -418
       m_Right: 418
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: 9a42c4fcfe5dc774b87e464c9b154482,
+  - sprite_Cardillustration: {fileID: 21300000, guid: c4c43549693a25746bb32a137335f6f9,
       type: 3}
     margins:
       m_Left: 309
       m_Right: -309
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: 4394b63beadb42e4899d72e76f524424,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 967efc9042eaf9148a8cb0921d8b23f0,
+      type: 3}
+    margins:
+      m_Left: 651
+      m_Right: -651
+      m_Top: 442
+      m_Bottom: -442
+  - sprite_Cardillustration: {fileID: 21300000, guid: 85ad39846589b1749a1c3c9ef317eb97,
+      type: 3}
+    margins:
+      m_Left: 651
+      m_Right: -651
+      m_Top: 442
+      m_Bottom: -442
+  - sprite_Cardillustration: {fileID: 21300000, guid: 85e770cd353bd9147ac504ae04b1b730,
+      type: 3}
+    margins:
+      m_Left: 651
+      m_Right: -651
+      m_Top: 442
+      m_Bottom: -442
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3e72b4890da012d42b78c89e78dd03aa,
       type: 3}
     margins:
       m_Left: 651

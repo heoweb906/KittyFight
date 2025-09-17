@@ -12,15 +12,124 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 16_ShearShock
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 16
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: d3c258255584a6744abd76ff7eb0db1a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 25490e97f51f8bb4580ae6e6bb360bdb,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3736c202cadadd444bf0d94000958589,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d4d8281c912a2004498c689ee06c6182,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b32d930d7382e0a448c0dcb75d534f54,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9e4418926ebddd645a138c3c587c67bb,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c55938fd396719844a59ad8d8a57095b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: fad24b07dcfb54a41aada7f404900d71,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c49a62906c84ad34a832656e00473021,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 12989357c2c18864da544c996ea60938,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 820b2fd6ae8f2964ea2b22487bcf1244,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: bb437dedfdc3bc54c9b97e3a98da55e1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8d6df84caeea1744db8c03e1757a4384,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ad5f7bf19c60914468c821587e143d3f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce5bcc2ee47c41f4da3371f4bb0278e2,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: bee5b236c7929c44a804aa67f73006de, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 6096466e5a5298943ba85a53a8a59e1a, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 93a56f3f40d616a4f9f9653b92626a65, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 0a1b6e80b3431924abd8074d355ef7e9,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 1671f109c78fd0b46807e0cf997fa097,
+    type: 3}
+  animationType: 3
+  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
+    seconds with a burst of static electricity</color>

@@ -19,6 +19,7 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI3_Player1;    // Player1 - Dash
     public SkillCooldownHexUI skillUI4_Player1;    // Player1 - Skill1
     public SkillCooldownHexUI skillUI5_Player1;    // Player1 - Skill2
+    public SkillEffectAnimation effectPlayer1;
 
     [Header("Player2 UI")]
     public PlayerHealthHexUI hpUI_Player2;
@@ -27,6 +28,7 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI3_Player2;    // Player2 - Dash
     public SkillCooldownHexUI skillUI4_Player2;    // Player2 - Skill1
     public SkillCooldownHexUI skillUI5_Player2;    // Player2 - Skill2
+    public SkillEffectAnimation effectPlayer2;
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
@@ -36,6 +38,7 @@ public class InGameUIController : MonoBehaviour
     [Header("관리하는 UI 컨트롤러들")]
     public SkillCardController skillCardController;
     public ScoreBoardUIController scoreBoardUIController;
+    public MapBoardController mapBoardController;
 
     [Header("연출용")]
     public Image image_FadeOut_White;
@@ -57,7 +60,7 @@ public class InGameUIController : MonoBehaviour
 
         scoreBoardUIController = this.GetComponent<ScoreBoardUIController>();
         scoreBoardUIController.Initialize(this, canvasMain.transform);
-
+        mapBoardController.Initialize(this, canvasMain.transform);
     }
 
     public void StartGameTimer(float duration)
@@ -73,6 +76,17 @@ public class InGameUIController : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndByTimer();
         }
     }
+
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            mapBoardController.OpenMapBoardPanelVertical();
+        }
+    }
+
 
     public void ShowBlindOverlay(float duration)
     {
@@ -106,7 +120,13 @@ public class InGameUIController : MonoBehaviour
         skillUI3_Player2?.Bind(player2Ability, SkillType.Dash);
         skillUI4_Player2?.Bind(player2Ability, SkillType.Skill1);
         skillUI5_Player2?.Bind(player2Ability, SkillType.Skill2);
+
+
+        if (player1Ability != null) player1Ability.effect = effectPlayer1;
+        if (player2Ability != null) player2Ability.effect = effectPlayer2;
     }
+
+
 
 
 
@@ -135,6 +155,9 @@ public class InGameUIController : MonoBehaviour
             MovePlayerImageToCenter(iLosePlayerNum);
             yield break; 
         }
+
+
+        yield return new WaitForSeconds(1f);
 
         scoreBoardUIController.OpenScorePanel();
     }

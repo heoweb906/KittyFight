@@ -36,6 +36,9 @@ public class PlayerAbility : MonoBehaviour
     [Header("식별")]
     public int playerNumber;
 
+    [Header("스킬 애니메이션")]
+    public SkillEffectAnimation effect;
+
     // Re-peek 용
     private bool _hasLastActionType;
     private SkillType _lastActionType;
@@ -141,6 +144,7 @@ public class PlayerAbility : MonoBehaviour
 
         // 바로 효과 실행
         s.Execute(origin, direction);
+        if (effect != null) effect.PlayShakeAnimation(SlotToIndex(type));
 
         if (!(s is SK_Repeek))
             RecordLastActionType(type);
@@ -150,6 +154,19 @@ public class PlayerAbility : MonoBehaviour
             P2PMessageSender.SendMessage(
                 SkillMessageBuilder.Build(origin, direction, type, playerNumber)
             );
+        }
+    }
+
+    private int SlotToIndex(SkillType s)
+    {
+        switch (s)
+        {
+            case SkillType.Melee: return 0;
+            case SkillType.Ranged: return 1;
+            case SkillType.Dash: return 2;
+            case SkillType.Skill1: return 3;
+            case SkillType.Skill2: return 4;
+            default: return -1;
         }
     }
 

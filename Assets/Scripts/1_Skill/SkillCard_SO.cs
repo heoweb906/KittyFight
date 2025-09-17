@@ -4,9 +4,19 @@ using UnityEngine.UI;
 public enum CardAnimationType
 {
     Number_5,
+    Number_12,
     Number_15,
+    Number_16,
+    Number_20,
     Number_22,
+    Number_24,
+    Number_103,
+    Number_108,
+    Number_109,
+    Number_113,
     Number_123,
+    Number_133,
+    Number_137
 }
 
 public enum CardType
@@ -44,11 +54,9 @@ public class SkillCard_SO : ScriptableObject
 
 
 
-
-
     [Space(10)]
     [Header("애니메이션 설정")]
-    public CardAnimationType animationType = CardAnimationType.Number_5;
+    public CardAnimationType animationType;
     [TextArea(5, 20)]
     public string description;
 }

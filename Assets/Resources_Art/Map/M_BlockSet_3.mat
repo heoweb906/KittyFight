@@ -21,15 +21,15 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_BlockSet_3
-  m_Shader: {fileID: 4800000, guid: 487953e69e4df7748916955975e24fee, type: 3}
+  m_Shader: {fileID: 4800000, guid: 91407bb176ce0cd4c97a183433b33f05, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - TCP2_UV_NORMALS_ZW
   m_InvalidKeywords:
   - TCP2_REFLECTIONS_FRESNEL
   - TCP2_RIM_LIGHTING_LIGHTMASK
   - TCP2_SHADOW_LIGHT_COLOR
-  - TCP2_UV_NORMALS_FULL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6642725f67a4bab46a04f044a9fec8ef, type: 3}
+        m_Texture: {fileID: 2800000, guid: f285cb85e01d4a142985c837d594fc63, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCapMask:
@@ -97,6 +97,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowBaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowColor:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -149,7 +153,7 @@ Material:
     - _MatCapType: 0
     - _Metallic: 0
     - _NormalsSource: 0
-    - _NormalsUVType: 0
+    - _NormalsUVType: 2
     - _OcclusionChannel: 0
     - _OcclusionStrength: 1
     - _OutlineGlow: 0
@@ -160,7 +164,7 @@ Material:
     - _OutlinePixelSizeType: 0
     - _OutlineTextureLOD: 5
     - _OutlineTextureType: 0
-    - _OutlineWidth: 0.1
+    - _OutlineWidth: 4
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _RampBands: 4
@@ -183,6 +187,7 @@ Material:
     - _SingleIndirectColor: 0
     - _SketchMax: 1
     - _SketchMin: 0
+    - _SketchTexture_OffsetSpeed: 120
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

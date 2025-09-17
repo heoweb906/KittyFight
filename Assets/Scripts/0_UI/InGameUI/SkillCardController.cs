@@ -1,39 +1,46 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections;
+using TMPro;
+using UnityEngine.EventSystems;
 
 
 
-public class SkillCardController : MonoBehaviour 
+public class SkillCardController : MonoBehaviour
 {
-    [Header("Áß¿äÇÑ Á¤º¸µé")]
+    [Header("ì¤‘ìš”í•œ ì •ë³´ë“¤")]
     public int iAuthorityPlayerNum = 0;
     public InGameUIController InGameUiController { get; set; }
     public bool IsAnimating { get; private set; }
-   
 
-    [Header("¸®¼Ò½º ¼³Á¤")]
-    [Tooltip("Resources/SkillCards Æú´õ °æ·Î")]
+
+    public TMP_Text text_Timer;
+    private float fTimerInternal;
+    public int iTimerForSelect;
+    public bool bTimerCheck;
+
+    [Header("ë¦¬ì†ŒìŠ¤ ì„¤ì •")]
+    [Tooltip("Resources/SkillCards í´ë” ê²½ë¡œ")]
     [SerializeField] string skillCardResourceFolder = "SkillCards";
 
 
-    [Header("½ºÅ³ ÇÁ¸®ÆÕ ¸®½ºÆ®")]
+    [Header("ìŠ¤í‚¬ í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸")]
     public List<GameObject> skillPrefabs;
 
-    [Header("½ºÅ³ Ä«µå ÇÁ¸®ÆÕ")]
+    [Header("ìŠ¤í‚¬ ì¹´ë“œ í”„ë¦¬íŒ¹")]
     [SerializeField] GameObject objSkillCard;
     public List<SkillCard_SO> skillDataList = new List<SkillCard_SO>();
     private SkillCard_UI[] instances = new SkillCard_UI[4];
 
-    [Header("Ä«µå »ı¼º À§Ä¡ ¹è¿­")]
+    [Header("ì¹´ë“œ ìƒì„± ìœ„ì¹˜ ë°°ì—´")]
     [SerializeField] Transform[] spawnPoints = new Transform[4];
     [SerializeField] Transform[] targetPoints = new Transform[4];
 
-    [Header("¿¬Ãâ¿¡ »ç¿ëÇÒ °Íµé")]
+    [Header("ì—°ì¶œì— ì‚¬ìš©í•  ê²ƒë“¤")]
     public GameObject[] objs_AnimalSkillCardEffects;
 
 
@@ -44,18 +51,18 @@ public class SkillCardController : MonoBehaviour
 
         var datas = Resources.LoadAll<SkillCard_SO>(skillCardResourceFolder);
 
-        // ¼ıÀÚ ÃßÃâ ÇÔ¼ö
+        // ìˆ«ì ì¶”ì¶œ í•¨ìˆ˜
         int ExtractLeadingNumber(string name)
         {
             var match = Regex.Match(name, @"^\d+");
             if (match.Success)
                 return int.Parse(match.Value);
-            return int.MaxValue; // ¼ıÀÚ ¾øÀ¸¸é ¸Ç µÚ·Î
+            return int.MaxValue; // ìˆ«ì ì—†ìœ¼ë©´ ë§¨ ë’¤ë¡œ
         }
 
         var sortedDatas = datas.OrderBy(d => ExtractLeadingNumber(d.name)).ToArray();
 
-        // 0¹ø µ¥ÀÌÅÍ Á¦¿ÜÇÏ°í Ãß°¡
+        // 0ë²ˆ ë°ì´í„° ì œì™¸í•˜ê³  ì¶”ê°€
         foreach (var data in sortedDatas)
         {
             if (ExtractLeadingNumber(data.name) != 0)
@@ -68,7 +75,7 @@ public class SkillCardController : MonoBehaviour
         {
             if (objSkillCard == null || spawnPoints[i] == null)
             {
-                Debug.LogError($"[SkillCardController] Prefab ¶Ç´Â spawnPoints[{i}]°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                Debug.LogError($"[SkillCardController] Prefab ë˜ëŠ” spawnPoints[{i}]ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
                 continue;
             }
 
@@ -77,7 +84,7 @@ public class SkillCardController : MonoBehaviour
             card.skillCardController = this;
             if (card == null)
             {
-                Debug.LogError("[SkillCardController] objSkillCard Prefab¿¡ SkillCard_UI ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.LogError("[SkillCardController] objSkillCard Prefabì— SkillCard_UI ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
                 continue;
             }
 
@@ -85,17 +92,119 @@ public class SkillCardController : MonoBehaviour
             card.gameObject.SetActive(false);
             instances[i] = card;
         }
+
+        text_Timer.gameObject.SetActive(false);
+        iTimerForSelect = 0;
+        fTimerInternal = 0f;
+        bTimerCheck = false;
     }
 
 
-    // #. ½ºÅ³ º¸¿©ÁÖ´Â ÇÔ¼ö
+
+
+    private void Update()
+    {
+        if (iTimerForSelect > 0 && bTimerCheck)
+        {
+            fTimerInternal -= Time.deltaTime;
+
+            int newTimerValue = Mathf.CeilToInt(fTimerInternal);
+            if (newTimerValue != iTimerForSelect)
+            {
+                iTimerForSelect = newTimerValue;
+                text_Timer.text = iTimerForSelect.ToString();  
+            }
+
+            if (fTimerInternal <= 0 && iAuthorityPlayerNum == MatchResultStore.myPlayerNumber)
+            {
+                iTimerForSelect = 0;
+                fTimerInternal = 0;
+                bTimerCheck = false;
+
+                SelectRandomCard();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            ShowSkillCardListWithSpecific(0, false, new int[] { 16, 103, 108, 24 });
+        }
+    }
+    // ì• ë‹ˆë©”ì´ì…˜ ì œì‘í•  ë•Œ ì‚¬ìš©í•˜ëŠ” í…ŒìŠ¤íŠ¸ìš© í•¨ìˆ˜
+    public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
+    {
+        if (skillDataList.Count == 0 || IsAnimating) return;
+        iAuthorityPlayerNum = iPlayernum;
+        IsAnimating = true;
+
+        List<int> selectedIndices = new List<int>();
+
+        List<int> filteredIndices = new List<int>();
+        for (int i = 0; i < skillDataList.Count; i++)
+        {
+            bool isActive = skillDataList[i].iSkillIndex < 100;
+            if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+            {
+                filteredIndices.Add(i);
+            }
+        }
+
+        if (filteredIndices.Count == 0)
+        {
+            IsAnimating = false;
+            return;
+        }
+
+        List<int> availableIndices = new List<int>(filteredIndices);
+
+        if (specifiedSkillIndices != null && specifiedSkillIndices.Length > 0)
+        {
+            foreach (int skillIndex in specifiedSkillIndices)
+            {
+                if (selectedIndices.Count >= instances.Length) break;
+
+                int foundIndex = -1;
+                for (int i = 0; i < skillDataList.Count; i++)
+                {
+                    if (skillDataList[i].iSkillIndex == skillIndex)
+                    {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex >= 0)
+                {
+                    selectedIndices.Add(foundIndex);
+                    availableIndices.Remove(foundIndex);
+                }
+            }
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½
+        for (int i = selectedIndices.Count; i < instances.Length && availableIndices.Count > 0; i++)
+        {
+            int randomIndex = Random.Range(0, availableIndices.Count);
+            int selectedIdx = availableIndices[randomIndex];
+            selectedIndices.Add(selectedIdx);
+            availableIndices.RemoveAt(randomIndex);
+        }
+
+        StartShowingCards(selectedIndices);
+    }
+
+
+
+
+
+    // #. ìŠ¤í‚¬ ë³´ì—¬ì£¼ëŠ” í•¨ìˆ˜
     public void ShowSkillCardList(int iPlayernum = 0, bool bActivePassive = true, int[] iCardArray = null)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
         iAuthorityPlayerNum = iPlayernum;
         IsAnimating = true;
 
-        // ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ PlayerAbility °¡Á®¿À±â
+        // í˜„ì¬ í”Œë ˆì´ì–´ì˜ PlayerAbility ê°€ì ¸ì˜¤ê¸°
         PlayerAbility currentPlayerAbility = null;
         if (InGameUiController?.gameManager != null)
         {
@@ -107,7 +216,7 @@ public class SkillCardController : MonoBehaviour
 
         List<int> selectedIndices = new List<int>();
 
-        // iCardArray°¡ ÀÖÀ¸¸é ±× °ªµéÀ» »ç¿ë
+        // iCardArrayê°€ ìˆìœ¼ë©´ ê·¸ ê°’ë“¤ì„ ì‚¬ìš©
         if (iCardArray != null && iCardArray.Length > 0)
         {
             for (int i = 0; i < instances.Length && i < iCardArray.Length; i++)
@@ -117,14 +226,14 @@ public class SkillCardController : MonoBehaviour
             }
 
             StartShowingCards(selectedIndices);
-            // ¿ÜºÎ¿¡¼­ ¹ŞÀº µ¥ÀÌÅÍ¶óµµ ¾à°£ÀÇ µô·¹ÀÌ Ãß°¡
+            // ì™¸ë¶€ì—ì„œ ë°›ì€ ë°ì´í„°ë¼ë„ ì•½ê°„ì˜ ë”œë ˆì´ ì¶”ê°€
             //DOVirtual.DelayedCall(0.05f, () => {
-               
+
             //});
         }
         else
         {
-            // Á¶°Ç¿¡ ¸Â´Â ½ºÅ³¸¸ ÇÊÅÍ¸µ
+            // ì¡°ê±´ì— ë§ëŠ” ìŠ¤í‚¬ë§Œ í•„í„°ë§
             List<int> filteredIndices = new List<int>();
             for (int i = 0; i < skillDataList.Count; i++)
             {
@@ -135,7 +244,7 @@ public class SkillCardController : MonoBehaviour
                 }
             }
 
-            // »ç¿ë °¡´ÉÇÑ ½ºÅ³ÀÌ ¾øÀ¸¸é Á¾·á
+            // ì‚¬ìš© ê°€ëŠ¥í•œ ìŠ¤í‚¬ì´ ì—†ìœ¼ë©´ ì¢…ë£Œ
             if (filteredIndices.Count == 0)
             {
                 IsAnimating = false;
@@ -146,7 +255,7 @@ public class SkillCardController : MonoBehaviour
 
             List<int> availableIndices = new List<int>(filteredIndices);
 
-            // ÀÌ¹Ì º¸À¯ÇÑ ½ºÅ³ Á¦°Å
+            // ì´ë¯¸ ë³´ìœ í•œ ìŠ¤í‚¬ ì œê±°
             for (int i = availableIndices.Count - 1; i >= 0; i--)
             {
                 if (IsSkillOwned(currentPlayerAbility, availableIndices[i]))
@@ -155,37 +264,39 @@ public class SkillCardController : MonoBehaviour
                 }
             }
 
-            // »ç¿ë °¡´ÉÇÑ ½ºÅ³ÀÌ ºÎÁ·ÇÏ¸é ¿ø·¡ ¸®½ºÆ® »ç¿ë
+            // ì‚¬ìš© ê°€ëŠ¥í•œ ìŠ¤í‚¬ì´ ë¶€ì¡±í•˜ë©´ ì›ë˜ ë¦¬ìŠ¤íŠ¸ ì‚¬ìš©
             if (availableIndices.Count < instances.Length)
             {
                 availableIndices = new List<int>(filteredIndices);
             }
 
-            // Áßº¹ ¾øÀÌ ¼±ÅÃ
+            // ì¤‘ë³µ ì—†ì´ ì„ íƒ
             for (int i = 0; i < instances.Length && availableIndices.Count > 0; i++)
             {
                 int randomIndex = Random.Range(0, availableIndices.Count);
                 int selectedIdx = availableIndices[randomIndex];
                 selectedIndices.Add(selectedIdx);
-                availableIndices.RemoveAt(randomIndex); // ¼±ÅÃµÈ °ÍÀº Á¦°Å
+                availableIndices.RemoveAt(randomIndex); // ì„ íƒëœ ê²ƒì€ ì œê±°
             }
 
 
 
-            // ¸Ş½ÃÁö Àü¼Û ÈÄ ¾à°£ÀÇ µô·¹ÀÌ¸¦ µÎ°í Ä«µå Ç¥½Ã
+            // ë©”ì‹œì§€ ì „ì†¡ í›„ ì•½ê°„ì˜ ë”œë ˆì´ë¥¼ ë‘ê³  ì¹´ë“œ í‘œì‹œ
             P2PMessageSender.SendMessage(
                 SkillShowBuilder.Build(MatchResultStore.myPlayerNumber, selectedIndices.ToArray())
             );
 
             StartShowingCards(selectedIndices);
-            // ¸Ş½ÃÁö Àü¼Û ÈÄ ÂªÀº µô·¹ÀÌ·Î µ¿±âÈ­ °³¼±
+            // ë©”ì‹œì§€ ì „ì†¡ í›„ ì§§ì€ ë”œë ˆì´ë¡œ ë™ê¸°í™” ê°œì„ 
             //DOVirtual.DelayedCall(0.05f, () => {
-                
+
             //});
         }
     }
 
-    // ½ÇÁ¦ Ä«µå Ç¥½Ã ·ÎÁ÷À» ºĞ¸®ÇÑ ÇÔ¼ö
+
+
+    // ì‹¤ì œ ì¹´ë“œ í‘œì‹œ ë¡œì§ì„ ë¶„ë¦¬í•œ í•¨ìˆ˜
     private void StartShowingCards(List<int> selectedIndices)
     {
         int completed = 0;
@@ -196,6 +307,13 @@ public class SkillCardController : MonoBehaviour
         FadeImage(1f, 0f).OnComplete(() =>
         {
             InGameUiController.scoreBoardUIController.ActiveFalseBones();
+
+
+            text_Timer.gameObject.SetActive(true);
+            iTimerForSelect = 15;
+            fTimerInternal = 15.0f;
+            bTimerCheck = true;
+            text_Timer.text = iTimerForSelect.ToString();
 
 
             for (int i = 0; i < total; i++)
@@ -237,7 +355,7 @@ public class SkillCardController : MonoBehaviour
                             })
                             .OnKill(() =>
                             {
-                                // TweenÀÌ Áß´ÜµÈ °æ¿ì¿¡µµ completed Áõ°¡
+                                // Tweenì´ ì¤‘ë‹¨ëœ ê²½ìš°ì—ë„ completed ì¦ê°€
                                 if (!hasError)
                                 {
                                     completed++;
@@ -276,14 +394,14 @@ public class SkillCardController : MonoBehaviour
         });
     }
 
-    // Ä«µå Ç¥½Ã ¿Ï·á Ã³¸®¸¦ º°µµ ÇÔ¼ö·Î ºĞ¸®
+    // ì¹´ë“œ í‘œì‹œ ì™„ë£Œ ì²˜ë¦¬ë¥¼ ë³„ë„ í•¨ìˆ˜ë¡œ ë¶„ë¦¬
     private void CompleteCardShow()
     {
         IsAnimating = false;
         SetAllCanInteract(true);
     }
 
-    // #. ÀÌ¹Ì º¸À¯ÇÏ°í ÀÖ´Â ½ºÅ³ÀÎÁö ÆÇ´ÜÇÏ´Â ÇÔ¼ö
+    // #. ì´ë¯¸ ë³´ìœ í•˜ê³  ìˆëŠ” ìŠ¤í‚¬ì¸ì§€ íŒë‹¨í•˜ëŠ” í•¨ìˆ˜
     private bool IsSkillOwned(PlayerAbility playerAbility, int skillIndex)
     {
         if (playerAbility == null) return false;
@@ -305,7 +423,9 @@ public class SkillCardController : MonoBehaviour
         IsAnimating = true;
         SetAllCanInteract(false);
 
-        // floating ¾Ö´Ï¸ŞÀÌ¼Ç Á¤Áö
+       
+
+        // floating ì• ë‹ˆë©”ì´ì…˜ ì •ì§€
         for (int i = 0; i < instances.Length; i++)
         {
             var card = instances[i];
@@ -317,6 +437,11 @@ public class SkillCardController : MonoBehaviour
 
         FadeImage(1f, 0f).OnComplete(() =>
         {
+            text_Timer.gameObject.SetActive(false) ;
+            iTimerForSelect = 0;
+            fTimerInternal = 0f;
+            bTimerCheck = false;
+
             DOVirtual.DelayedCall(0.1f, () =>
             {
                 FadeImage(0f, 1f);
@@ -330,19 +455,19 @@ public class SkillCardController : MonoBehaviour
             {
                 continue;
             }
-            card.transform.position = spawnPoints[i].position; // Áï½Ã ÀÌµ¿
+            card.transform.position = spawnPoints[i].position; // ì¦‰ì‹œ ì´ë™
             card.gameObject.SetActive(false);
         }
         iAuthorityPlayerNum = 0;
         if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
         {
-            GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform); 
+            GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
             RectTransform effectRect = effectObj.GetComponent<RectTransform>();
 
-            // image_FadeOut_Whiteº¸´Ù µÚ¿¡ º¸ÀÌ°Ô ¼³Á¤
-            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1); 
+            // image_FadeOut_Whiteë³´ë‹¤ ë’¤ì— ë³´ì´ê²Œ ì„¤ì •
+            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
 
-            // Å¬¸¯ÇÑ Ä«µå À§Ä¡ »ç¿ë
+            // í´ë¦­í•œ ì¹´ë“œ ìœ„ì¹˜ ì‚¬ìš©
             effectRect.anchoredPosition = clickedCardPosition;
 
             DOVirtual.DelayedCall(1f, () =>
@@ -380,7 +505,7 @@ public class SkillCardController : MonoBehaviour
 
     public void SetAllCanInteract(bool canInteract)
     {
-        Debug.Log("Àü¿ø " + canInteract + "·Î ¼³Á¤µÊ");
+        Debug.Log("ì „ì› " + canInteract + "ë¡œ ì„¤ì •ë¨");
 
         for (int i = 0; i < instances.Length; i++)
         {
@@ -407,7 +532,7 @@ public class SkillCardController : MonoBehaviour
             return null;
         }
 
-        // skillDataList¿¡¼­ ÇØ´ç Ä«µåÀÇ ½ÇÁ¦ ÀÎµ¦½º Ã£±â
+        // skillDataListì—ì„œ í•´ë‹¹ ì¹´ë“œì˜ ì‹¤ì œ ì¸ë±ìŠ¤ ì°¾ê¸°
         int actualIndex = skillDataList.IndexOf(card);
         if (actualIndex < 0)
         {
@@ -425,7 +550,7 @@ public class SkillCardController : MonoBehaviour
         Skill skill = skillObj.GetComponent<Skill>();
         if (skill != null)
         {
-            skill.SkillIndex = actualIndex;  // ÀÎµ¦½º ¼³Á¤
+            skill.SkillIndex = actualIndex;  // ì¸ë±ìŠ¤ ì„¤ì •
         }
 
         return skillObj;
@@ -435,7 +560,7 @@ public class SkillCardController : MonoBehaviour
 
     public Tween FadeImage(float fTargetAlpha, float duration)
     {
-        // ½ÃÀÛÇÒ ¶§, ¸ñÇ¥ ¾ËÆÄ°ªÀÌ 0ÀÌ ¾Æ´Ï¶ó¸é È°¼ºÈ­
+        // ì‹œì‘í•  ë•Œ, ëª©í‘œ ì•ŒíŒŒê°’ì´ 0ì´ ì•„ë‹ˆë¼ë©´ í™œì„±í™”
         if (fTargetAlpha != 0f)
         {
             InGameUIController.Instance.image_FadeOut_White.gameObject.SetActive(true);
@@ -445,11 +570,35 @@ public class SkillCardController : MonoBehaviour
         return InGameUIController.Instance.image_FadeOut_White.DOFade(fTargetAlpha, duration)
             .OnComplete(() =>
             {
-                // ¸¶Áö¸· ¾ËÆÄ°ªÀÌ 0ÀÌ¶ó¸é ºñÈ°¼ºÈ­
+                // ë§ˆì§€ë§‰ ì•ŒíŒŒê°’ì´ 0ì´ë¼ë©´ ë¹„í™œì„±í™”
                 if (fTargetAlpha == 0f)
                 {
                     InGameUIController.Instance.image_FadeOut_White.gameObject.SetActive(false);
                 }
             });
+    }
+
+
+    private void SelectRandomCard()
+    {
+        List<SkillCard_UI> activeCards = new List<SkillCard_UI>();
+
+        for (int i = 0; i < instances.Length; i++)
+        {
+            if (instances[i] != null && instances[i].gameObject.activeInHierarchy)
+            {
+                activeCards.Add(instances[i]);
+            }
+        }
+
+        if (activeCards.Count > 0)
+        {
+            int randomIndex = Random.Range(0, activeCards.Count);
+            SkillCard_UI selectedCard = activeCards[randomIndex];
+
+            // ï¿½ï¿½Â¥ Å¬ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ OnPointerClick È£ï¿½ï¿½
+            PointerEventData fakeEventData = new PointerEventData(EventSystem.current);
+            selectedCard.OnPointerClick(fakeEventData);
+        }
     }
 }

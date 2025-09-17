@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 15_HoofOut
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: 
   iAnimalNum: 7
   iSkillIndex: 15
@@ -108,20 +109,13 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 1cde462fe2496c24ab86daa3a5c3a2b0,
-      type: 3}
-    margins:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-  sprite_Frame: {fileID: 21300000, guid: abcad94e2aa771545a46827bf3269fbb, type: 3}
+  sprite_Frame: {fileID: 21300000, guid: d30a57eeaf64a004199a3f89d64d21aa, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: c4005cb950a0e4b4ba32f6b24d24d274, type: 3}
   sprite_Keyword: {fileID: 21300000, guid: 0280ae7d83131454a93f144915b5b99b, type: 3}
   sprite_BorderLine_Left: {fileID: 21300000, guid: d170b4410f698f64ca91c78515643f58,
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: d2c4c755f4994ad46b264d765472aeed,
     type: 3}
-  animationType: 0
+  animationType: 2
   description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
     damage and launching them away</color>

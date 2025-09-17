@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 22_FeatherShot
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: FeatherShot
   iAnimalNum: 10
   iSkillIndex: 22
@@ -38,14 +39,21 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 303f023684853ae4f8ab99c636db1c0e,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3312fddd09b6a4b48950758d5ed3712e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 51cd5168259d4cd44a8efa28b47fbeca,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 291199fdafe5d304d808a546aa5d7cec,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 692d95a139107c04cbe8ae8195eb2251,
       type: 3}
     margins:
       m_Left: 0
@@ -59,6 +67,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
     type: 3}
-  animationType: 0
+  animationType: 5
   description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
     <color=#FF0000>0.5</color> damage</color>

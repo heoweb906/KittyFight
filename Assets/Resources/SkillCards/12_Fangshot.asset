@@ -12,15 +12,145 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 12_Fangshot
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 12
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 17cec539e1353ed48a5a5e2727f76004,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 412b6a35e2d98734797d7d9408f74846,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 10cdd0b32134b6f429e98282aae89c76,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 57d82ed28db88e841930294fd3dcdbb2,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b1d33c2df37435c4987e721dd8dfd744,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: dfe076f3b287cee4fa66891581c25f10,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b6edc2303903cb746af35f6222493620,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 58098a8a349cf9840ac9c732a351e4b5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e92b2150fee56ba4dab9e4a06a2ebd09,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7c20b54626334e74895cda55e5b99bdf,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: f1831e96b94e50846a7f0f21b280f239,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 48a02ab0d35b37a43803e33931da806a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 846cc51f732368c45953de23eb9145c4,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9db8486ed34e88148996c184f90a643b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 210abace3576c3b40a04e126fac917a9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1978fd8cd6675ef41805d297a54e85f0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: fbfe469b1bc625849b6bc88f48b8a5fe,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 61f245d8eb4c7064f97220f9e1214820,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 01fb0a0b5efefd94ea9d62a625275396, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: f30cb485301bc11429cb11c7cf488622, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 3a079d5201968864b9bdf9a87cabb6fa, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: cdbf4a2b9857c6f47a42d4ccded817a8,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: a6b10d83ccf7f1743b00e886814d4d8a,
+    type: 3}
+  animationType: 1
+  description: <color=#FFFFFF>Fires a venomous fang that poisons foes, dealing <color=#FF0000>0.7</color>
+    damage per second for <color=#FF0000>3</color> seconds</color>

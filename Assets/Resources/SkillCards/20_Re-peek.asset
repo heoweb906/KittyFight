@@ -12,15 +12,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
   m_Name: 20_Re-peek
   m_EditorClassIdentifier: 
+  cardType: 0
   sSkillName: 
   iAnimalNum: 0
   iSkillIndex: 20
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
-  cardillustrationPivots: []
-  sprite_Frame: {fileID: 0}
-  sprite_SkillName: {fileID: 0}
-  sprite_Keyword: {fileID: 0}
-  sprite_BorderLine_Left: {fileID: 0}
-  sprite_BorderLine_Right: {fileID: 0}
-  animationType: 0
-  description: 
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: c68c4b852cec58f4b933b35a4692880a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a736185852ea5fa47b282950f80ea334,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4e34abc00a8b08f4b9d8cab680b4f78c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d32012ba3e6412c4aab03d4a7b5618ed,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: cb3b37d76ce81624791e9fac284dd941,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c2fda467dfcf98549b0b34a6ff5e1bd5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 433e2672fe3cab54896726c22be0766f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: bf09bee8688667f4880c90579afcc7f4,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: fb83a3fc6671076458aed41e1ceb2705, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 267d8c44ed33b7e4c8e4e2ae7bd9c09e, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 43511e85b6fa2a940a0ff33b2bfa332f,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 76beef7d1f2fc4041917b0a59f7fce2d,
+    type: 3}
+  animationType: 4
+  description: "<color=#FFFFFF>Do that thing you just did\u2014again.</color>"
