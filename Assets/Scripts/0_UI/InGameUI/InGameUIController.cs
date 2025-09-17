@@ -19,6 +19,7 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI3_Player1;    // Player1 - Dash
     public SkillCooldownHexUI skillUI4_Player1;    // Player1 - Skill1
     public SkillCooldownHexUI skillUI5_Player1;    // Player1 - Skill2
+    public SkillEffectAnimation effectPlayer1;
 
     [Header("Player2 UI")]
     public PlayerHealthHexUI hpUI_Player2;
@@ -27,6 +28,7 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI3_Player2;    // Player2 - Dash
     public SkillCooldownHexUI skillUI4_Player2;    // Player2 - Skill1
     public SkillCooldownHexUI skillUI5_Player2;    // Player2 - Skill2
+    public SkillEffectAnimation effectPlayer2;
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
@@ -118,6 +120,10 @@ public class InGameUIController : MonoBehaviour
         skillUI3_Player2?.Bind(player2Ability, SkillType.Dash);
         skillUI4_Player2?.Bind(player2Ability, SkillType.Skill1);
         skillUI5_Player2?.Bind(player2Ability, SkillType.Skill2);
+
+
+        if (player1Ability != null) player1Ability.effect = effectPlayer1;
+        if (player2Ability != null) player2Ability.effect = effectPlayer2;
     }
 
 

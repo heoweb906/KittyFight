@@ -76,6 +76,7 @@ public class PlayerHealth : MonoBehaviour
 
         currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        ability.effect?.PlayDoubleShakeAnimation(5, 6); // 내 HP
 
         // 권위 판정: Ability.playerNumber 기준
         int pn = ability != null ? ability.playerNumber : 0;
@@ -125,6 +126,7 @@ public class PlayerHealth : MonoBehaviour
         int prev = currentHP;
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
+        ability.effect?.PlayDoubleShakeAnimation(5, 6); // 상대 HP
 
         if (currentHP < prev)
             hitEffectPending = true;
