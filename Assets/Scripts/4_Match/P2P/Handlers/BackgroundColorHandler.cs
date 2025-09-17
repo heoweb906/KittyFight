@@ -21,8 +21,6 @@ public class BackgroundColorHandler : IP2PMessageHandler
 
 
 
-
-
         if (data.iMapGimicNum >= 1)
         {
             gameManager.IntMapGimicnumber = data.iMapGimicNum;

@@ -33,8 +33,6 @@ public class C_MapBoardElement
 
 public class MapBoardController : MonoBehaviour
 {
-    public Canvas canvas;   // 테스트용
-
     public InGameUIController InGameUiController { get; set; }
 
     [Header("실제로 사용할 패널들")]
@@ -52,6 +50,8 @@ public class MapBoardController : MonoBehaviour
 
         mapBoardElement_Upper.StoreInitialPosition();
         mapBoardElement_Lower.StoreInitialPosition();
+
+        OpenMapBoardPanelVertical();
     }
 
     public void OpenMapBoardPanelVertical()

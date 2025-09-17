@@ -144,8 +144,6 @@ public class SkillEffectAnimation : MonoBehaviour
     }
 
 
-
-
     // HP 전용 애니메이션
     public void PlayDoubleShakeAnimation(Image image1, Image image2)
     {
