@@ -47,5 +47,5 @@ MonoBehaviour:
   playerAbility: {fileID: 0}
   coolTime: 0
   objSkillEntity: {fileID: 0}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: ca08707fc64071c4aa321d4750e4b85b, type: 3}
   aimRange: 2.5

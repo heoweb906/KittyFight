@@ -85,8 +85,8 @@ public class GameManager : MonoBehaviour
         Transform opponentSpawn = (myNum == 1) ? spawnPoint2 : spawnPoint1;
 
         // Instantiate
-        GameObject myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, Quaternion.identity);
-        GameObject opponentPlayer = Instantiate(opponentPlayerPrefab, opponentSpawn.position, Quaternion.identity);
+        GameObject myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, mySpawn.rotation);
+        GameObject opponentPlayer = Instantiate(opponentPlayerPrefab, opponentSpawn.position, opponentSpawn.rotation);
 
         // player1 / player2 참조 정리 (화면 좌/우 고정 관점 유지)
         player1 = (myNum == 1) ? myPlayer : opponentPlayer;
@@ -107,10 +107,6 @@ public class GameManager : MonoBehaviour
         if (myAbility != null) myAbility.playerNumber = myNum;
         if (oppAbility != null) oppAbility.playerNumber = (myNum == 1) ? 2 : 1;
 
-        // 기본 스킬 장착 (근접/원거리)
-        EquipDefaultSkills(myAbility);
-        EquipDefaultSkills(oppAbility);
-
         // 공개 참조 채워두기
         if (myNum == 1)
         {
@@ -126,6 +122,10 @@ public class GameManager : MonoBehaviour
         // UI 와이어링 (쿨다운은 Ability pull 기반)
         ingameUIController?.WireSkillUIs(playerAbility_1, playerAbility_2);
         ingameUIController?.StartGameTimer(90f);
+
+        // 기본 스킬 장착 (근접/원거리)
+        EquipDefaultSkills(myAbility);
+        EquipDefaultSkills(oppAbility);
 
         // 핸들러 등록
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));

@@ -44,39 +44,6 @@ public class SkillEffectAnimation : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // 0번 요소: H(Shake), B(Simple)
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            PlayShakeAnimation(0);
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            PlaySimpleAnimation(0);
-        }
-
-        // 1번 요소: J(Shake), N(Simple)
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            PlayShakeAnimation(1);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            PlaySimpleAnimation(1);
-        }
-
-        // 2번 요소: K(Shake), M(Simple)
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            PlayShakeAnimation(2);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            PlaySimpleAnimation(2);
-        }
-    }
-
     // 특정 인덱스의 애니메이션 정리
     private void StopCurrentAnimation(int index)
     {

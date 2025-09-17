@@ -48,10 +48,9 @@ MonoBehaviour:
   coolTime: 3
   objSkillEntity: {fileID: 551775367249106992, guid: c41e6769c4c75854f9331459f4404bba,
     type: 3}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 15a1f6d07a7eb9d4a955c321cc87c346, type: 3}
   aimRange: 1
-  p1Material: {fileID: 2100000, guid: 9155458aed9b38848b6949d5c0f7a960, type: 2}
-  p2Material: {fileID: 2100000, guid: 5cc840b250e862846914600b1801463f, type: 2}
   events: {fileID: 0}
   meleeEffectPrefab: {fileID: 7243278475803563119, guid: 1a45ae6741eb29d4d99d4547ec940881,
     type: 3}
+  shakeAmount: 0.24

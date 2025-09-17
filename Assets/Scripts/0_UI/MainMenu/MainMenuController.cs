@@ -197,6 +197,7 @@ public class MainMenuController : MonoBehaviour
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
 
         CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.15f);
+        panels[1].SetActive(false); // Player UI
         DOVirtual.DelayedCall(0.2f, () => {
             matchManager.OnMatchButtonClicked();
         });
@@ -209,6 +210,7 @@ public class MainMenuController : MonoBehaviour
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = false;
 
         OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.15f);
+        panels[1].SetActive(true); // Player UI
         DOVirtual.DelayedCall(0.2f, () => {
             scriptPlayerCharacter.bCanControl = true;
         });
