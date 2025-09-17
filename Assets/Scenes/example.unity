@@ -4732,7 +4732,7 @@ GameObject:
   - component: {fileID: 593840146}
   - component: {fileID: 593840145}
   m_Layer: 0
-  m_Name: Text (TMP)_TIMER
+  m_Name: Text (TMP)_Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
