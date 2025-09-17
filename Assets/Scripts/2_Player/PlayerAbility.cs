@@ -63,6 +63,9 @@ public class PlayerAbility : MonoBehaviour
 
     public event System.Action<SkillType> OnCooldownChanged;
 
+    // 스킬 장착 알림 (UI 아이콘 주입용)
+    public event System.Action<SkillType, Skill> OnSkillEquipped;
+
     private void Awake()
     {
         Health = GetComponent<PlayerHealth>();
@@ -111,6 +114,8 @@ public class PlayerAbility : MonoBehaviour
             case SkillType.Skill1: skill1 = skill; break;
             case SkillType.Skill2: skill2 = skill; break;
         }
+
+        OnSkillEquipped?.Invoke(type, skill);
     }
 
     public void TryExecuteSkill(SkillType type, Vector3 origin, Vector3 direction, bool force = false, float? overrideDuration = null)

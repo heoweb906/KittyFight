@@ -150,5 +150,5 @@ MonoBehaviour:
   lifeTime: 5
   environmentMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8960
   damage: 40

@@ -13,20 +13,20 @@ public class InGameUIController : MonoBehaviour
     public GameManager gameManager;
 
     [Header("Player1 UI")]
-    public PlayerHealthUI hpUI_Player1;
-    public SkillCooldownUI skillUI_Player1;     // Player1 - Melee
-    public SkillCooldownUI skillUI2_Player1;    // Player1 - Ranged
-    public SkillCooldownUI skillUI3_Player1;    // Player1 - Dash
-    public SkillCooldownUI skillUI4_Player1;    // Player1 - Skill1
-    public SkillCooldownUI skillUI5_Player1;    // Player1 - Skill2
+    public PlayerHealthHexUI hpUI_Player1;
+    public SkillCooldownHexUI skillUI_Player1;     // Player1 - Melee
+    public SkillCooldownHexUI skillUI2_Player1;    // Player1 - Ranged
+    public SkillCooldownHexUI skillUI3_Player1;    // Player1 - Dash
+    public SkillCooldownHexUI skillUI4_Player1;    // Player1 - Skill1
+    public SkillCooldownHexUI skillUI5_Player1;    // Player1 - Skill2
 
     [Header("Player2 UI")]
-    public PlayerHealthUI hpUI_Player2;
-    public SkillCooldownUI skillUI_Player2;     // Player2 - Melee
-    public SkillCooldownUI skillUI2_Player2;    // Player2 - Ranged
-    public SkillCooldownUI skillUI3_Player2;    // Player2 - Dash
-    public SkillCooldownUI skillUI4_Player2;    // Player1 - Skill1
-    public SkillCooldownUI skillUI5_Player2;    // Player1 - Skill2
+    public PlayerHealthHexUI hpUI_Player2;
+    public SkillCooldownHexUI skillUI_Player2;     // Player2 - Melee
+    public SkillCooldownHexUI skillUI2_Player2;    // Player2 - Ranged
+    public SkillCooldownHexUI skillUI3_Player2;    // Player2 - Dash
+    public SkillCooldownHexUI skillUI4_Player2;    // Player2 - Skill1
+    public SkillCooldownHexUI skillUI5_Player2;    // Player2 - Skill2
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
@@ -105,19 +105,19 @@ public class InGameUIController : MonoBehaviour
     {
         // Player1 (¿ÞÂÊ)
         hpUI_Player1?.Bind(player1Ability);
-        if (skillUI_Player1 != null) { skillUI_Player1.abilityRef = player1Ability; skillUI_Player1.slot = SkillType.Melee; }
-        if (skillUI2_Player1 != null) { skillUI2_Player1.abilityRef = player1Ability; skillUI2_Player1.slot = SkillType.Ranged; }
-        if (skillUI3_Player1 != null) { skillUI3_Player1.abilityRef = player1Ability; skillUI3_Player1.slot = SkillType.Dash; }
-        if (skillUI4_Player1 != null) { skillUI4_Player1.abilityRef = player1Ability; skillUI4_Player1.slot = SkillType.Skill1; }
-        if (skillUI5_Player1 != null) { skillUI5_Player1.abilityRef = player1Ability; skillUI5_Player1.slot = SkillType.Skill2; }
+        skillUI_Player1?.Bind(player1Ability, SkillType.Melee);
+        skillUI2_Player1?.Bind(player1Ability, SkillType.Ranged);
+        skillUI3_Player1?.Bind(player1Ability, SkillType.Dash);
+        skillUI4_Player1?.Bind(player1Ability, SkillType.Skill1);
+        skillUI5_Player1?.Bind(player1Ability, SkillType.Skill2);
 
         // Player2 (¿À¸¥ÂÊ)
         hpUI_Player2?.Bind(player2Ability);
-        if (skillUI_Player2 != null) { skillUI_Player2.abilityRef = player2Ability; skillUI_Player2.slot = SkillType.Melee; }
-        if (skillUI2_Player2 != null) { skillUI2_Player2.abilityRef = player2Ability; skillUI2_Player2.slot = SkillType.Ranged; }
-        if (skillUI3_Player2 != null) { skillUI3_Player2.abilityRef = player2Ability; skillUI3_Player2.slot = SkillType.Dash; }
-        if (skillUI4_Player2 != null) { skillUI4_Player2.abilityRef = player2Ability; skillUI4_Player2.slot = SkillType.Skill1; }
-        if (skillUI5_Player2 != null) { skillUI5_Player2.abilityRef = player2Ability; skillUI5_Player2.slot = SkillType.Skill2; }
+        skillUI_Player2?.Bind(player2Ability, SkillType.Melee);
+        skillUI2_Player2?.Bind(player2Ability, SkillType.Ranged);
+        skillUI3_Player2?.Bind(player2Ability, SkillType.Dash);
+        skillUI4_Player2?.Bind(player2Ability, SkillType.Skill1);
+        skillUI5_Player2?.Bind(player2Ability, SkillType.Skill2);
     }
 
 
