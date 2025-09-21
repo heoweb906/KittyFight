@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
     public Canvas mainCanVas;
     public MatchManager matchManager;
     public TestPlayerComtroller scriptPlayerCharacter;
+    public TitleLogoAssist titleLogoAssist;
 
     public List<GameObject> panels; // 인덱스로 관리
     private int currentIndex = -1;
@@ -40,12 +41,6 @@ public class MainMenuController : MonoBehaviour
         foreach (var panel in panels)
         {
             panel.SetActive(false);
-        }
-        // 0번 패널 활성화
-        if (panels.Count > 0)
-        {
-            currentIndex = 0;
-            panels[0].SetActive(true);
         }
 
         OpenSceneChangePanel(image_LeftBackGround.rectTransform, image_RightBackGround.rectTransform, 0f);
@@ -141,10 +136,6 @@ public class MainMenuController : MonoBehaviour
 
 
 
-
-
-
-
     public void OnNickNameInputPanel()
     {
         CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.15f);
@@ -153,7 +144,9 @@ public class MainMenuController : MonoBehaviour
     {
         matchManager.MyNickname = nicknameInput.text;
 
-        SwitchPanel_ByButton(iPanelNum);
+        scriptPlayerCharacter.bCanControl = true;
+
+        // SwitchPanel_ByButton(iPanelNum);
 
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f);
     }
@@ -217,6 +210,30 @@ public class MainMenuController : MonoBehaviour
     }
 
 
+
+    public void ResetPlayerPosition(GameObject obj)
+    {
+        scriptPlayerCharacter.bCanControl = false;
+
+
+        obj.transform.position = transformCenter.position;
+        obj.transform.eulerAngles = new Vector3(0f, 90f, 0f);
+        Rigidbody playerRb = obj.GetComponent<Rigidbody>();
+        if (playerRb != null)
+        {
+            playerRb.velocity = Vector3.zero;
+            playerRb.angularVelocity = Vector3.zero;
+        }
+
+        StartCoroutine(DelayedAction());
+    }
+
+
+    private IEnumerator DelayedAction()
+    {
+        yield return new WaitForSeconds(0.3f);
+        titleLogoAssist.ChangeVirtualCamera(0);
+    }
 
 
 

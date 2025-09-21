@@ -13,7 +13,7 @@ public class SkillEffectAnimation : MonoBehaviour
     private Sequence[] currentSequences;
     private Sequence[] currentShakeSequences;
 
-    void Start()
+    void Awake()
     {
         InitializeArrays();
     }
@@ -74,6 +74,12 @@ public class SkillEffectAnimation : MonoBehaviour
     {
         if (index < 0 || index >= targetRectTransforms.Length) return;
 
+        // 해당 인덱스의 RectTransform에 있는 모든 DOTween 애니메이션만 정리
+        if (targetRectTransforms[index] != null)
+        {
+            targetRectTransforms[index].DOKill();
+        }
+
         if (currentSequences[index] != null)
         {
             currentSequences[index].Kill();
@@ -96,6 +102,10 @@ public class SkillEffectAnimation : MonoBehaviour
     // 매개변수로 인덱스를 받는 Shake 애니메이션
     public void PlayShakeAnimation(int index)
     {
+        Debug.Log($"PlayShakeAnimation called with index: {index}");
+        Debug.Log($"targetRectTransforms length: {targetRectTransforms?.Length}");
+        Debug.Log($"targetRectTransforms[{index}] is null: {targetRectTransforms?[index] == null}");
+
         if (index < 0 || index >= targetRectTransforms.Length || targetRectTransforms[index] == null) return;
 
         StopCurrentAnimation(index);
@@ -103,7 +113,10 @@ public class SkillEffectAnimation : MonoBehaviour
         // 떨림 애니메이션
         currentShakeSequences[index] = DOTween.Sequence();
         currentShakeSequences[index].Append(targetRectTransforms[index].DOPunchRotation(Vector3.forward * 30f, 0.4f, 30, 0.4f))
-                                   .OnComplete(() => currentShakeSequences[index] = null);
+                                   .OnComplete(() => {
+                                       currentShakeSequences[index] = null;
+                                       targetRectTransforms[index].localEulerAngles = originalRotations[index];
+                                   });
 
         // 스케일 애니메이션
         currentSequences[index] = DOTween.Sequence();
@@ -113,7 +126,6 @@ public class SkillEffectAnimation : MonoBehaviour
                               .OnComplete(() => {
                                   currentSequences[index] = null;
                                   targetRectTransforms[index].localScale = originalScales[index];
-                                  targetRectTransforms[index].localEulerAngles = originalRotations[index];
                               });
     }
 
@@ -136,7 +148,6 @@ public class SkillEffectAnimation : MonoBehaviour
 
 
 
-
     public void PlayShakeAnimation(Image targetImage)
     {
         int index = System.Array.IndexOf(targetImages, targetImage);
@@ -156,38 +167,55 @@ public class SkillEffectAnimation : MonoBehaviour
 
 
     // HP바 전용 애니메이션
+    // HP바 전용 애니메이션
     public void PlayDoubleShakeAnimation(int index1, int index2)
     {
-        if (index1 >= 0)
+        if (index1 >= 0 && index1 < targetRectTransforms.Length)
         {
+            StopCurrentAnimation(index1);
+
             RectTransform rect1 = targetRectTransforms[index1];
-            rect1.DOKill();
 
             // Z축 떨림
-            rect1.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f)
-                    .OnComplete(() => rect1.localEulerAngles = originalRotations[index1]);
+            currentShakeSequences[index1] = DOTween.Sequence();
+            currentShakeSequences[index1].Append(rect1.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f))
+                    .OnComplete(() => {
+                        currentShakeSequences[index1] = null;
+                        rect1.localEulerAngles = originalRotations[index1];
+                    });
 
             // 크기 변화
-            Sequence scaleSeq1 = DOTween.Sequence();
-            scaleSeq1.Append(rect1.DOScale(originalScales[index1] * 1.1f, 0.15f))
+            currentSequences[index1] = DOTween.Sequence();
+            currentSequences[index1].Append(rect1.DOScale(originalScales[index1] * 1.1f, 0.15f))
                         .Append(rect1.DOScale(originalScales[index1], 0.15f))
-                        .OnComplete(() => rect1.localScale = originalScales[index1]);
+                        .OnComplete(() => {
+                            currentSequences[index1] = null;
+                            rect1.localScale = originalScales[index1];
+                        });
         }
 
-        if (index2 >= 0)
+        if (index2 >= 0 && index2 < targetRectTransforms.Length)
         {
+            StopCurrentAnimation(index2);
+
             RectTransform rect2 = targetRectTransforms[index2];
-            rect2.DOKill();
 
             // Z축 떨림
-            rect2.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f)
-                    .OnComplete(() => rect2.localEulerAngles = originalRotations[index2]);
+            currentShakeSequences[index2] = DOTween.Sequence();
+            currentShakeSequences[index2].Append(rect2.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f))
+                    .OnComplete(() => {
+                        currentShakeSequences[index2] = null;
+                        rect2.localEulerAngles = originalRotations[index2];
+                    });
 
             // 크기 변화
-            Sequence scaleSeq2 = DOTween.Sequence();
-            scaleSeq2.Append(rect2.DOScale(originalScales[index2] * 1.1f, 0.15f))
+            currentSequences[index2] = DOTween.Sequence();
+            currentSequences[index2].Append(rect2.DOScale(originalScales[index2] * 1.1f, 0.15f))
                         .Append(rect2.DOScale(originalScales[index2], 0.15f))
-                        .OnComplete(() => rect2.localScale = originalScales[index2]);
+                        .OnComplete(() => {
+                            currentSequences[index2] = null;
+                            rect2.localScale = originalScales[index2];
+                        });
         }
     }
 

@@ -5,11 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 public class TitleLogoAssist : MonoBehaviour
 {
+    public MainMenuController mainMenuController;
+    public CameraManager cameraManager;
+    public TestPlayerComtroller testPlayerComtroller;
+
     [Header("타이틀 로고")]
     public SpriteRenderer image_Logo;
 
     [Header("카메라 종류 / 피사체 위치")]
-    public GameObject[] objs_VirtualCamera;
+    public GameObject[] objs_VirtualCamera; 
     // 0 - 일러스트, 중앙 방
     // 1 - 우측 방
     // 2 - 좌측방
@@ -26,6 +30,7 @@ public class TitleLogoAssist : MonoBehaviour
         image_Logo.DOFade(0f, 0f);
         ChangeVirtualCamera(0);
         objs_VirtualCamera[0].transform.position = transforms_Subject[0].position;
+        testPlayerComtroller.bCanControl = false;
 
         for (int i = 0; i < doors.Length; ++i) doors[i].titleLogoAssist = this;
     }
@@ -41,10 +46,14 @@ public class TitleLogoAssist : MonoBehaviour
             SkipCurrentStep();
         }
     }
+
+
     private void SkipCurrentStep()
     {
-        DOTween.KillAll();
-
+        // DOTween.KillAll() 제거하고 이 스크립트의 트위닝만 정리
+        image_Logo.DOKill();
+        objs_VirtualCamera[0].transform.DOKill();
+        DOTween.Kill(this); // 이 MonoBehaviour와 연관된 DOVirtual 정리
         if (currentStep == 1)
         {
             image_Logo.color = new Color(image_Logo.color.r, image_Logo.color.g, image_Logo.color.b, 1f);
@@ -58,6 +67,7 @@ public class TitleLogoAssist : MonoBehaviour
         else if (currentStep == 3)
         {
             objs_VirtualCamera[0].transform.position = transforms_Subject[1].position;
+            DOVirtual.DelayedCall(0.2f, () => mainMenuController.SwitchPanel_ByButton(1));
         }
     }
 
@@ -76,12 +86,11 @@ public class TitleLogoAssist : MonoBehaviour
     private void StartStep3()
     {
         currentStep = 3;
-        objs_VirtualCamera[0].transform.DOMove(transforms_Subject[1].position, 10f);
+        objs_VirtualCamera[0].transform.DOMove(transforms_Subject[1].position, 10f).OnComplete(() => {
+
+            DOVirtual.DelayedCall(0.2f, () => mainMenuController.SwitchPanel_ByButton(1));
+        });
     }
-
-
-   
-
 
 
 
@@ -92,6 +101,11 @@ public class TitleLogoAssist : MonoBehaviour
             if (i != targetIndex)
             {
                 objs_VirtualCamera[i].SetActive(false);
+            }
+            else
+            {
+                objs_VirtualCamera[i].SetActive(true);
+                cameraManager.objCamaera = objs_VirtualCamera[i];
             }
         }
     }
