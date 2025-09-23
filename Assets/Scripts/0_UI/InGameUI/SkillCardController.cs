@@ -8,6 +8,46 @@ using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
 
+
+[System.Serializable]
+public class RatCurtainBoard
+{
+    public GameObject obj_RatBoard;
+    public GameObject obj_curtain;
+    public GameObject obj_rat;
+    
+    [Header("초기 위치 저장")]
+    [HideInInspector] public Vector2 originalPos_RatBoard;
+    [HideInInspector] public Vector2 originalPos_curtain;
+    [HideInInspector] public Vector2 originalPos_rat;
+
+    public void SaveOriginalPositions()
+    {
+        if (obj_RatBoard != null)
+            originalPos_RatBoard = obj_RatBoard.GetComponent<RectTransform>().anchoredPosition;
+
+        if (obj_curtain != null)
+            originalPos_curtain = obj_curtain.GetComponent<RectTransform>().anchoredPosition;
+
+        if (obj_rat != null)
+            originalPos_rat = obj_rat.GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    public void RestoreOriginalPositions()
+    {
+        if (obj_RatBoard != null)
+            obj_RatBoard.GetComponent<RectTransform>().anchoredPosition = originalPos_RatBoard;
+
+        if (obj_curtain != null)
+            obj_curtain.GetComponent<RectTransform>().anchoredPosition = originalPos_curtain;
+
+        if (obj_rat != null)
+            obj_rat.GetComponent<RectTransform>().anchoredPosition = originalPos_rat;
+    }
+}
+
+
+
 public class SkillCardController : MonoBehaviour
 {
     [Header("중요한 정보들")]
@@ -41,13 +81,22 @@ public class SkillCardController : MonoBehaviour
     [Header("연출에 사용할 것들")]
     public GameObject[] objs_AnimalSkillCardEffects;
 
-
+    // 쥐 연출
+    public RatCurtainBoard[] ratCurtainBoards;
 
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
 
         var datas = Resources.LoadAll<SkillCard_SO>(skillCardResourceFolder);
+
+
+        for (int i = 0; i < ratCurtainBoards.Length; i++)
+        {
+            ratCurtainBoards[i].SaveOriginalPositions();
+        }
+
+
 
         // 숫자 추출 함수
         int ExtractLeadingNumber(string name)
@@ -68,6 +117,7 @@ public class SkillCardController : MonoBehaviour
                 skillDataList.Add(data);
             }
         }
+
 
         for (int i = 0; i < instances.Length; i++)
         {
@@ -91,12 +141,28 @@ public class SkillCardController : MonoBehaviour
             instances[i] = card;
         }
 
+        // 4개 카드 생성 완료 후 15% 확률로 하나를 쥐 카드로 설정
+        //if (Random.Range(0f, 100f) < 15f)
+        //{
+        //    int randomIndex = Random.Range(0, instances.Length);
+        //    instances[randomIndex].bIsRat = true;
+        //}
+
+
+        // 테스트용: 100% 확률로 4개 모두 쥐 카드로 설정
+        for (int i = 0; i < instances.Length; i++)
+        {
+            instances[i].bIsRat = true;
+        }
+
+
+
+
         text_Timer.gameObject.SetActive(false);
         iTimerForSelect = 0;
         fTimerInternal = 0f;
         bTimerCheck = false;
     }
-
 
 
 
@@ -127,6 +193,12 @@ public class SkillCardController : MonoBehaviour
         {
             ShowSkillCardListWithSpecific(0, false, new int[] { 16, 103, 108, 24 });
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HIdeSkillCardList_ForRat();
+        }
+
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
@@ -179,7 +251,6 @@ public class SkillCardController : MonoBehaviour
             }
         }
 
-        // ������ ������ �������� ä���
         for (int i = selectedIndices.Count; i < instances.Length && availableIndices.Count > 0; i++)
         {
             int randomIndex = Random.Range(0, availableIndices.Count);
@@ -396,7 +467,7 @@ public class SkillCardController : MonoBehaviour
     private void CompleteCardShow()
     {
         IsAnimating = false;
-        SetAllCanInteract(true);
+        SetBoolAllCardInteract(true);
     }
 
     // #. 이미 보유하고 있는 스킬인지 판단하는 함수
@@ -412,14 +483,14 @@ public class SkillCardController : MonoBehaviour
         return false;
     }
 
-
+      
 
 
     public void HideSkillCardList(int iAnimalNum = 0, Vector2 clickedCardPosition = default)
     {
         if (IsAnimating) return;
         IsAnimating = true;
-        SetAllCanInteract(false);
+        SetBoolAllCardInteract(false);
 
        
         // floating 애니메이션 정지
@@ -497,10 +568,126 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+    public void HIdeSkillCardList_ForRat(int iAnimalNum = 0, Vector2 clickedCardPosition = default)
+    {
+        if (IsAnimating) return;
+        IsAnimating = true;
+        SetBoolAllCardInteract(false);
+        clickedCardPosition = new Vector2(-750, 330);
+        int ratBoardIndex = clickedCardPosition.x < 0 ? 0 : 1;
+        if (ratBoardIndex < ratCurtainBoards.Length)
+        {
+            ratCurtainBoards[ratBoardIndex].RestoreOriginalPositions();
+
+            if (ratCurtainBoards[ratBoardIndex].obj_RatBoard != null)
+                ratCurtainBoards[ratBoardIndex].obj_RatBoard.SetActive(true);
+        }
+        // floating 애니메이션 정지
+        for (int i = 0; i < instances.Length; i++)
+        {
+            var card = instances[i];
+            if (card != null)
+            {
+                card.StopFloatingAnimation();
+            }
+        }
+        FadeImage(1f, 0f).OnComplete(() =>
+        {
+            text_Timer.gameObject.SetActive(false);
+            iTimerForSelect = 0;
+            fTimerInternal = 0f;
+            bTimerCheck = false;
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
+                FadeImage(0f, 1f);
+            });
+        });
+        int total = instances.Length;
+        for (int i = 0; i < total; i++)
+        {
+            var card = instances[i];
+            if (card == null || spawnPoints[i] == null)
+            {
+                continue;
+            }
+            card.transform.position = spawnPoints[i].position; // 즉시 이동
+            card.gameObject.SetActive(false);
+        }
+        iAuthorityPlayerNum = 0;
+        if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
+        {
+            // 커튼 애니메이션 추가
+            if (ratBoardIndex < ratCurtainBoards.Length && ratCurtainBoards[ratBoardIndex].obj_curtain != null)
+            {
+                RectTransform curtainRect = ratCurtainBoards[ratBoardIndex].obj_curtain.GetComponent<RectTransform>();
+                Vector2 originalCurtainPos = curtainRect.anchoredPosition;
+                Vector2 targetCurtainPos = new Vector2(originalCurtainPos.x, originalCurtainPos.y + 1500);
+
+                // 1.2초 딜레이 후 커튼 애니메이션 시작
+                DOVirtual.DelayedCall(1.2f, () =>
+                {
+                    Sequence curtainSequence = DOTween.Sequence();
+                    curtainSequence.Append(curtainRect.DOAnchorPosY(originalCurtainPos.y - 50f, 0.3f));
+                    curtainSequence.Append(curtainRect.DOAnchorPos(targetCurtainPos, 0.9f).SetEase(Ease.OutQuad));
+                    curtainSequence.OnComplete(() =>
+                    {
+                        // 커튼 애니메이션 완료 후 1초 대기 후 기존 로직 실행
+                        DOVirtual.DelayedCall(1f, () =>
+                        {
+                            ExecuteOriginalEffect();
+                        });
+                    });
+                });
+            }
+            else
+            {
+                // 커튼이 없으면 바로 기존 로직 실행
+                ExecuteOriginalEffect();
+            }
+
+            void ExecuteOriginalEffect()
+            {
+                GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
+                RectTransform effectRect = effectObj.GetComponent<RectTransform>();
+                // image_FadeOut_White보다 뒤에 보이게 설정
+                effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+                // 클릭한 카드 위치 사용
+                effectRect.anchoredPosition = clickedCardPosition;
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
+                    {
+                        FadeImage(1f, 0f).OnComplete(() =>
+                        {
+                            DOVirtual.DelayedCall(0.1f, () =>
+                            {
+                                FadeImage(0f, 1f);
+                                IsAnimating = false;
+                                DOVirtual.DelayedCall(0.9f, () =>
+                                {
+                                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                });
+                            });
+                        });
+                        Destroy(effectObj);
+                    });
+                });
+            }
+        }
+        else
+        {
+            IsAnimating = false;
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                InGameUiController.scoreBoardUIController.OpenScorePanel();
+            });
+        }
+    }
 
 
 
-    public void SetAllCanInteract(bool canInteract)
+
+    public void SetBoolAllCardInteract(bool canInteract)
     {
         Debug.Log("전원 " + canInteract + "로 설정됨");
 
@@ -515,12 +702,13 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
-
+    // #. Skill 이름으로 찾아와서 카드 생성하기
     public SkillCard_SO FindSkillCardByName(string skillName)
     {
         return skillDataList.Find(card => card.sSkillName == skillName);
     }
 
+    // #. SkillCard 인스턴스 생성
     public GameObject CreateSkillInstance(SkillCard_SO card)
     {
         if (card == null)
@@ -553,8 +741,6 @@ public class SkillCardController : MonoBehaviour
         return skillObj;
     }
 
-
-
     public Tween FadeImage(float fTargetAlpha, float duration)
     {
         // 시작할 때, 목표 알파값이 0이 아니라면 활성화
@@ -576,6 +762,7 @@ public class SkillCardController : MonoBehaviour
     }
 
 
+    // #. 시간 초과되면 랜덤으로 선택되게 하는 함수
     private void SelectRandomCard()
     {
         List<SkillCard_UI> activeCards = new List<SkillCard_UI>();
@@ -598,4 +785,5 @@ public class SkillCardController : MonoBehaviour
             selectedCard.OnPointerClick(fakeEventData);
         }
     }
+
 }

@@ -9,4 +9,6 @@ public class Model_SkillSelect
 
     public Vector2 cardPosition;  // 추가
     public SkillCard_SO skillCard_SO;   // 추가
+
+    public bool bIsRat;
 }

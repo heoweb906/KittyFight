@@ -262,15 +262,15 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
         P2PMessageSender.SendMessage(
-     SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition, skillCard_SO)
- );
+          SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition, skillCard_SO, bIsRat)
+      );
 
 
 
 
 
         // UI 처리
-        skillCardController.SetAllCanInteract(false);
+        skillCardController.SetBoolAllCardInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
         transform.DOKill();
 
