@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public enum CardAnimationType
 {
+    Number_1,
+    Number_3,
     Number_5,
     Number_12,
     Number_15,
@@ -10,6 +12,7 @@ public enum CardAnimationType
     Number_20,
     Number_22,
     Number_24,
+    Number_101,
     Number_103,
     Number_108,
     Number_109,
@@ -40,10 +43,10 @@ public class SkillCard_SO : ScriptableObject
     public string sSkillName;
     public int iAnimalNum;
     public int iSkillIndex;
+
     [Space(30)]
     [Header("스킬 기본 정보")]
     public Sprite sprite_Icon;
-
     [Header("스킬 기본 정보")]
     public CardillustrationPivot[] cardillustrationPivots;
     public Sprite sprite_Frame;
@@ -52,11 +55,28 @@ public class SkillCard_SO : ScriptableObject
     public Sprite sprite_BorderLine_Left;
     public Sprite sprite_BorderLine_Right;
 
-
-
-    [Space(10)]
-    [Header("애니메이션 설정")]
-    public CardAnimationType animationType;
+    public CardAnimationType AnimationType { get; set; }
+    
     [TextArea(5, 20)]
     public string description;
+
+    // iSkillIndex가 변경될 때 자동으로 animationType 설정
+    private void OnValidate()
+    {
+        SetAnimationTypeFromSkillIndex();
+    }
+
+    private void SetAnimationTypeFromSkillIndex()
+    {
+        string enumName = $"Number_{iSkillIndex}";
+        if (System.Enum.TryParse(enumName, out CardAnimationType result))
+        {
+            AnimationType = result;
+        }
+        else
+        {
+            // 해당하는 enum이 없으면 기본값으로 설정
+            AnimationType = CardAnimationType.Number_1;
+        }
+    }
 }

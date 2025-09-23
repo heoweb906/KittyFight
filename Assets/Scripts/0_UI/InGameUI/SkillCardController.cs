@@ -8,8 +8,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine.EventSystems;
 
-
-
 public class SkillCardController : MonoBehaviour
 {
     [Header("중요한 정보들")]
@@ -424,7 +422,6 @@ public class SkillCardController : MonoBehaviour
         SetAllCanInteract(false);
 
        
-
         // floating 애니메이션 정지
         for (int i = 0; i < instances.Length; i++)
         {

@@ -81,7 +81,7 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 52472b36c09e2004d881dcac5f7f2228,
     type: 3}
-  animationType: 8
+  animationType: 10
   description: <color=#FFFFFF>Your melee strikes start weak at <color=#FF0000>0.5</color>
     damage but sharpen with every hit, gaining <color=#0080FF>0.2</color> damage
     each time</color>

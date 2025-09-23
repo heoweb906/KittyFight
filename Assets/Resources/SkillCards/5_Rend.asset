@@ -165,6 +165,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
     type: 3}
-  animationType: 0
+  animationType: 2
   description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
     hit take <color=#FF0000>3.5</color> damage</color>

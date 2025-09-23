@@ -11,6 +11,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public SkillCardController skillCardController { get; set; }
     public bool bCanInteract = false;
 
+    public bool bIsRat = false;
+
 
     [Header("UI Card에 표시할 내용들")]
     public CanvasGroup imageGroup_illustration;
@@ -28,6 +30,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Skill 스크립터블")]
     public SkillCard_SO skillCard_SO;
     private CardAnimationBase currentAnimation;
+    
+
 
 
     // 트위닝 관리용
@@ -36,7 +40,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector3 originalScale;
 
     private Vector2 originalTitleAnchorPos;
-    private Color originalIllustrationColor;
     private Color originalKeyWordColor;
 
     private Color originalDescriptionColor;
@@ -45,7 +48,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector2 originalBorderRightPos;
 
     private float tweenDuration = 0.08f;
-    private float scaleFactor = 1.1f;
+    private float scaleFactor = 1.15f;
 
 
     private void Awake()
@@ -105,7 +108,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
 
         // 애니메이션 컴포넌트 추가
-        AddAnimationComponent(data.animationType);
+        AddAnimationComponent(data.AnimationType);
 
         image_CardBorderLine.sprite = data.sprite_Frame;
         image_CardTitle.sprite = data.sprite_SkillName;
@@ -264,6 +267,8 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
 
+
+
         // UI 처리
         skillCardController.SetAllCanInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
@@ -271,16 +276,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, rectTransformMine.anchoredPosition);
 
-
-        //OnPointerExit(eventData);
-
-        //Sequence clickSeq = DOTween.Sequence();
-        //clickSeq.Append(transform.DOPunchScale(originalScale * 0.1f, tweenDuration + 0.5f));
-        //clickSeq.Append(transform.DOScale(originalScale, tweenDuration));
-        //clickSeq.OnComplete(() =>
-        //{
-        //    skillCardController.HideSkillCardList();
-        //});
     }
 
 

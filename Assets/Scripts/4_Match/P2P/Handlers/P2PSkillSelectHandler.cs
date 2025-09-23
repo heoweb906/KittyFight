@@ -42,6 +42,8 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             }
         }
 
+
+
         skillCardController.SetAllCanInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
         skillCardController.HideSkillCardList(model.skillCard_SO.iAnimalNum, model.cardPosition);

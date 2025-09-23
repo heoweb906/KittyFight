@@ -81,6 +81,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: ab62846c5c28aa244a02c3b52f2d0e89,
     type: 3}
-  animationType: 10
+  animationType: 12
   description: "<color=#FFFFFF>Explosive fury erupts every <color=#0080FF>10</color>
     seconds! <color=#FF0000>2</color> damage to all around you \u2014 yourself included!!</color>"

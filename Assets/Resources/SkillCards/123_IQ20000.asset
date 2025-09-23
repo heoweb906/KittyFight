@@ -95,6 +95,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
     type: 3}
-  animationType: 11
+  animationType: 13
   description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
     by <color=#00BFFF>2</color></color>
