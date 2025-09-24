@@ -95,6 +95,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: d38335604d19f75488134bd1c667b7a3,
     type: 3}
-  animationType: 9
+  AnimationType: 10
   description: "<color=#FFFFFF>The longer you hold back, the harder you charge\u2014like
     a bull ready to smash!</color>"

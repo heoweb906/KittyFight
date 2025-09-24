@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
@@ -5,7 +6,10 @@ using UnityEngine;
 
 public class TestPlayerComtroller : MonoBehaviour
 {
+    public MatchManager matchManager;
+
     public bool bCanControl;
+    public TMP_Text text_nickname;
 
     private PlayerMovement movement;
     private PlayerJump jump;
@@ -23,6 +27,8 @@ public class TestPlayerComtroller : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         jump = GetComponent<PlayerJump>();
         ability = GetComponent<PlayerAbility>();
+
+        text_nickname.text = matchManager.MyNickname;
     }
 
     private void Update()

@@ -42,8 +42,18 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             }
         }
 
+
         skillCardController.SetBoolAllCardInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
-        skillCardController.HideSkillCardList(model.skillCard_SO.iAnimalNum, model.cardPosition);
+
+
+        if (model.bIsRat)
+        {
+            skillCardController.HIdeSkillCardList_ForRat(model.skillCard_SO.iAnimalNum, model.cardPosition, model.iRandomSkillIndex);
+        }
+        else
+        {
+            skillCardController.HideSkillCardList(model.skillCard_SO.iAnimalNum, model.cardPosition);
+        }
     }
 }

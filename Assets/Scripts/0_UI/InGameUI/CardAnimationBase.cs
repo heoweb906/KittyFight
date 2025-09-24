@@ -1,10 +1,7 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using System.Runtime.CompilerServices;
-using static UnityEngine.UI.CanvasScaler;
 
 public interface ICardAnimation
 {
@@ -81,6 +78,19 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
 // ============================================================================================
 // ============================================================================================
 // ============================================================================================
+
+
+public class CardAnimation_Num_1 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+
+    }
+    protected override void KillAllTweens()
+    {
+    }
+}
+
 
 
 public class CardAnimation_Num_5 : CardAnimationBase
@@ -1534,6 +1544,21 @@ public class CardAnimation_Num_24 : CardAnimationBase
         }
     }
 }
+
+
+
+
+public class CardAnimation_Num_101 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+
+    }
+    protected override void KillAllTweens()
+    {
+    }
+}
+
 
 
 

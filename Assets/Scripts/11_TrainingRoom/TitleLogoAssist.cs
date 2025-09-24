@@ -28,7 +28,7 @@ public class TitleLogoAssist : MonoBehaviour
     private void Awake()
     {
         image_Logo.DOFade(0f, 0f);
-        ChangeVirtualCamera(0);
+        // ChangeVirtualCamera(0);
         objs_VirtualCamera[0].transform.position = transforms_Subject[0].position;
         testPlayerComtroller.bCanControl = false;
 

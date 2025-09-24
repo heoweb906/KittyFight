@@ -55,7 +55,7 @@ public class SkillCard_SO : ScriptableObject
     public Sprite sprite_BorderLine_Left;
     public Sprite sprite_BorderLine_Right;
 
-    public CardAnimationType AnimationType { get; set; }
+    public CardAnimationType AnimationType;
     
     [TextArea(5, 20)]
     public string description;

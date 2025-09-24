@@ -143,6 +143,7 @@ public class MainMenuController : MonoBehaviour
     public void OffNickNameInputPanel(int iPanelNum)         // 닉네임 결정
     {
         matchManager.MyNickname = nicknameInput.text;
+        scriptPlayerCharacter.text_nickname.text = nicknameInput.text;
 
         scriptPlayerCharacter.bCanControl = true;
 
