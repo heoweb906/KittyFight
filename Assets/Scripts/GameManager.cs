@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Transform spawnPoint2;
 
     [Header("UI/업데이트")]
+    public MapManager mapManager;
     public InGameUIController ingameUIController;
     public UpdateManager updateManager;
 
