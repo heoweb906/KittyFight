@@ -2,10 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerAbility))]
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerJump : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerAbility ability;
+    private PlayerMovement movementScript;
 
     private bool isGrounded = false;
     private bool isTouchingWall = false;
@@ -14,8 +16,8 @@ public class PlayerJump : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] public GameObject jumpEffectPrefab;
-    [SerializeField] private GameObject landEffectPrefab;  // ÂøÁö ÀÌÆåÆ®
-    [SerializeField] private Transform effectAnchor;       // ¹ß¹Ø ±âÁØ À§Ä¡
+    [SerializeField] public GameObject landEffectPrefab;  // ÂøÁö ÀÌÆåÆ®
+    [SerializeField] public Transform effectAnchor;       // ¹ß¹Ø ±âÁØ À§Ä¡
 
     [Header("Walk (Loop FX)")]
     [SerializeField] private ParticleSystem walkLoopFx;
@@ -27,6 +29,7 @@ public class PlayerJump : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ability = GetComponent<PlayerAbility>();
+        movementScript = GetComponent<PlayerMovement>();
     }
 
     private void FixedUpdate()
@@ -55,6 +58,8 @@ public class PlayerJump : MonoBehaviour
     {
         if (isGrounded || isTouchingWall)
         {
+            movementScript.AttachToPlatform(null);
+
             Vector3 velocity = rb.velocity;
             velocity.y = ability.jumpForce;
             rb.velocity = velocity;
@@ -95,11 +100,7 @@ public class PlayerJump : MonoBehaviour
         {
             if (landEffectPrefab != null)
             {
-                Instantiate(
-                    landEffectPrefab,
-                    effectAnchor.position,
-                    Quaternion.identity
-                );
+                Instantiate(landEffectPrefab, effectAnchor.position, Quaternion.identity);
             }
         }
     }
