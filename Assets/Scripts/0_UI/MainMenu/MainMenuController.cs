@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.Rendering;
+using System.Text.RegularExpressions;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class MainMenuController : MonoBehaviour
     public Image image_LowerArea;
     public TMP_InputField nicknameInput;
     public Transform transformCenter;
+    public GameObject text_WarningInfo;
+    private bool isButtonCooldown = false;
 
 
     [Header("Panel_MatchingLoading 관련")]
@@ -35,6 +38,13 @@ public class MainMenuController : MonoBehaviour
     public Image image_LeftBackGround;
     public Image image_RightBackGround;
 
+    [Header("설정창 관련")]  
+    private bool bOpenMenuPanel;    // Panel On/Off 상태
+    public GameObject panelMenu;
+   
+    
+
+
 
     void Start()
     {
@@ -47,11 +57,16 @@ public class MainMenuController : MonoBehaviour
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0f);
         OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f);
 
+        matchManager.MyNickname = "Kitty";
+
+
+
         matchStartCollision_1.mainMenuController = this;
         matchStartCollision_2.mainMenuController = this;
     }
 
 
+  
 
 
     // #. 부드러운 패널 교체
@@ -66,7 +81,12 @@ public class MainMenuController : MonoBehaviour
 
 
         if (targetIndex == 0) scriptPlayerCharacter.bCanControl = false;
-        else if (targetIndex == 1) scriptPlayerCharacter.bCanControl = true;
+        else if (targetIndex == 1)
+        {
+            scriptPlayerCharacter.bCanControl = true;
+            SetNickName();
+        }
+            
 
 
         panels[targetIndex].SetActive(true);
@@ -140,16 +160,67 @@ public class MainMenuController : MonoBehaviour
     {
         CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.15f);
     }
-    public void OffNickNameInputPanel(int iPanelNum)         // 닉네임 결정
+    public void OffNickNameInputPanel(int iPanelNum)
     {
-        matchManager.MyNickname = nicknameInput.text;
-        scriptPlayerCharacter.text_nickname.text = nicknameInput.text;
+        // 버튼 쿨다운 체크
+        if (isButtonCooldown) return;
 
+        string nickname = nicknameInput.text.Trim();
+
+        // 공백이면 Kitty로 강제 설정
+        if (string.IsNullOrEmpty(nickname))
+        {
+            nickname = "Kitty";
+            matchManager.MyNickname = nickname;
+            SetNickName(matchManager.MyNickname);
+            scriptPlayerCharacter.bCanControl = true;
+            OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f);
+            return;
+        }
+
+        // 영어, 숫자 외 문자 체크
+        bool hasInvalidChar = false;
+        foreach (char c in nickname)
+        {
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_'))
+            {
+                hasInvalidChar = true;
+                break;
+            }
+        }
+
+        if (hasInvalidChar)
+        {
+            // 버튼 쿨다운 시작
+            StartCoroutine(ButtonCooldown());
+
+            // 인풋 필드 비우기
+            nicknameInput.text = "";
+
+            // 인풋 필드 흔들기
+            nicknameInput.transform.DOShakePosition(0.5f, strength: 10f, vibrato: 20, randomness: 90f);
+
+            // 경고문 활성화
+            text_WarningInfo.SetActive(true);
+            DOVirtual.DelayedCall(3f, () => {
+                text_WarningInfo.SetActive(false);
+            });
+
+            return;
+        }
+
+        // 정상 처리
+        matchManager.MyNickname = nickname;
+        SetNickName(matchManager.MyNickname);
         scriptPlayerCharacter.bCanControl = true;
-
-        // SwitchPanel_ByButton(iPanelNum);
-
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f);
+    }
+
+    private IEnumerator ButtonCooldown()
+    {
+        isButtonCooldown = true;
+        yield return new WaitForSeconds(0.5f);
+        isButtonCooldown = false;
     }
 
     public void CloseInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
@@ -194,6 +265,7 @@ public class MainMenuController : MonoBehaviour
         panels[1].SetActive(false); // Player UI
         DOVirtual.DelayedCall(0.2f, () => {
             matchManager.OnMatchButtonClicked();
+            SetNickName(matchManager.MyNickname);
         });
     }
     public void StopMatching()
@@ -236,6 +308,11 @@ public class MainMenuController : MonoBehaviour
         titleLogoAssist.ChangeVirtualCamera(0);
     }
 
+
+    public void SetNickName(string sName = "Kitty")
+    {
+        scriptPlayerCharacter.text_nickname.text = sName;
+    }
 
 
 

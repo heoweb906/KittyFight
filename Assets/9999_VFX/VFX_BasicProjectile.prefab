@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4f070f55aedf740b987835bb1c3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle_Sparkle: {fileID: 8616689868332765632}
   trailLength: 20
   startWidth: 0.01
   endWidth: 0.1

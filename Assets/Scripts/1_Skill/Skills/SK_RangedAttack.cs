@@ -44,15 +44,22 @@ public class SK_RangedAttack : Skill
         }
     }
 
+
+
     private void ApplyPerPlayerMaterial(GameObject go)
     {
-        var mat = (playerAbility.playerNumber == 1) ? p1Material : p2Material;
-        if (mat == null) return;
-
         var renderers = go.GetComponentsInChildren<Renderer>(true);
         foreach (var r in renderers)
         {
-            r.sharedMaterial = mat;
+            // 기존 머테리얼을 복사해서 새로 만들기
+            Material newMat = new Material(r.sharedMaterial);
+
+            // 아웃라인 색상 설정
+            Color outlineColor = (playerAbility.playerNumber == 1) ? Color.red : Color.blue;
+            newMat.SetColor("_OutlineColorVertex", outlineColor);
+
+            // 새 머테리얼 적용
+            r.material = newMat;
         }
     }
 }

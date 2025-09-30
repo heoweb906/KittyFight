@@ -356,7 +356,7 @@ public class SkillCardController : MonoBehaviour
                 int randomIndex = Random.Range(0, availableIndices.Count);
                 int selectedIdx = availableIndices[randomIndex];
                 selectedIndices.Add(selectedIdx);
-                availableIndices.RemoveAt(randomIndex); // 선택된 것은 제거
+                availableIndices.RemoveAt(randomIndex); // 선택된 것은 제거s
             }
 
             // 메시지 전송 후 약간의 딜레이를 두고 카드 표시

@@ -39,14 +39,21 @@ public abstract class AB_HitboxBase : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         TryApplyHit(other);
+
+        if (IsEnvironment(other.gameObject.layer))
+            OnEnvironmentHit(other);
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("OnCollision이 작동함");
+
         var col = collision.collider;
 
         // 1) 플레이어 피격 시도
         if (TryApplyHit(col)) return;
+
+        Debug.Log("여기까지 잘 작동하고 있음");
 
         // 2) 환경 충돌 처리
         if (IsEnvironment(col.gameObject.layer))
