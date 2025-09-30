@@ -1,7 +1,7 @@
 [System.Serializable]
 public class BackgroundColorMessage
 {
-    public float r, g, b;
-
+    public int mapIndex;
+    public int backgroundIndex;
     public int iMapGimicNum;
 }

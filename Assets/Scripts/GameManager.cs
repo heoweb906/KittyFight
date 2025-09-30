@@ -10,10 +10,6 @@ public class GameManager : MonoBehaviour
     public GameObject player1Prefab;
     public GameObject player2Prefab;
 
-    [Header("스폰 포인트")]
-    public Transform spawnPoint1;
-    public Transform spawnPoint2;
-
     [Header("UI/업데이트")]
     public MapManager mapManager;
     public InGameUIController ingameUIController;
@@ -49,7 +45,8 @@ public class GameManager : MonoBehaviour
     // #. 맵 기믹 활용 -> 나중에 분리할 수도 있음
     public int IntMapGimicnumber { get; set; }      // 현재 적용되어 있는 맵 미기 번호
     public bool BoolAcitveMapGimic { get; set; }    // 현재 맵 기믹이 적용되어 있음
-    
+    private bool isInitialSetupDone = false;        // 최초 설정 완료 여부 플래그
+
 
     private readonly Color[] backgroundColorCandidates = new Color[]
     {
@@ -65,6 +62,8 @@ public class GameManager : MonoBehaviour
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
         P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
 
+        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
+
         IntScorePlayer_1 = 0;
         IntScorePlayer_2 = 0;
 
@@ -74,25 +73,53 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (P2PManager.IsReadyToStartGame)
+        if (P2PManager.IsReadyToStartGame && !isInitialSetupDone)
         {
-            P2PManager.IsReadyToStartGame = false;
-            InitializeGame();
+            myNum = MatchResultStore.myPlayerNumber;
+
+            if (myNum == 1)
+            {
+                int initialMapIndex = Random.Range(0, mapManager.mapObjects.Length);
+                int initialBgIndex = Random.Range(0, mapManager.backgroundSprites.Length);
+
+                string message = BackgroundColorMessageBuilder.Build(initialMapIndex, initialBgIndex);
+                P2PMessageSender.SendMessage(message);
+
+                InitializeGame(initialMapIndex, initialBgIndex);
+            }
         }
 
         ingameUIController?.TickGameTimer();
     }
-
-    private void InitializeGame()
+    public void OnReceiveSetupMessage(BackgroundColorMessage data)
     {
+        if (!isInitialSetupDone) // 아직 초기화 전이라면, '최초 설정'으로 간주
+        {
+            myNum = MatchResultStore.myPlayerNumber;
+            InitializeGame(data.mapIndex, data.backgroundIndex);
+        }
+        else // 이미 초기화가 끝났다면, '라운드 리셋'으로 간주
+        {
+            ApplyResetData(data.mapIndex, data.backgroundIndex, data.iMapGimicNum);
+        }
+    }
+
+    private void InitializeGame(int mapIndex, int bgIndex)
+    {
+        if (isInitialSetupDone) return;
+        isInitialSetupDone = true;
+
+        mapManager.ChangeMap(mapIndex);
+        mapManager.ChangeBackground(bgIndex);
+
         myNum = MatchResultStore.myPlayerNumber;
 
         // 프리팹/스폰 선택
         GameObject myPlayerPrefab = (myNum == 1) ? player1Prefab : player2Prefab;
         GameObject opponentPlayerPrefab = (myNum == 1) ? player2Prefab : player1Prefab;
 
-        Transform mySpawn = (myNum == 1) ? spawnPoint1 : spawnPoint2;
-        Transform opponentSpawn = (myNum == 1) ? spawnPoint2 : spawnPoint1;
+        Transform mySpawn = mapManager.GetSpawnPoint(myNum);
+        Transform opponentSpawn = mapManager.GetSpawnPoint(myNum == 1 ? 2 : 1);
 
         // Instantiate
         GameObject myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, mySpawn.rotation);
@@ -140,7 +167,6 @@ public class GameManager : MonoBehaviour
         // 핸들러 등록
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myNum));
-        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
         P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum));
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
@@ -241,10 +267,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Game");
 
-        if (MatchResultStore.myPlayerNumber == 1)
+        if (myNum == 1)
         {
-            int index = Random.Range(0, backgroundColorCandidates.Length);
-            Color selectedColor = backgroundColorCandidates[index];
+            int nextMapIndex = Random.Range(0, mapManager.mapObjects.Length);
+            int nextBgIndex = Random.Range(0, mapManager.backgroundSprites.Length);
 
             // 맵 기믹 처리
             int randomValue = 0;
@@ -255,36 +281,31 @@ public class GameManager : MonoBehaviour
             }
 
             P2PMessageSender.SendMessage( 
-                BackgroundColorMessageBuilder.Build(selectedColor, randomValue) 
-            ); 
+                BackgroundColorMessageBuilder.Build(nextMapIndex, nextBgIndex, randomValue) 
+            );
 
-            ApplyBackgroundColor(selectedColor); 
+            ApplyResetData(nextMapIndex, nextBgIndex, randomValue);
         }
-
-
-        if (player1 != null) player1.transform.position = spawnPoint1.position;
-        if (player2 != null) player2.transform.position = spawnPoint2.position;
-        player1.GetComponent<PlayerHealth>()?.ResetHealth();
-        player2.GetComponent<PlayerHealth>()?.ResetHealth();
-        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
-        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
-        gameEnded = false;
-        ingameUIController?.StartGameTimer(60f);
 
         myAbility.events?.EmitRoundStart(0);
     }
 
-
-    public void ApplyBackgroundColor(Color color)
+    private void ApplyResetData(int mapIdx, int bgIdx, int gimic)
     {
-        if (backgroundPlane == null) return;
+        mapManager.ChangeMap(mapIdx);
+        mapManager.ChangeBackground(bgIdx);
+        IntMapGimicnumber = gimic;
+        BoolAcitveMapGimic = gimic > 0;
 
-        Renderer rend = backgroundPlane.GetComponent<Renderer>();
-        if (rend == null) return;
+        if (player1 != null) player1.transform.position = mapManager.GetSpawnPoint(1).position;
+        if (player2 != null) player2.transform.position = mapManager.GetSpawnPoint(2).position;
 
-        if (rend.material.HasProperty("_BaseColor"))
-            rend.material.SetColor("_BaseColor", color);
-        else if (rend.material.HasProperty("_Color"))
-            rend.material.SetColor("_Color", color);
+        player1.GetComponent<PlayerHealth>()?.ResetHealth();
+        player2.GetComponent<PlayerHealth>()?.ResetHealth();
+        player1.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 1);
+        player2.GetComponent<PlayerInputRouter>().SetOwnership(myNum == 2);
+        gameEnded = false;
+        ingameUIController?.StartGameTimer(60f);
+        myAbility.events?.EmitRoundStart(0);
     }
 }
