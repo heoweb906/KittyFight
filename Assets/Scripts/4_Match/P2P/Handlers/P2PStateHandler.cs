@@ -19,6 +19,7 @@ public class P2PStateHandler : IP2PMessageHandler
     {
         var state = JsonUtility.FromJson<PlayerState>(msg.Substring(6));
         if (state.player == myPlayerNumber) return;
+        if (opponentPlayer == null) return;
 
         opponentPlayer.transform.position = state.position;
         opponentPlayer.transform.rotation = Quaternion.Euler(0, state.rotationY, 0);

@@ -31,7 +31,7 @@ public class MatchManager : MonoBehaviour
         isMatching = true;
         // 1. 플레이어 ID 생성
         myPlayerId = Guid.NewGuid().ToString();
-        MyNickname = "Kitty";
+        //MyNickname = "Kitty";
 
         // 2. 로컬 포트 확보
         myPort = GetAvailablePort();

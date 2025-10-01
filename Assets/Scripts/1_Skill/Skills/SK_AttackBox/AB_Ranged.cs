@@ -46,9 +46,7 @@ public class AB_Ranged : AB_HitboxBase
                 }
             }
         }
-
         //StartCoroutine(DestroyFragments());
-
         Destroy(gameObject, 2f);
     }
     void SetLayerRecursively(GameObject obj, int layer)
