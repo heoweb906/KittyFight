@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 898473161637626695}
   - component: {fileID: 1559159667772888511}
   - component: {fileID: -8924510803427197770}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -437,6 +437,7 @@ MonoBehaviour:
   passives: []
   initialPassives: []
   playerNumber: 2
+  effect: {fileID: 0}
 --- !u!114 &5848055480860405593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +482,8 @@ MonoBehaviour:
     type: 3}
   effectAnchor: {fileID: 7211459757429617110}
   walkLoopFx: {fileID: 5298219692752552902}
+  walkSpeedThreshold: 0.1
+  IsWalking2: 0
 --- !u!114 &898473161637626695
 MonoBehaviour:
   m_ObjectHideFlags: 0
