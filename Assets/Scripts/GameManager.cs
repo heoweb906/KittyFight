@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     bool isOpponentReady = false;
     bool isBootstrapped = false;
     bool gameEnded = false;
+    bool pendingStart = false;
     PlayerAbility myAbility;
 
     // 배경 후보(원 코드 유지)
@@ -108,7 +109,10 @@ public class GameManager : MonoBehaviour
         }
 
         // 실제 타이머 카운트는 StartGame에서 시작하지만, UI Tick은 유지
-        ingameUIController?.TickGameTimer();
+        if (currentState == GameState.Playing)
+        {
+            ingameUIController?.TickGameTimer();
+        }
     }
 
     // P1이 보낸 세팅 수신(P2 최초/라운드 리셋 모두 공용)
@@ -121,18 +125,12 @@ public class GameManager : MonoBehaviour
         ApplyResetData(data.mapIndex, data.backgroundIndex, data.iMapGimicNum);
     }
 
-    // P2가 준비됐다고 알림 수신(P1에서만 의미)
-    public void OnOpponentReady()
-    {
-        if (myNum != 1) return;
-        isOpponentReady = true;
-        CheckIfBothPlayersAreReady();
-    }
-
     // START 수신(양쪽 공통)
     public void OnReceiveStart()
     {
-        StartGame();
+        // START를 받으면 일단 플래그만 세팅하고, 바로 시도
+        pendingStart = true;
+        TryStartIfReady();
     }
 
     // ==== 내부: 씬 배치 객체 주입(1회) ====
@@ -196,12 +194,26 @@ public class GameManager : MonoBehaviour
         myAbility = myAb;
     }
 
+    private void TryStartIfReady()
+    {
+        // Ready가 된 상태에서만 실제 시작
+        if (currentState == GameState.Ready && pendingStart)
+        {
+            pendingStart = false;
+            StartGame();
+        }
+    }
+
     // ==== 내부: 라운드 리셋/최초 세팅 ====
     void ApplyResetData(int mapIdx, int bgIdx, int gimic)
     {
+        player1?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
+        player2?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
+
         // 맵/배경
         mapManager.ChangeMap(mapIdx);
         mapManager.ChangeBackground(bgIdx);
+
 
         // 기믹 상태 저장(이번 단계에선 동작 제어 X, 값만 유지)
         IntMapGimicnumber = gimic;
@@ -228,24 +240,9 @@ public class GameManager : MonoBehaviour
         player1?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
-        // P2는 READY 알림
-        if (myNum == 2)
-        {
-            P2PMessageSender.SendMessage("[READY]");
-        }
-
-        // P1은 자동 체크
-        if (myNum == 1) CheckIfBothPlayersAreReady();
+        TryStartIfReady();
     }
 
-    void CheckIfBothPlayersAreReady()
-    {
-        if (myNum == 1 && currentState == GameState.Ready && isOpponentReady)
-        {
-            P2PMessageSender.SendMessage("[START]");
-            StartGame();
-        }
-    }
 
     public void StartGame()
     {
