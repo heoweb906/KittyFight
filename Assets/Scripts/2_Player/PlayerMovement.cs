@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Visual")]
     public Transform visualPivot;
 
-    // ¹ßÆÇ¿ë
-    //private Vector3 storedVelocity;
+    [Header("Parenting Platform")]
+    public Transform playersRoot;
 
     private void Awake()
     {
@@ -32,6 +32,13 @@ public class PlayerMovement : MonoBehaviour
             transform.SetParent(null);
             //rb.velocity = storedVelocity;
         }
+    }
+    public void ForceDetachFromPlatform()
+    {
+        if (playersRoot != null)
+            transform.SetParent(playersRoot, true);
+        else
+            transform.SetParent(null, true);
     }
 
     public void Move(Vector2 input)
