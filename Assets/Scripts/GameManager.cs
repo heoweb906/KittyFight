@@ -254,7 +254,6 @@ public class GameManager : MonoBehaviour
         if (myRb) { myRb.isKinematic = false; myRb.velocity = Vector3.zero; }
         if (oppRb) { oppRb.isKinematic = true; oppRb.velocity = Vector3.zero; }
 
-        // 소유권 재확인(좌=1, 우=2)
         player1?.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
         player2?.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
 
