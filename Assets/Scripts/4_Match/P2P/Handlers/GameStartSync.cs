@@ -22,6 +22,13 @@ public class GameStartSync : MonoBehaviour
     [Tooltip("재전송 총 시간(초)")]
     public float handshakeTimeout = 3f;
 
+    [SerializeField] private float stallKick = 0.75f;
+    private float readySeenAt = -1f;
+    private bool handshakeStarted = false;
+
+    [SerializeField] private float stallRestart = 3.0f;  // 3초 동안 진전 없으면 하드 리스타트
+    private float lastProgressAt = -1f;
+
     private GameManager gm;
 
     // 라운드 상태
@@ -37,152 +44,162 @@ public class GameStartSync : MonoBehaviour
     private void Awake()
     {
         gm = GetComponent<GameManager>();
-        prevState = gm != null ? gm.currentState : (GameManager.GameState?)null;
+        prevState = null;
     }
 
     private void OnDisable() => StopAllHandshakeCoroutines();
-
     private void Update()
     {
         if (gm == null) return;
 
-        // GameManager의 상태가 Ready로 진입하는 시점을 폴링 감지 (GameManager 코드 무수정)
+        // 상태 변화 감지
         if (prevState != gm.currentState)
         {
-            var old = prevState;
             prevState = gm.currentState;
 
             if (gm.currentState == GameManager.GameState.Ready)
-                BeginRoundHandshake();
-            else if (gm.currentState == GameManager.GameState.Playing)
-                StopAllHandshakeCoroutines(); // 플레이 중엔 전송 불필요
+            {
+                readySeenAt = Time.time;
+                handshakeStarted = false;
+                BeginRoundHandshake(true); // 정상 진입: 토큰 증가
+                lastProgressAt = Time.time; // 시작과 동시에 진행 시점 갱신
+            }
+            else
+            {
+                StopAllHandshakeCoroutines();
+                handshakeStarted = false;
+            }
+        }
+        // Ready 유지 중 watchdog
+        else if (gm.currentState == GameManager.GameState.Ready)
+        {
+            bool loopsOff = (coReadySpam == null && coStartSpam == null && coStartDelay == null);
+
+            // 루프가 아예 꺼졌다면(비정상) 소프트 킥
+            if (!handshakeStarted && loopsOff && readySeenAt > 0f && Time.time - readySeenAt > stallKick)
+            {
+                BeginRoundHandshake(false); // 토큰 증가 없이 재가동
+                lastProgressAt = Time.time;
+            }
+
+            //  진행이 일정 시간 멈춰 있으면 '하드 리스타트' (토큰 증가+완전 재시작)
+            if (lastProgressAt > 0f && Time.time - lastProgressAt > stallRestart)
+            {
+                // 전부 리셋 후 처음부터 다시
+                StopAllHandshakeCoroutines();
+                handshakeStarted = false;
+                BeginRoundHandshake(true);  // 토큰 bump
+                lastProgressAt = Time.time;
+            }
         }
     }
 
-    /// <summary>Ready 진입 시 라운드 토큰 증가 및 상태/코루틴 초기화</summary>
-    private void BeginRoundHandshake()
+
+    private void BeginRoundHandshake(bool bumpToken)
     {
-        roundToken++;
+        if (handshakeStarted) return;
+        handshakeStarted = true;
+
+        if (bumpToken) roundToken++;
+
         gotOpponentPlayingAck = false;
         gotStartToken = false;
         opponentReady = false;
 
         StopAllHandshakeCoroutines();
 
-        // P2: READY 재전송 시작 (START 수신 시까지)
-        if (GetMyNum() == 2)
-            coReadySpam = StartCoroutine(SpamReadyUntilStart());
-        // P1: READY 수신되면 START 재전송 + 동일 지연 시작 예약
-        // (여기서는 기다리기만, 실제 트리거는 OnReadyMessage에서)
+        // 역할 구분 없이 양쪽 다 READY 스팸 시작 (대칭화)
+        coReadySpam = StartCoroutine(SpamReadyUntilStart());
     }
 
-    /// <summary>READY 수신 (P1에서만 의미)</summary>
+    // READY 수신: 누구든 받으면 START 스팸/지연 예약
     public void OnReadyMessage(ReadyPayload payload)
     {
         if (gm == null || gm.currentState != GameManager.GameState.Ready) return;
-        if (GetMyNum() != 1) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-        if (r < roundToken) return;     // 과거 라운드 무시
+        if (r < roundToken) return;     // 과거 라운드
         if (r > roundToken) roundToken = r;
 
         opponentReady = true;
+        lastProgressAt = Time.time;     // 진행 갱신
 
-        // 동일 지연으로 로컬 시작 예약 (중복 방지)
         if (coStartDelay == null)
             coStartDelay = StartCoroutine(StartAfterDelay(startLeadDelay));
 
-        // START 재전송 시작 (ACK 오면 자동 중단)
         if (coStartSpam == null)
             coStartSpam = StartCoroutine(SpamStartUntilAck());
     }
 
-    /// <summary>START 수신 (P2에서만 의미)</summary>
+    // START 수신: 누구든 받으면 READY 스팸 중단 + 동일 지연 예약 + ACK 송신
     public void OnStartMessage(StartPayload payload)
     {
         if (gm == null || gm.currentState != GameManager.GameState.Ready) return;
-        if (GetMyNum() != 2) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-
-        if (r < roundToken) return;     // 과거 라운드
+        if (r < roundToken) return;
         if (r > roundToken) roundToken = r;
 
         gotStartToken = true;
+        lastProgressAt = Time.time;     // 진행 갱신
 
-        // READY 재전송 종료
         if (coReadySpam != null) { StopCoroutine(coReadySpam); coReadySpam = null; }
 
         int delayMs = payload.d >= 0 ? payload.d : Mathf.RoundToInt(startLeadDelay * 1000);
         float delay = Mathf.Max(0.05f, delayMs / 1000f);
 
-        // 동일한 지연으로 시작 예약 (중복 방지)
         if (coStartDelay == null)
             coStartDelay = StartCoroutine(StartAfterDelay(delay));
 
-        // P1에게 "나 시작할게" ACK
         var ack = new PlayingPayload { r = roundToken };
         P2PMessageSender.SendMessage("[PLAYING]" + JsonUtility.ToJson(ack));
     }
 
-    /// <summary>PLAYING(ACK) 수신 (P1: START 재전송 중단)</summary>
+    // ACK(PLAYING) 수신: 누구든 받으면 START 스팸 중단
     public void OnPlayingMessage(PlayingPayload payload)
     {
         if (gm == null || gm.currentState != GameManager.GameState.Ready) return;
-        if (GetMyNum() != 1) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-
         if (r < roundToken) return;
         if (r > roundToken) roundToken = r;
 
         gotOpponentPlayingAck = true;
+        lastProgressAt = Time.time;     // 진행 갱신
 
         if (coStartSpam != null) { StopCoroutine(coStartSpam); coStartSpam = null; }
     }
+
 
     // ─────────────────────────────────────────────────────────────────────────────
 
     private IEnumerator SpamReadyUntilStart()
     {
-        // 지금은 일단 무한히 될 때까지 대기
-        //float deadline = Time.time + handshakeTimeout;
         var payload = new ReadyPayload { r = roundToken };
         string msg = "[READY]" + JsonUtility.ToJson(payload);
-        
+
         while (IsStillReady() && !gotStartToken)
         {
             P2PMessageSender.SendMessage(msg);
+            lastProgressAt = Time.time;       // 전송 자체도 "진행"으로 간주
             yield return new WaitForSeconds(resendInterval);
         }
-        //while (Time.time < deadline && !gotStartToken && IsStillReady())
-        //{
-        //    P2PMessageSender.SendMessage(msg);
-        //    yield return new WaitForSeconds(resendInterval);
-        //}
         coReadySpam = null;
     }
 
     private IEnumerator SpamStartUntilAck()
     {
-        //float deadline = Time.time + handshakeTimeout;
-
-        //while (Time.time < deadline && !gotOpponentPlayingAck && IsStillReady())
-        //{
-        //    int delayMs = Mathf.RoundToInt(startLeadDelay * 1000);
-        //    var payload = new StartPayload { r = roundToken, d = delayMs };
-        //    P2PMessageSender.SendMessage("[START]" + JsonUtility.ToJson(payload));
-        //    yield return new WaitForSeconds(resendInterval);
-        //}
         while (IsStillReady() && !gotOpponentPlayingAck)
         {
             int delayMs = Mathf.RoundToInt(startLeadDelay * 1000);
             var payload = new StartPayload { r = roundToken, d = delayMs };
             P2PMessageSender.SendMessage("[START]" + JsonUtility.ToJson(payload));
+            lastProgressAt = Time.time;       // 진행 갱신
             yield return new WaitForSeconds(resendInterval);
         }
         coStartSpam = null;
     }
+
 
     private IEnumerator StartAfterDelay(float delay)
     {
