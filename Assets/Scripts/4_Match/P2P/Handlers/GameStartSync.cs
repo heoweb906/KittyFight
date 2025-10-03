@@ -83,7 +83,8 @@ public class GameStartSync : MonoBehaviour
         if (GetMyNum() != 1) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-        if (r != roundToken) return;
+        if (r < roundToken) return;     // 과거 라운드 무시
+        if (r > roundToken) roundToken = r;
 
         opponentReady = true;
 
@@ -103,7 +104,9 @@ public class GameStartSync : MonoBehaviour
         if (GetMyNum() != 2) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-        if (r != roundToken) return;
+
+        if (r < roundToken) return;     // 과거 라운드
+        if (r > roundToken) roundToken = r;
 
         gotStartToken = true;
 
@@ -129,7 +132,9 @@ public class GameStartSync : MonoBehaviour
         if (GetMyNum() != 1) return;
 
         int r = payload.r >= 0 ? payload.r : roundToken;
-        if (r != roundToken) return;
+
+        if (r < roundToken) return;
+        if (r > roundToken) roundToken = r;
 
         gotOpponentPlayingAck = true;
 
@@ -140,23 +145,36 @@ public class GameStartSync : MonoBehaviour
 
     private IEnumerator SpamReadyUntilStart()
     {
-        float deadline = Time.time + handshakeTimeout;
+        // 지금은 일단 무한히 될 때까지 대기
+        //float deadline = Time.time + handshakeTimeout;
         var payload = new ReadyPayload { r = roundToken };
         string msg = "[READY]" + JsonUtility.ToJson(payload);
-
-        while (Time.time < deadline && !gotStartToken && IsStillReady())
+        
+        while (IsStillReady() && !gotStartToken)
         {
             P2PMessageSender.SendMessage(msg);
             yield return new WaitForSeconds(resendInterval);
         }
+        //while (Time.time < deadline && !gotStartToken && IsStillReady())
+        //{
+        //    P2PMessageSender.SendMessage(msg);
+        //    yield return new WaitForSeconds(resendInterval);
+        //}
         coReadySpam = null;
     }
 
     private IEnumerator SpamStartUntilAck()
     {
-        float deadline = Time.time + handshakeTimeout;
+        //float deadline = Time.time + handshakeTimeout;
 
-        while (Time.time < deadline && !gotOpponentPlayingAck && IsStillReady())
+        //while (Time.time < deadline && !gotOpponentPlayingAck && IsStillReady())
+        //{
+        //    int delayMs = Mathf.RoundToInt(startLeadDelay * 1000);
+        //    var payload = new StartPayload { r = roundToken, d = delayMs };
+        //    P2PMessageSender.SendMessage("[START]" + JsonUtility.ToJson(payload));
+        //    yield return new WaitForSeconds(resendInterval);
+        //}
+        while (IsStillReady() && !gotOpponentPlayingAck)
         {
             int delayMs = Mathf.RoundToInt(startLeadDelay * 1000);
             var payload = new StartPayload { r = roundToken, d = delayMs };
