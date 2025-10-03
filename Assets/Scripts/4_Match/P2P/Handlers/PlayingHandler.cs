@@ -1,39 +1,39 @@
 using UnityEngine;
 
 /// <summary>
-/// P2가 씬 준비를 마쳤다는 [READY]{json} 메시지 핸들러
+/// 상대가 실제 플레이 상태에 들어갔음을 알리는 [PLAYING]{json} ACK 핸들러
 /// </summary>
-public class ReadyHandler : IP2PMessageHandler
+public class PlayingHandler : IP2PMessageHandler
 {
     private readonly GameStartSync sync;
 
-    public ReadyHandler(GameManager gm)
+    public PlayingHandler(GameManager gm)
     {
-        // 기존 시그니처 유지, 내부에서 GameStartSync 확보
+        // GameStartSync를 자동으로 확보 (없으면 같은 오브젝트에 부착)
         sync = gm != null
             ? (gm.GetComponent<GameStartSync>() ?? gm.gameObject.AddComponent<GameStartSync>())
             : null;
     }
 
-    public bool CanHandle(string msg) => msg.StartsWith("[READY]");
+    public bool CanHandle(string msg) => msg.StartsWith("[PLAYING]");
 
     public void Handle(string msg)
     {
         if (sync == null) return;
 
-        const int tagLen = 7; // "[READY]"
-        var payload = new ReadyPayload { r = -1 };
+        const int tagLen = 9; // "[PLAYING]"
+        var payload = new PlayingPayload { r = -1 };
 
         if (msg.Length > tagLen)
         {
             try
             {
                 var json = msg.Substring(tagLen);
-                payload = JsonUtility.FromJson<ReadyPayload>(json);
+                payload = JsonUtility.FromJson<PlayingPayload>(json);
             }
             catch { /* 무해: 기본값 사용 */ }
         }
 
-        sync.OnReadyMessage(payload);
+        sync.OnPlayingMessage(payload);
     }
 }

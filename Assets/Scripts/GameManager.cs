@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
         P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
 
+        P2PMessageDispatcher.RegisterHandler(new PlayingHandler(this));
         P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
         P2PMessageDispatcher.RegisterHandler(new ReadyHandler(this));
         P2PMessageDispatcher.RegisterHandler(new StartHandler(this));
@@ -223,6 +224,10 @@ public class GameManager : MonoBehaviour
         currentState = GameState.Ready;
         isOpponentReady = false;
 
+        if (updateManager != null) updateManager.enabled = false;  // 대기 중 송신 금지
+        player1?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+        player2?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+
         // P2는 READY 알림
         if (myNum == 2)
         {
@@ -251,7 +256,7 @@ public class GameManager : MonoBehaviour
         var oppPlayer = (myNum == 1) ? player2 : player1;
         var myRb = myPlayer ? myPlayer.GetComponent<Rigidbody>() : null;
         var oppRb = oppPlayer ? oppPlayer.GetComponent<Rigidbody>() : null;
-        if (myRb) { myRb.isKinematic = false; myRb.velocity = Vector3.zero; }
+        if (myRb) { myRb.isKinematic = false; myRb.useGravity = true; myRb.velocity = Vector3.zero; }
         if (oppRb) { oppRb.isKinematic = true; oppRb.velocity = Vector3.zero; }
 
         // 소유권 재확인(좌=1, 우=2)
@@ -294,7 +299,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameEnded) return;
         gameEnded = true;
-        currentState = GameState.Ready;
+        currentState = GameState.SceneSetup;
 
         var rb1 = player1 ? player1.GetComponent<Rigidbody>() : null;
         var rb2 = player2 ? player2.GetComponent<Rigidbody>() : null;
