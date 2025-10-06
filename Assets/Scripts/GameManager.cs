@@ -101,8 +101,8 @@ public class GameManager : MonoBehaviour
             if (myNum == 1)
             {
                 currentState = GameState.SceneSetup;
-                int mapIdx = Random.Range(0, mapManager.mapObjects.Length);
-                int bgIdx = Random.Range(0, mapManager.backgroundSprites.Length);
+                int mapIdx = Random.Range(0, 6);        // 나중에 늘려야 함
+                int bgIdx = Random.Range(0, 4);
                 P2PMessageSender.SendMessage(BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, 0));
                 ApplyResetData(mapIdx, bgIdx, 0);
             }
@@ -276,11 +276,34 @@ public class GameManager : MonoBehaviour
 
         if (myNum == 1)
         {
-            int mapIdx = Random.Range(0, mapManager.mapObjects.Length);
-            int bgIdx = Random.Range(0, mapManager.backgroundSprites.Length);
+            int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
+            int mapIdx = 0;
+            int bgIdx = 0;
+
+            if (totalScore >= 14)
+            {
+                mapIdx = Random.Range(0, 7);
+                bgIdx = Random.Range(0, 4);
+
+                //mapIdx = Random.Range(16, 24);
+                //bgIdx = Random.Range(16, 24);
+            }
+            else if (totalScore >= 5)
+            {
+                mapIdx = Random.Range(0, 7);
+                bgIdx = Random.Range(0, 4);
+
+                //mapIdx = Random.Range(8, 16);
+                // bgIdx = Random.Range(8, 16);
+            }
+            else
+            {
+                mapIdx = Random.Range(0, 7);
+                bgIdx = Random.Range(0, 4);
+            }
 
             int randomValue = 0;
-            if ((IntScorePlayer_1 + IntScorePlayer_2) > 0)
+            if (totalScore > 0)
             {
                 randomValue = Random.Range(1, 13);
                 BoolAcitveMapGimic = true;

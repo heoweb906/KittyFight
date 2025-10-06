@@ -144,6 +144,11 @@ public class SkillCardController : MonoBehaviour
 
 
 
+        // 수정 필요
+        for (int i = 0; i < instances.Length; i++)
+        {
+            instances[i].bIsRat = false;
+        }
         // #. 테스트용임 수정 꼭 해야함
         //if (Random.Range(0f, 100f) < 15f)
         //{
@@ -151,10 +156,7 @@ public class SkillCardController : MonoBehaviour
         //    instances[randomIndex].bIsRat = true;
         //}
 
-        for (int i = 0; i < instances.Length; i++)
-        {
-            instances[i].bIsRat = false;
-        }
+
 
 
 
@@ -266,9 +268,6 @@ public class SkillCardController : MonoBehaviour
 
         StartShowingCards(selectedIndices);
     }
-
-
-
 
 
     // #. 스킬 보여주는 함수
@@ -850,7 +849,6 @@ public class SkillCardController : MonoBehaviour
             int randomIndex = Random.Range(0, activeCards.Count);
             SkillCard_UI selectedCard = activeCards[randomIndex];
 
-            // ��¥ Ŭ�� �̺�Ʈ �����ؼ� OnPointerClick ȣ��
             PointerEventData fakeEventData = new PointerEventData(EventSystem.current);
             selectedCard.OnPointerClick(fakeEventData);
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class MapManager : MonoBehaviour
 {
+
+
     [Header("맵 관리")]
     [Tooltip("Hierarchy 뷰의 맵 부모 오브젝트들을 순서대로 등록해주세요.")]
     public GameObject[] mapObjects;
@@ -16,6 +18,11 @@ public class MapManager : MonoBehaviour
     public Sprite[] backgroundSprites;
 
     private MapLayout currentMapLayout;
+
+
+    //[Header("맵 기믹 관련")]
+    //public 
+
 
     void Awake()
     {

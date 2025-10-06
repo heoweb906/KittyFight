@@ -18,6 +18,8 @@ public class C_ScoreImageElement
 
     public Image imagePlayerCat;
     public Sprite[] spritesPlayerCat;
+    public RectTransform rectTransfrom_imageShadow;
+
 
     private Vector2 initialPlayerImagePosition;
 
@@ -33,26 +35,46 @@ public class C_ScoreImageElement
     public void ResetToInitialPosition()
     {
         if (rectTransform_PlayerImage != null)
+        {
+            rectTransform_PlayerImage.DOKill();
             rectTransform_PlayerImage.anchoredPosition = initialPlayerImagePosition;
+        }
     }
 
 
-    public void ChangePlayerImage(int iActionNum = 0)
+    public void ChangePlayerImage(int iActionNum = 0, bool bFlip = false, int iPlayerNum = 1)
     {
+        Vector2 shadowPos = Vector2.zero;
+
         switch (iActionNum)
         {
-            case 1:
+            case 1:         // IDLE
                 imagePlayerCat.sprite = spritesPlayerCat[0];
+                shadowPos = new Vector2(600f, -300f);
                 break;
-            case 2:
-                imagePlayerCat.sprite = spritesPlayerCat[1];
+            case 2:         // Attack
+                imagePlayerCat.sprite = spritesPlayerCat[Random.Range(1, 4)];
+                shadowPos = new Vector2(500f, -300f);
                 break;
-            case 3:
-                imagePlayerCat.sprite = spritesPlayerCat[2];
+            case 3:         // TakeDamage
+                imagePlayerCat.sprite = spritesPlayerCat[Random.Range(4, 7)];
+                shadowPos = new Vector2(650f, -300f);
+                break;
+            case 4:         // Resurrection(부활)
+                imagePlayerCat.sprite = spritesPlayerCat[7];
+                shadowPos = new Vector2(600f, -300f);
                 break;
             default:
                 break;
         }
+
+        if (iPlayerNum == 2)
+        {
+            shadowPos.x *= -1;
+        }
+
+        rectTransfrom_imageShadow.anchoredPosition = shadowPos;
+        imagePlayerCat.transform.localScale = bFlip ? new Vector3(-0.5f, 0.5f, 0.5f) : new Vector3(0.5f, 0.5f, 0.5f);
     }
 }
 
@@ -81,6 +103,8 @@ public class ScoreBoardUIController : MonoBehaviour
 
         // OnOffCheering(false);
     }
+
+
 
 
     // #. Score 패널 닫기
@@ -142,13 +166,16 @@ public class ScoreBoardUIController : MonoBehaviour
         float leftTargetX = -(canvasWidth / 2f) - (imageWidth / 2f);
         float rightTargetX = (canvasWidth / 2f) + (imageWidth / 2f);
 
+        scoreImageElement_Player1.rectTransform_BackGround.DOKill();
+        scoreImageElement_Player2.rectTransform_BackGround.DOKill();
+
         scoreImageElement_Player1.rectTransform_BackGround.DOAnchorPosX(leftTargetX, 0.2f).SetEase(Ease.InQuint);
         scoreImageElement_Player2.rectTransform_BackGround.DOAnchorPosX(rightTargetX, 0.2f).SetEase(Ease.InQuint)
             .OnComplete(() => {
                 scoreImageElement_Player1.ResetToInitialPosition();
                 scoreImageElement_Player2.ResetToInitialPosition();
-                scoreImageElement_Player1.ChangePlayerImage(1);
-                scoreImageElement_Player2.ChangePlayerImage(1);
+                scoreImageElement_Player1.ChangePlayerImage(1, false, 1);
+                scoreImageElement_Player2.ChangePlayerImage(1, false, 1);
                 scoreImageElement_Player1.objMine.SetActive(false);
                 scoreImageElement_Player2.objMine.SetActive(false);
                 OnOffCheering(false);
@@ -168,8 +195,8 @@ public class ScoreBoardUIController : MonoBehaviour
     {
         if (iWinnerPlayerNum == 1)
         {
-            scoreImageElement_Player1.ChangePlayerImage(2);
-            scoreImageElement_Player2.ChangePlayerImage(3);
+            scoreImageElement_Player1.ChangePlayerImage(2, false, 1);
+            scoreImageElement_Player2.ChangePlayerImage(3, false, 2);
 
             float newPosX1 = scoreImageElement_Player1.rectTransform_PlayerImage.anchoredPosition.x + 80f;
             float newPosX2 = scoreImageElement_Player2.rectTransform_PlayerImage.anchoredPosition.x + 80f;
@@ -179,8 +206,8 @@ public class ScoreBoardUIController : MonoBehaviour
         }
         else if (iWinnerPlayerNum == 2)
         {
-            scoreImageElement_Player1.ChangePlayerImage(3);
-            scoreImageElement_Player2.ChangePlayerImage(2);
+            scoreImageElement_Player1.ChangePlayerImage(3, true, 1);
+            scoreImageElement_Player2.ChangePlayerImage(2, true, 2);
 
             float newPosX1 = scoreImageElement_Player1.rectTransform_PlayerImage.anchoredPosition.x - 80f;
             float newPosX2 = scoreImageElement_Player2.rectTransform_PlayerImage.anchoredPosition.x - 80f;
@@ -199,23 +226,18 @@ public class ScoreBoardUIController : MonoBehaviour
         if (iWinnerPlayerNum == 1) targetPlayer = scoreImageElement_Player2;
         else if (iWinnerPlayerNum == 2) targetPlayer = scoreImageElement_Player1;
         else return;
-
         int arrayIndex = iBoneIndex - 1;
         if (arrayIndex >= targetPlayer.rectTransform_Bones.Length) return;
         RectTransform boneToThrow = targetPlayer.rectTransform_Bones[arrayIndex];
         if (boneToThrow == null) return;
-
         // 방향별로 다른 거리 설정
-        float throwDistanceX = (iWinnerPlayerNum == 1) ? Random.Range(-800f, -600f) : Random.Range(-800f, -600f);
-        float throwDistanceY = Random.Range(-100f, 200f);
-
+        float throwDistanceX = (iWinnerPlayerNum == 1) ? Random.Range(-800f, -600f) : Random.Range(-800f, 800f);
+        float throwDistanceY = Random.Range(-200f, 200f);
         float newPosX = boneToThrow.anchoredPosition.x + throwDistanceX;
         float newPosY = boneToThrow.anchoredPosition.y + throwDistanceY;
-
-        // 랜덤 회전 (360도 * 1~3바퀴)
-        float randomRotation = Random.Range(200f, 400f);
-        if (Random.Range(0, 2) == 0) randomRotation = -randomRotation; // 50% 확률로 반대 방향
-
+        // 약한 회전 (이동 방향에 따라)
+        float randomRotation = Random.Range(40f, 80f);
+        if (iWinnerPlayerNum == 1) randomRotation = -randomRotation;
         boneToThrow.DOAnchorPos(new Vector2(newPosX, newPosY), fFlyAwayAimTime + 1f).SetEase(Ease.OutQuad);
         boneToThrow.DORotate(new Vector3(0, 0, randomRotation), fFlyAwayAimTime + 1f, RotateMode.FastBeyond360).SetEase(Ease.OutQuad);
     }

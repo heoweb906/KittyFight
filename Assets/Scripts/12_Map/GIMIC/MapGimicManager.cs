@@ -8,6 +8,7 @@ public class MapGimicManager : MonoBehaviour
 
     [SerializeField] private List<AbstractMapGimic> gimicks;
     private AbstractMapGimic currentGimmick;
+
     private int currentIndex = -1;
 
 
@@ -16,7 +17,6 @@ public class MapGimicManager : MonoBehaviour
         for(int i = 0; i < gimicks.Count;++i) gimicks[i].gameManger = gameManager;
         ActivateGimmick(0);
     }
-
 
 
     private void FixedUpdate()
@@ -33,7 +33,6 @@ public class MapGimicManager : MonoBehaviour
 
         index--;
 
-
         if (index < 0 || index >= gimicks.Count)
         {
             currentGimmick = null;
@@ -45,6 +44,7 @@ public class MapGimicManager : MonoBehaviour
         currentGimmick = gimicks[index];
         currentGimmick.OnGimicStart();
     }
+
 
 
     public void StopCurrentGimmick()

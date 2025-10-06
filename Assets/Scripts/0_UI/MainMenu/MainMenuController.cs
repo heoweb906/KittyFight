@@ -31,7 +31,8 @@ public class MainMenuController : MonoBehaviour
     public Image iamge_UpperAreaMatching;
     public Image iamge_LowerAreaMatching;
     public MatchStartCollision matchStartCollision_1;           // 나중에 지정 매칭으로
-    public MatchStartCollision matchStartCollision_2;          
+    public MatchStartCollision matchStartCollision_2;
+    public MatchStartCollision matchStartCollision_3; // 테스트용
 
 
     [Header("SceneChnageAssist 관련")]
@@ -60,9 +61,10 @@ public class MainMenuController : MonoBehaviour
         matchManager.MyNickname = "Kitty";
 
 
+        if(matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this;
+        if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this;
+        if(matchStartCollision_3 != null) matchStartCollision_3.mainMenuController = this;
 
-        matchStartCollision_1.mainMenuController = this;
-        matchStartCollision_2.mainMenuController = this;
     }
 
 

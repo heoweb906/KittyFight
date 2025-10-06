@@ -247,9 +247,24 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         int randomSkillIndex = -1;
 
         // 쥐 카드라면 랜덤 스킬로 교체
+
+        // 수정 필요
         if (bIsRat)
         {
-            randomSkillIndex = new int[] { 1, 101/*, 2, 102, 139 */ }[Random.Range(0, 2)];
+            // 액티브/패시브 여부에 따라 다른 배열 사용
+            int[] ratSkillPool;
+
+            if (skillCard_SO.iSkillIndex < 100) // 현재 보여진 카드가 액티브 구간이면
+            {
+                ratSkillPool = new int[] { 1, 2 }; // 액티브 스킬 풀
+            }
+            else // 패시브 구간이면
+            {
+                ratSkillPool = new int[] { 101, 102, 139 }; // 패시브 스킬 풀
+            }
+
+            randomSkillIndex = ratSkillPool[Random.Range(0, ratSkillPool.Length)];
+
             // randomSkillIndex에 해당하는 스킬 찾기
             for (int i = 0; i < skillCardController.skillDataList.Count; i++)
             {
