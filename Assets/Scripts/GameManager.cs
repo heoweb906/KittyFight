@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     public int IntScorePlayer_2 { get; set; }
     public int IntMapGimicnumber { get; set; }   // 현재 적용 중인 맵 기믹 번호
     public bool BoolAcitveMapGimic { get; set; } // 기믹 활성 여부
+    private int currentGimmickIndex = 0;
 
     // 내부 상태
     int myNum;                   // 1 or 2
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
                 int mapIdx = Random.Range(0, 6);        // 나중에 늘려야 함
                 int bgIdx = Random.Range(0, 4);
                 P2PMessageSender.SendMessage(BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, 0));
+                
                 ApplyResetData(mapIdx, bgIdx, 0);
             }
         }
@@ -190,7 +192,7 @@ public class GameManager : MonoBehaviour
             updateManager.enabled = false;
             updateManager.Initialize(myPlayer, oppPlayer, myNum);
         }
-
+        
         myAbility = myAb;
     }
 
@@ -218,6 +220,8 @@ public class GameManager : MonoBehaviour
         // 기믹 상태 저장(이번 단계에선 동작 제어 X, 값만 유지)
         IntMapGimicnumber = gimic;
         BoolAcitveMapGimic = gimic > 0;
+        mapManager.ChangeMapGimicIndex(IntMapGimicnumber);
+
 
         // 스폰 배치 + HP 리셋 (씬 배치 플레이어 사용)
         var sp1 = mapManager.GetSpawnPoint(1);
@@ -264,6 +268,7 @@ public class GameManager : MonoBehaviour
 
         // 라운드 타이머 시작(여기서만)
         ingameUIController?.StartGameTimer(60f);
+        mapManager.ActivateGimmick();
 
         // 패시브 이벤트(있으면)
         myAbility?.events?.EmitRoundStart(0);
@@ -302,10 +307,13 @@ public class GameManager : MonoBehaviour
                 bgIdx = Random.Range(0, 4);
             }
 
-            int randomValue = 0;
-            if (totalScore > 0)
+
+            int randomValue = currentGimmickIndex; // 기존 값 유지
+
+            if (totalScore == 5 || totalScore == 10 || totalScore == 15)
             {
                 randomValue = Random.Range(1, 13);
+                currentGimmickIndex = randomValue; // 저장
                 BoolAcitveMapGimic = true;
             }
 
@@ -329,7 +337,11 @@ public class GameManager : MonoBehaviour
         player1?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2?.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
+        mapManager.StopCurrentGimmick();
+
+
         StartCoroutine(EndGameSequence(iLosePlayerNum));
+
     }
 
     IEnumerator EndGameSequence(int iLosePlayerNum)

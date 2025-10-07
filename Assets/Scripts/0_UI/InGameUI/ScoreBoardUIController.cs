@@ -62,7 +62,6 @@ public class C_ScoreImageElement
                 break;
             case 4:         // Resurrection(부활)
                 imagePlayerCat.sprite = spritesPlayerCat[7];
-                shadowPos = new Vector2(600f, -300f);
                 break;
             default:
                 break;
@@ -80,6 +79,7 @@ public class C_ScoreImageElement
 
 public class ScoreBoardUIController : MonoBehaviour
 {
+
     public InGameUIController InGameUiController { get; set; }
 
     public C_ScoreImageElement scoreImageElement_Player1;
@@ -90,6 +90,10 @@ public class ScoreBoardUIController : MonoBehaviour
 
     [Header("추가 효과들")]
     public C_CheeringAnimal[] cheeringAnimals;
+
+    [Header("점수판 텍스트")]
+    public GameObject obj_ScorePlayer1;
+    public GameObject obj_ScorePlayer2;
 
 
     public void Initialize(InGameUIController temp, Transform parent)
@@ -104,6 +108,15 @@ public class ScoreBoardUIController : MonoBehaviour
         // OnOffCheering(false);
     }
 
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            OnOffCheering(true);
+        }
+    }
 
 
 
@@ -179,6 +192,8 @@ public class ScoreBoardUIController : MonoBehaviour
                 scoreImageElement_Player1.objMine.SetActive(false);
                 scoreImageElement_Player2.objMine.SetActive(false);
                 OnOffCheering(false);
+
+                OnOffScoreTextObj(true);
 
                 if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
                 {
@@ -289,6 +304,12 @@ public class ScoreBoardUIController : MonoBehaviour
                 cheeringAnimals[i].Off();
             }
         }
+    }
+
+    public void OnOffScoreTextObj(bool bActive)
+    {
+        obj_ScorePlayer1.SetActive(bActive);
+        obj_ScorePlayer2.SetActive(bActive);
     }
 
 

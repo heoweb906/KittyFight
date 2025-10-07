@@ -60,16 +60,16 @@ public class C_CheeringAnimal : MonoBehaviour
     {
         if (!isFloating) return;
         Vector2 targetPos = rectTransform_Target.anchoredPosition;
-        float jumpHeight = Random.Range(30f, 60f);
+        float jumpHeight = Random.Range(-10f, -30f);
 
         // 위로 점프
         rectTransform_Origin.DOAnchorPosY(targetPos.y + jumpHeight, Random.Range(0.25f, 0.4f))
-            .SetEase(Ease.OutQuad)
+            .SetEase(Ease.InQuad)
             .OnComplete(() =>
             {
                 // 원래 위치로 돌아오기
                 rectTransform_Origin.DOAnchorPosY(targetPos.y, Random.Range(0.25f, 0.4f))
-                    .SetEase(Ease.InQuad)
+                    .SetEase(Ease.OutQuad)
                     .OnComplete(() =>
                     {
                         FloatingLoop();

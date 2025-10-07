@@ -205,7 +205,7 @@ public class SkillCardController : MonoBehaviour
         {
             HIdeSkillCardList_ForRat();
         }
-
+ 
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
@@ -387,6 +387,8 @@ public class SkillCardController : MonoBehaviour
             bTimerCheck = true;
             text_Timer.text = iTimerForSelect.ToString();
 
+            InGameUiController.scoreBoardUIController.OnOffScoreTextObj(false);
+
 
             for (int i = 0; i < total; i++)
             {
@@ -541,7 +543,10 @@ public class SkillCardController : MonoBehaviour
             card.transform.position = spawnPoints[i].position; // 즉시 이동
             card.gameObject.SetActive(false);
         }
+
+        int iTemp = iAuthorityPlayerNum;
         iAuthorityPlayerNum = 0;
+       
         if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
         {
             GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
@@ -559,6 +564,9 @@ public class SkillCardController : MonoBehaviour
                 {
                     FadeImage(1f, 0f).OnComplete(() =>
                     {
+                        InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
+                        InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
+
                         DOVirtual.DelayedCall(0.1f, () =>
                         {
                             FadeImage(0f, 1f);
@@ -639,7 +647,9 @@ public class SkillCardController : MonoBehaviour
             card.gameObject.SetActive(false);
         }
 
+        int iTemp = iAuthorityPlayerNum;
         iAuthorityPlayerNum = 0;
+
         if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
         {
             // 커튼 애니메이션 추가
@@ -693,6 +703,9 @@ public class SkillCardController : MonoBehaviour
                                             // 기존 마무리 로직
                                             FadeImage(1f, 0f).OnComplete(() =>
                                             {
+                                                if (iTemp == 1) InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
+                                                if (iTemp == 2) InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
+
                                                 DOVirtual.DelayedCall(0.1f, () =>
                                                 {
                                                     FadeImage(0f, 1f);
