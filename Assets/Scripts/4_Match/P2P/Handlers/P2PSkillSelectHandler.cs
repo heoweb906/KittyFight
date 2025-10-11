@@ -20,11 +20,18 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
         var model = JsonUtility.FromJson<Model_SkillSelect>(msg.Substring("[SKILL_SELECT]".Length));
         if (model.iPlayer == myPlayerNumber) return;
 
-        GameObject objSkill = skillCardController.CreateSkillInstance(model.skillCard_SO);
-
-        if (model.skillCard_SO.cardType == CardType.Active)
+        // iSkillIndex로 skillCard_SO 찾기
+        SkillCard_SO skillCard_SO = skillCardController.FindSkillCardByIndex(model.iSkillIndex);
+        if (skillCard_SO == null)
         {
-            // 액티브 스킬 처리
+            Debug.LogError($"[P2PSkillSelectHandler] iSkillIndex {model.iSkillIndex}에 해당하는 스킬을 찾을 수 없습니다.");
+            return;
+        }
+
+        GameObject objSkill = skillCardController.CreateSkillInstance(skillCard_SO);
+
+        if (skillCard_SO.cardType == CardType.Active)
+        {
             Skill skillComponent = objSkill.GetComponent<Skill>();
             if (skillComponent != null)
             {
@@ -32,9 +39,8 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
                 playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
             }
         }
-        else if (model.skillCard_SO.cardType == CardType.Passive)
+        else if (skillCard_SO.cardType == CardType.Passive)
         {
-            // 패시브 스킬 처리
             Passive passiveComponent = objSkill.GetComponent<Passive>();
             if (passiveComponent != null)
             {
@@ -42,18 +48,16 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             }
         }
 
-
         skillCardController.SetBoolAllCardInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
 
-
         if (model.bIsRat)
         {
-            skillCardController.HIdeSkillCardList_ForRat(model.skillCard_SO.iAnimalNum, model.cardPosition, model.iRandomSkillIndex);
+            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iAnimalNum, model.cardPosition, model.iRandomSkillIndex);
         }
         else
         {
-            skillCardController.HideSkillCardList(model.skillCard_SO.iAnimalNum, model.cardPosition);
+            skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, model.cardPosition);
         }
     }
 }

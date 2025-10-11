@@ -4,7 +4,7 @@ using UnityEngine;
 public class Model_SkillSelect
 {
     public int iPlayer;
-    public string sSkillCardName;
+    public int iSkillIndex;  // skillCard_SO 대신 인덱스만 전송
     public Vector2 cardPosition;
     public SkillCard_SO skillCard_SO;
 

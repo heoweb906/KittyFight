@@ -6,9 +6,8 @@ public static class SkillSelectBuilder
         Model_SkillSelect msg = new Model_SkillSelect
         {
             iPlayer = iPlayerNum,
-            sSkillCardName = sSkillName,
+            iSkillIndex = _skillCard_SO.iSkillIndex,  // SO 대신 인덱스만 전송
             cardPosition = cardPos,
-            skillCard_SO = _skillCard_SO,
             bIsRat = bIsRat_,
             iRandomSkillIndex = _iRatSkillNum
         };

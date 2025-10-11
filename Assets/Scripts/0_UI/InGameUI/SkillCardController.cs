@@ -867,4 +867,10 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
+    public SkillCard_SO FindSkillCardByIndex(int skillIndex)
+    {
+        return skillDataList.Find(card => card.iSkillIndex == skillIndex);
+    }
+
 }

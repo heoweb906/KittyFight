@@ -246,9 +246,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         SkillCard_SO skillToEquip = skillCard_SO;
         int randomSkillIndex = -1;
 
-        // 쥐 카드라면 랜덤 스킬로 교체
-
-        // 수정 필요
+        
         if (bIsRat)
         {
             // 액티브/패시브 여부에 따라 다른 배열 사용
@@ -275,6 +273,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 }
             }
         }
+
 
         GameObject skillObj = skillCardController.CreateSkillInstance(skillToEquip);
         PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
@@ -304,6 +303,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         P2PMessageSender.SendMessage(
      SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillToEquip.sSkillName, rectTransformMine.anchoredPosition, skillToEquip, bIsRat, randomSkillIndex)
  );
+
 
         // UI 처리
         skillCardController.SetBoolAllCardInteract(false);
