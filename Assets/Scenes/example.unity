@@ -12058,7 +12058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &505714991
 Transform:
   m_ObjectHideFlags: 0
@@ -32167,6 +32167,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5001395786464291979, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5766427849843523657, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
         type: 3}
       propertyPath: m_IsKinematic
@@ -32182,19 +32187,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d13c371f5dee54bbcffb8fb0c351ba, type: 3}
---- !u!1 &1236629119 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5001395786464291979, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
-    type: 3}
-  m_PrefabInstance: {fileID: 1236629118}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1236629120 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6589624401035276662, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
     type: 3}
   m_PrefabInstance: {fileID: 1236629118}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236629119}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88ec58a86c2056448765c45c878a7e1, type: 3}
@@ -38014,16 +38013,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356d31f1eb8279c42b1b4d7f5ad16201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   player1Prefab: {fileID: 5001395786464291979, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
     type: 3}
   player2Prefab: {fileID: 5001395786464291979, guid: 219e7fa8f3bcc764e9222fae2800773b,
     type: 3}
-  player1: {fileID: 1236629119}
-  player2: {fileID: 1935623260}
-  mapManager: {fileID: 1511321034}
+  spawnPoint1: {fileID: 1502491636}
+  spawnPoint2: {fileID: 2032165737}
   ingameUIController: {fileID: 2097744494}
   updateManager: {fileID: 1102403079}
+  mapManager: {fileID: 1511321034}
   cameraManager: {fileID: 1260943388}
   backgroundPlane: {fileID: 0}
   meleeSkillPrefab: {fileID: 2211560603425008042, guid: 00e097bd3773c7845ba69fa274e50624,
@@ -38050,7 +38048,15 @@ MonoBehaviour:
   resendInterval: 0.2
   handshakeTimeout: 3
   stallKick: 0.75
+  readySeenAt: -1
+  handshakeStarted: 0
   stallRestart: 3
+  lastProgressAt: -1
+  gm: {fileID: 0}
+  roundToken: 0
+  gotOpponentPlayingAck: 0
+  gotStartToken: 0
+  opponentReady: 0
 --- !u!1001 &1424529370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52050,6 +52056,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5001395786464291979, guid: 219e7fa8f3bcc764e9222fae2800773b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5766427849843523657, guid: 219e7fa8f3bcc764e9222fae2800773b,
         type: 3}
       propertyPath: m_IsKinematic
@@ -52065,19 +52076,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 219e7fa8f3bcc764e9222fae2800773b, type: 3}
---- !u!1 &1935623260 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5001395786464291979, guid: 219e7fa8f3bcc764e9222fae2800773b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1935623259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1935623261 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6589624401035276662, guid: 219e7fa8f3bcc764e9222fae2800773b,
     type: 3}
   m_PrefabInstance: {fileID: 1935623259}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935623260}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f88ec58a86c2056448765c45c878a7e1, type: 3}

@@ -17,6 +17,6 @@ public class BackgroundColorHandler : IP2PMessageHandler
         string json = msg.Substring(7);
         var data = JsonUtility.FromJson<BackgroundColorMessage>(json);
 
-        gameManager.OnReceiveSetupMessage(data);
+        gameManager.ApplyBackground(data.mapIndex, data.backgroundIndex, data.iMapGimicNum);
     }
 }
