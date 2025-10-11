@@ -12058,7 +12058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &505714991
 Transform:
   m_ObjectHideFlags: 0
@@ -29016,7 +29016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1138780392
 Transform:
   m_ObjectHideFlags: 0
@@ -38044,19 +38044,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e56cf23a5b10046bee90c5d52ec958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLeadDelay: 0.7
-  resendInterval: 0.2
-  handshakeTimeout: 3
-  stallKick: 0.75
-  readySeenAt: -1
-  handshakeStarted: 0
-  stallRestart: 3
-  lastProgressAt: -1
-  gm: {fileID: 0}
-  roundToken: 0
-  gotOpponentPlayingAck: 0
-  gotStartToken: 0
-  opponentReady: 0
 --- !u!1001 &1424529370
 PrefabInstance:
   m_ObjectHideFlags: 0
