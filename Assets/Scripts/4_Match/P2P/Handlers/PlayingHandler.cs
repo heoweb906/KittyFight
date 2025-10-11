@@ -5,35 +5,35 @@ using UnityEngine;
 /// </summary>
 public class PlayingHandler : IP2PMessageHandler
 {
-    private readonly GameStartSync sync;
+    //private readonly GameStartSync sync;
 
     public PlayingHandler(GameManager gm)
     {
-        // GameStartSync를 자동으로 확보 (없으면 같은 오브젝트에 부착)
-        sync = gm != null
-            ? (gm.GetComponent<GameStartSync>() ?? gm.gameObject.AddComponent<GameStartSync>())
-            : null;
+        //// GameStartSync를 자동으로 확보 (없으면 같은 오브젝트에 부착)
+        //sync = gm != null
+        //    ? (gm.GetComponent<GameStartSync>() ?? gm.gameObject.AddComponent<GameStartSync>())
+        //    : null;
     }
 
     public bool CanHandle(string msg) => msg.StartsWith("[PLAYING]");
 
     public void Handle(string msg)
     {
-        if (sync == null) return;
+        //if (sync == null) return;
 
-        const int tagLen = 9; // "[PLAYING]"
-        var payload = new PlayingPayload { r = -1 };
+        //const int tagLen = 9; // "[PLAYING]"
+        //var payload = new PlayingPayload { r = -1 };
 
-        if (msg.Length > tagLen)
-        {
-            try
-            {
-                var json = msg.Substring(tagLen);
-                payload = JsonUtility.FromJson<PlayingPayload>(json);
-            }
-            catch { /* 무해: 기본값 사용 */ }
-        }
+        //if (msg.Length > tagLen)
+        //{
+        //    try
+        //    {
+        //        var json = msg.Substring(tagLen);
+        //        payload = JsonUtility.FromJson<PlayingPayload>(json);
+        //    }
+        //    catch { /* 무해: 기본값 사용 */ }
+        //}
 
-        sync.OnPlayingMessage(payload);
+        //sync.OnPlayingMessage(payload);
     }
 }
