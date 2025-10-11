@@ -262,7 +262,8 @@ public class GameManager : MonoBehaviour
 
         if (MatchResultStore.myPlayerNumber == 1)
         {
-            int mapIdx = Random.Range(0, 6);
+            int mapIdx = Random.Range(0, 8);
+
             int bgIdx = Random.Range(0, 4);
             // ¸Ê ±â¹Í Ã³¸®
             int randomValue = 0;

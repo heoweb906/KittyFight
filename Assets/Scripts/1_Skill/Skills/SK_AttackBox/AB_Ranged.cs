@@ -55,7 +55,7 @@ public class AB_Ranged : AB_HitboxBase
             }
         }
 
-        // StartCoroutine(DestroyFragments());
+        StartCoroutine(DestroyFragments());
 
         Destroy(gameObject, 2f);
     }
@@ -78,7 +78,14 @@ public class AB_Ranged : AB_HitboxBase
             {
                 if (fragment != null && fragment.gameObject != null)
                 {
-                    Destroy(fragment.gameObject);
+                    fragment.transform.DOScale(Vector3.zero, 0.5f)
+                        .SetEase(Ease.InBack)
+                        .OnComplete(() => {
+                            if (fragment != null && fragment.gameObject != null)
+                            {
+                                Destroy(fragment.gameObject);
+                            }
+                        });
                 }
             }
         }
