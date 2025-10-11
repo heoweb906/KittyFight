@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject rangedSkillPrefab;
     public GameObject dashPrefab;
 
+    private GameObject myPlayer;
     private GameObject player1;
     private GameObject player2;
     private int myNum;
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
         Transform opponentSpawn = (myNum == 1) ? spawnPoint2 : spawnPoint1;
 
         // Instantiate
-        GameObject myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, mySpawn.rotation);
+        myPlayer = Instantiate(myPlayerPrefab, mySpawn.position, mySpawn.rotation);
         GameObject opponentPlayer = Instantiate(opponentPlayerPrefab, opponentSpawn.position, opponentSpawn.rotation);
 
         // player1 / player2 참조 정리 (화면 좌/우 고정 관점 유지)
@@ -108,7 +109,9 @@ public class GameManager : MonoBehaviour
         opponentPlayer.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
 
         // 상대 물리 동기화: 원격 대상은 Kinematic
+        var myRb = myPlayer.GetComponent<Rigidbody>();
         var oppRb = opponentPlayer.GetComponent<Rigidbody>();
+        if (myRb != null) myRb.isKinematic = true;
         if (oppRb != null) oppRb.isKinematic = true;
 
         // Ability / Health 번호 세팅 (권위 일원화)
@@ -147,8 +150,13 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
 
+
+        var myNicknameText = myPlayer ? myPlayer.GetComponentInChildren<TextMeshProUGUI>() : null;
+        var oppNicknameText = opponentPlayer ? opponentPlayer.GetComponentInChildren<TextMeshProUGUI>() : null;
+        if (myNicknameText) myNicknameText.text = MatchResultStore.myNickname;
+        if (oppNicknameText) oppNicknameText.text = MatchResultStore.opponentNickname;
+
         StartCoroutine(DelayedInitialize());
-        ResetGame();
 
         // 상태 동기화 시작
         updateManager?.Initialize(myPlayer, opponentPlayer, myNum);
@@ -210,7 +218,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DelayedInitialize()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
+        ResetGame();
     }
 
 
@@ -277,8 +286,6 @@ public class GameManager : MonoBehaviour
         mapManager.ChangeMap(mapIndex);
         mapManager.ChangeBackground(backgroundIndex);
 
-        StartCoroutine(DelayedInitialize());
-
         var sp1 = mapManager.GetSpawnPoint(1);
         var sp2 = mapManager.GetSpawnPoint(2);
         if (player1 && sp1) player1.transform.position = sp1.position;
@@ -288,8 +295,11 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
 
-
         gameEnded = false;
+
+        var myRb = myPlayer.GetComponent<Rigidbody>();
+        if (myRb != null) myRb.isKinematic = false;
+
         ingameUIController?.StartGameTimer(60f);
 
         myAbility.events?.EmitRoundStart(0);
