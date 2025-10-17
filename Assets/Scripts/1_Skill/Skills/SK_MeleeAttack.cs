@@ -43,7 +43,14 @@ public class SK_MeleeAttack : Skill
         if (ab != null) ab.Init(playerAbility);
 
 
-        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        // ÈÆ·ÃÀå¿ë
+        if (playerAbility.playerNumber == 0)
+        {
+            var cm = FindObjectOfType<CameraManager>();
+            cm?.ShakeCamera(shakeAmount, 0.2f);
+        }
+
+        else if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
             gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
