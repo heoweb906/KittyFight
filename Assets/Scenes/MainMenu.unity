@@ -11672,7 +11672,7 @@ MonoBehaviour:
   events: {fileID: 0}
   passives: []
   initialPassives: []
-  playerNumber: 1
+  playerNumber: 0
   effect: {fileID: 1369997704}
 --- !u!23 &6918819254541039523
 MeshRenderer:
