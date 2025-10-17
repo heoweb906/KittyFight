@@ -5,7 +5,7 @@ public class SK_FeatherShot : Skill
     [Header("발사 설정")]
     public float projectileSpeed = 20f;
     public float spawnOffset = 0.6f;
-    public float spreadAngleDeg = 12f;
+    public float spreadAngleDeg = 20f;
 
     private void Awake()
     {
