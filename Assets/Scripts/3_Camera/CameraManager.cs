@@ -24,6 +24,7 @@ public class CameraManager : MonoBehaviour
 
     public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
     {
+        originalCameraPosition = objCamaera.transform.position;
         if (objCamaera == null) return;
         Vector3 shakeStrength = new Vector3(strength, strength * 0.5f, 0f);
         if (shakeSequence != null)
