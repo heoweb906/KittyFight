@@ -28,6 +28,12 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] public GameObject hitEffectPrefab;
+    private Vector3? pendingSourcePos;        // 원거리/근거리에서 넘겨주는 공격 소스 위치
+
+    [SerializeField] private Renderer[] flashTargets;   // group6_polySurface11, Right_Ear, Left_Ear
+    [SerializeField] private Material flashMaterial;   // 순백 머테리얼 (Toony Colors Pro 2 등)
+    [SerializeField] private float flashDuration = 0.2f;
+
 
     private void Awake()
     {
@@ -62,12 +68,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        pendingSourcePos = null;
         TakeDamage(damage, null);
     }
 
     public void TakeDamage(int damage, PlayerAbility attacker)
     {
         if (isInvincible) return;
+
+        // 테스트용
+        //pendingSourcePos = null;
 
         int amount = Mathf.Max(0, damage);
 
@@ -100,25 +110,70 @@ public class PlayerHealth : MonoBehaviour
         ShakeCamera(selfShake);
     }
 
+    public void TakeDamage(int damage, PlayerAbility attacker, Vector3 sourceWorldPos)
+    {
+        pendingSourcePos = sourceWorldPos;
+        TakeDamage(damage, attacker);
+    }
+
     private IEnumerator DamageEffectCoroutine()
     {
         isInvincible = true;
-        if (rend != null) rend.material.color = Color.white;
 
-        if (hitEffectPrefab != null)
+        // 하얗게 점멸
+        yield return StartCoroutine(WhiteFlashSwapOnce());
+
+        Quaternion rot = ComputeHitEffectRotation();
+
+        if (hitEffectPrefab)
+            Instantiate(hitEffectPrefab, transform.position, rot);
+
+        // 무적
+        yield return new WaitForSeconds(invincibleTime);
+        isInvincible = false;
+
+        // 사용한 값 정리
+        pendingSourcePos = null;
+    }
+
+    // === [ADD] 머테리얼 스왑 코루틴 (sharedMaterials만 교체/복원) ===
+    private IEnumerator WhiteFlashSwapOnce()
+    {
+        if (flashTargets == null || flashTargets.Length == 0 || flashMaterial == null)
+            yield break;
+
+        // 원복을 위해 각 렌더러의 sharedMaterials 배열을 그대로 백업
+        var originals = new System.Collections.Generic.List<Material[]>();
+        originals.Capacity = flashTargets.Length;
+
+        for (int i = 0; i < flashTargets.Length; i++)
         {
-            Instantiate(
-                hitEffectPrefab,
-                transform.position,
-                Quaternion.Euler(-90f, 0f, 0f)
-            );
+            var r = flashTargets[i];
+            if (!r) { originals.Add(null); continue; }
+
+            var prev = r.sharedMaterials;                  // 그대로 보관 (자산 레퍼런스)
+            originals.Add(prev);
+
+            // 같은 길이로 전 슬롯을 flashMaterial로 채워서 교체
+            int n = prev != null ? prev.Length : 1;
+            var temp = new Material[n];
+            for (int k = 0; k < n; k++) temp[k] = flashMaterial;
+            r.sharedMaterials = temp;                      // ← 스왑 (자산 레퍼런스만 바꿈)
         }
 
-        yield return new WaitForSeconds(invincibleTime);
+        yield return new WaitForSeconds(flashDuration);
 
-        if (rend != null) rend.material.color = originalColor;
-        isInvincible = false;
+        // 원상복구
+        for (int i = 0; i < flashTargets.Length; i++)
+        {
+            var r = flashTargets[i];
+            if (!r || originals[i] == null) continue;
+            r.sharedMaterials = originals[i];
+        }
     }
+
+
+
 
     // 원격 HP 확정값 반영
     public void RemoteSetHP(int hp)
@@ -129,7 +184,10 @@ public class PlayerHealth : MonoBehaviour
         ability.effect?.PlayDoubleShakeAnimation(5, 6); // 상대 HP
 
         if (currentHP < prev)
+        {
             hitEffectPending = true;
+            pendingSourcePos = null; // 테스트용
+        }
 
         if (currentHP <= 0)
         {
@@ -174,5 +232,25 @@ public class PlayerHealth : MonoBehaviour
     public void AddMaxHP(int delta, bool keepCurrentRatio = false)
     {
         SetMaxHP(maxHP + delta, keepCurrentRatio);
+    }
+
+    private Quaternion ComputeHitEffectRotation()
+    {
+        float fy;
+
+        if (pendingSourcePos.HasValue)
+        {
+            // 소스 기준 "반대" 방향의 X 부호로 오른/왼 판단
+            Vector3 awayDir = (transform.position - pendingSourcePos.Value);
+            fy = (awayDir.x >= 0f) ? 90f : -90f;      // 오른쪽=+90, 왼쪽=-90
+        }
+        else
+        {
+            // 소스 없으면: "내가 보는 방향의 반대"
+            bool selfRight = Vector3.Dot(transform.forward, Vector3.right) >= 0f;
+            fy = selfRight ? -90f : 90f; // 반대로 보냄
+        }
+
+        return Quaternion.Euler(-9f, fy, -90f);     // X=-90, Z=-90 고정
     }
 }
