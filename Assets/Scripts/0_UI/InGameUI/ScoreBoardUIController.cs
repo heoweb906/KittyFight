@@ -62,6 +62,8 @@ public class C_ScoreImageElement
                 break;
             case 4:         // Resurrection(∫Œ»∞)
                 imagePlayerCat.sprite = spritesPlayerCat[7];
+                shadowPos = new Vector2(550f, -300f);
+
                 break;
             default:
                 break;
@@ -108,15 +110,6 @@ public class ScoreBoardUIController : MonoBehaviour
         // OnOffCheering(false);
     }
 
-
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            OnOffCheering(true);
-        }
-    }
 
 
 

@@ -4876,7 +4876,7 @@ GameObject:
   - component: {fileID: 6135315945164361652}
   - component: {fileID: 5189815286609567268}
   m_Layer: 0
-  m_Name: VFX_18_HoofOut
+  m_Name: VFX_15_HoofOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
