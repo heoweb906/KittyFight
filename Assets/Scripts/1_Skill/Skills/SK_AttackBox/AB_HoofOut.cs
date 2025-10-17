@@ -35,7 +35,6 @@ public class AB_HoofOut : AB_HitboxBase
         var controller = victim.GetComponent<PlayerController>();
         if (controller != null)
         {
-            controller.enabled = false;
             StartCoroutine(ReenableAfter(controller, disableControlSeconds));
         }
 
@@ -45,6 +44,7 @@ public class AB_HoofOut : AB_HitboxBase
 
     private System.Collections.IEnumerator ReenableAfter(MonoBehaviour m, float delay)
     {
+        if (m != null) m.enabled = false;
         yield return new WaitForSeconds(delay);
         if (m != null) m.enabled = true;
     }
