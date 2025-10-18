@@ -17,7 +17,10 @@ public class DamageHandler : IP2PMessageHandler
     {
         var d = JsonUtility.FromJson<DamageMessage>(msg.Substring(5));
         if (d.targetPlayer == myPlayerNumber) return;
-        Debug.Log(d);
-        opponentHp.RemoteSetHP(d.hp);
+        
+        if (d.hasSource)
+            opponentHp.RemoteSetHP(d.hp, d.sourceWorldPos);
+        else
+            opponentHp.RemoteSetHP(d.hp);
     }
 }

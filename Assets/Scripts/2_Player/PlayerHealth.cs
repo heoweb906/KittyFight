@@ -29,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Effects")]
     [SerializeField] public GameObject hitEffectPrefab;
     private Vector3? pendingSourcePos;        // 원거리/근거리에서 넘겨주는 공격 소스 위치
+    private Vector3? pendingPunchDir;
 
     [SerializeField] private Renderer[] flashTargets;   // group6_polySurface11, Right_Ear, Left_Ear
     [SerializeField] private Material flashMaterial;   // 순백 머테리얼 (Toony Colors Pro 2 등)
@@ -60,11 +61,29 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void ShakeCamera(float strength)
+    private void ShakeCameraPunch(float strength, Vector3 dir, float duration = 0.14f)
     {
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCamera(Mathf.Clamp01(strength), 0.2f);
+        var cam = gm?.cameraManager;
+        if (cam == null) return;
+
+        float mag = Mathf.Clamp01(strength);
+        if (dir.sqrMagnitude < 1e-8f) dir = Vector3.right;
+
+        cam.ShakeCameraPunch(mag, duration, dir);
     }
+
+    private Vector3 ComputePunchDirFromSource(Vector3 sourceWorldPos)
+    {
+        Vector3 away = transform.position - sourceWorldPos; // 소스→나
+        Vector3 dir = new Vector3(away.x, away.y, 0f);
+        if (dir.sqrMagnitude > 1e-8f) return dir.normalized;
+
+        // 폴백: 바라보는 좌/우로
+        bool selfFacingRight = Vector3.Dot(transform.forward, Vector3.right) >= 0f;
+        return selfFacingRight ? Vector3.right : Vector3.left;
+    }
+
 
     public void TakeDamage(int damage)
     {
@@ -83,17 +102,25 @@ public class PlayerHealth : MonoBehaviour
 
         // 공격자
         attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
+        if (amount <= 0) return;
 
         currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
         ability.effect?.PlayDoubleShakeAnimation(5, 6); // 내 HP
+
+        float selfShake = 0.15f + Mathf.FloorToInt(amount / 10) * 0.08f;
+
+        Vector3 dir = pendingPunchDir
+            ?? (Vector3.Dot(transform.forward, Vector3.right) >= 0f ? Vector3.right : Vector3.left);
+        ShakeCameraPunch(selfShake, dir);
+        pendingPunchDir = null;
 
         // 권위 판정: Ability.playerNumber 기준
         int pn = ability != null ? ability.playerNumber : 0;
         if (pn == MatchResultStore.myPlayerNumber)
         {
             P2PMessageSender.SendMessage(
-                DamageMessageBuilder.Build(pn, currentHP));
+                DamageMessageBuilder.Build(pn, currentHP, pendingSourcePos));
         }
 
         if (currentHP <= 0)
@@ -102,17 +129,13 @@ public class PlayerHealth : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
 
-        //StartCoroutine(DamageEffectCoroutine());
         hitEffectPending = true;
-
-
-        float selfShake = 0.15f + Mathf.FloorToInt(amount/10) * 0.08f;
-        ShakeCamera(selfShake);
     }
 
     public void TakeDamage(int damage, PlayerAbility attacker, Vector3 sourceWorldPos)
     {
         pendingSourcePos = sourceWorldPos;
+        pendingPunchDir = ComputePunchDirFromSource(sourceWorldPos);
         TakeDamage(damage, attacker);
     }
 
@@ -121,8 +144,7 @@ public class PlayerHealth : MonoBehaviour
         isInvincible = true;
 
         // 하얗게 점멸
-        // yield return
-
+        //yield return
         StartCoroutine(WhiteFlashSwapOnce());
 
         Quaternion rot = ComputeHitEffectRotation();
@@ -180,30 +202,35 @@ public class PlayerHealth : MonoBehaviour
     // 원격 HP 확정값 반영
     public void RemoteSetHP(int hp)
     {
+        RemoteSetHP(hp, null);
+    }
+
+    public void RemoteSetHP(int hp, Vector3? sourceWorldPos)
+    {
         int prev = currentHP;
         currentHP = Mathf.Clamp(hp, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
-        ability.effect?.PlayDoubleShakeAnimation(5, 6); // 상대 HP
+        ability.effect?.PlayDoubleShakeAnimation(5, 6);
 
         if (currentHP < prev)
         {
+            pendingSourcePos = sourceWorldPos;
+
+            int dealt = prev - currentHP;
+            float oppHitShake = 0.09f + Mathf.FloorToInt(dealt / 10f) * 0.08f;
+
+            Vector3 dir = sourceWorldPos.HasValue
+                ? ComputePunchDirFromSource(sourceWorldPos.Value)
+                : (Vector3.Dot(transform.forward, Vector3.right) >= 0f ? Vector3.right : Vector3.left);
+
+            ShakeCameraPunch(oppHitShake, dir);
             hitEffectPending = true;
-            pendingSourcePos = null; // 테스트용
         }
 
         if (currentHP <= 0)
         {
-            Debug.Log("Lose");
-
             int winnerPlayerNum = MatchResultStore.myPlayerNumber == 1 ? 2 : 1;
             FindObjectOfType<GameManager>()?.EndGame(winnerPlayerNum);
-        }
-
-        int dealt = Mathf.Max(0, prev - currentHP);
-        if (dealt > 0)
-        {
-            float oppHitShake = 0.09f + Mathf.FloorToInt(dealt/10f) * 0.08f;
-            ShakeCamera(oppHitShake);
         }
     }
 
@@ -238,21 +265,32 @@ public class PlayerHealth : MonoBehaviour
 
     private Quaternion ComputeHitEffectRotation()
     {
-        float fy;
+        const float fixedY = 90f;
+        const float fixedZ = -90f;
+        float xAngle;
 
         if (pendingSourcePos.HasValue)
         {
-            // 소스 기준 "반대" 방향의 X 부호로 오른/왼 판단
-            Vector3 awayDir = (transform.position - pendingSourcePos.Value);
-            fy = (awayDir.x >= 0f) ? 90f : -90f;      // 오른쪽=+90, 왼쪽=-90
+            Vector3 away = transform.position - pendingSourcePos.Value;
+
+            float x = away.x;
+            float y = away.y;
+
+            if (Mathf.Abs(x) > 1e-5f || Mathf.Abs(y) > 1e-5f)
+            {
+                xAngle = Mathf.Atan2(-y, x) * Mathf.Rad2Deg;
+                if (xAngle < 0f) xAngle += 360f;  // 0~360°로 정규화
+            }
+            else
+            {
+                xAngle = 0f; // 같은 자리면 기본값(오른쪽)
+            }
         }
         else
         {
-            // 소스 없으면: "내가 보는 방향의 반대"
-            bool selfRight = Vector3.Dot(transform.forward, Vector3.right) >= 0f;
-            fy = selfRight ? -90f : 90f; // 반대로 보냄
+            xAngle = 0f; // 소스 정보 없으면 기본(오른쪽)
         }
 
-        return Quaternion.Euler(-9f, fy, -90f);     // X=-90, Z=-90 고정
+        return Quaternion.Euler(xAngle, fixedY, fixedZ);
     }
 }
