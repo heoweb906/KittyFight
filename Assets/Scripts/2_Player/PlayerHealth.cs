@@ -121,7 +121,9 @@ public class PlayerHealth : MonoBehaviour
         isInvincible = true;
 
         // ÇÏ¾é°Ô Á¡¸ê
-        yield return StartCoroutine(WhiteFlashSwapOnce());
+        // yield return
+
+        StartCoroutine(WhiteFlashSwapOnce());
 
         Quaternion rot = ComputeHitEffectRotation();
 
