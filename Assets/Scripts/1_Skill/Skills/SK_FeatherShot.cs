@@ -18,8 +18,8 @@ public class SK_FeatherShot : Skill
         if (!objSkillEntity) return;
 
         Vector3 dirC = direction.normalized;
-        Vector3 dirL = Quaternion.AngleAxis(-spreadAngleDeg, Vector3.up) * dirC;
-        Vector3 dirR = Quaternion.AngleAxis(+spreadAngleDeg, Vector3.up) * dirC;
+        Vector3 dirL = Quaternion.AngleAxis(+spreadAngleDeg, Vector3.forward) * dirC;
+        Vector3 dirR = Quaternion.AngleAxis(-spreadAngleDeg, Vector3.forward) * dirC;
 
         FireOne(origin, dirL);
         FireOne(origin, dirC);
