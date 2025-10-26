@@ -9,6 +9,6 @@ public class AB_Rend : AB_HitboxBase
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
-        victim.TakeDamage(damage, ownerAbility);
+        victim.TakeDamage(damage, ownerAbility, transform.position);
     }
 }

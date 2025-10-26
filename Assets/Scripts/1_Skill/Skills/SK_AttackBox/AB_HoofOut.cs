@@ -39,7 +39,7 @@ public class AB_HoofOut : AB_HitboxBase
         }
 
         // µ¥¹ÌÁö
-        victim.TakeDamage(damage, ownerAbility);
+        victim.TakeDamage(damage, ownerAbility, transform.position);
     }
 
     private System.Collections.IEnumerator ReenableAfter(MonoBehaviour m, float delay)
