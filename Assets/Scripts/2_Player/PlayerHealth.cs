@@ -283,12 +283,12 @@ public class PlayerHealth : MonoBehaviour
             }
             else
             {
-                xAngle = 0f; // 같은 자리면 기본값(오른쪽)
+                xAngle = (transform.forward.x >= 0f) ? 180f : 0f;
             }
         }
         else
         {
-            xAngle = 0f; // 소스 정보 없으면 기본(오른쪽)
+            xAngle = (transform.forward.x >= 0f) ? 180f : 0f;
         }
 
         return Quaternion.Euler(xAngle, fixedY, fixedZ);
