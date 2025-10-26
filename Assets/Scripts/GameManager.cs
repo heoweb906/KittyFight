@@ -259,6 +259,8 @@ public class GameManager : MonoBehaviour
 
         player1?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
         player2?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
+        player1?.GetComponentInChildren<WallCheck>()?.ForceClearContacts();
+        player2?.GetComponentInChildren<WallCheck>()?.ForceClearContacts();
 
         if (MatchResultStore.myPlayerNumber == 1)
         {
