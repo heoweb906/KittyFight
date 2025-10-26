@@ -11355,6 +11355,9 @@ MonoBehaviour:
   invincibleTime: 1
   events: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
+  flashTargets: []
+  flashMaterial: {fileID: 0}
+  flashDuration: 0.2
 --- !u!65 &1135219770940976284
 BoxCollider:
   m_ObjectHideFlags: 0
