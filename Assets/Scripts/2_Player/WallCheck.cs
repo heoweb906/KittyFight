@@ -37,4 +37,10 @@ public class WallCheck : MonoBehaviour
             }
         }
     }
+
+    public void ForceClearContacts()
+    {
+        jumpScript?.SetTouchingWall(false);
+        movementScript?.AttachToPlatform(null);
+    }
 }
