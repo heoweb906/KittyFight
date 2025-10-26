@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class SK_HoofOut : Skill
 {
-    private void Awake()
-    {
-        coolTime = 8.0f;
-        aimRange = 2.5f;
-    }
-
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (objSkillEntity == null) return;

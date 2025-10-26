@@ -21,6 +21,9 @@ public class TestPlayerComtroller : MonoBehaviour
     private bool meleeInput;
     private bool rangedInput;
 
+    private bool skill1Input;
+    private bool skill2Input;
+
 
     private void Awake()
     {
@@ -41,10 +44,16 @@ public class TestPlayerComtroller : MonoBehaviour
         meleeInput = Input.GetMouseButtonDown(0);
         rangedInput = Input.GetMouseButtonDown(1);
 
+        skill1Input = Input.GetKeyDown(KeyCode.Q);
+        skill2Input = Input.GetKeyDown(KeyCode.E);
+
         if (jumpInput) jump.TryJump();
         if (dashInput) TryExecuteAimedSkill(SkillType.Dash);
         if (meleeInput) TryExecuteAimedSkill(SkillType.Melee);
         if (rangedInput) TryExecuteAimedSkill(SkillType.Ranged);
+
+        if (skill1Input) TryExecuteAimedSkill(SkillType.Skill1);
+        if (skill2Input) TryExecuteAimedSkill(SkillType.Skill2);
     }
 
     private void FixedUpdate()

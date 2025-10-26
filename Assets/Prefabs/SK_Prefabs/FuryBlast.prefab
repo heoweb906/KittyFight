@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4443636851060309739}
   - component: {fileID: 4574550274525587615}
   - component: {fileID: -1800038675427722978}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: FuryBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,4 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleHit: 1
   lifeTime: 0.2
+  environmentMask:
+    serializedVersion: 2
+    m_Bits: 0
   damageToOthers: 20

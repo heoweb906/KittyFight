@@ -4,9 +4,6 @@ public class SK_RangedAttack : Skill
 {
     public float projectileSpeed = 10f;
 
-    [Header("Visuals")]
-    [SerializeField] private Material p1Material;
-    [SerializeField] private Material p2Material;
 
     [Header("카메라")]
     public float shakeAmount = 0.06f;
@@ -25,10 +22,18 @@ public class SK_RangedAttack : Skill
         if (objSkillEntity == null) return;
 
         GameObject proj = Instantiate(objSkillEntity, spawnPos, rot);
-
+     
         // 공통 Init: 소유자 Ability 주입 (playerNumber도 내부에서 세팅됨)
         var ab = proj.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
+
+
+        if(playerAbility.playerNumber == 2)
+        {
+            AB_Ranged range = proj.GetComponent<AB_Ranged>();
+            range.ChangeMaterial();
+        }
+        
 
         ApplyPerPlayerMaterial(proj);
 

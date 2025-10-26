@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class SK_Rend : Skill
 {
-    private void Awake()
-    {
-        coolTime = 4.5f;
-        aimRange = 3.0f;
-    }
+   
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {

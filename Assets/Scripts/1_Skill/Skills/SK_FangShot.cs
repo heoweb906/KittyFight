@@ -5,12 +5,6 @@ public class SK_FangShot : Skill
     [Header("발사체 이동")]
     public float projectileSpeed = 12f;
 
-    private void Awake()
-    {
-        coolTime = 6.0f;
-        aimRange = 2.5f;
-    }
-
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;

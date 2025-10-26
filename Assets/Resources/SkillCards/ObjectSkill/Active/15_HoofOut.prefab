@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1657814523355016355
 Transform:
   m_ObjectHideFlags: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 8
-  objSkillEntity: {fileID: 6777267630284458099, guid: 7671d1727d07f5a4d98f7e99621f1edd,
+  coolTime: 1
+  objSkillEntity: {fileID: 6718696843200834826, guid: f7eb4f9523779aa4e86417bee3b501bb,
     type: 3}
   skillIcon: {fileID: 21300000, guid: eb7fe4a989fedc54db11ac7ab7b10267, type: 3}
-  aimRange: 2.5
+  aimRange: 1.5

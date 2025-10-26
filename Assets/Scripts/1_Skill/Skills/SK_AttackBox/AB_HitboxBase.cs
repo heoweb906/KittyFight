@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
+using RayFire;
 
 /// <summary>
 /// 모든 근접 히트박스/투사체가 공통으로 갖는 판정/소유/친선무시/권위 체크 로직
@@ -14,7 +16,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
     [SerializeField] protected bool singleHit = true;
 
     [Tooltip("수명(초). 0 이하이면 자동 파괴하지 않음")]
-    [SerializeField] protected float lifeTime = 0.2f;
+    [SerializeField] public float lifeTime = 0.2f;
 
     [Header("환경 충돌 설정")]
     [Tooltip("환경으로 간주할 레이어(벽/바닥 등)")]
@@ -23,9 +25,12 @@ public abstract class AB_HitboxBase : MonoBehaviour
     // 이미 맞춘 대상(중복 히트 방지)
     private readonly HashSet<PlayerHealth> _hitOnce = new HashSet<PlayerHealth>();
 
+
     protected virtual void Awake()
     {
         if (lifeTime > 0f) Destroy(gameObject, lifeTime);
+
+        StartEffect();
     }
 
     /// <summary>
@@ -93,6 +98,38 @@ public abstract class AB_HitboxBase : MonoBehaviour
     {
         return (environmentMask.value & (1 << otherLayer)) != 0;
     }
+
+
+    protected virtual void StartEffect() { }
+
+
+
+
+
+    public void Explode(float range, float force)
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range);
+
+        foreach (Collider col in colliders)
+        {
+            FragmentPiece piece = col.GetComponent<FragmentPiece>();
+
+            if (piece != null)
+            {
+                Debug.Log("조각 발견");
+
+
+                piece.OnThisPiece();
+                Rigidbody rb = col.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 direction = (col.transform.position - transform.position).normalized;
+                    rb.AddForce(direction * force, ForceMode.Impulse);
+                }
+            }
+        }
+    }
+
 
     /// <summary>
     /// 환경(벽/바닥 등)과의 접촉 시 동작. 기본은 아무것도 안 함.
