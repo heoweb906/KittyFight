@@ -8,6 +8,7 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody rb;
     private PlayerAbility ability;
     private PlayerMovement movementScript;
+    private Animator anim;
 
     private bool isGrounded = false;
     private bool isTouchingWall = false;
@@ -30,10 +31,15 @@ public class PlayerJump : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ability = GetComponent<PlayerAbility>();
         movementScript = GetComponent<PlayerMovement>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     private void FixedUpdate()
     {
+        anim.SetBool("isGround", isGrounded);
+        anim.SetBool("isHanging", isTouchingWall);
+        anim.SetFloat("speedY", rb.velocity.y);
+
         IsWalking = isGrounded && Mathf.Abs(rb.velocity.x) > walkSpeedThreshold;
 
         if (walkLoopFx)

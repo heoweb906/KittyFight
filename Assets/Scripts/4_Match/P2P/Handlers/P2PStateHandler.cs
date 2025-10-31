@@ -30,7 +30,7 @@ public class P2PStateHandler : IP2PMessageHandler
         var pm = opponentPlayer.GetComponent<PlayerMovement>();
         if (pm != null && pm.visualPivot != null)
         {
-            float yaw = facingRight ? 230f : 130f;
+            float yaw = facingRight ? 50f : 310f;
             pm.visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
         }
 
