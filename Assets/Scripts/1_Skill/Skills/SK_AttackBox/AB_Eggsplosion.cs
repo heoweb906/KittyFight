@@ -7,6 +7,9 @@ public class AB_Eggsplosion : AB_HitboxBase
     [Header("Blind")]
     [Min(0.01f)] public float blindnessDuration = 2.5f;
 
+    [Header("µø¿€")]
+    public bool destroyOnHit = true;
+
     [Header("¿Ã∆Â∆Æ")]
     public VFX_BasicProjectile particle_Line;
 
@@ -26,13 +29,21 @@ public class AB_Eggsplosion : AB_HitboxBase
         }
     }
 
+
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
         var blind = victim.GetComponent<BlindStatus>();
         if (!blind) blind = victim.gameObject.AddComponent<BlindStatus>();
 
         blind.ApplyBlind(blindnessDuration);
+
+        if (destroyOnHit && this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
+
 
     protected override void OnEnvironmentHit(Collider other)
     {

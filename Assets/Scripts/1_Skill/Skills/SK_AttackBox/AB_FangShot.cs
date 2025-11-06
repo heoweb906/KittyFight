@@ -39,7 +39,14 @@ public class AB_FangShot : AB_HitboxBase
         if (!poison) poison = victim.gameObject.AddComponent<PoisonDoT>();
         poison.ApplyPoison(duration, tickInterval, damagePerTick);
 
-        if (destroyOnHit && this) Destroy(gameObject);
+        if (destroyOnHit && this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
+
+            
+           
     }
 
 

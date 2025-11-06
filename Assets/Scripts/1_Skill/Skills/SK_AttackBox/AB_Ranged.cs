@@ -5,6 +5,10 @@ public class AB_Ranged : AB_HitboxBase
 {
     [Header("피해/제어")]
     public int damage = 20;
+
+    [Header("동작")]
+    public bool destroyOnHit = true;
+
     [Header("꾸미기용")]
     public Material mat;
 
@@ -31,14 +35,17 @@ public class AB_Ranged : AB_HitboxBase
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
         victim.TakeDamage(damage, ownerAbility, transform.position);
+
+        if (destroyOnHit && this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
 
     protected override void OnEnvironmentHit(Collider other)
     {
         OnDisappearEffect();
-
-
-        obj_Bone.transform.DOKill();
         Destroy(gameObject);
     }
 
@@ -46,6 +53,8 @@ public class AB_Ranged : AB_HitboxBase
 
     private void OnDisappearEffect()
     {
+        obj_Bone.transform.DOKill();
+
         particle_Line.StopTrailGeneration();
         GameObject obj = particle_Line.GetComponent<GameObject>();
         particle_Line.transform.SetParent(null);
