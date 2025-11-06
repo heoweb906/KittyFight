@@ -9,7 +9,7 @@ public class P2PStateHandler : IP2PMessageHandler
     public P2PStateHandler(GameObject opponentObj, int myNumber)
     {
         opponentPlayer = opponentObj;
-        anim = opponentObj.GetComponent<Animator>();
+        anim = opponentObj.GetComponentInChildren<Animator>();
         myPlayerNumber = myNumber;
     }
 
@@ -49,6 +49,14 @@ public class P2PStateHandler : IP2PMessageHandler
                     Quaternion.Euler(-90f, 0f, 0f)
                 );
             }
+        }
+
+        if (anim != null)
+        {
+            anim.SetBool("isGround", state.isGround);
+            anim.SetBool("isRun", state.isRun);
+            anim.SetBool("isHanging", state.isHanging);
+            anim.SetFloat("speedY", state.speedY);
         }
     }
 }
