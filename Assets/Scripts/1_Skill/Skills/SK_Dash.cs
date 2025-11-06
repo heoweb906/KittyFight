@@ -18,6 +18,8 @@ public class SK_Dash : Skill
     [Header("카메라")]
     public float shakeAmount = 0.09f;
 
+    private Animator anim;
+
     private void Awake()
     {
         coolTime = 1.0f;
@@ -26,6 +28,14 @@ public class SK_Dash : Skill
             rb = playerAbility.GetComponent<Rigidbody>();
         if (!rb) rb = GetComponentInParent<Rigidbody>();
         if (playerAbility != null) events = playerAbility.events;
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
+    public override void Bind(PlayerAbility ability)
+    {
+        base.Bind(ability);
+        events = ability.events;
+        anim = ability.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)
@@ -80,6 +90,8 @@ public class SK_Dash : Skill
         if (events != null && desiredSpeed > 0f)
             duration = maxDistance / desiredSpeed;
 
+        anim.SetBool("isDash", true);
+        anim.SetTrigger("Dash");
         StartCoroutine(DashLerp(startPos, targetPos, duration));
 
         // 훈련장용
@@ -116,5 +128,6 @@ public class SK_Dash : Skill
 
         if (disableGravityDuringDash) rb.useGravity = origUseGravity;
         rb.velocity = Vector3.zero;
+        anim.SetBool("isDash", false);
     }
 }

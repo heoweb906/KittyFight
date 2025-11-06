@@ -9,7 +9,7 @@ public class P2PStateSender : P2PManager
     public static void Init(GameObject playerObj, int playerNumber)
     {
         myPlayer = playerObj;
-        anim = playerObj.GetComponent<Animator>();
+        anim = playerObj.GetComponentInChildren<Animator>();
         myPlayerNumber = playerNumber;
     }
 
@@ -17,32 +17,36 @@ public class P2PStateSender : P2PManager
     {
         if (myPlayer == null) return;
 
-        string evtOnce = UpdateManager.ConsumeEventOnce(); // "Jump" 또는 null
-        //string animState = GetCurrentAnim();
+        string evtOnce = UpdateManager.ConsumeEventOnce();
         
         bool walking = false;
         var pj = myPlayer.GetComponent<PlayerJump>();
         if (pj != null) walking = pj.IsWalking;
+
+        bool isGround = false, isRun = false, isHanging = false;
+        float speedY = 0f;
+
+        if (anim != null)
+        {
+            // 파라미터 이름은 양쪽 Animator에서 동일해야 함
+            isGround = anim.GetBool("isGround");
+            isRun = anim.GetBool("isRun");
+            isHanging = anim.GetBool("isHanging");
+            speedY = anim.GetFloat("speedY");
+        }
 
         var msg = PlayerStateMessageBuilder.Build(
             myPlayer.transform.position,
             myPlayer.transform.eulerAngles.y,
             myPlayerNumber,
             evtOnce,
-            walking
+            walking,
+            isGround,
+            isRun,
+            isHanging,
+            speedY
         );
 
         P2PMessageSender.SendMessage(msg);
-    }
-
-    static string GetCurrentAnim()
-    {
-        if (anim == null) return "idle";
-
-        var info = anim.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName("Idle")) return "idle";
-        if (info.IsName("Run")) return "run";
-        if (info.IsName("Jump")) return "jump";
-        return "unknown";
     }
 }

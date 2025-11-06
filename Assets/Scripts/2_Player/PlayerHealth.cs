@@ -23,6 +23,8 @@ public class PlayerHealth : MonoBehaviour
     private PlayerAbility ability;
     public AbilityEvents events;
 
+    private Animator anim;
+
 
     private bool hitEffectPending;   // 데미지 점멸
 
@@ -38,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
+        anim = GetComponentInChildren<Animator>();
         currentHP = maxHP;
 
         rend = GetComponent<Renderer>();
@@ -57,6 +60,8 @@ public class PlayerHealth : MonoBehaviour
         if (hitEffectPending && isActiveAndEnabled && gameObject.activeInHierarchy && !isInvincible)
         {
             hitEffectPending = false;
+            anim.SetBool("isDamage", true);
+            anim.SetTrigger("TakeDamage");
             StartCoroutine(DamageEffectCoroutine()); // 메인 스레드에서 안전하게 시작
         }
     }
@@ -158,6 +163,7 @@ public class PlayerHealth : MonoBehaviour
 
         // 사용한 값 정리
         pendingSourcePos = null;
+        anim.SetBool("isDamage", false);
     }
 
     // === [ADD] 머테리얼 스왑 코루틴 (sharedMaterials만 교체/복원) ===
