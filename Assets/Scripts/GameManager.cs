@@ -172,7 +172,11 @@ public class GameManager : MonoBehaviour
         {
             GameObject meleeObj = Instantiate(meleeSkillPrefab, ability.transform);
             Skill melee = meleeObj.GetComponent<Skill>();
-            if (melee != null) ability.SetSkill(SkillType.Melee, melee);
+            if (melee != null)
+            {
+                melee.Bind(ability);
+                ability.SetSkill(SkillType.Melee, melee);
+            }
         }
 
         // 원거리
@@ -180,7 +184,11 @@ public class GameManager : MonoBehaviour
         {
             GameObject rangedObj = Instantiate(rangedSkillPrefab, ability.transform);
             Skill ranged = rangedObj.GetComponent<Skill>();
-            if (ranged != null) ability.SetSkill(SkillType.Ranged, ranged);
+            if (ranged != null)
+            {
+                ranged.Bind(ability);
+                ability.SetSkill(SkillType.Ranged, ranged);
+            }
         }
 
         // 대쉬
@@ -188,7 +196,11 @@ public class GameManager : MonoBehaviour
         {
             GameObject dashObj = Instantiate(dashPrefab, ability.transform);
             Skill dash = dashObj.GetComponent<Skill>();
-            if (dash != null) ability.SetSkill(SkillType.Dash, dash);
+            if (dash != null)
+            {
+                dash.Bind(ability);
+                ability.SetSkill(SkillType.Dash, dash);
+            }
         }
     }
 
