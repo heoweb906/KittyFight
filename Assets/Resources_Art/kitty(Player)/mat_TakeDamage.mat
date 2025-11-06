@@ -8,10 +8,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_TakeDamage
-  m_Shader: {fileID: 4800000, guid: 134df03d154adcb4daa9a7f1419c25fc, type: 3}
+  m_Shader: {fileID: 4800000, guid: f18928ad19f6867438daed95081e3e2c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - TCP2_UV_NORMALS_FULL
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -80,6 +81,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowBaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowColor:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -175,6 +180,7 @@ Material:
     - _SingleIndirectColor: 0
     - _SketchMax: 1
     - _SketchMin: 0
+    - _SketchTexture_OffsetSpeed: 120
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

@@ -5487,6 +5487,11 @@ PrefabInstance:
       propertyPath: playerAbility
       value: 
       objectReference: {fileID: 6589624400339541464}
+    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
+        type: 3}
+      propertyPath: attackAnimDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1657814523355016355, guid: 00e097bd3773c7845ba69fa274e50624,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -11573,7 +11578,7 @@ Animator:
   m_GameObject: {fileID: 2003471705}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 69547bef4f26195498b53cd59f9698b7, type: 2}
+  m_Controller: {fileID: 9100000, guid: ae32450c7583a774394e3df2ade713d7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

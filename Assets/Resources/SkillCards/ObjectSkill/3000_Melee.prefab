@@ -54,3 +54,4 @@ MonoBehaviour:
   meleeEffectPrefab: {fileID: 7243278475803563119, guid: 1a45ae6741eb29d4d99d4547ec940881,
     type: 3}
   shakeAmount: 0.24
+  attackAnimDuration: 1
