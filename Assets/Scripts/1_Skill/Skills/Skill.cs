@@ -25,6 +25,8 @@ public abstract class Skill : MonoBehaviour, ISKILL
     public void SetNewBasicValue(PlayerAbility ability) => playerAbility = ability;
     public void SetAssignedSlot(SkillType slot) => assignedSlot = slot;
     public virtual float GetAimRange() => aimRange;
+    public virtual void Bind(PlayerAbility ability) => playerAbility = ability;
+
     // 래퍼 없이 순수 추상, 각 스킬은 이걸 구현
     public abstract void Execute(Vector3 origin, Vector3 direction);
 }

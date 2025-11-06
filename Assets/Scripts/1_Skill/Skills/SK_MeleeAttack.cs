@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_MeleeAttack : Skill
 {
@@ -10,11 +11,22 @@ public class SK_MeleeAttack : Skill
     [Header("카메라")]
     public float shakeAmount = 0.24f;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
     private void Awake()
     {
         coolTime = 3.0f;
         aimRange = 1.0f;
         if (!events && playerAbility) events = playerAbility.events;
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
+    public override void Bind(PlayerAbility ability)
+    {
+        base.Bind(ability);
+        events = ability.events;
+        anim = ability.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)
@@ -42,6 +54,9 @@ public class SK_MeleeAttack : Skill
         var ab = hitbox.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        StartCoroutine(ResetAttackAnimState());
 
         // 훈련장용
         if (playerAbility.playerNumber == 0)
@@ -55,5 +70,10 @@ public class SK_MeleeAttack : Skill
             var gm = FindObjectOfType<GameManager>();
             gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
         }
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

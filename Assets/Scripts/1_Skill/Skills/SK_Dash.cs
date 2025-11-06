@@ -31,6 +31,13 @@ public class SK_Dash : Skill
         anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
+    public override void Bind(PlayerAbility ability)
+    {
+        base.Bind(ability);
+        events = ability.events;
+        anim = ability.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         // 로컬 소유자만 실제 이동 (원격은 쿨타임/UI만), 개발 확인 시에는 주석바람
@@ -85,7 +92,6 @@ public class SK_Dash : Skill
 
         anim.SetBool("isDash", true);
         anim.SetTrigger("Dash");
-        if (anim == null) Debug.Log("???");
         StartCoroutine(DashLerp(startPos, targetPos, duration));
 
         // 훈련장용
