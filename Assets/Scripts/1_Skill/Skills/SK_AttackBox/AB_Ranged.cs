@@ -66,6 +66,7 @@ public class AB_Ranged : AB_HitboxBase
             effect.transform.SetParent(null);
         }
 
+        Explode(0.7f, 5f);
 
         foreach (GameObject piece in objs_Piece)
         {
@@ -75,7 +76,7 @@ public class AB_Ranged : AB_HitboxBase
             }
         }
 
-        Explode(1f, 5f);
+        
     }
 
 

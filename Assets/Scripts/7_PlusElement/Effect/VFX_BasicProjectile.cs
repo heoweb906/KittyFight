@@ -35,7 +35,7 @@ public class VFX_BasicProjectile : MonoBehaviour
         UpdateGradient();
 
 
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
 
     }
     void UpdateGradient()

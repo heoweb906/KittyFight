@@ -71,6 +71,8 @@ public class AB_FangShot : AB_HitboxBase
             effect.transform.SetParent(null);
         }
 
+
+        Explode(0.5f, 5f);
         foreach (GameObject piece in objs_Piece)
         {
             if (piece != null)
@@ -79,7 +81,8 @@ public class AB_FangShot : AB_HitboxBase
             }
         }
 
-        Explode(1f, 5f);
+
+
     }
 
 

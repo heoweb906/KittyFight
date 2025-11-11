@@ -25,6 +25,17 @@ public class TitleLogoAssist : MonoBehaviour
 
     private int currentStep = 0; // 0: 대기, 1: 로고 페이드인, 2: 대기, 3: 카메라 이동
 
+
+    [Header("FadeInOut")]
+    public Image iamge_Left;
+    public Image iamge_Right;
+    public RectTransform startPoint1;
+    public RectTransform startPoint2;
+    public RectTransform targetPoint;
+    private RectTransform image1Rect;
+    private RectTransform image2Rect;
+
+
     private void Awake()
     {
         image_Logo.DOFade(0f, 0f);
@@ -33,6 +44,9 @@ public class TitleLogoAssist : MonoBehaviour
         testPlayerComtroller.bCanControl = false;
 
         for (int i = 0; i < doors.Length; ++i) doors[i].titleLogoAssist = this;
+
+        if (iamge_Left != null) image1Rect = iamge_Left.GetComponent<RectTransform>();
+        if (iamge_Right != null) image2Rect = iamge_Right.GetComponent<RectTransform>();
     }
     private void Start()
     {
@@ -50,24 +64,30 @@ public class TitleLogoAssist : MonoBehaviour
 
     private void SkipCurrentStep()
     {
+        if (currentStep == 4) return;
+
         // DOTween.KillAll() 제거하고 이 스크립트의 트위닝만 정리
         image_Logo.DOKill();
-        objs_VirtualCamera[0].transform.DOKill();
+    
         DOTween.Kill(this); // 이 MonoBehaviour와 연관된 DOVirtual 정리
         if (currentStep == 1)
         {
             image_Logo.color = new Color(image_Logo.color.r, image_Logo.color.g, image_Logo.color.b, 1f);
             currentStep = 2;
-            DOVirtual.DelayedCall(3f, StartStep3);
+
+            DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
         }
         else if (currentStep == 2)
         {
+            DOTween.Kill(this);
+
             StartStep3();
         }
         else if (currentStep == 3)
         {
-            objs_VirtualCamera[0].transform.position = transforms_Subject[1].position;
-            DOVirtual.DelayedCall(0.2f, () => mainMenuController.SwitchPanel_ByButton(1));
+            DOTween.Kill(this);
+
+            StartStep4();
         }
     }
 
@@ -78,7 +98,7 @@ public class TitleLogoAssist : MonoBehaviour
         currentStep = 1;
         image_Logo.DOFade(1f, 3f).SetDelay(1f).OnComplete(() => {
             currentStep = 2;
-            DOVirtual.DelayedCall(3f, StartStep3);
+            DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
         });
     }
 
@@ -86,11 +106,32 @@ public class TitleLogoAssist : MonoBehaviour
     private void StartStep3()
     {
         currentStep = 3;
-        objs_VirtualCamera[0].transform.DOMove(transforms_Subject[1].position, 10f).OnComplete(() => {
+        objs_VirtualCamera[0].transform.DOMove(transforms_Subject[1].position, 7f)
+            .SetEase(Ease.InOutSine);
 
-            DOVirtual.DelayedCall(0.2f, () => mainMenuController.SwitchPanel_ByButton(1));
+        DOVirtual.DelayedCall(5.0f, () => {
+            StartStep4();
+        }).SetId(this);
+    }
+
+    private void StartStep4()
+    {
+        currentStep = 4;
+
+        MoveToTarget();
+
+        DOVirtual.DelayedCall(1.0f, () => {
+            objs_VirtualCamera[0].transform.DOKill();
+            objs_VirtualCamera[0].transform.position = transforms_Subject[2].position;
+            mainMenuController.SwitchPanel_ByButton(1);
+        });
+
+        DOVirtual.DelayedCall(2.5f, () => {
+            MoveToStart();
+            currentStep = 5; // 5: 완료
         });
     }
+
 
 
 
@@ -109,4 +150,29 @@ public class TitleLogoAssist : MonoBehaviour
             }
         }
     }
+
+
+
+
+    public void MoveToTarget()
+    {
+        if (image1Rect != null && targetPoint != null)
+        {
+            image1Rect.DOAnchorPos(targetPoint.anchoredPosition, 0.6f).SetEase(Ease.InQuint);
+            image2Rect.DOAnchorPos(targetPoint.anchoredPosition, 0.6f).SetEase(Ease.InQuint);
+        }
+    }
+    public void MoveToStart()
+    {
+        if (image1Rect != null && startPoint1 != null)
+        {
+            image1Rect.DOAnchorPos(startPoint1.anchoredPosition, 0.6f).SetEase(Ease.OutQuint);
+        }
+
+        if (image2Rect != null && startPoint2 != null)
+        {
+            image2Rect.DOAnchorPos(startPoint2.anchoredPosition, 0.6f).SetEase(Ease.OutQuint);
+        }
+    }
+
 }

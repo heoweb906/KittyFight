@@ -22,6 +22,15 @@ public class CameraManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ShakeCameraPunch();
+        }
+    }
+
+
     public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
     {
         originalCameraPosition = objCamaera.transform.position;
@@ -40,7 +49,7 @@ public class CameraManager : MonoBehaviour
         );
     }
 
-    public void ShakeCameraPunch(float strength = 0.2f, float duration = 0.75f, Vector3 direction = default)
+    public void ShakeCameraPunch(float strength = 0.2f, float duration = 0.6f, Vector3 direction = default)
     {
         if (objCamaera == null) return;
 

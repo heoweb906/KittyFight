@@ -71,6 +71,8 @@ public class AB_Eggsplosion : AB_HitboxBase
             effect.transform.SetParent(null);
         }
 
+
+        Explode(0.7f, 5f);
         foreach (GameObject piece in objs_Piece)
         {
             if (piece != null)
@@ -79,6 +81,6 @@ public class AB_Eggsplosion : AB_HitboxBase
             }
         }
 
-        Explode(1f, 5f);
+      
     }
 }

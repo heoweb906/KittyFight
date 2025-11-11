@@ -105,25 +105,37 @@ public abstract class AB_HitboxBase : MonoBehaviour
 
 
 
-
     public void Explode(float range, float force)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, range);
+        Vector3 explosionPos = transform.position;
 
-        foreach (Collider col in colliders)
+        // 1. OverlapSphere 대신 자식들에서 FragmentPiece 컴포넌트를 모두 찾습니다.
+        FragmentPiece[] pieces = GetComponentsInChildren<FragmentPiece>();
+
+        foreach (FragmentPiece piece in pieces)
         {
-            FragmentPiece piece = col.GetComponent<FragmentPiece>();
+            // 2. 부모(자기 자신)는 건너뜁니다.
+            if (piece.transform == transform) continue;
 
-            if (piece != null)
+            // 3. 자식이 폭발 범위(range) 내에 있는지 확인합니다.
+            float distance = Vector3.Distance(piece.transform.position, explosionPos);
+            if (distance <= range)
             {
                 Debug.Log("조각 발견");
-
-
                 piece.OnThisPiece();
-                Rigidbody rb = col.GetComponent<Rigidbody>();
+
+                // 4. Rigidbody를 찾아 힘을 가합니다.
+                Rigidbody rb = piece.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    Vector3 direction = (col.transform.position - transform.position).normalized;
+                    Vector3 direction = (piece.transform.position - explosionPos).normalized;
+
+                    // 거리가 0이면 방향이 (0,0,0)이 되어 문제가 생길 수 있으므로 기본 방향을 줍니다.
+                    if (direction == Vector3.zero)
+                    {
+                        direction = Vector3.up; // 혹은 랜덤 방향
+                    }
+
                     rb.AddForce(direction * force, ForceMode.Impulse);
                 }
             }
