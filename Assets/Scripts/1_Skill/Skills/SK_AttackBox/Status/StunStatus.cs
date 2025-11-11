@@ -5,6 +5,11 @@ public class StunStatus : MonoBehaviour
 {
     private MonoBehaviour controller;
     private Coroutine stunRoutine;
+    private Animator anim;
+    private void Awake()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
 
     public void ApplyStun(float duration)
     {
@@ -21,6 +26,7 @@ public class StunStatus : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+        anim.SetBool("isShock", true);
     }
 
     private IEnumerator StunTimer(float duration)
@@ -30,6 +36,7 @@ public class StunStatus : MonoBehaviour
         {
             controller.enabled = true;
         }
+        anim.SetBool("isShock", false);
         Destroy(this);
     }
 }

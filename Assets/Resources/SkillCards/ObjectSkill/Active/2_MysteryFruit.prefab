@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657814523355016355}
-  - component: {fileID: -7408899166155909078}
+  - component: {fileID: 8206251480387968023}
   m_Layer: 0
-  m_Name: 3000_Melee
+  m_Name: 2_MysteryFruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 2211560603425008042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1279.9934, y: 719.99634, z: 0.00000044648826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7408899166155909078
+--- !u!114 &8206251480387968023
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,17 +41,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2211560603425008042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d525116466d3f5449ee6e16dbdd815c, type: 3}
+  m_Script: {fileID: 11500000, guid: b9c716fef51f7454199873326722de87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 3
-  objSkillEntity: {fileID: 7030629527735423589, guid: c41e6769c4c75854f9331459f4404bba,
-    type: 3}
-  skillIcon: {fileID: 21300000, guid: 3fb25a89099dd074eabdd1e1c81054dc, type: 3}
-  aimRange: 1
-  events: {fileID: 0}
-  meleeEffectPrefab: {fileID: 7243278475803563119, guid: 1a45ae6741eb29d4d99d4547ec940881,
-    type: 3}
-  shakeAmount: 0.24
-  attackAnimDuration: 1
+  coolTime: 8
+  objSkillEntity: {fileID: 0}
+  skillIcon: {fileID: 0}
+  aimRange: 0
+  minDelta: -20
+  maxDelta: 30

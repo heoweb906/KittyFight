@@ -57,6 +57,7 @@ public class P2PStateHandler : IP2PMessageHandler
             anim.SetBool("isRun", state.isRun);
             anim.SetBool("isHanging", state.isHanging);
             anim.SetFloat("speedY", state.speedY);
+            anim.SetBool("speedY", state.isShock);
         }
     }
 }
