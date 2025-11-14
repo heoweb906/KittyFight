@@ -64,17 +64,17 @@ public class GameManager : MonoBehaviour
     };
 
 
-    private void Start()
+    private void Start() 
     {
-        P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
-        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+        P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this); 
+        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort); 
 
-        IntScorePlayer_1 = 0;
-        IntScorePlayer_2 = 0;
+        IntScorePlayer_1 = 0; 
+        IntScorePlayer_2 = 0; 
 
-        IntMapGimicnumber = 0;
-        BoolAcitveMapGimic = false;
-    }
+        IntMapGimicnumber = 0; 
+        BoolAcitveMapGimic = false; 
+    } 
 
     private void Update()
     {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
             InitializeGame();
         }
 
-        ingameUIController?.TickGameTimer();
+        if(!gameEnded) ingameUIController?.TickGameTimer();
     }
 
     private void InitializeGame()
@@ -107,8 +107,8 @@ public class GameManager : MonoBehaviour
         player2 = (myNum == 1) ? opponentPlayer : myPlayer;
 
         // 입력 권한
-        myPlayer.GetComponent<PlayerInputRouter>()?.SetOwnership(true);
-        opponentPlayer.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+        myPlayer.GetComponent<PlayerInputRouter>()?.SetOwnership(false); 
+        opponentPlayer.GetComponent<PlayerInputRouter>()?.SetOwnership(false); 
 
         // 상대 물리 동기화: 원격 대상은 Kinematic
         var myRb = myPlayer.GetComponent<Rigidbody>();
@@ -159,10 +159,10 @@ public class GameManager : MonoBehaviour
         if (oppNicknameText) oppNicknameText.text = MatchResultStore.opponentNickname;
 
 
-        ingameUIController.ChangeReadyStartSprite(0);
+        ingameUIController.CloseFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0f);
+        ingameUIController.ChangeReadyStartSprite(0); 
 
-
-        StartCoroutine(DelayedInitialize());
+        StartCoroutine(DelayedInitialize()); 
 
         // 상태 동기화 시작
         updateManager?.Initialize(myPlayer, opponentPlayer, myNum);
@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DelayedInitialize()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2.2f);
         ResetGame();
     }
 
@@ -306,29 +306,52 @@ public class GameManager : MonoBehaviour
 
     public void ApplyBackground(int mapIndex, int backgroundIndex, int iMapGimicNum)
     {
+        StartCoroutine(ApplyBackground_(mapIndex, backgroundIndex, iMapGimicNum));
+    }
 
-        ingameUIController.ChangeReadyStartSprite(1);
-        ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform);
 
+    public IEnumerator ApplyBackground_(int mapIndex, int backgroundIndex, int iMapGimicNum)
+    {
+
+        if (IntScorePlayer_1 == 0 && IntScorePlayer_2 == 0) // 최초 실행이라면 
+        {
+            ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);
+        }
+
+        // 화면이 보이지 않을 때 처리해야 하는 것들
         mapManager.ChangeMap(mapIndex);
         mapManager.ChangeBackground(backgroundIndex);
 
         var sp1 = mapManager.GetSpawnPoint(1);
         var sp2 = mapManager.GetSpawnPoint(2);
+
         if (player1 && sp1) player1.transform.position = sp1.position;
         if (player2 && sp2) player2.transform.position = sp2.position;
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
         player2.GetComponent<PlayerHealth>()?.ResetHealth();
-        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
-        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
+
+        ingameUIController?.StartGameTimer(61f);
+
+
+
+
+        yield return new WaitForSeconds(1.5f); 
+
+        ingameUIController.ChangeReadyStartSprite(1); 
+        ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
+        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1); 
+        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2); 
 
         gameEnded = false;
 
         var myRb = myPlayer.GetComponent<Rigidbody>();
         if (myRb != null) myRb.isKinematic = false;
 
-        ingameUIController?.StartGameTimer(60f);
-
-        myAbility.events?.EmitRoundStart(0);
+        myAbility.events?.EmitRoundStart(0); 
     }
+
+
+
+
+
 }

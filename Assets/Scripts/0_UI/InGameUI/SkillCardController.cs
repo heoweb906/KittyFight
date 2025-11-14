@@ -573,7 +573,13 @@ public class SkillCardController : MonoBehaviour
                             IsAnimating = false;
                             DOVirtual.DelayedCall(0.9f, () =>
                             {
-                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                InGameUiController.gameManager.ResetGame();
+
+                                DOVirtual.DelayedCall(1.0f, () =>
+                                {
+                                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                });
+
                             });
                         });
                     });
@@ -586,7 +592,13 @@ public class SkillCardController : MonoBehaviour
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
             {
-                InGameUiController.scoreBoardUIController.OpenScorePanel();
+
+                InGameUiController.gameManager.ResetGame();
+
+                DOVirtual.DelayedCall(1.0f, () =>
+                {
+                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                });
             });
         }
     }
@@ -712,7 +724,12 @@ public class SkillCardController : MonoBehaviour
                                                     IsAnimating = false;
                                                     DOVirtual.DelayedCall(0.9f, () =>
                                                     {
-                                                        InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                                        InGameUiController.gameManager.ResetGame();
+
+                                                        DOVirtual.DelayedCall(1.0f, () =>
+                                                        {
+                                                            InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                                        });
                                                     });
                                                 });
                                             });
@@ -746,7 +763,12 @@ public class SkillCardController : MonoBehaviour
                                     IsAnimating = false;
                                     DOVirtual.DelayedCall(0.9f, () =>
                                     {
-                                        InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                        InGameUiController.gameManager.ResetGame();
+
+                                        DOVirtual.DelayedCall(1.0f, () =>
+                                        {
+                                            InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                        });
                                     });
                                 });
                             });
@@ -761,7 +783,12 @@ public class SkillCardController : MonoBehaviour
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
             {
-                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                InGameUiController.gameManager.ResetGame();
+
+                DOVirtual.DelayedCall(1.0f, () =>
+                {
+                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                });
             });
         }
     }

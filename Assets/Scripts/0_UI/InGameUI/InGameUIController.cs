@@ -85,30 +85,6 @@ public class InGameUIController : MonoBehaviour
     }
 
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            mapBoardController.OpenMapBoardPanelVertical();
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ChangeReadyStartSprite(0);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            ChangeReadyStartSprite(1);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            PlayStartPriteAnimation(image_ReadyStart.rectTransform);
-        }
-
-    }
-
     public void ShowBlindOverlay(float duration)
     {
         if (blindOverlay == null) return;
@@ -166,7 +142,7 @@ public class InGameUIController : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
 
-        gameManager.ResetGame();
+        ChangeReadyStartSprite(0);
 
 
         int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
@@ -178,6 +154,8 @@ public class InGameUIController : MonoBehaviour
             yield break; 
         }
 
+        gameManager.ResetGame();
+     
         yield return new WaitForSeconds(1f); 
  
         scoreBoardUIController.OpenScorePanel(); 
@@ -239,6 +217,7 @@ public class InGameUIController : MonoBehaviour
 
         image_ReadyStart.sprite = sprites_ReadyStart[iIdx];
     }
+
 
 
     public void PlayStartPriteAnimation(RectTransform targetRect)
