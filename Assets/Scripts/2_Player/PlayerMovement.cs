@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private PlayerAbility ability;
     private Animator anim;
+    private PlayerJump jumpScript;
 
     [Header("Visual")]
     public Transform visualPivot;
@@ -14,11 +15,19 @@ public class PlayerMovement : MonoBehaviour
     [Header("Parenting Platform")]
     public Transform playersRoot;
 
+    [Header("Slope Move")]
+    [SerializeField] private float groundRayDistance = 0.6f;   // 발밑 Raycast 거리
+    [SerializeField] private float groundRayOffsetY = 0.1f;
+
+    [Header("Ground Move")]
+    [SerializeField] private float groundStickForce = 5f;  // 경사에서 살짝 아래로 눌러주는 힘
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         ability = GetComponent<PlayerAbility>();
         anim = GetComponentInChildren<Animator>();
+        jumpScript = GetComponent<PlayerJump>();
     }
 
     public void AttachToPlatform(Transform platform)
@@ -49,8 +58,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Vector3 moveDirection = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0);
-            rb.velocity = moveDirection;
+            HandleDynamicMove(input);
         }
 
         anim.SetBool("isRun", input.x != 0f);
@@ -65,5 +73,38 @@ public class PlayerMovement : MonoBehaviour
                 visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
             }
         }
+    }
+    private void HandleDynamicMove(Vector2 input)
+    {
+        bool grounded = (jumpScript != null && jumpScript.IsGrounded);
+        bool inJumpLock = (jumpScript != null && jumpScript.IsInJumpLock);
+
+        if (grounded && !inJumpLock)
+        {
+            rb.useGravity = false;
+
+            float moveX = input.x * ability.moveSpeed;
+            float moveY = 0f;
+
+            if (Mathf.Abs(input.x) > 0.001f)
+            {
+                moveY = -groundStickForce;
+            }
+
+            rb.velocity = new Vector3(moveX, moveY, 0f);
+        }
+        else
+        {
+            // 공중, 점프 락 중
+            ApplyAirMove(input);
+        }
+    }
+
+    private void ApplyAirMove(Vector2 input)
+    {
+        rb.useGravity = true;
+
+        Vector3 moveVelocity = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0f);
+        rb.velocity = moveVelocity;
     }
 }

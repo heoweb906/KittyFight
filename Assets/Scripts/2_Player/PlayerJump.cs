@@ -26,6 +26,12 @@ public class PlayerJump : MonoBehaviour
     public bool IsWalking { get; private set; }
     public bool IsWalking2 = false;
 
+    [Header("Jump Lock")]
+    [SerializeField] private float postJumpGroundIgnoreTime = 0.08f; // 0.06~0.12 정도에서 조절
+    private float jumpLockTimer = 0f;
+    public bool IsInJumpLock => jumpLockTimer > 0f;
+    public bool IsGrounded => isGrounded;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,6 +42,9 @@ public class PlayerJump : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (jumpLockTimer > 0f)
+            jumpLockTimer -= Time.fixedDeltaTime;
+
         anim.SetBool("isGround", isGrounded);
         anim.SetBool("isHanging", isTouchingWall);
         anim.SetFloat("speedY", rb.velocity.y);
@@ -69,6 +78,11 @@ public class PlayerJump : MonoBehaviour
             Vector3 velocity = rb.velocity;
             velocity.y = ability.jumpForce;
             rb.velocity = velocity;
+
+            isGrounded = false;
+            rb.useGravity = true;
+
+            jumpLockTimer = postJumpGroundIgnoreTime;
 
             // PS_KickStart
             ability.events?.EmitJump();
