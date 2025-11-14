@@ -24,10 +24,10 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ShakeCameraPunch();
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    ShakeCameraPunch();
+        //}
     }
 
 

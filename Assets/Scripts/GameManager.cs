@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using DG.Tweening.Core.Easing;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         new Color(0.75f, 1f, 0.75f),
         new Color(1f, 1f, 0.6f),
     };
+
 
     private void Start()
     {
@@ -155,6 +157,10 @@ public class GameManager : MonoBehaviour
         var oppNicknameText = opponentPlayer ? opponentPlayer.GetComponentInChildren<TextMeshProUGUI>() : null;
         if (myNicknameText) myNicknameText.text = MatchResultStore.myNickname;
         if (oppNicknameText) oppNicknameText.text = MatchResultStore.opponentNickname;
+
+
+        ingameUIController.ChangeReadyStartSprite(0);
+
 
         StartCoroutine(DelayedInitialize());
 
@@ -265,6 +271,8 @@ public class GameManager : MonoBehaviour
 
         return ph.CurrentHP;
     }
+
+
     public void ResetGame()
     {
         Debug.Log("Resetting Game");
@@ -298,6 +306,10 @@ public class GameManager : MonoBehaviour
 
     public void ApplyBackground(int mapIndex, int backgroundIndex, int iMapGimicNum)
     {
+
+        ingameUIController.ChangeReadyStartSprite(1);
+        ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform);
+
         mapManager.ChangeMap(mapIndex);
         mapManager.ChangeBackground(backgroundIndex);
 

@@ -21,6 +21,13 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI5_Player1;    // Player1 - Skill2
     public SkillEffectAnimation effectPlayer1;
 
+
+    public Image image_UpperArea;
+    public Image image_LowerArea;
+    public Image image_ReadyStart;
+    public Sprite[] sprites_ReadyStart;
+
+
     [Header("Player2 UI")]
     public PlayerHealthHexUI hpUI_Player2;
     public SkillCooldownHexUI skillUI_Player2;     // Player2 - Melee
@@ -81,12 +88,26 @@ public class InGameUIController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             mapBoardController.OpenMapBoardPanelVertical();
         }
-    }
 
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ChangeReadyStartSprite(0);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            ChangeReadyStartSprite(1);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            PlayStartPriteAnimation(image_ReadyStart.rectTransform);
+        }
+
+    }
 
     public void ShowBlindOverlay(float duration)
     {
@@ -140,6 +161,7 @@ public class InGameUIController : MonoBehaviour
         StartCoroutine(OpenScorePanelAfterDelay(winnerPlayerNum));
     }
 
+
     private IEnumerator OpenScorePanelAfterDelay(int winnerPlayerNum)
     {
         yield return new WaitForSeconds(1.2f);
@@ -156,10 +178,9 @@ public class InGameUIController : MonoBehaviour
             yield break; 
         }
 
-
-        yield return new WaitForSeconds(1f);
-
-        scoreBoardUIController.OpenScorePanel();
+        yield return new WaitForSeconds(1f); 
+ 
+        scoreBoardUIController.OpenScorePanel(); 
     }
 
 
@@ -206,6 +227,69 @@ public class InGameUIController : MonoBehaviour
                    });
     }
 
+
+
+    public void ChangeReadyStartSprite(int iIdx)
+    {
+        // 0 = Ready;
+        // 1 = Start;
+
+        GameObject targetGO = image_ReadyStart.gameObject;
+        targetGO.SetActive(true);
+
+        image_ReadyStart.sprite = sprites_ReadyStart[iIdx];
+    }
+
+
+    public void PlayStartPriteAnimation(RectTransform targetRect)
+    {
+        if (targetRect == null) return;
+
+        // 현재 크기를 저장 (원래 크기 역할)
+        Vector3 originalScale = targetRect.localScale;
+
+        // 이전에 실행 중이던 DOTween 애니메이션 중지
+        targetRect.DOKill();
+
+        // 트윈 동작을 순서대로 연결하여 애니메이션 흐름을 만듭니다.
+        DOTween.Sequence()
+            .Append(targetRect.DOScale(originalScale * 0.9f, 0.04f)) // 첫 번째 동작: 축소
+            .Append(targetRect.DOScale(originalScale * 1.2f, 0.2f))  // 두 번째 동작: 확대
+            .Append(targetRect.DOScale(0f, 0.15f))        // 세 번째 동작: 크기 0으로 사라짐
+            .OnComplete(() => {
+
+                targetRect.gameObject.SetActive(false);
+                targetRect.localScale = originalScale;
+            });
+    }
+
+
+    public void CloseFadePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
+    {
+        topImage.gameObject.SetActive(true);
+        bottomImage.gameObject.SetActive(true);
+        float topImageHeight = topImage.rect.height;
+        float bottomImageHeight = bottomImage.rect.height;
+        float topClosedPosY = (topImageHeight / 2f);
+        float bottomClosedPosY = -(bottomImageHeight / 2f);
+        topImage.DOAnchorPosY(topClosedPosY, fDuration).SetEase(Ease.OutQuart);
+        bottomImage.DOAnchorPosY(bottomClosedPosY, fDuration).SetEase(Ease.OutQuart);
+    }
+
+    public void OpenFadePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
+    {
+        RectTransform canvasRect = canvasMain.GetComponent<RectTransform>();
+        float canvasHeight = canvasRect.rect.height;
+        float imageHeight = topImage.rect.height;
+        float topTargetY = (canvasHeight / 2f) + (imageHeight / 2f);
+        float bottomTargetY = -(canvasHeight / 2f) - (imageHeight / 2f);
+        topImage.DOAnchorPosY(topTargetY, fDuration).SetEase(Ease.InQuint)
+            .OnComplete(() => {
+                topImage.gameObject.SetActive(false);
+                bottomImage.gameObject.SetActive(false);
+            });
+        bottomImage.DOAnchorPosY(bottomTargetY, fDuration).SetEase(Ease.InQuint);
+    }
 
 
 }

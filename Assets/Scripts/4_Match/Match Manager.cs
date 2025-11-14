@@ -7,9 +7,12 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class MatchManager : MonoBehaviour
 {
+    public MainMenuController mainMenuController;
+
     public TMP_InputField nicknameInput;
     public TMP_Text logText;
 
@@ -22,16 +25,27 @@ public class MatchManager : MonoBehaviour
     private int localPort;
 
     private string ticketId;
-    private bool isMatching = false;
+    private bool isMatching = false;    // 매칭 중임....
     private float matchStartTime = 0f;
+
+    public bool BoolMatchSucces { get; set; }    // 매칭 성공
+
+
+    private void Awake()
+    {
+        BoolMatchSucces = false;
+    }
+
 
     public async void OnMatchButtonClicked()
     {
         if (isMatching) return;
+
+        matchStartTime = 0;
         isMatching = true;
+
         // 1. 플레이어 ID 생성
         myPlayerId = Guid.NewGuid().ToString();
-        //MyNickname = "Kitty";
 
         // 2. 로컬 포트 확보
         myPort = GetAvailablePort();
@@ -45,6 +59,7 @@ public class MatchManager : MonoBehaviour
         if (stunResult?.PublicEndPoint == null)
         {
             //AppendLog("STUN 요청 실패 - 공인 IP/Port 조회 실패");
+            isMatching = false; // 실패 시 플래그 정리
             return;
         }
 
@@ -55,12 +70,13 @@ public class MatchManager : MonoBehaviour
         await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, MyNickname);
 
         // 5. GameLift 매칭 시작
-        AppendLog("Match Search Start!");
+        // AppendLog("Match Search Start!");
         ticketId = await GameLiftStartMatch.StartMatchmaking(myPlayerId);
 
         if (ticketId == null)
         {
             //AppendLog("매칭 티켓 생성 실패");
+            isMatching = false; // 실패 시 플래그 정리
             return;
         }
 
@@ -74,19 +90,39 @@ public class MatchManager : MonoBehaviour
         if (!matchCompleted)
         {
             //AppendLog("매칭 실패 또는 완료되지 않음");
+            isMatching = false; // 실패 시 플래그 정리
             return;
         }
 
         AppendLog("Match Completed");
+
+        // 매칭 성공 응답 후, 취소 요청이 있었는지 확인 (경쟁 조건 방지)
+        if (!isMatching)
+        {
+            // 취소 버튼을 눌러 isMatching이 false가 되었다면 여기서 종료
+            return;
+        }
+
+        // BoolMatchSucces 플래그를 여기서 설정하여 코루틴을 즉시 종료시킵니다.
+        BoolMatchSucces = true;
+
+        // 1초 지연 (UX 개선) 및 UI 효과 실행
+        await Task.Delay(1000);
+
+        // BoolMatchSucces = true; // 제거됨 (바로 위에서 설정)
+        mainMenuController.MatchSuccessfEffect();
+
 
         // 7. 상대방 정보 조회
         var opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
         while (opponent == null || string.IsNullOrEmpty(opponent.ip))
         {
             //AppendLog("상대 정보 조회 실패");
+            // 취소 요청이 있었는지 재확인
+            if (!isMatching) return;
+
             opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
             await Task.Delay(500);
-            //return;
         }
 
         // 8. P2P 연결 및 채팅 초기화
@@ -102,10 +138,12 @@ public class MatchManager : MonoBehaviour
         MatchResultStore.myPort = myPort;
         MatchResultStore.udpClient = udp;
 
-        AppendLog("Game Start!!");
+        // AppendLog("Game Start!!"); // (선택 사항: 디버그 콘솔에만 기록됨)
+
         isMatching = false;
         SceneManager.LoadScene("example");
     }
+
 
     private int GetAvailablePort()
     {
@@ -115,6 +153,7 @@ public class MatchManager : MonoBehaviour
         listener.Stop();
         return port;
     }
+
 
     private string GetLocalIPAddress()
     {
@@ -129,6 +168,7 @@ public class MatchManager : MonoBehaviour
         throw new Exception("No network adapters with an IPv4 address in the system!");
     }
 
+
     private void AppendLog(string msg)
     {
         Debug.Log(msg);
@@ -136,35 +176,42 @@ public class MatchManager : MonoBehaviour
         //    logText.text += msg + "\n";
         logText.text = msg;
     }
+
+
     private IEnumerator UpdateMatchElapsedTime()
     {
         while (isMatching)
         {
+            // BoolMatchSucces를 먼저 확인하여 로그 출력을 방지합니다.
+            if (BoolMatchSucces) yield break;
+
             float elapsed = Time.time - matchStartTime;
-            AppendLog($"Match Searching... {Mathf.FloorToInt(elapsed)}s...");
+            AppendLog($"Match Searching \n{Mathf.FloorToInt(elapsed)}s");
+
             yield return new WaitForSeconds(1f);
         }
     }
+
 
     public async void OnCancelMatchButtonClicked()
     {
         if (!isMatching || string.IsNullOrEmpty(ticketId))
         {
-            AppendLog("Currently not matching");
+            // AppendLog("Currently not matching");
             return;
         }
 
-        AppendLog("try to cancel matching...");
+        // AppendLog("try to cancel matching...");
         bool success = await GameLiftCancelMatch.CancelMatchmaking(ticketId);
 
         if (success)
         {
-            AppendLog("Match Canceled.");
+            AppendLog("Match Canceled");
             isMatching = false;
         }
         else
         {
-            AppendLog("Matching cancellation failed");
+            // AppendLog("Matching cancellation failed");
         }
     }
 }

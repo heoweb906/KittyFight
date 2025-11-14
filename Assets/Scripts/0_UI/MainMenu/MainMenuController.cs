@@ -26,6 +26,8 @@ public class MainMenuController : MonoBehaviour
     public GameObject text_WarningInfo;
     private bool isButtonCooldown = false;
 
+    public RectTransform nicknameConfirmButtonRect;
+
 
     [Header("Panel_MatchingLoading 관련")]
     public Image iamge_UpperAreaMatching;
@@ -33,6 +35,14 @@ public class MainMenuController : MonoBehaviour
     public MatchStartCollision matchStartCollision_1;           // 나중에 지정 매칭으로
     public MatchStartCollision matchStartCollision_2;
     public MatchStartCollision matchStartCollision_3; // 테스트용
+
+    public RectTransform stopMatchingButtonRect;
+    public GameObject[] successEffectObjs;
+    public Button buttonCancel;
+
+
+    public Image image_LoadingSpiner;
+    private Tween currentSpinTween;
 
 
     [Header("SceneChnageAssist 관련")]
@@ -65,10 +75,14 @@ public class MainMenuController : MonoBehaviour
         if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this;
         if(matchStartCollision_3 != null) matchStartCollision_3.mainMenuController = this;
 
+
+        OnSpinImage(image_LoadingSpiner, 0f);
+        OffSpinImage(image_LoadingSpiner, fSpeedLap: 0f);
     }
 
 
-  
+
+
 
 
     // #. 부드러운 패널 교체
@@ -160,12 +174,33 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNickNameInputPanel()
     {
-        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.15f);
+        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.3f);
     }
-    public void OffNickNameInputPanel(int iPanelNum)
+
+
+    public void OnClickNicknameConfirmButton()
     {
-        // 버튼 쿨다운 체크
         if (isButtonCooldown) return;
+        StartCoroutine(ButtonCooldown());
+
+        if (nicknameConfirmButtonRect == null)
+        {
+            Debug.LogError("닉네임 확인 버튼의 RectTransform이 연결되지 않았습니다.");
+            ExecuteOffNickNameInputPanelLogic();
+            return;
+        }
+
+        // 버튼 애니메이션 실행 후, 완료되면 ExecuteOffNickNameInputPanelLogic() 실행
+        PlaySimpleAnimation(nicknameConfirmButtonRect, () =>
+        {
+            ExecuteOffNickNameInputPanelLogic();
+        });
+    }
+
+
+    private void ExecuteOffNickNameInputPanelLogic()
+    {
+        // 이전 'if (isButtonCooldown) return;' 코드는 OnClickNicknameConfirmButton()으로 이동했습니다.
 
         string nickname = nicknameInput.text.Trim();
 
@@ -193,25 +228,19 @@ public class MainMenuController : MonoBehaviour
 
         if (hasInvalidChar)
         {
-            // 버튼 쿨다운 시작
+            // 유효성 검사 실패 시: 버튼 쿨다운 재시작(추가 방지), 경고 애니메이션
             StartCoroutine(ButtonCooldown());
 
-            // 인풋 필드 비우기
             nicknameInput.text = "";
-
-            // 인풋 필드 흔들기
             nicknameInput.transform.DOShakePosition(0.5f, strength: 10f, vibrato: 20, randomness: 90f);
-
-            // 경고문 활성화
             text_WarningInfo.SetActive(true);
             DOVirtual.DelayedCall(3f, () => {
                 text_WarningInfo.SetActive(false);
             });
-
             return;
         }
 
-        // 정상 처리
+        // 정상 처리: 닉네임 설정 및 패널 닫기
         matchManager.MyNickname = nickname;
         SetNickName(matchManager.MyNickname);
         scriptPlayerCharacter.bCanControl = true;
@@ -236,6 +265,7 @@ public class MainMenuController : MonoBehaviour
         topImage.DOAnchorPosY(topClosedPosY, fDuration).SetEase(Ease.OutQuart);
         bottomImage.DOAnchorPosY(bottomClosedPosY, fDuration).SetEase(Ease.OutQuart);
     }
+
     public void OpenInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
     {
         RectTransform canvasRect = mainCanVas.GetComponent<RectTransform>();
@@ -263,24 +293,77 @@ public class MainMenuController : MonoBehaviour
 
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
 
-        CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.15f);
-        panels[1].SetActive(false); // Player UI
-        DOVirtual.DelayedCall(0.2f, () => {
+        // 1. 매칭 UI 닫기 애니메이션 시작 (0.3초)
+        matchManager.logText.text = "";
+        CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.3f);
+
+        panels[1].SetActive(false); // Player UI 비활성화
+
+        // 2. 패널 닫힘 시간(0.3초) + 추가 지연 시간(0.1초) = 총 0.4초 후 실행
+        DOVirtual.DelayedCall(0.8f, () =>
+        { 
+            OnSpinImage(image_LoadingSpiner);
+
+            // 3. 매칭 로직 시작 (기존 로직)
             matchManager.OnMatchButtonClicked();
             SetNickName(matchManager.MyNickname);
         });
     }
-    public void StopMatching()
+
+
+
+
+    public void OnClickStopMatchingButton()
     {
+
+        if (isButtonCooldown) return;
+        StartCoroutine(ButtonCooldown());
+   
+
+        if (stopMatchingButtonRect == null)
+        {
+            Debug.LogError("매칭 취소 버튼의 RectTransform이 연결되지 않았습니다.");
+            ExecuteStopMatchingLogic();
+            return;
+        }
+
+        // 버튼 애니메이션 실행 후, 완료되면 실제 로직 함수를 실행하도록 콜백 전달
+        PlaySimpleAnimation(stopMatchingButtonRect, () =>
+        {
+            ExecuteStopMatchingLogic();
+        });
+    }
+
+
+    private void ExecuteStopMatchingLogic()
+    {
+        // 1. 매칭 취소 신호 및 플레이어 리셋 (애니메이션 전에 수행)
         matchManager.OnCancelMatchButtonClicked();
         scriptPlayerCharacter.transform.position = transformCenter.position;
 
+        // Rigidbody를 Kinematic에서 해제하여 물리 동작을 복원
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = false;
 
-        OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.15f);
-        panels[1].SetActive(true); // Player UI
-        DOVirtual.DelayedCall(0.2f, () => {
-            scriptPlayerCharacter.bCanControl = true;
+        OffSpinImage(image_LoadingSpiner, () =>
+        {
+
+            float delayBeforePanelOpen = 0.5f;
+
+            DOVirtual.DelayedCall(delayBeforePanelOpen, () =>
+            {
+
+                // 2. 매칭 로딩 UI 닫기 애니메이션 시작 (패널 열림 - 0.3s)
+                OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.3f);
+
+                // 3. Player UI 활성화
+                panels[1].SetActive(true);
+
+                // 4. UI 닫힘 애니메이션이 끝날 즈음에 캐릭터 조작을 허용
+                //    (0.3초 + 0.2초 지연 후)
+                DOVirtual.DelayedCall(0.2f, () => {
+                    scriptPlayerCharacter.bCanControl = true;
+                });
+            });
         });
     }
 
@@ -317,5 +400,156 @@ public class MainMenuController : MonoBehaviour
     }
 
 
+    public void PlaySimpleAnimation(RectTransform targetRect, System.Action onCompleteCallback = null)
+    {
+        if (targetRect == null) return;
 
+        // 현재 크기를 저장 (원래 크기 역할)
+        Vector3 originalScale = targetRect.localScale;
+
+        // 이전에 실행 중이던 DOTween 애니메이션 중지 (클릭 시마다 새로운 애니메이션이 덮어쓰도록)
+        targetRect.DOKill();
+
+        // 시퀀스 생성 및 애니메이션 정의
+        Sequence seq = DOTween.Sequence();
+
+        seq
+            .Append(targetRect.DOScale(originalScale * 0.9f, 0.04f)) // 1. 축소
+            .Append(targetRect.DOScale(originalScale * 1.2f, 0.1f))  // 2. 확대
+            .Append(targetRect.DOScale(originalScale, 0.1f))        // 3. 복귀
+            .OnComplete(() => {
+                // 혹시 모를 오차 방지를 위해 원래 크기로 강제 설정
+                targetRect.localScale = originalScale;
+
+                // 전달받은 콜백 함수 실행
+                onCompleteCallback?.Invoke();
+            });
+    }
+
+
+
+    public void MatchSuccessfEffect()
+    {
+        buttonCancel.interactable = false; 
+        OffSpinImage(image_LoadingSpiner); 
+        for (int i = 0; i < successEffectObjs.Length; ++i) OffSpinGameObject(successEffectObjs[i]); 
+    }
+
+
+    private void OnSpinImage(Image targetImage, float fSpeedLap = 1f)
+    {
+        if (targetImage == null) return;
+
+        RectTransform targetRect = targetImage.rectTransform;
+        Vector2 targetSize = new Vector2(100f, 100f);
+
+        // 이전 애니메이션 중지 및 초기 상태 설정
+        targetRect.DOKill();
+
+        currentSpinTween?.Kill();
+
+        targetRect.sizeDelta = Vector2.zero;
+        targetImage.gameObject.SetActive(true);
+
+        currentSpinTween = targetRect.DORotate(new Vector3(0, 0, 360), 4f, RotateMode.FastBeyond360)
+                                     .SetEase(Ease.Linear)
+                                     .SetLoops(-1, LoopType.Incremental);
+
+        DOTween.Sequence()
+            // 1단계: 목표 크기의 1.2배까지 빠르게 확장
+            .Append(targetRect.DOSizeDelta(targetSize * 1.2f, 0.2f * fSpeedLap).SetEase(Ease.OutQuad))
+
+            // 2단계: 최종 목표 크기(300x300)로 되돌아와 정착
+            .Append(targetRect.DOSizeDelta(targetSize, 0.1f * fSpeedLap).SetEase(Ease.InQuad))
+
+            .OnComplete(() =>
+            {
+                // 애니메이션 완료 후 크기 오차 방지
+                targetRect.sizeDelta = targetSize;
+            });
+    }
+
+    private void OffSpinImage(Image targetImage, System.Action onCompleteCallback = null, float fSpeedLap = 1f)
+    {
+        if (targetImage == null) return;
+
+        RectTransform targetRect = targetImage.rectTransform;
+        Vector2 currentSize = targetRect.sizeDelta;
+
+        targetRect.DOKill();
+        currentSpinTween?.Kill();
+
+        // fSpeedLap을 사용하여 애니메이션 시간을 0으로 설정
+        float duration1 = 0.1f * fSpeedLap;
+        float duration2 = 0.2f * fSpeedLap;
+
+        // duration이 0이면 즉시 완료
+        DOTween.Sequence()
+            .Append(targetRect.DOSizeDelta(currentSize * 1.2f, duration1).SetEase(Ease.OutQuad))
+            .Append(targetRect.DOSizeDelta(Vector2.zero, duration2).SetEase(Ease.InQuad))
+
+            .OnComplete(() =>
+            {
+                // 애니메이션 완료 후 최종 정리
+                targetRect.DOKill();
+                currentSpinTween?.Kill();
+
+                targetImage.gameObject.SetActive(false);
+                targetRect.sizeDelta = Vector2.zero;
+                targetRect.localRotation = Quaternion.identity;
+
+                onCompleteCallback?.Invoke();
+            });
+    }
+
+    private void OffSpinGameObject(GameObject targetObject, System.Action onCompleteCallback = null)
+    {
+        if (targetObject == null) return;
+
+        RectTransform targetRect = targetObject.GetComponent<RectTransform>();
+        if (targetRect == null)
+        {
+            Debug.LogError("대상 GameObject에 RectTransform 컴포넌트가 없습니다.");
+            targetObject.SetActive(false);
+            onCompleteCallback?.Invoke();
+            return;
+        }
+
+        // 현재 실행 중인 DOTween 애니메이션 중지 (스피너 Tween은 이 함수에서 Kill하지 않음 - 필요한 경우 외부에서 처리)
+        targetRect.DOKill();
+
+        Vector3 currentScale = targetRect.localScale;
+
+        DOTween.Sequence()
+            // 1. 살짝 확대 (OffSpinImage와 유사한 효과)
+            .Append(targetRect.DOScale(currentScale * 1.2f, 0.1f).SetEase(Ease.OutQuad))
+
+            // 2. 0으로 축소
+            .Append(targetRect.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InQuad))
+
+            .OnComplete(() =>
+            {
+                // 애니메이션 완료 후 최종 정리
+                targetRect.DOKill();
+                targetObject.SetActive(false);
+
+                // 스케일을 원래대로 복원 (다음에 다시 켜질 때를 대비)
+                targetRect.localScale = currentScale;
+
+                // 콜백 실행
+                onCompleteCallback?.Invoke();
+            });
+    }
+
+
+    public void SetCancelButtonVisibilityAndInteractable(bool isVisible, bool isInteractable)
+    {
+        if (buttonCancel == null) return;
+
+        // 버튼의 GameObject 활성화/비활성화 (눈에 보이게/안 보이게)
+        buttonCancel.gameObject.SetActive(isVisible);
+
+        // 버튼의 상호작용 가능 여부 설정
+        buttonCancel.interactable = isInteractable;
+    }
 }
