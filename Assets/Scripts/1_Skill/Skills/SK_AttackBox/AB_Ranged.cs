@@ -62,7 +62,7 @@ public class AB_Ranged : AB_HitboxBase
         if (particle_Destroy != null)
         {
             GameObject effect = Instantiate(particle_Destroy, transform.position, transform.rotation);
-            effect.transform.localScale = Vector3.one * 2f;
+            effect.transform.localScale = Vector3.one * 2.5f;
             effect.transform.SetParent(null);
         }
 

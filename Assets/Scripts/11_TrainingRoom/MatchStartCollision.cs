@@ -11,9 +11,10 @@ public class MatchStartCollision : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             mainMenuController.StartMatching();
-            mainMenuController.ResetPlayerPosition(other.gameObject);
+            // mainMenuController.ResetPlayerPosition(other.gameObject);
         }
     }
 
+    
 
 }

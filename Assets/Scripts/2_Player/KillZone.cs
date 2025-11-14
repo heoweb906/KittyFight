@@ -35,7 +35,9 @@ public class KillZone : MonoBehaviour
 
             Quaternion rot = Quaternion.Euler(euler);
 
-            Instantiate(explodeEffectPrefab, other.transform.position, rot);
+            GameObject effectInstance = Instantiate(explodeEffectPrefab, other.transform.position, rot);
+
+            effectInstance.transform.localScale *= 2f;
         }
 
         //  내 플레이어만 처리

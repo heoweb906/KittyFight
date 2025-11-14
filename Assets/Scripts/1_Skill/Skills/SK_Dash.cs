@@ -22,8 +22,6 @@ public class SK_Dash : Skill
 
     private void Awake()
     {
-        coolTime = 1.0f;
-        aimRange = 3.5f;
         if (playerAbility != null)
             rb = playerAbility.GetComponent<Rigidbody>();
         if (!rb) rb = GetComponentInParent<Rigidbody>();

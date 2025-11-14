@@ -16,8 +16,6 @@ public class SK_MeleeAttack : Skill
 
     private void Awake()
     {
-        coolTime = 3.0f;
-        aimRange = 1.0f;
         if (!events && playerAbility) events = playerAbility.events;
         anim = playerAbility.GetComponentInChildren<Animator>();
     }

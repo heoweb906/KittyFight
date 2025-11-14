@@ -8,12 +8,6 @@ public class SK_RangedAttack : Skill
     [Header("카메라")]
     public float shakeAmount = 0.06f;
 
-    private void Awake()
-    {
-        coolTime = 3.0f;
-        aimRange = 1.0f;
-    }
-
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         Vector3 spawnPos = origin;
@@ -64,7 +58,9 @@ public class SK_RangedAttack : Skill
             Material newMat = new Material(r.sharedMaterial);
 
             // 아웃라인 색상 설정
-            Color outlineColor = (playerAbility.playerNumber == 1) ? Color.red : Color.blue;
+            Color outlineColor = Color.red;
+            if(playerAbility.playerNumber == 2) outlineColor = Color.blue;
+
             newMat.SetColor("_OutlineColorVertex", outlineColor);
 
             // 새 머테리얼 적용
