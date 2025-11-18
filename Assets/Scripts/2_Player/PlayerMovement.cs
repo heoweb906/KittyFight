@@ -15,12 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Parenting Platform")]
     public Transform playersRoot;
 
-    [Header("Slope Move")]
-    [SerializeField] private float groundRayDistance = 0.6f;   // 발밑 Raycast 거리
-    [SerializeField] private float groundRayOffsetY = 0.1f;
+    [Header("Slope Handling")]
+    public float maxSlopeAngle;
+    private RaycastHit slopeHit;
 
-    [Header("Ground Move")]
-    [SerializeField] private float groundStickForce = 5f;  // 경사에서 살짝 아래로 눌러주는 힘
+    [SerializeField] private Transform groundCheck;
+
+    Vector3 moveDirection;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         ability = GetComponent<PlayerAbility>();
         anim = GetComponentInChildren<Animator>();
         jumpScript = GetComponent<PlayerJump>();
+
     }
 
     public void AttachToPlatform(Transform platform)
@@ -51,15 +53,32 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 input)
     {
+        bool grounded = (jumpScript != null && jumpScript.IsGrounded);
+        bool isJump = (jumpScript != null && jumpScript.IsJump);
+
+        moveDirection = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0);
+        bool onSlope = OnSlope() && grounded;
+
         if (rb.isKinematic)
         {
             float moveX = input.x * ability.moveSpeed * Time.deltaTime;
             transform.Translate(moveX, 0, 0, Space.World);
         }
+        else if (OnSlope() && !isJump) {
+            {
+                if (rb.velocity.y > 0)
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                moveDirection.y = 0f;
+                Vector3 slopeDir = GetSlopeMoveDirection();
+                rb.velocity = slopeDir * ability.moveSpeed;
+            }
+        }
         else
         {
-            HandleDynamicMove(input);
+            rb.velocity = moveDirection;
         }
+
+        rb.useGravity = !onSlope;
 
         anim.SetBool("isRun", input.x != 0f);
         if (input.x != 0)
@@ -74,37 +93,23 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    private void HandleDynamicMove(Vector2 input)
+
+    private bool OnSlope()
     {
-        bool grounded = (jumpScript != null && jumpScript.IsGrounded);
-        bool inJumpLock = (jumpScript != null && jumpScript.IsInJumpLock);
-
-        if (grounded && !inJumpLock)
+        Vector3 origin = groundCheck.position;
+        Debug.DrawRay(origin, Vector3.down * 0.2f, Color.yellow);
+        if (Physics.Raycast(origin, Vector3.down, out slopeHit, 0.2f))
         {
-            rb.useGravity = false;
-
-            float moveX = input.x * ability.moveSpeed;
-            float moveY = 0f;
-
-            if (Mathf.Abs(input.x) > 0.001f)
-            {
-                moveY = -groundStickForce;
-            }
-
-            rb.velocity = new Vector3(moveX, moveY, 0f);
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            Debug.Log($"Hit: {slopeHit.collider.name}, tag={slopeHit.collider.tag}, normal={slopeHit.normal}, angle={angle}");
+            return angle < maxSlopeAngle && angle != 0;
         }
-        else
-        {
-            // 공중, 점프 락 중
-            ApplyAirMove(input);
-        }
+        Debug.Log(false);
+        return false;
     }
 
-    private void ApplyAirMove(Vector2 input)
+    private Vector3 GetSlopeMoveDirection()
     {
-        rb.useGravity = true;
-
-        Vector3 moveVelocity = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0f);
-        rb.velocity = moveVelocity;
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 }
