@@ -3592,6 +3592,96 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &555389988
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1279.9934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 719.99634
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000044648826
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1657814523355016355, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211560603425008042, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: m_Name
+      value: 5_Rend
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575292399935434211, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: aimRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575292399935434211, guid: a58e9801a93119e49a60773a0f8a8e1a,
+        type: 3}
+      propertyPath: playerAbility
+      value: 
+      objectReference: {fileID: 6589624400339541464}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a58e9801a93119e49a60773a0f8a8e1a, type: 3}
+--- !u!114 &555389989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3575292399935434211, guid: a58e9801a93119e49a60773a0f8a8e1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 555389988}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff56873d41ab1a4da537f2a555ab180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &569369707
 GameObject:
   m_ObjectHideFlags: 0
@@ -14570,6 +14660,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualPivot: {fileID: 2003471706}
   playersRoot: {fileID: 0}
+  groundRayDistance: 0.6
+  groundRayOffsetY: 0.1
+  groundStickForce: 5
 --- !u!33 &6586406224143922573
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14595,7 +14688,7 @@ MonoBehaviour:
   meleeSkill: {fileID: 1266430599}
   rangedSkill: {fileID: 1323632689}
   dash: {fileID: 1536973415}
-  skill1: {fileID: 0}
+  skill1: {fileID: 555389989}
   skill2: {fileID: 0}
   events: {fileID: 0}
   passives: []
@@ -14705,6 +14798,7 @@ MonoBehaviour:
   walkLoopFx: {fileID: 0}
   walkSpeedThreshold: 0.1
   IsWalking2: 0
+  postJumpGroundIgnoreTime: 0.08
 --- !u!23 &9096772134613818516
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14782,3 +14876,4 @@ SceneRoots:
   - {fileID: 402731094}
   - {fileID: 1931324933}
   - {fileID: 409328283496868008}
+  - {fileID: 555389988}

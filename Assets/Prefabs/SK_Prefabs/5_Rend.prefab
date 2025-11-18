@@ -29,10 +29,11 @@ Transform:
   m_GameObject: {fileID: 6777267630284458099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.3567}
-  m_LocalScale: {x: 1.1149, y: 1.3388674, z: 2.2108085}
+  m_LocalPosition: {x: 0, y: 0, z: -0.499}
+  m_LocalScale: {x: 0.89568835, y: 1.1159594, z: 2.2108085}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6503168057778712768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8412478699033323130
@@ -124,5 +125,92 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   damage: 35
-  aobjEffect: {fileID: 2851843576404209680, guid: e62088784944c7f4aa0d4cbf27acc220,
+--- !u!1001 &4246509762621896874
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4803350163563814046}
+    m_Modifications:
+    - target: {fileID: 2851843576404209680, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_5_Rend
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3894196
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3889
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3889
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.64085644
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.29883623
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.64085644
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.29883623
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e62088784944c7f4aa0d4cbf27acc220, type: 3}
+--- !u!4 &6503168057778712768 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6976435113972156522, guid: e62088784944c7f4aa0d4cbf27acc220,
     type: 3}
+  m_PrefabInstance: {fileID: 4246509762621896874}
+  m_PrefabAsset: {fileID: 0}

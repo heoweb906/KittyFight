@@ -575,7 +575,7 @@ public class SkillCardController : MonoBehaviour
                             {
                                 InGameUiController.gameManager.ResetGame();
 
-                                DOVirtual.DelayedCall(1.0f, () =>
+                                DOVirtual.DelayedCall(0.6f, () =>
                                 {
                                     InGameUiController.scoreBoardUIController.OpenScorePanel();
                                 });
@@ -595,7 +595,7 @@ public class SkillCardController : MonoBehaviour
 
                 InGameUiController.gameManager.ResetGame();
 
-                DOVirtual.DelayedCall(1.0f, () =>
+                DOVirtual.DelayedCall(0.6f, () =>
                 {
                     InGameUiController.scoreBoardUIController.OpenScorePanel();
                 });
@@ -726,7 +726,7 @@ public class SkillCardController : MonoBehaviour
                                                     {
                                                         InGameUiController.gameManager.ResetGame();
 
-                                                        DOVirtual.DelayedCall(1.0f, () =>
+                                                        DOVirtual.DelayedCall(0.6f, () =>
                                                         {
                                                             InGameUiController.scoreBoardUIController.OpenScorePanel();
                                                         });
@@ -765,7 +765,7 @@ public class SkillCardController : MonoBehaviour
                                     {
                                         InGameUiController.gameManager.ResetGame();
 
-                                        DOVirtual.DelayedCall(1.0f, () =>
+                                        DOVirtual.DelayedCall(0.6f, () =>
                                         {
                                             InGameUiController.scoreBoardUIController.OpenScorePanel();
                                         });
@@ -785,7 +785,7 @@ public class SkillCardController : MonoBehaviour
             {
                 InGameUiController.gameManager.ResetGame();
 
-                DOVirtual.DelayedCall(1.0f, () =>
+                DOVirtual.DelayedCall(0.6f, () =>
                 {
                     InGameUiController.scoreBoardUIController.OpenScorePanel();
                 });

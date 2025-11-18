@@ -144,7 +144,6 @@ public class InGameUIController : MonoBehaviour
 
         ChangeReadyStartSprite(0);
 
-
         int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
         int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
 
@@ -156,7 +155,7 @@ public class InGameUIController : MonoBehaviour
 
         gameManager.ResetGame();
      
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(0.6f); 
  
         scoreBoardUIController.OpenScorePanel(); 
     }
@@ -233,7 +232,7 @@ public class InGameUIController : MonoBehaviour
         // 트윈 동작을 순서대로 연결하여 애니메이션 흐름을 만듭니다.
         DOTween.Sequence()
             .Append(targetRect.DOScale(originalScale * 0.9f, 0.04f)) // 첫 번째 동작: 축소
-            .Append(targetRect.DOScale(originalScale * 1.2f, 0.2f))  // 두 번째 동작: 확대
+            .Append(targetRect.DOScale(originalScale * 1.35f, 0.2f))  // 두 번째 동작: 확대
             .Append(targetRect.DOScale(0f, 0.15f))        // 세 번째 동작: 크기 0으로 사라짐
             .OnComplete(() => {
 

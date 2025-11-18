@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private GameObject player1;
     private GameObject player2;
     private int myNum;
-    private bool gameEnded = false;
+    private bool gameEnded = true;
     private PlayerAbility myAbility;
 
     [Header("양측 플레이어 Ability 참조")]
@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator DelayedInitialize()
     {
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(1.5f);
         ResetGame();
     }
 
@@ -332,10 +332,7 @@ public class GameManager : MonoBehaviour
 
         ingameUIController?.StartGameTimer(61f);
 
-
-
-
-        yield return new WaitForSeconds(1.5f); 
+        yield return new WaitForSeconds(2f); 
 
         ingameUIController.ChangeReadyStartSprite(1); 
         ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
