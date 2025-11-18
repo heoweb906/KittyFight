@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerAbility))]
@@ -10,8 +11,11 @@ public class PlayerJump : MonoBehaviour
     private PlayerMovement movementScript;
     private Animator anim;
 
+    private bool isJump = false;
     private bool isGrounded = false;
     private bool isTouchingWall = false;
+    public bool IsGrounded => isGrounded;
+    public bool IsJump => isJump;
 
     public float wallSlideSpeed = 0.5f;
 
@@ -26,11 +30,7 @@ public class PlayerJump : MonoBehaviour
     public bool IsWalking { get; private set; }
     public bool IsWalking2 = false;
 
-    [Header("Jump Lock")]
-    [SerializeField] private float postJumpGroundIgnoreTime = 0.08f; // 0.06~0.12 정도에서 조절
-    private float jumpLockTimer = 0f;
-    public bool IsInJumpLock => jumpLockTimer > 0f;
-    public bool IsGrounded => isGrounded;
+    private Coroutine jumpResetRoutine;
 
     private void Awake()
     {
@@ -42,9 +42,6 @@ public class PlayerJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (jumpLockTimer > 0f)
-            jumpLockTimer -= Time.fixedDeltaTime;
-
         anim.SetBool("isGround", isGrounded);
         anim.SetBool("isHanging", isTouchingWall);
         anim.SetFloat("speedY", rb.velocity.y);
@@ -73,21 +70,23 @@ public class PlayerJump : MonoBehaviour
     {
         if (isGrounded || isTouchingWall)
         {
+            isJump = true;
             movementScript.AttachToPlatform(null);
 
             Vector3 velocity = rb.velocity;
             velocity.y = ability.jumpForce;
             rb.velocity = velocity;
 
-            isGrounded = false;
-            rb.useGravity = true;
-
-            jumpLockTimer = postJumpGroundIgnoreTime;
-
             // PS_KickStart
             ability.events?.EmitJump();
 
             UpdateManager.EnqueueEventOnce("Jump");
+
+            if (jumpResetRoutine != null)
+            {
+                StopCoroutine(jumpResetRoutine);
+            }
+            jumpResetRoutine = StartCoroutine(ResetJumpFlagAfterDelay(0.1f));
 
             // 이펙트 생성
             if (jumpEffectPrefab != null)
@@ -99,6 +98,12 @@ public class PlayerJump : MonoBehaviour
                 );
             }
         }
+    }
+    private IEnumerator ResetJumpFlagAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isJump = false;
+        jumpResetRoutine = null;
     }
 
     public void HandleWallSlide()
