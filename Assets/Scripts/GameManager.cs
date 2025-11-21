@@ -309,6 +309,21 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ApplyBackground_(mapIndex, backgroundIndex, iMapGimicNum));
     }
 
+    private void ResetPlayerAnimation(GameObject player)
+    {
+        if (!player) return;
+
+        var anim = player.GetComponentInChildren<Animator>();
+        if (anim == null) return;
+
+        anim.SetBool("isGround", true);
+        anim.SetBool("isRun", false);
+        anim.SetBool("isHanging", false);
+        anim.SetBool("isDash", false);
+        anim.SetBool("isDamage", false);
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isShock", false);
+    }
 
     public IEnumerator ApplyBackground_(int mapIndex, int backgroundIndex, int iMapGimicNum)
     {
@@ -329,6 +344,9 @@ public class GameManager : MonoBehaviour
         if (player2 && sp2) player2.transform.position = sp2.position;
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
         player2.GetComponent<PlayerHealth>()?.ResetHealth();
+
+        ResetPlayerAnimation(player1);
+        ResetPlayerAnimation(player2);
 
         ingameUIController?.StartGameTimer(61f);
 
