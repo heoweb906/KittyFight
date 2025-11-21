@@ -53,6 +53,24 @@ public class PlayerController : MonoBehaviour
         var s = ability.GetSkill(type);
         if (s == null) return;
 
+        // Rabbit Hole 전용
+        if (s is SK_RabbitHole rabbit)
+        {
+            Vector3 currentPos = transform.position;
+            Vector3 clickPos = AttackUtils.GetWorldClickOnSameZ(transform);
+
+            Vector3 targetPos = clickPos;
+            targetPos.z = currentPos.z;
+
+            // 여기서 막혀 있으면 아예 실행 안 함 => 쿨타임 X
+            if (!rabbit.CanTeleportPosition(currentPos, targetPos))
+                return;
+
+            Vector3 dir1 = targetPos - currentPos;
+            ability.TryExecuteSkill(type, currentPos, dir1);
+            return;
+        }
+
         float range = s.GetAimRange();
         Vector3 origin, dir;
         AttackUtils.GetAimPointAndDirection(transform, range, out origin, out dir);
