@@ -6,6 +6,9 @@ public enum CardAnimationType
     Number_1,
     Number_3,
     Number_5,
+    Number_7,
+    Number_8,
+    Number_9,
     Number_12,
     Number_15,
     Number_16,
@@ -16,6 +19,7 @@ public enum CardAnimationType
     Number_103,
     Number_108,
     Number_109,
+    Number_110,
     Number_113,
     Number_123,
     Number_133,
@@ -50,6 +54,7 @@ public class SkillCard_SO : ScriptableObject
     [Header("스킬 기본 정보")]
     public CardillustrationPivot[] cardillustrationPivots;
     public Sprite sprite_Frame;
+    public Sprite sprite_Simbol;
     public Sprite sprite_SkillName;
     public Sprite sprite_Keyword;
     public Sprite sprite_BorderLine_Left;

@@ -17,11 +17,14 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("UI Card에 표시할 내용들")]
     public CanvasGroup imageGroup_illustration;
     public Image image_GrayWall;
+    public Image image_DrawTeritory;
     public Image image_CardBorderLine;
+    public Image image_CardAnilSimbol;
     public Image image_CardTitle;
     public Image image_CardKeyWord;
     public Image image_BorderLine_Left;
     public Image image_BorderLine_Right;
+    public Image image_Triangle;
     public TMP_Text text_Description;
 
 
@@ -33,8 +36,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Skill 스크립터블")]
     public SkillCard_SO skillCard_SO;
     private CardAnimationBase currentAnimation;
-    
-
 
 
     // 트위닝 관리용
@@ -58,14 +59,32 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         rectTransformMine = GetComponent<RectTransform>();
         originalScale = transform.localScale;
+
         // 복원용 정보 저장
         originalTitleAnchorPos = image_CardTitle.rectTransform.anchoredPosition;
         originalKeyWordColor = image_CardKeyWord.color;
         originalBorderLeftPos = image_BorderLine_Left.rectTransform.anchoredPosition;
         originalBorderRightPos = image_BorderLine_Right.rectTransform.anchoredPosition;
+
         Color startColor = originalDescriptionColor;
         startColor.a = 0f;
         text_Description.color = startColor;
+
+        // =========================================================
+        // [추가] 모든 카드 공통 적용: 마스킹 처리
+        // =========================================================
+
+        // 1. GrayWall에 Mask 컴포넌트 추가 (이미지 모양대로 잘라냄)
+        Mask wallMask = image_DrawTeritory.GetComponent<Mask>();
+        if (wallMask == null)
+        {
+            // [수정] image_CardBorderLine -> image_DrawTeritory로 변경
+            wallMask = image_DrawTeritory.gameObject.AddComponent<Mask>();
+            wallMask.showMaskGraphic = true;
+        }
+
+        // 2. 일러스트 그룹을 DrawTeritory 자식으로 이동 (이제 마스크 영향 받음)
+        imageGroup_illustration.transform.SetParent(image_DrawTeritory.transform, false);
     }
 
 
@@ -117,6 +136,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         AddAnimationComponent(data.AnimationType);
 
         image_CardBorderLine.sprite = data.sprite_Frame;
+        image_CardAnilSimbol.sprite = data.sprite_Simbol;
         image_CardTitle.sprite = data.sprite_SkillName;
         image_CardKeyWord.sprite = data.sprite_Keyword;
         image_BorderLine_Left.sprite = data.sprite_BorderLine_Left;
@@ -199,6 +219,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         text_Description.DOColor(fullVisible, tweenDuration);
 
         // 보더라인 알파값 0으로
+        image_Triangle.DOFade(0f, tweenDuration);
         image_BorderLine_Left.DOFade(0f, tweenDuration);
         image_BorderLine_Right.DOFade(0f, tweenDuration);
     }
@@ -219,6 +240,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         text_Description.DOColor(invisible, tweenDuration);
 
         // 보더라인 알파값 1로 복원
+        image_Triangle.DOFade(1f, tweenDuration);
         image_BorderLine_Left.DOFade(1f, tweenDuration);
         image_BorderLine_Right.DOFade(1f, tweenDuration);
     }
@@ -312,11 +334,11 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (bIsRat)
         {
-            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iAnimalNum, rectTransformMine.anchoredPosition, randomSkillIndex);
+            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iSkillIndex, rectTransformMine.anchoredPosition, randomSkillIndex);
         }
         else
         {
-            skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, rectTransformMine.anchoredPosition);
+            skillCardController.HideSkillCardList(skillCard_SO.iSkillIndex, rectTransformMine.anchoredPosition);
         }
     }
 

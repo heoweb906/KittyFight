@@ -159,12 +159,13 @@ MonoBehaviour:
       m_Top: 442
       m_Bottom: -442
   sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
   sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
   sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
     type: 3}
-  animationType: 2
+  AnimationType: 2
   description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
     hit take <color=#FF0000>3.5</color> damage</color>

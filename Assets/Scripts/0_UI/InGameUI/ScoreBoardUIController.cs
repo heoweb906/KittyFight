@@ -17,6 +17,7 @@ public class C_ScoreImageElement
     public RectTransform[] rectTransform_Bones;
 
     public Image imagePlayerCat;
+    public Image imageSkillIcon;
     public Sprite[] spritesPlayerCat;
     public RectTransform rectTransfrom_imageShadow;
 
@@ -105,6 +106,9 @@ public class ScoreBoardUIController : MonoBehaviour
         scoreImageElement_Player1.StoreInitialPosition();
         scoreImageElement_Player2.StoreInitialPosition();
 
+        scoreImageElement_Player1.imageSkillIcon.gameObject.SetActive(false);
+        scoreImageElement_Player2.imageSkillIcon.gameObject.SetActive(false);
+
         OpenScorePanel();
 
         // OnOffCheering(false);
@@ -117,6 +121,7 @@ public class ScoreBoardUIController : MonoBehaviour
     public void CloseScorePanel(int iWinnerPlayerNum, int iWinnerPlayerScore)
     {
         UpdateScoreText();
+        SkillIconImageOnOff(false);
 
         scoreImageElement_Player1.objMine.SetActive(true);
         scoreImageElement_Player2.objMine.SetActive(true);
@@ -312,5 +317,14 @@ public class ScoreBoardUIController : MonoBehaviour
         scoreImageElement_Player2.text_Score.text = InGameUiController.gameManager.IntScorePlayer_2.ToString();
     }
 
+
+    public void SkillIconImageOnOff(bool bActive)
+    {
+
+        scoreImageElement_Player1.imageSkillIcon.gameObject.SetActive(bActive);
+        scoreImageElement_Player2.imageSkillIcon.gameObject.SetActive(bActive);
+
+
+    }
 
 }

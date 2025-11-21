@@ -53,11 +53,11 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
 
         if (model.bIsRat)
         {
-            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iAnimalNum, model.cardPosition, model.iRandomSkillIndex);
+            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iSkillIndex, model.cardPosition, model.iRandomSkillIndex);
         }
         else
         {
-            skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, model.cardPosition);
+            skillCardController.HideSkillCardList(skillCard_SO.iSkillIndex, model.cardPosition);
         }
     }
 }

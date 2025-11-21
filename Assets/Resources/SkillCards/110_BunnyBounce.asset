@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 110_BunnyBounce
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 110
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: f9babc4003d971b4c876463b9e1c6f3b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 353c4f550cef32c4d87073109d7f6ce7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: db56d7d9f75dc1d4eb46897bcf2ab4ee,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4c6d22af27af2aa44ae797fa27433137,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 94c002ff23ed3d9458db69d95f7ca392,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 88c1b96ac52fe194ea94cf079afab247,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b167dacd336cdf34b9aa1c93bc2a2b73,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1e69754cce0439b41a630cf8d24d7d89,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c87a7e452ae6850428469a3115066165,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: af2e474cbce95794eac93866a40666be,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: cf71ad7c69846c24aa95878f271671a1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c8cd65b332ade344bb676d956f3a286c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 6b848eca0ee3cc74aae9d580fa90d983, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: c2dda509eb4a3444392a542505b13c96, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 8dfdf403497aa574fa3597646a24d7db, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: d5fb826bbdb105b4f860645bad4767c0, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: e749eb57bf4a53a4cb1dd01fe3d00fb6,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: f7fc9a8934fd8524182e12ae2a5d6b67,
+    type: 3}
+  AnimationType: 16
+  description: <color=#FFFFFF>Skills slow down by <color=#FF0000>5</color> seconds,
+    but each hop cuts cooldowns by <color=#0080FF>0.6</color> seconds. Keep jumping
+    to speed things up!</color>

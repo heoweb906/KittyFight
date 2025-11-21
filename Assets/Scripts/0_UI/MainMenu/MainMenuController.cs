@@ -71,13 +71,9 @@ public class MainMenuController : MonoBehaviour
         matchManager.MyNickname = "Kitty";
 
 
-        if(matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this;
-        if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this;
+        if(matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this; 
+        if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this; 
         if(matchStartCollision_3 != null) matchStartCollision_3.mainMenuController = this;
-
-
-        OnSpinImage(image_LoadingSpiner, 0f);
-        OffSpinImage(image_LoadingSpiner, fSpeedLap: 0f);
     }
 
 
@@ -250,7 +246,7 @@ public class MainMenuController : MonoBehaviour
     private IEnumerator ButtonCooldown()
     {
         isButtonCooldown = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         isButtonCooldown = false;
     }
 
@@ -552,4 +548,6 @@ public class MainMenuController : MonoBehaviour
         // 버튼의 상호작용 가능 여부 설정
         buttonCancel.interactable = isInteractable;
     }
+
+ 
 }

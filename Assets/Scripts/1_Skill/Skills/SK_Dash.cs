@@ -92,6 +92,9 @@ public class SK_Dash : Skill
         anim.SetTrigger("Dash");
         StartCoroutine(DashLerp(startPos, targetPos, duration));
 
+        if (playerAbility.meshTrail != null) playerAbility.meshTrail.ActiveateTrail(playerAbility.playerNumber);
+
+
         // ÈÆ·ÃÀå¿ë
         if (playerAbility.playerNumber == 0)
         {
