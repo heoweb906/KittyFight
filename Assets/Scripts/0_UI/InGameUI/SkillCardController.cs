@@ -80,7 +80,9 @@ public class SkillCardController : MonoBehaviour
     [SerializeField] Transform[] targetPoints = new Transform[4];
 
     [Header("연출에 사용할 것들")]
-    public GameObject[] objs_AnimalSkillCardEffects;
+    public GameObject objs_AnimalSkillCardEffects;
+    public Sprite[] sprites_Icons;
+    private Dictionary<int, Sprite> skillIconMap = new Dictionary<int, Sprite>();
 
     // 쥐 연출
     public RatCurtainBoard[] ratCurtainBoards;
@@ -157,7 +159,7 @@ public class SkillCardController : MonoBehaviour
         //}
 
 
-
+        MapSkillIcons();
 
 
         text_Timer.gameObject.SetActive(false);
@@ -191,21 +193,12 @@ public class SkillCardController : MonoBehaviour
             }
         }
 
+
+
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            ShowSkillCardListWithSpecific(0, false, new int[] { 16, 103, 108, 24 });
+            ShowSkillCardListWithSpecific(0, false, new int[] { 7, 8, 9, 110 });
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ShowSkillCardList();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            HIdeSkillCardList_ForRat();
-        }
- 
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
@@ -500,16 +493,16 @@ public class SkillCardController : MonoBehaviour
         return false;
     }
 
-      
 
 
-    public void HideSkillCardList(int iAnimalNum = 0, Vector2 clickedCardPosition = default)
+
+    public void HideSkillCardList(int iSkillIndex = 0, Vector2 clickedCardPosition = default)
     {
         if (IsAnimating) return;
         IsAnimating = true;
         SetBoolAllCardInteract(false);
 
-       
+
         // floating 애니메이션 정지
         for (int i = 0; i < instances.Length; i++)
         {
@@ -522,7 +515,7 @@ public class SkillCardController : MonoBehaviour
 
         FadeImage(1f, 0f).OnComplete(() =>
         {
-            text_Timer.gameObject.SetActive(false) ;
+            text_Timer.gameObject.SetActive(false);
             iTimerForSelect = 0;
             fTimerInternal = 0f;
             bTimerCheck = false;
@@ -546,19 +539,38 @@ public class SkillCardController : MonoBehaviour
 
         int iTemp = iAuthorityPlayerNum;
         iAuthorityPlayerNum = 0;
-       
-        if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
+
+        SkillCard_SO selectedSkillData = skillDataList.Find(data => data.iSkillIndex == iSkillIndex);
+
+        if (selectedSkillData != null)
         {
-            GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
-            RectTransform effectRect = effectObj.GetComponent<RectTransform>();
+            // 2. 실제 스킬 인덱을 사용하여 매핑된 아이콘 스프라이트를 가져옴
+            Sprite skillIconSprite = GetSkillIconBySkillIndex(selectedSkillData.iSkillIndex);
 
-            // image_FadeOut_White보다 뒤에 보이게 설정
-            effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+            if (skillIconSprite != null)
+            {
+                // 3. GameObject 대신 Image 컴포넌트를 가진 새로운 오브젝트를 생성
+                GameObject effectObj = new GameObject("SkillIconEffect");
+                RectTransform effectRect = effectObj.AddComponent<RectTransform>();
+                Image effectImage = effectObj.AddComponent<Image>();
+                effectImage.sprite = skillIconSprite;
+                effectRect.sizeDelta = new Vector2(200f, 200f); // 스프라이트 크기에 맞춤
+                effectImage.raycastTarget = false; // 클릭 방지
 
-            // 클릭한 카드 위치 사용
-            effectRect.anchoredPosition = clickedCardPosition;
+                effectRect.SetParent(InGameUiController.canvasMain.transform, false);
 
-            DOVirtual.DelayedCall(1f, () =>
+
+                // effectObj의 크기를 조절 (선택 사항)
+                effectRect.localScale = Vector3.one * 1.5f;
+
+                // (이하 기존 로직 유지)
+                // image_FadeOut_White보다 뒤에 보이게 설정
+                effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+
+                // 클릭한 카드 위치 사용
+                effectRect.anchoredPosition = clickedCardPosition;
+
+                DOVirtual.DelayedCall(1f, () =>
             {
                 effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
                 {
@@ -566,6 +578,11 @@ public class SkillCardController : MonoBehaviour
                     {
                         InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
                         InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
+
+                        Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex);
+                        InGameUiController.scoreBoardUIController.scoreImageElement_Player1.imageSkillIcon.sprite = skillIconSprite;
+                        InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = skillIconSprite;
+                        InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
 
                         DOVirtual.DelayedCall(0.1f, () =>
                         {
@@ -586,47 +603,66 @@ public class SkillCardController : MonoBehaviour
                     Destroy(effectObj);
                 });
             });
-        }
-        else
-        {
-            IsAnimating = false;
-            DOVirtual.DelayedCall(1f, () =>
+            }
+            else
             {
-
-                InGameUiController.gameManager.ResetGame();
-
-                DOVirtual.DelayedCall(0.6f, () =>
+                IsAnimating = false;
+                DOVirtual.DelayedCall(1f, () =>
                 {
-                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+
+                    InGameUiController.gameManager.ResetGame();
+
+                    DOVirtual.DelayedCall(0.6f, () =>
+                    {
+                        InGameUiController.scoreBoardUIController.OpenScorePanel();
+                    });
                 });
-            });
+            }
         }
     }
-
-    public void HIdeSkillCardList_ForRat(int iAnimalNum = 0, Vector2 clickedCardPosition = default, int iRaySkillIndex = 0)
+    public void HIdeSkillCardList_ForRat(int iSkillIndex = 0, Vector2 clickedCardPosition = default, int iRaySkillIndex = 0)
     {
         if (IsAnimating) return;
         IsAnimating = true;
         SetBoolAllCardInteract(false);
-        
+
+        // 클릭된 카드 위치를 기준으로 쥐 보드의 인덱스(0 또는 1)를 결정
         int ratBoardIndex = clickedCardPosition.x < 0 ? 0 : 1;
+
         if (ratBoardIndex < ratCurtainBoards.Length)
         {
+            // 쥐 보드 초기 위치 복원
             ratCurtainBoards[ratBoardIndex].RestoreOriginalPositions();
 
             if (ratCurtainBoards[ratBoardIndex].obj_RatBoard != null)
                 ratCurtainBoards[ratBoardIndex].obj_RatBoard.SetActive(true);
 
-            // rectTransform_Card에 카드 생성
+            // rectTransform_Card에 쥐 카드 생성
             if (ratCurtainBoards[ratBoardIndex].rectTransform_Card != null && iRaySkillIndex < skillDataList.Count)
             {
+                // 이전에 생성된 쥐 카드가 있을 수 있으므로 제거
+                for (int j = ratCurtainBoards[ratBoardIndex].rectTransform_Card.childCount - 1; j >= 0; j--)
+                {
+                    Destroy(ratCurtainBoards[ratBoardIndex].rectTransform_Card.GetChild(j).gameObject);
+                }
+
                 GameObject ratCardObj = Instantiate(objSkillCard, ratCurtainBoards[ratBoardIndex].rectTransform_Card);
                 SkillCard_UI ratCard = ratCardObj.GetComponent<SkillCard_UI>();
                 ratCard.skillCardController = this;
-                ratCard.ApplyData(skillDataList[iRaySkillIndex], true); // 쥐 카드로 설정
-                ratCard.gameObject.SetActive(true);
+
+                // iRaySkillIndex는 skillDataList의 인덱스이므로, 해당 데이터를 찾아 적용
+                if (iRaySkillIndex < skillDataList.Count)
+                {
+                    ratCard.ApplyData(skillDataList[iRaySkillIndex], true); // 쥐 카드로 설정
+                    ratCard.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Destroy(ratCardObj);
+                }
             }
         }
+
         // floating 애니메이션 정지
         for (int i = 0; i < instances.Length; i++)
         {
@@ -636,17 +672,22 @@ public class SkillCardController : MonoBehaviour
                 card.StopFloatingAnimation();
             }
         }
+
+        // 페이드 인/아웃 시작 (흰색 오버레이 표시)
         FadeImage(1f, 0f).OnComplete(() =>
         {
             text_Timer.gameObject.SetActive(false);
             iTimerForSelect = 0;
             fTimerInternal = 0f;
             bTimerCheck = false;
+
             DOVirtual.DelayedCall(0.1f, () =>
             {
-                FadeImage(0f, 1f);
+                FadeImage(0f, 1f); // 흰색 오버레이 투명화
             });
         });
+
+        // 카드들을 생성 위치로 즉시 이동시키고 비활성화
         int total = instances.Length;
         for (int i = 0; i < total; i++)
         {
@@ -662,21 +703,24 @@ public class SkillCardController : MonoBehaviour
         int iTemp = iAuthorityPlayerNum;
         iAuthorityPlayerNum = 0;
 
-        if (iAnimalNum >= 0 && iAnimalNum < objs_AnimalSkillCardEffects.Length)
+        if (iSkillIndex >= 0)
         {
-            // 커튼 애니메이션 추가
+            // 커튼 애니메이션
             if (ratBoardIndex < ratCurtainBoards.Length && ratCurtainBoards[ratBoardIndex].obj_curtain != null)
             {
                 RectTransform curtainRect = ratCurtainBoards[ratBoardIndex].obj_curtain.GetComponent<RectTransform>();
-                Vector2 originalCurtainPos = curtainRect.anchoredPosition;
+                Vector2 originalCurtainPos = ratCurtainBoards[ratBoardIndex].originalPos_curtain; // 저장된 원본 위치 사용
                 Vector2 targetCurtainPos = new Vector2(originalCurtainPos.x, originalCurtainPos.y + 1500);
 
                 // 1.2초 딜레이 후 커튼 애니메이션 시작
                 DOVirtual.DelayedCall(1.2f, () =>
                 {
                     Sequence curtainSequence = DOTween.Sequence();
+                    // 튕기는 듯한 연출
                     curtainSequence.Append(curtainRect.DOAnchorPosY(originalCurtainPos.y - 50f, 0.3f));
+                    // 위로 빠르게 올라감
                     curtainSequence.Append(curtainRect.DOAnchorPos(targetCurtainPos, 0.9f).SetEase(Ease.OutQuad));
+
                     curtainSequence.OnComplete(() =>
                     {
                         // 커튼 올라간 후 3초 대기
@@ -693,50 +737,76 @@ public class SkillCardController : MonoBehaviour
                                         DestroyImmediate(ratCurtainBoards[ratBoardIndex].rectTransform_Card.GetChild(j).gameObject);
                                     }
                                 }
-                                ratCurtainBoards[ratBoardIndex].obj_rat.SetActive(false);   
+                                ratCurtainBoards[ratBoardIndex].obj_rat.SetActive(false);
 
 
+                                // ----------------------------------------------------
+                                // 💡 [수정 부분] 아이콘 스프라이트 생성 로직
+                                // ----------------------------------------------------
+                                Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex); // iAnimalNum은 스킬 인덱스로 가정
 
-                                // 아이콘 생성 및 중앙으로 이동
-                                GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
-                                RectTransform effectRect = effectObj.GetComponent<RectTransform>();
-                                effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
-                                effectRect.anchoredPosition = ratCurtainBoards[ratBoardIndex].rectTransform_Card.anchoredPosition;
-
-                                DOVirtual.DelayedCall(0.1f, () =>
+                                if (skillIconSprite != null)
                                 {
-                                    FadeImage(0f, 1f);
+                                    // 아이콘 생성 및 설정 (GameObject 대신 Image 컴포넌트를 가진 오브젝트를 생성)
+                                    GameObject effectObj = new GameObject("RatSkillIconEffect");
+                                    RectTransform effectRect = effectObj.AddComponent<RectTransform>();
+                                    Image effectImage = effectObj.AddComponent<Image>();
+                                    effectImage.sprite = skillIconSprite;
+                                    effectRect.sizeDelta = new Vector2(200f, 200f);
+                                    effectImage.raycastTarget = false;
 
-                                    // 1초 대기 후 중앙으로 이동 (원래 버전과 동일)
-                                    DOVirtual.DelayedCall(1f, () =>
+                                    effectRect.SetParent(InGameUiController.canvasMain.transform, false);
+
+                                    // 크기 및 위치 설정
+                                    effectRect.localScale = Vector3.one * 1.5f;
+                                    effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+                                    effectRect.anchoredPosition = ratCurtainBoards[ratBoardIndex].rectTransform_Card.anchoredPosition;
+
+                                    DOVirtual.DelayedCall(0.1f, () =>
                                     {
-                                        effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
+                                        FadeImage(0f, 1f); // 화면 다시 보이기 (아이콘 생성 완료)
+
+                                        // 1초 대기 후 중앙으로 이동
+                                        DOVirtual.DelayedCall(1f, () =>
                                         {
-                                            // 기존 마무리 로직
-                                            FadeImage(1f, 0f).OnComplete(() =>
+                                            effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
                                             {
-                                                if (iTemp == 1) InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
-                                                if (iTemp == 2) InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
-
-                                                DOVirtual.DelayedCall(0.1f, () =>
+                                                // 기존 마무리 로직
+                                                FadeImage(1f, 0f).OnComplete(() =>
                                                 {
-                                                    FadeImage(0f, 1f);
-                                                    IsAnimating = false;
-                                                    DOVirtual.DelayedCall(0.9f, () =>
-                                                    {
-                                                        InGameUiController.gameManager.ResetGame();
+                                                    if (iTemp == 1) InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
+                                                    if (iTemp == 2) InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
 
-                                                        DOVirtual.DelayedCall(0.6f, () =>
+
+                                                    Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex);
+                                                    InGameUiController.scoreBoardUIController.scoreImageElement_Player1.imageSkillIcon.sprite = skillIconSprite;
+                                                    InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = skillIconSprite;
+                                                    InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
+
+
+                                                    DOVirtual.DelayedCall(0.1f, () =>
+                                                    {
+                                                        FadeImage(0f, 1f);
+                                                        IsAnimating = false;
+                                                        DOVirtual.DelayedCall(0.9f, () =>
                                                         {
-                                                            InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                                            InGameUiController.gameManager.ResetGame();
+
+                                                            DOVirtual.DelayedCall(0.6f, () =>
+                                                            {
+                                                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                                            });
                                                         });
                                                     });
                                                 });
+                                                Destroy(effectObj);
                                             });
-                                            Destroy(effectObj);
                                         });
                                     });
-                                });
+                                }
+                                // ----------------------------------------------------
+                                // 💡 [수정 부분] 아이콘 스프라이트 생성 로직 종료
+                                // ----------------------------------------------------
                             });
                         });
                     });
@@ -744,41 +814,74 @@ public class SkillCardController : MonoBehaviour
             }
             else
             {
-                // 커튼이 없으면 기존 로직 실행
+                // 커튼이 없으면 일반 스킬 카드 숨기기 로직 (iAnimalNum에 해당하는 아이콘 사용)
                 DOVirtual.DelayedCall(1f, () =>
                 {
-                    GameObject effectObj = Instantiate(objs_AnimalSkillCardEffects[iAnimalNum], InGameUiController.canvasMain.transform);
-                    RectTransform effectRect = effectObj.GetComponent<RectTransform>();
-                    effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
-                    effectRect.anchoredPosition = clickedCardPosition;
-                    DOVirtual.DelayedCall(1f, () =>
-                    {
-                        effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
-                        {
-                            FadeImage(1f, 0f).OnComplete(() =>
-                            {
-                                DOVirtual.DelayedCall(0.1f, () =>
-                                {
-                                    FadeImage(0f, 1f);
-                                    IsAnimating = false;
-                                    DOVirtual.DelayedCall(0.9f, () =>
-                                    {
-                                        InGameUiController.gameManager.ResetGame();
+                    // ----------------------------------------------------
+                    // 💡 [수정 부분] 아이콘 스프라이트 생성 로직
+                    // ----------------------------------------------------
+                    Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex);
 
-                                        DOVirtual.DelayedCall(0.6f, () =>
+                    if (skillIconSprite != null)
+                    {
+                        GameObject effectObj = new GameObject("SkillIconEffect");
+                        RectTransform effectRect = effectObj.AddComponent<RectTransform>();
+                        Image effectImage = effectObj.AddComponent<Image>();
+                        effectImage.sprite = skillIconSprite;
+                        effectRect.sizeDelta = new Vector2(200f, 200f);
+                        effectImage.raycastTarget = false;
+
+                        effectRect.SetParent(InGameUiController.canvasMain.transform, false);
+                        effectRect.localScale = Vector3.one * 1.5f;
+                        effectRect.SetSiblingIndex(InGameUIController.Instance.image_FadeOut_White.transform.GetSiblingIndex() - 1);
+                        effectRect.anchoredPosition = clickedCardPosition;
+
+                        DOVirtual.DelayedCall(1f, () =>
+                        {
+                            effectRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
+                            {
+                                FadeImage(1f, 0f).OnComplete(() =>
+                                {
+                                    DOVirtual.DelayedCall(0.1f, () =>
+                                    {
+                                        FadeImage(0f, 1f);
+                                        IsAnimating = false;
+                                        DOVirtual.DelayedCall(0.9f, () =>
                                         {
-                                            InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                            InGameUiController.gameManager.ResetGame();
+
+                                            DOVirtual.DelayedCall(0.6f, () =>
+                                            {
+                                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                            });
                                         });
                                     });
                                 });
+                                Destroy(effectObj);
                             });
-                            Destroy(effectObj);
                         });
-                    });
+                    }
+                    else
+                    {
+                        // 아이콘이 없는 경우, 바로 게임 리셋 로직 실행
+                        DOVirtual.DelayedCall(1.6f, () =>
+                        {
+                            InGameUiController.gameManager.ResetGame();
+
+                            DOVirtual.DelayedCall(0.6f, () =>
+                            {
+                                InGameUiController.scoreBoardUIController.OpenScorePanel();
+                            });
+                        });
+                        IsAnimating = false;
+                    }
+                    // ----------------------------------------------------
+                    // 💡 [수정 부분] 아이콘 스프라이트 생성 로직 종료
+                    // ----------------------------------------------------
                 });
             }
         }
-        else
+        else // iAnimalNum < 0 일 때 (애니메이션 효과 없이 종료)
         {
             IsAnimating = false;
             DOVirtual.DelayedCall(1f, () =>
@@ -898,6 +1001,34 @@ public class SkillCardController : MonoBehaviour
     public SkillCard_SO FindSkillCardByIndex(int skillIndex)
     {
         return skillDataList.Find(card => card.iSkillIndex == skillIndex);
+    }
+
+
+
+    private void MapSkillIcons()
+    {
+        int ExtractLeadingNumber(string name)
+        {
+            var match = Regex.Match(name, @"^\d+");
+            if (match.Success) return int.Parse(match.Value);
+            return -1;
+        }
+
+        skillIconMap.Clear();
+        foreach (var sprite in sprites_Icons)
+        {
+            if (sprite == null) continue;
+            int number = ExtractLeadingNumber(sprite.name);
+            if (number >= 0 && !skillIconMap.ContainsKey(number))
+            {
+                skillIconMap.Add(number, sprite);
+            }
+        }
+    }
+
+    public Sprite GetSkillIconBySkillIndex(int skillIndex)
+    {
+        return skillIconMap.ContainsKey(skillIndex) ? skillIconMap[skillIndex] : null;
     }
 
 }

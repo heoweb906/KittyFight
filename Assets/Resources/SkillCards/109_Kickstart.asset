@@ -61,13 +61,14 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 6b848eca0ee3cc74aae9d580fa90d983, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: c2dda509eb4a3444392a542505b13c96, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: 8dfdf403497aa574fa3597646a24d7db, type: 3}
   sprite_Keyword: {fileID: 21300000, guid: d5fb826bbdb105b4f860645bad4767c0, type: 3}
   sprite_BorderLine_Left: {fileID: 21300000, guid: e749eb57bf4a53a4cb1dd01fe3d00fb6,
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: f7fc9a8934fd8524182e12ae2a5d6b67,
     type: 3}
-  animationType: 11
+  AnimationType: 12
   description: <color=#FFFFFF>Skills slow down by <color=#FF0000>5</color> seconds,
     but each hop cuts cooldowns by <color=#0080FF>0.6</color> seconds. Keep jumping
     to speed things up!</color>

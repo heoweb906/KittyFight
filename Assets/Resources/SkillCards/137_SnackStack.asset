@@ -117,12 +117,13 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 2a2bfea16e01f484996a4f4485810680, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 4ab5bcb5b2373a741a2debf255ccb2df, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: 4b9780d6e6914ff44975192b1fdf54a2, type: 3}
   sprite_Keyword: {fileID: 21300000, guid: 4abf30457bba55241ae0b02c2e6c702e, type: 3}
   sprite_BorderLine_Left: {fileID: 21300000, guid: 9cca33c8aa7a48a4396239dc2b08c0b5,
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 7ad3d3c15ae21b74da600e3ace05a889,
     type: 3}
-  animationType: 15
+  AnimationType: 16
   description: <color=#FFFFFF>Max HP drops by <color=#FF0000>5</color> then rises
     by <color=#0080FF>2</color> each round. Eating your way to strength</color>

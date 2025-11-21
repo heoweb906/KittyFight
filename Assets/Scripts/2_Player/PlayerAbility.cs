@@ -46,6 +46,10 @@ public class PlayerAbility : MonoBehaviour
     // Health 참조 (HP의 유일한 소유자)
     public PlayerHealth Health { get; private set; }
 
+
+    // 대쉬 잔상 용
+    public VFX_MeshTrail meshTrail;
+
     // HP 이벤트 패스스루(옵션이지만 UI에 편리)
     public event Action<int, int> OnHPChanged
     {

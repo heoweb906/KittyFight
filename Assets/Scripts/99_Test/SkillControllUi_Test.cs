@@ -39,17 +39,6 @@ public class SkillCardController_Test : MonoBehaviour
     public KeyCode keyShowCards = KeyCode.Space;
     public KeyCode keyHideCards = KeyCode.Escape;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ShowSkillCardList(1, true);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            HideSkillCardList(0);
-        }
-    }
 
     private void Start()
     {

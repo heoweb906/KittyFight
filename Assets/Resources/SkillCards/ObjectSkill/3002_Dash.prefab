@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2499996, y: 1.25, z: 1.2499996}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 3.2
+  coolTime: 2.5
   objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: 224d43335bfdff143bef740666092a2d, type: 3}
   aimRange: 2.5
@@ -57,3 +57,4 @@ MonoBehaviour:
   disableGravityDuringDash: 1
   events: {fileID: 0}
   shakeAmount: 0.09
+  meshTrail: {fileID: 0}

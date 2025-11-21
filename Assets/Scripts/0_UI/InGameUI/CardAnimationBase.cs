@@ -272,6 +272,516 @@ public class CardAnimation_Num_5 : CardAnimationBase
 }
 
 
+public class CardAnimation_Num_7 : CardAnimationBase
+{
+    private const float InitialY_2 = -140f;
+
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+        // ====================================================================
+        // 1. 초기 설정 (크기, 위치, 알파)
+        // ====================================================================
+
+        // 1번 요소 (미지정: 기본값 유지)
+        if (images.Count > 1)
+        {
+            images[1].rectTransform.localScale = Vector3.one * 1f;
+            SetPosition(images, 1, 0f, 0f);
+            SetAlphaZero(images, 1); // 1번 요소 알파 0 설정
+        }
+
+        // 2번 요소: 0, -128 / 0.25배
+        if (images.Count > 2)
+        {
+            images[2].rectTransform.localScale = Vector3.one * 0.25f;
+            SetPosition(images, 2, 0f, InitialY_2);
+        }
+
+        // 3번 요소부터 10번 요소까지 초기 설정은 유지됩니다. (생략) 
+        if (images.Count > 3) SetPosition(images, 3, 0f, -550f); images[3].rectTransform.localScale = Vector3.one * 0.54f;
+        if (images.Count > 4) SetPosition(images, 4, -237f, -376f); images[4].rectTransform.localScale = Vector3.one * 0.285f;
+        if (images.Count > 5) SetPosition(images, 5, -186f, -326f); images[5].rectTransform.localScale = Vector3.one * 0.32f;
+        if (images.Count > 6) SetPosition(images, 6, 168f, -356f); images[6].rectTransform.localScale = Vector3.one * 0.28f;
+        if (images.Count > 7) SetPosition(images, 7, 605f, 316f); images[7].rectTransform.localScale = Vector3.one * 0.4f;
+        if (images.Count > 8) SetPosition(images, 8, -396f, 203f); images[8].rectTransform.localScale = Vector3.one * 0.23f;
+        if (images.Count > 9) SetPosition(images, 9, 739f, -243f); images[9].rectTransform.localScale = Vector3.one * 0.4f;
+        if (images.Count > 10) SetPosition(images, 10, -764f, -232f); images[10].rectTransform.localScale = Vector3.one * 0.42f;
+
+        // 11번 요소 초기 설정
+        if (images.Count > 11)
+        {
+            images[11].rectTransform.localScale = Vector3.one * 1f;
+            SetPosition(images, 11, 0f, 0f);
+            SetAlphaZero(images, 11);
+        }
+
+        // 레이어 순서 조정은 이전과 동일하게 유지됩니다. (생략)
+        if (images.Count > 10)
+        {
+            int baseIndex = images[0].rectTransform.GetSiblingIndex();
+            int currentSiblingIndex = baseIndex + 1;
+
+            images[1].rectTransform.SetSiblingIndex(currentSiblingIndex++); images[4].rectTransform.SetSiblingIndex(currentSiblingIndex++);
+            images[5].rectTransform.SetSiblingIndex(currentSiblingIndex++); images[6].rectTransform.SetSiblingIndex(currentSiblingIndex++);
+            images[3].rectTransform.SetSiblingIndex(currentSiblingIndex++); images[2].rectTransform.SetSiblingIndex(currentSiblingIndex++);
+            images[7].rectTransform.SetSiblingIndex(currentSiblingIndex++); images[8].rectTransform.SetSiblingIndex(currentSiblingIndex++);
+            images[9].rectTransform.SetSiblingIndex(currentSiblingIndex++); images[10].rectTransform.SetSiblingIndex(currentSiblingIndex++);
+            if (images.Count > 11) images[11].rectTransform.SetAsLastSibling();
+        }
+
+        // ====================================================================
+        // 3. 반복 애니메이션 (7, 8, 9, 10) - 유지
+        // ====================================================================
+
+        const float floatDistance = 15f;
+        const float floatDuration = 4.0f;
+        const float rotateDuration7_8 = 10f;
+        const float fullRotation = 360f;
+        const float loopRotateDuration9_10 = 1.5f;
+        const float loopRotateAngle = 5f;
+
+        // 7, 8, 9, 10번 요소의 연속 애니메이션 로직은 유지됩니다. (생략)
+        if (images.Count > 7) { RectTransform rt7 = images[7].rectTransform; Vector2 initialPos7 = rt7.anchoredPosition; rt7.DOAnchorPos(initialPos7 + new Vector2(floatDistance, floatDistance), floatDuration).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetTarget(rt7); rt7.DOLocalRotate(new Vector3(0, 0, fullRotation), rotateDuration7_8, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetTarget(rt7); }
+        if (images.Count > 8) { RectTransform rt8 = images[8].rectTransform; Vector2 initialPos8 = rt8.anchoredPosition; rt8.DOAnchorPos(initialPos8 + new Vector2(-floatDistance * 0.7f, floatDistance * 0.7f), floatDuration * 1.2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetTarget(rt8); rt8.DOLocalRotate(new Vector3(0, 0, -fullRotation), rotateDuration7_8 * 1.5f, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear).SetTarget(rt8); }
+        if (images.Count > 9) { images[9].rectTransform.DOLocalRotate(new Vector3(0, 0, loopRotateAngle), loopRotateDuration9_10).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetTarget(images[9].rectTransform); }
+        if (images.Count > 10) { images[10].rectTransform.DOLocalRotate(new Vector3(0, 0, -loopRotateAngle * 1.2f), loopRotateDuration9_10 * 0.8f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetTarget(images[10].rectTransform); }
+
+
+        // ====================================================================
+        // 4. 메인 무한 루프 애니메이션 (2, 11, 1)
+        // ====================================================================
+
+        if (images.Count > 11)
+        {
+            const float TremorTotalDuration = 1.5f;
+            const float FlashDuration = 0.1f;
+            const float WaitDuration = 0.2f;
+            const float Fade11OutDuration = 0.8f;
+            const float ReturnDuration = 1.0f;
+            const float MoveY_2 = 300f;
+            const float TremorAngle = 5f;
+
+            Sequence mySequence = DOTween.Sequence()
+                .SetLoops(-1, LoopType.Restart)
+                .SetTarget(this);
+
+            // ----------------------------------------------------------------------
+            // P1. 2번 요소 떨림 가속 (총 1.5s)
+            // ----------------------------------------------------------------------
+
+            Sequence tremorSequence = DOTween.Sequence();
+            tremorSequence.SetTarget(images[2].rectTransform);
+
+            // 1. 느린 떨림 (0.5s)
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, TremorAngle * 1.5f), 0.25f).SetEase(Ease.OutSine));
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, -TremorAngle * 1.5f), 0.25f).SetEase(Ease.OutSine));
+
+            // 2. 중간 떨림 (0.5s)
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, TremorAngle * 3f), 0.2f).SetEase(Ease.OutSine));
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, -TremorAngle * 3f), 0.3f).SetEase(Ease.OutSine));
+
+            // 3. 최대치 떨림 직전 (0.5s)
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, TremorAngle * 7f), 0.25f).SetEase(Ease.OutQuad));
+            tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, -TremorAngle * 7f), 0.25f).SetEase(Ease.OutQuad));
+
+            mySequence.Append(tremorSequence);
+
+            // ----------------------------------------------------------------------
+            // P2. 떨림 종료 시점 (Flash & Move/Alpha 통합)
+            // ----------------------------------------------------------------------
+
+            // 1. 떨림이 끝난 직후, 2번 요소의 회전을 0초 트윈으로 즉시 복구합니다.
+            mySequence.Append(images[2].rectTransform.DOLocalRotate(Vector3.zero, 0f));
+
+            // 2. Flash (0.1s) 시작: 11번 알파 1
+            mySequence.Append(GetCanvasGroup(images[11]).DOFade(1f, FlashDuration));
+
+            // 3. Join: 2번 요소 이동 (+300Y) 및 1번 등장 (Alpha 1) - 0.1s 동안 동시 처리
+            mySequence.Join(images[2].rectTransform.DOAnchorPosY(InitialY_2 + MoveY_2, FlashDuration));
+            mySequence.Join(GetCanvasGroup(images[1]).DOFade(1f, FlashDuration));
+
+            // ----------------------------------------------------------------------
+            // P3 & P4. Fade Out 11 & Return
+            // ----------------------------------------------------------------------
+
+            // 11번 요소의 알파값 0.2초 뒤에 0.8초에 걸쳐서 0으로 돌아감
+            mySequence.AppendInterval(WaitDuration);
+            mySequence.Append(GetCanvasGroup(images[11]).DOFade(0f, Fade11OutDuration));
+
+            // 이후 2번 요소 1초에 걸쳐 제자리 복귀 + 1번 요소 1초에 걸쳐 알파 0
+            mySequence.Append(images[2].rectTransform.DOAnchorPosY(InitialY_2, ReturnDuration));
+            mySequence.Join(GetCanvasGroup(images[1]).DOFade(0f, ReturnDuration));
+
+            // 다음 루프를 위해 최종 회전 복구는 이미 0으로 설정되어 있습니다.
+        }
+    }
+
+    private void SetPosition(List<Image> images, int index, float x, float y)
+    {
+        if (index < images.Count)
+        {
+            images[index].rectTransform.anchoredPosition = new Vector2(x, y);
+        }
+    }
+
+    // CanvasGroup을 가져오거나 없으면 추가하여 반환
+    private CanvasGroup GetCanvasGroup(Image image)
+    {
+        CanvasGroup cg = image.GetComponent<CanvasGroup>();
+        if (cg == null) cg = image.gameObject.AddComponent<CanvasGroup>();
+        return cg;
+    }
+
+    private void SetAlphaZero(List<Image> images, int index)
+    {
+        if (index < images.Count)
+        {
+            GetCanvasGroup(images[index]).alpha = 0f;
+        }
+    }
+
+    protected override void KillAllTweens()
+    {
+        if (animationImages != null)
+        {
+            foreach (var img in animationImages)
+            {
+                if (img != null) img.rectTransform.DOKill();
+            }
+        }
+        DOTween.Kill(this);
+    }
+}
+public class CardAnimation_Num_8 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+        // ====================================================================
+        // 1. 초기 설정 (위치 + scale)
+        // ====================================================================
+        if (images.Count > 1) { images[1].rectTransform.localScale = Vector3.one * 1f; SetPos(images, 1, 82f, -122f); }
+        if (images.Count > 2) { images[2].rectTransform.localScale = Vector3.one * 1f; SetPos(images, 2, 82f, -122f); }
+        if (images.Count > 3) { images[3].rectTransform.localScale = Vector3.one * 1f; SetPos(images, 3, 82f, -122f); }
+        if (images.Count > 4) { images[4].rectTransform.localScale = Vector3.one * 1f; SetPos(images, 4, 82f, -122f); }
+        if (images.Count > 5) { images[5].rectTransform.localScale = Vector3.one * 0.45f; SetPos(images, 5, 68f, 23f); }
+        if (images.Count > 6) { images[6].rectTransform.localScale = Vector3.one * 0.3f; SetPos(images, 6, 518f, 215f); }
+        if (images.Count > 7) { images[7].rectTransform.localScale = Vector3.one * 0.2f; SetPos(images, 7, -367f, 264f); }
+        if (images.Count > 8) { images[8].rectTransform.localScale = Vector3.one * 0.3f; SetPos(images, 8, -406f, -338f); }
+
+        // ====================================================================
+        // 2. 메인 반복 루프 (5번 요소 점프 → 착지 → 착지 직후 지진)
+        // ====================================================================
+        if (images.Count > 5)
+        {
+            const float Delay = 1f;
+            const float JumpDur = 0.4f;
+            const float HoldDur = 0.3f;
+            const float SlamDur = 0.1f;
+
+            Vector2 startPos = images[5].rectTransform.anchoredPosition;
+            Vector2 jumpPos = new Vector2(-71f, 283f);
+
+            int[] shakeTargets = { 1, 2, 3, 4, 6, 7, 8 };
+
+            Sequence seq = DOTween.Sequence()
+                .SetLoops(-1, LoopType.Restart)
+                .SetTarget(this);
+
+            // 대기
+            seq.AppendInterval(Delay);
+
+            // 점프
+            seq.Append(
+                images[5].rectTransform.DOAnchorPos(jumpPos, JumpDur)
+                    .SetEase(Ease.OutSine)
+            );
+
+            // 최고점 유지
+            seq.AppendInterval(HoldDur);
+
+            // Slam(착지)
+            seq.Append(
+                images[5].rectTransform.DOAnchorPos(startPos, SlamDur)
+                    .SetEase(Ease.InQuad)
+            );
+
+            // 착지 애니메이션이 **완전히 끝난 순간** 지진 실행
+            seq.AppendCallback(() =>
+            {
+                foreach (int i in shakeTargets)
+                {
+                    if (i >= images.Count) continue;
+
+                    RectTransform rt = images[i].rectTransform;
+
+                    // 시퀀스를 생성하되 일단 Pause 상태로 생성
+                    Sequence s = CreateEarthquakeShake(rt).Pause();
+
+                    // 즉시 재생
+                    s.Play();
+                }
+            });
+        }
+    }
+
+    // ========================================================================
+    // 지진 패턴 (각도 너무 크지 않게 부드럽고 빠른 좌우 떨림)
+    // ========================================================================
+    Sequence CreateEarthquakeShake(RectTransform rt)
+    {
+        float step = 0.05f;   // 빠르고 짧은 시간
+        float a1 = 8f;
+        float a2 = 6f;
+        float a3 = 4f;
+        float a4 = 2.5f;
+
+        Sequence s = DOTween.Sequence();
+
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, -a1), step).SetEase(Ease.Linear));
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, a1), step).SetEase(Ease.Linear));
+
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, -a2), step).SetEase(Ease.Linear));
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, a2), step).SetEase(Ease.Linear));
+
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, -a3), step).SetEase(Ease.Linear));
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, a3), step).SetEase(Ease.Linear));
+
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, -a4), step).SetEase(Ease.Linear));
+        s.Append(rt.DOLocalRotate(new Vector3(0, 0, a4), step).SetEase(Ease.Linear));
+
+        // 잔진동 후 원위치
+        s.Append(rt.DOLocalRotate(Vector3.zero, 0.02f));
+
+        return s;
+    }
+
+    // ========================================================================
+    // 보조 함수들
+    // ========================================================================
+    void SetPos(List<Image> imgs, int index, float x, float y)
+    {
+        if (index < imgs.Count)
+            imgs[index].rectTransform.anchoredPosition = new Vector2(x, y);
+    }
+
+    protected override void KillAllTweens()
+    {
+        if (animationImages != null)
+        {
+            foreach (var img in animationImages)
+            {
+                if (img == null) continue;
+                img.rectTransform.DOKill();
+                CanvasGroup cg = img.GetComponent<CanvasGroup>();
+                if (cg != null) cg.DOKill();
+            }
+        }
+        DOTween.Kill(this);
+    }
+}
+public class CardAnimation_Num_9 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+        // ====================================================================
+        // 1. 초기 설정 (위치 + scale)
+        // ====================================================================
+
+        // 1번 요소: -162, 300 / 0.54배 (초기 스케일 저장)
+        const float Scale1 = 0.54f;
+        if (images.Count > 1) { SetScale(images, 1, Scale1); SetPos(images, 1, -162f, 300f); }
+
+        // 2번 요소: 237, -304 / 0.46배 (초기 스케일 저장)
+        const float Scale2 = 0.46f;
+        if (images.Count > 2) { SetScale(images, 2, Scale2); SetPos(images, 2, 237f, -304f); }
+
+        // 3번 요소: -200, 116 / 0.54배
+        if (images.Count > 3) { SetScale(images, 3, 0.54f); SetPos(images, 3, -200f, 116f); }
+        // 4번 요소: -71, 6 / 0.21배
+        if (images.Count > 4) { SetScale(images, 4, 0.21f); SetPos(images, 4, -71f, 6f); }
+        // 5번 요소: -200, 116 / 0.54배
+        if (images.Count > 5) { SetScale(images, 5, 0.54f); SetPos(images, 5, -200f, 116f); }
+        // 6번 요소: 254, -225 / 0.46배
+        if (images.Count > 6) { SetScale(images, 6, 0.46f); SetPos(images, 6, 254f, -225f); }
+        // 7번 요소: 80, -332 / 0.21배
+        if (images.Count > 7) { SetScale(images, 7, 0.21f); SetPos(images, 7, 80f, -332f); }
+        // 8번 요소: 46, -329 / 0.21배
+        if (images.Count > 8) { SetScale(images, 8, 0.21f); SetPos(images, 8, 46f, -329f); }
+        // 9번 요소: 280, -233 / 0.46배
+        if (images.Count > 9) { SetScale(images, 9, 0.46f); SetPos(images, 9, 280f, -220f); }
+
+        // 10번 요소: -560, 110 / 0.18배 (초기 위치 저장)
+        Vector2 initialPos10 = Vector2.zero;
+        if (images.Count > 10)
+        {
+            SetScale(images, 10, 0.18f);
+            SetPos(images, 10, -900f, 110f);
+            initialPos10 = images[10].rectTransform.anchoredPosition;
+        }
+
+        // ====================================================================
+        // 2. 무한 맥동 애니메이션 (1, 2번 요소 - 메인 루프와 별개)
+        // ====================================================================
+
+        // 1번 요소 (Scale1 * 1.1f까지 커졌다가 Scale1 * 0.9f까지 작아지는 반복)
+        if (images.Count > 1)
+        {
+            images[1].rectTransform.DOScale(Scale1 * 1.1f, 1.4f) // 1초 동안 10% 커짐
+                .SetLoops(-1, LoopType.Yoyo)                     // Yoyo 타입으로 무한 반복 (커짐->작아짐->커짐)
+                .SetEase(Ease.InOutSine)                         // 부드러운 가속/감속
+                .SetTarget(images[1].rectTransform);             // 트윈 대상 지정
+        }
+
+        // 2번 요소 (Scale2 * 1.1f까지 커졌다가 Scale2 * 0.9f까지 작아지는 반복)
+        if (images.Count > 2)
+        {
+            images[2].rectTransform.DOScale(Scale2 * 1.3f, 2.1f) // 1초 동안 10% 커짐
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine)
+                // 딜레이를 주어 1번 요소와 비대칭적인 박자감 부여 (선택 사항)
+                // .SetDelay(0.5f) 
+                .SetTarget(images[2].rectTransform);
+        }
+
+        // ====================================================================
+        // 3. 메인 반복 루프 (10번 요소 점프 이동)
+        // ====================================================================
+
+        if (images.Count > 10)
+        {
+            // 참고: images[10]의 초기 설정 위치 (-560, 110)를 가져와 첫 번째 사이클에 사용합니다.
+            Vector2 initialPosForFirstLoop = images[10].rectTransform.anchoredPosition;
+
+            const float InitialScale10 = 0.18f;
+            const float JumpHeight = 150f;
+            const float JumpDuration = 0.5f;
+            const int JumpCount = 1;
+
+            // 초기 점프 목표 위치 (Y는 초기 설정값 110을 사용)
+            Vector2 targetPos1 = new Vector2(-400f, initialPosForFirstLoop.y); // X = -400f
+            Vector2 targetPos2 = new Vector2(-200f, initialPosForFirstLoop.y); // X = -200f
+
+            // 새로 등장할 위치 (X: 250, Y: -220)
+            Vector2 appearPos = new Vector2(250f, -220f);
+
+            // 추가 점프 목표 위치 (Y는 appearPos의 Y값 -220을 유지)
+            Vector2 jumpTarget3 = new Vector2(520f, appearPos.y); // X = 520f
+            Vector2 jumpTarget4 = new Vector2(920f, appearPos.y); // X = 920f 
+
+            // 최종 복귀 위치 (새로운 시작 위치가 됨)
+            Vector2 finalReturnPos = new Vector2(-800f, 110f); // X = -800f, Y = 110f
+
+            Sequence seq = DOTween.Sequence()
+                .SetLoops(-1, LoopType.Restart)
+                .SetTarget(this);
+
+            // 1. (X: -560) -> (X: -400)으로 점프 이동
+            seq.Append(
+                images[10].rectTransform.DOJumpAnchorPos(targetPos1, JumpHeight, JumpCount, JumpDuration)
+                    .SetEase(Ease.Linear)
+            );
+            seq.AppendInterval(0.2f);
+
+            // 2. (X: -400) -> (X: -200)으로 점프 이동 (도착)
+            seq.Append(
+                images[10].rectTransform.DOJumpAnchorPos(targetPos2, JumpHeight, JumpCount, JumpDuration)
+                    .SetEase(Ease.Linear)
+            );
+
+            // 3. 잠시 대기
+            seq.AppendInterval(0.2f);
+
+            // 4. 크기가 살짝 커짐 (1.2배)
+            seq.Append(
+                images[10].rectTransform.DOScale(InitialScale10 * 1.2f, 0.15f)
+                    .SetEase(Ease.OutQuad)
+            );
+
+            // 5. 사이즈를 0까지 줄임 (축소/페이드 아웃)
+            seq.Append(
+                images[10].rectTransform.DOScale(0f, 0.2f)
+                    .SetEase(Ease.InQuad)
+            );
+
+            // 6. (크기 0인 상태에서) 새 위치로 즉시 이동
+            seq.AppendCallback(() =>
+            {
+                SetPos(images, 10, appearPos.x, appearPos.y);
+            });
+
+            // 7. 뛰용 하면서 다시 등장
+            seq.Append(
+                images[10].rectTransform.DOScale(InitialScale10 * 1.3f, 0.2f)
+                    .SetEase(Ease.OutQuad)
+            );
+            seq.Append(
+                images[10].rectTransform.DOScale(InitialScale10, 0.1f)
+                    .SetEase(Ease.InQuad)
+            );
+
+            // 8. 잠시 대기 (새 위치에서 잠시 머뭄)
+            seq.AppendInterval(0.5f);
+
+            // 9. (X: 250) -> (X: 520)으로 점프 이동 
+            seq.Append(
+                images[10].rectTransform.DOJumpAnchorPos(jumpTarget3, JumpHeight, JumpCount, JumpDuration)
+                    .SetEase(Ease.Linear)
+            );
+
+            // 10. 잠시 대기
+            seq.AppendInterval(0.2f);
+
+            // 11. (X: 520) -> (X: 920)으로 점프 이동
+            seq.Append(
+                images[10].rectTransform.DOJumpAnchorPos(jumpTarget4, JumpHeight, JumpCount, JumpDuration)
+                    .SetEase(Ease.Linear)
+            );
+
+
+
+            // 14. 다음 반복까지 대기 (시퀀스 종료 시 다음 루프는 -800, 110에서 시작합니다.)
+            seq.AppendInterval(1.0f);
+        }
+    }
+
+    // ====================================================================
+    // 보조 함수들
+    // ====================================================================
+
+    void SetPos(List<Image> imgs, int index, float x, float y)
+    {
+        if (index < imgs.Count)
+            imgs[index].rectTransform.anchoredPosition = new Vector2(x, y);
+    }
+
+    void SetScale(List<Image> imgs, int index, float scale)
+    {
+        if (index < imgs.Count)
+            imgs[index].rectTransform.localScale = Vector3.one * scale;
+    }
+
+    protected override void KillAllTweens()
+    {
+        // 1번과 2번 요소의 무한 반복 트윈도 반드시 Kill합니다.
+        if (animationImages != null)
+        {
+            foreach (var img in animationImages)
+            {
+                if (img == null) continue;
+                // rectTransform에 걸린 트윈을 Kill (Scale, Jump, Sequence 모두 포함)
+                img.rectTransform.DOKill();
+                CanvasGroup cg = img.GetComponent<CanvasGroup>();
+                if (cg != null) cg.DOKill();
+            }
+        }
+        // 이 스크립트(this)에 걸린 메인 Sequence도 Kill합니다.
+        DOTween.Kill(this);
+    }
+}
+
+
+
+
 
 public class CardAnimation_Num_12 : CardAnimationBase
 {
@@ -2200,7 +2710,9 @@ public class CardAnimation_Num_109 : CardAnimationBase
         cloneRect.anchoredPosition = spawnPos;
 
         // 알파값 0에서 시작
+        cloneRect.localScale = Vector3.one * 0.3f;
         cloneCanvasGroup.alpha = 0f;
+      
 
         // 목표 위치 (500만큼 위로)
         Vector2 targetPos = new Vector2(spawnPos.x, spawnPos.y + 300f);
@@ -2274,6 +2786,209 @@ public class CardAnimation_Num_109 : CardAnimationBase
                 animationImages[4].GetComponent<RectTransform>().DOKill();
             }
         }
+    }
+}
+
+
+
+public class CardAnimation_Num_110 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+        // ====================================================================
+        // 1. 초기 설정 (크기, 알파, 위치)
+        // ====================================================================
+
+        // 1. 크기(Scale) 설정
+        for (int i = 1; i <= 11; i++)
+        {
+            if (i >= images.Count) break;
+
+            images[i].rectTransform.localScale = Vector3.one * 0.4f;
+            images[i].rectTransform.localRotation = Quaternion.identity;
+        }
+
+        // 2. 알파(Alpha) 설정
+        SetAlphaZero(images, 1);
+        SetAlphaZero(images, 2);
+
+        // 3. 위치(Position) 설정
+        float initialY_3 = -120f;
+
+        // 3번: 0, -80
+        SetPosition(images, 3, 0f, initialY_3);
+
+        // 4, 5번: 329, -271
+        SetPosition(images, 4, 329f, -271f);
+        SetPosition(images, 5, 329f, -271f);
+
+        // 6, 7번: -474, -322
+        SetPosition(images, 6, -474f, -322f);
+        SetPosition(images, 7, -474f, -322f);
+
+        // 8, 9번: 525, -343
+        SetPosition(images, 8, 525f, -343f);
+        SetPosition(images, 9, 525f, -343f);
+
+        // 10, 11번: -291, -257
+        SetPosition(images, 10, -291f, -257f);
+        SetPosition(images, 11, -291f, -257f);
+
+        // ====================================================================
+        // 2. 애니메이션 구현 (Tween)
+        // ====================================================================
+
+        const float jumpDuration = 0.7f;
+        const float jumpHeight = 330f;
+        const float halfDuration = jumpDuration / 2f; // 0.5초
+        const float rotateAngle = -20f;
+
+        // Z축 떨림 효과 상수
+        const float tremorScale = 0f;
+        const float tremorRotate = 10f;
+        const float cycleTime = 0.08f;
+        int loopCount = (int)(halfDuration / (cycleTime * 2));
+
+        // 시퀀스 생성 및 무한 반복 설정
+        Sequence mySequence = DOTween.Sequence()
+            .SetLoops(-1, LoopType.Restart)
+            .SetTarget(this);
+
+        // 0. 바람 이펙트 시작
+        mySequence.AppendCallback(() => StartWindEffect(images));
+
+
+        // 1. 3번 카드 점프 (상승)
+        mySequence.Append(images[3].rectTransform.DOAnchorPosY(initialY_3 + jumpHeight, halfDuration)
+            .SetEase(Ease.OutSine));
+        mySequence.Join(images[3].rectTransform.DOLocalRotate(new Vector3(0, 0, rotateAngle), halfDuration)
+            .SetEase(Ease.OutSine));
+
+
+        // 2. Z축 떨림 효과 (점프 상승과 동시 실행)
+
+        // -Z 방향 떨림: 4, 8번
+        CreateTremorSequenceInSequence(mySequence, images[4].rectTransform, -tremorScale, -tremorRotate, cycleTime, loopCount);
+        CreateTremorSequenceInSequence(mySequence, images[8].rectTransform, -tremorScale, -tremorRotate, cycleTime, loopCount);
+
+        // +Z 방향 떨림: 6, 10번
+        CreateTremorSequenceInSequence(mySequence, images[6].rectTransform, tremorScale, tremorRotate, cycleTime, loopCount);
+        CreateTremorSequenceInSequence(mySequence, images[10].rectTransform, tremorScale, tremorRotate, cycleTime, loopCount);
+
+
+        // 3. 3번 카드 착지 (하강)
+        mySequence.Append(images[3].rectTransform.DOAnchorPosY(initialY_3, halfDuration)
+            .SetEase(Ease.InSine));
+        mySequence.Join(images[3].rectTransform.DOLocalRotate(Vector3.zero, halfDuration)
+            .SetEase(Ease.InSine));
+
+        // 4. 반복 대기 시간 추가 (0.5초)
+        mySequence.AppendInterval(0.5f);
+    }
+
+    private void StartWindEffect(List<Image> images)
+    {
+        if (images.Count <= 1) return;
+
+        const float moveDuration = 0.5f;
+        const float fadeDuration = 0.1f;
+
+        // 0번 요소(배경)의 Sibling Index를 가져와 +1 한 값에 복제 요소를 배치 (바로 앞으로)
+        int desiredSiblingIndex = images[0].rectTransform.GetSiblingIndex() + 1;
+
+        // 1번 요소 복제 (초기 위치: 100, -200 | 이동 목표: 800, -200)
+        if (images.Count > 1 && images[1] != null)
+        {
+            CreateMovingClone(images[1], 300f, -240f, 800f, -240f, moveDuration, fadeDuration, this, desiredSiblingIndex);
+        }
+
+        // 2번 요소 복제 (초기 위치: -100, -200 | 이동 목표: -800, -200)
+        if (images.Count > 2 && images[2] != null)
+        {
+            CreateMovingClone(images[2], -300f, -240f, -800f, -240f, moveDuration, fadeDuration, this, desiredSiblingIndex);
+        }
+    }
+
+    private void CreateMovingClone(Image originalImage, float startX, float startY, float targetX, float targetY, float duration, float fadeDuration, object targetObject, int desiredSiblingIndex)
+    {
+        // 복제본 생성
+        GameObject cloneObj = GameObject.Instantiate(originalImage.gameObject, originalImage.transform.parent);
+        RectTransform cloneRect = cloneObj.GetComponent<RectTransform>();
+        CanvasGroup cloneCanvasGroup = cloneObj.GetComponent<CanvasGroup>();
+
+        if (cloneCanvasGroup == null)
+        {
+            cloneCanvasGroup = cloneObj.AddComponent<CanvasGroup>();
+        }
+
+        // 초기 위치 설정
+        cloneRect.anchoredPosition = new Vector2(startX, startY);
+        cloneCanvasGroup.alpha = 0f;
+
+        // ★ Sibling Index를 0번 요소 바로 다음(앞)으로 설정
+        cloneRect.SetSiblingIndex(desiredSiblingIndex);
+
+        // 시퀀스 구성
+        Sequence cloneSequence = DOTween.Sequence().SetTarget(targetObject);
+
+        // 1. 알파 페이드 인 (등장)
+        cloneSequence.Append(cloneCanvasGroup.DOFade(1f, fadeDuration));
+
+        // 2. X, Y축으로 이동
+        cloneSequence.Append(cloneRect.DOAnchorPos(new Vector2(targetX, targetY), duration).SetEase(Ease.OutQuad));
+
+        // 3. 이동 종료 시점에 알파 페이드 아웃 (사라짐)
+        cloneSequence.Join(cloneCanvasGroup.DOFade(0f, fadeDuration).SetDelay(duration - fadeDuration));
+
+        // 4. 애니메이션 완료 후 오브젝트 제거
+        cloneSequence.OnComplete(() => {
+            GameObject.Destroy(cloneObj);
+        });
+    }
+
+    // 시퀀스 내에 떨림 시퀀스를 Join 시키는 Helper 함수
+    private void CreateTremorSequenceInSequence(Sequence mainSequence, RectTransform element, float scaleOffset, float rotateOffset, float cycleTime, int loopCount)
+    {
+        Sequence tremorSequence = DOTween.Sequence()
+            .SetTarget(this)
+            .Append(element.DOScale(element.localScale.x + scaleOffset, cycleTime))
+            .Join(element.DOLocalRotate(new Vector3(0, 0, rotateOffset), cycleTime).SetEase(Ease.InOutSine))
+            .Append(element.DOScale(element.localScale.x, cycleTime))
+            .Join(element.DOLocalRotate(Vector3.zero, cycleTime).SetEase(Ease.InOutSine))
+            .SetLoops(loopCount, LoopType.Yoyo)
+            .SetTarget(element.gameObject);
+
+        mainSequence.Join(tremorSequence);
+    }
+
+    private void SetAlphaZero(List<Image> images, int index)
+    {
+        if (index < images.Count)
+        {
+            CanvasGroup cg = images[index].GetComponent<CanvasGroup>();
+            if (cg == null) cg = images[index].gameObject.AddComponent<CanvasGroup>();
+            cg.alpha = 0f;
+        }
+    }
+
+    private void SetPosition(List<Image> images, int index, float x, float y)
+    {
+        if (index < images.Count)
+        {
+            images[index].rectTransform.anchoredPosition = new Vector2(x, y);
+        }
+    }
+
+    protected override void KillAllTweens()
+    {
+        if (animationImages != null)
+        {
+            foreach (var img in animationImages)
+            {
+                if (img != null) img.rectTransform.DOKill();
+            }
+        }
+        DOTween.Kill(this);
     }
 }
 
@@ -3020,5 +3735,22 @@ public class CardAnimation_Num_137 : CardAnimationBase
                 }
             }
         }
+    }
+}
+
+
+
+
+
+
+
+public class CardAnimation_Num_999 : CardAnimationBase
+{
+    protected override void ExecuteAnimation(List<Image> images)
+    {
+
+    }
+    protected override void KillAllTweens()
+    {
     }
 }

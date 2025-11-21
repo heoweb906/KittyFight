@@ -145,12 +145,13 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 01fb0a0b5efefd94ea9d62a625275396, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 63efdf131f32d3b4f91b73b2f71972c6, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: f30cb485301bc11429cb11c7cf488622, type: 3}
   sprite_Keyword: {fileID: 21300000, guid: 3a079d5201968864b9bdf9a87cabb6fa, type: 3}
   sprite_BorderLine_Left: {fileID: 21300000, guid: cdbf4a2b9857c6f47a42d4ccded817a8,
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: a6b10d83ccf7f1743b00e886814d4d8a,
     type: 3}
-  animationType: 3
+  AnimationType: 3
   description: <color=#FFFFFF>Fires a venomous fang that poisons foes, dealing <color=#FF0000>0.7</color>
     damage per second for <color=#FF0000>3</color> seconds</color>
