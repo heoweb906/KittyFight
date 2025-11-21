@@ -1288,6 +1288,7 @@ MonoBehaviour:
   visualPivot: {fileID: 6749979592270201476}
   playersRoot: {fileID: 0}
   maxSlopeAngle: 50
+  mulSlopeSpeed: 1.2
   groundCheck: {fileID: 350022922035580808}
 --- !u!114 &8667721077074239387
 MonoBehaviour:
