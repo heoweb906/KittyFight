@@ -43,7 +43,7 @@ public class KillZone : MonoBehaviour
         //  내 플레이어만 처리
         if (ability.playerNumber != MatchResultStore.myPlayerNumber) return;
 
-        health.TakeDamage(lethalDamage, null);
+        health.ForceDamage(lethalDamage, null);
     }
 
     private void OnTriggerExit(Collider other)

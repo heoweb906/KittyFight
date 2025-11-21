@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHP;
     private bool isInvincible = false;
+    private bool skipNextDamageEffect = false;
 
     private Renderer rend;
     private Color originalColor;
@@ -134,13 +135,22 @@ public class PlayerHealth : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
 
-        hitEffectPending = true;
+        if (!skipNextDamageEffect) hitEffectPending = true;
+        else skipNextDamageEffect = false;
     }
 
     public void TakeDamage(int damage, PlayerAbility attacker, Vector3 sourceWorldPos)
     {
         pendingSourcePos = sourceWorldPos;
         pendingPunchDir = ComputePunchDirFromSource(sourceWorldPos);
+        TakeDamage(damage, attacker);
+    }
+
+    public void ForceDamage(int damage, PlayerAbility attacker = null)
+    {
+        isInvincible = false;
+        skipNextDamageEffect = true;
+
         TakeDamage(damage, attacker);
     }
 
