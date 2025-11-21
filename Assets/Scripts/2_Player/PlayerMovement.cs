@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
+    public float mulSlopeSpeed = 1.2f;
 
     [SerializeField] private Transform groundCheck;
 
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                     rb.AddForce(Vector3.down * 80f, ForceMode.Force);
                 moveDirection.y = 0f;
                 Vector3 slopeDir = GetSlopeMoveDirection();
-                rb.velocity = slopeDir * ability.moveSpeed;
+                rb.velocity = slopeDir * ability.moveSpeed * mulSlopeSpeed;
             }
         }
         else
