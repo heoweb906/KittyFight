@@ -13,6 +13,11 @@ public class StunStatus : MonoBehaviour
 
     public void ApplyStun(float duration)
     {
+        ApplyStun(duration, true);
+    }
+
+    public void ApplyStun(float duration, bool playShockAnim)
+    {
         controller = GetComponent<PlayerController>(); // 조작 차단 대상
         if (controller != null)
         {
@@ -26,7 +31,13 @@ public class StunStatus : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
-        anim.SetBool("isShock", true);
+
+        if (anim != null && !playShockAnim)
+        {
+            anim.SetBool("isRun", false);
+        }
+        else if (anim != null && playShockAnim)
+            anim.SetBool("isShock", true);
     }
 
     private IEnumerator StunTimer(float duration)

@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHP;
     private bool isInvincible = false;
+    private bool skInvincible = false; // LazyMode 용
     private bool skipNextDamageEffect = false;
 
     private Renderer rend;
@@ -99,7 +100,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage, PlayerAbility attacker)
     {
-        if (isInvincible) return;
+        if (isInvincible || skInvincible)
+            return;
 
         // 테스트용
         //pendingSourcePos = null;
@@ -149,6 +151,7 @@ public class PlayerHealth : MonoBehaviour
     public void ForceDamage(int damage, PlayerAbility attacker = null)
     {
         isInvincible = false;
+        skInvincible = false;
         skipNextDamageEffect = true;
 
         TakeDamage(damage, attacker);
@@ -308,5 +311,18 @@ public class PlayerHealth : MonoBehaviour
         }
 
         return Quaternion.Euler(xAngle, fixedY, fixedZ);
+    }
+
+    // 스킬로 무적하는거 용
+    public void SetSkillInvincible(float duration)
+    {
+        StartCoroutine(Co_SkillInvincible(duration));
+    }
+
+    private IEnumerator Co_SkillInvincible(float duration)
+    {
+        skInvincible = true;
+        yield return new WaitForSeconds(duration);
+        skInvincible = false;
     }
 }

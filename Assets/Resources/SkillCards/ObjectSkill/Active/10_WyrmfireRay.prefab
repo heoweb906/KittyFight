@@ -50,7 +50,6 @@ MonoBehaviour:
     type: 3}
   skillIcon: {fileID: 0}
   aimRange: 50
-  laserLifetime: 0.08
   obstacleMask:
     serializedVersion: 2
     m_Bits: 768

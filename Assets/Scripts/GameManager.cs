@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening.Core.Easing;
 using System.Threading.Tasks;
 
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
     [Header("양측 플레이어 Ability 참조")]
     public PlayerAbility playerAbility_1;
     public PlayerAbility playerAbility_2;
+
+    private readonly List<GameObject> roundObjects = new List<GameObject>();
 
     // #. 양측 플레이어 점수
     public int IntScorePlayer_1 { get; set; }
@@ -277,6 +280,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Resetting Game");
 
+        ClearRoundObjects();
+
         player1?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
         player2?.GetComponent<PlayerMovement>()?.ForceDetachFromPlatform();
         player1?.GetComponentInChildren<WallCheck>()?.ForceClearContacts();
@@ -366,7 +371,19 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void RegisterRoundObject(GameObject go)
+    {
+        if (go && !roundObjects.Contains(go))
+            roundObjects.Add(go);
+    }
 
-
-
+    public void ClearRoundObjects()
+    {
+        for (int i = 0; i < roundObjects.Count; i++)
+        {
+            if (roundObjects[i])
+                Destroy(roundObjects[i]);
+        }
+        roundObjects.Clear();
+    }
 }
