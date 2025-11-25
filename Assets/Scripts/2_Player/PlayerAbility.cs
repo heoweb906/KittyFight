@@ -130,6 +130,19 @@ public class PlayerAbility : MonoBehaviour
         var s = GetSkill(type);
         if (s == null) return;
 
+        if (type != SkillType.Dash)
+        {
+            SK_Ghostride ghost = null;
+
+            if (meleeSkill is SK_Ghostride g1) ghost = g1;
+            if (rangedSkill is SK_Ghostride g2) ghost = g2;
+            if (skill1 is SK_Ghostride g4) ghost = g4;
+            if (skill2 is SK_Ghostride g5) ghost = g5;
+
+            if (ghost != null)
+                ghost.NotifyAttack();
+        }
+
         if (s is SK_Repeek && TryGetLastActionType(out var lastType))
         {
             var target = GetSkill(lastType);
