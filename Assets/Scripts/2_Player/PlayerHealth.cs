@@ -67,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void ShakeCameraPunch(float strength, Vector3 dir, float duration = 0.14f)
+    private void ShakeCameraPunch(float strength, Vector3 dir, float duration = 0.6f)
     {
         var gm = FindObjectOfType<GameManager>();
         var cam = gm?.cameraManager;
@@ -76,7 +76,7 @@ public class PlayerHealth : MonoBehaviour
         float mag = Mathf.Clamp01(strength);
         if (dir.sqrMagnitude < 1e-8f) dir = Vector3.right;
 
-        cam.ShakeCameraPunch(mag, duration, dir);
+        cam.ShakeCameraPunch(mag, dir, duration);
     }
 
     private Vector3 ComputePunchDirFromSource(Vector3 sourceWorldPos)

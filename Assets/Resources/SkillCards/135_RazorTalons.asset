@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 135_RazorTalons
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 3
+  iSkillIndex: 135
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: f1e78b20630a7d142a30810cfdfdc5bb,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 26557786e56f5fe45a1d5bf3546a8e68,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: edb5167d37656944a98720e124aa462f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: adedb83f8049ece4bbf6d627c0c83267,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 61ecc293885d1dc449df64fe7bacbecd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+    type: 3}
+  AnimationType: 28
+  description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
+    hit take <color=#FF0000>3.5</color> damage</color>

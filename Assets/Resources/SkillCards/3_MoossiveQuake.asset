@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 3_MoossiveQuake
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 3
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 092265377dcf74b40ab8e2d0a38cba34,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6af2e83347c014448912bd70a82bdff4,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 52bac9355cfa5ff47bdb8c69295f4164,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 98056826de8d575429e98e889da1a975,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c343529d3519f36479bcc9e9bf640836,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a497442ce7dcb734f89b2b9456a74809,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 19e957684522f2f48b1cd288921bc24a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d29f9789d2be9e047b828f158386e58c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8e31fbcea808d2a428ac1cb7ae5691ee,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 29f14d9b39d3f21468f88f2e86848c5f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9639155d6cf56794b81d0160a2269672,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+    type: 3}
+  AnimationType: 1
+  description: 

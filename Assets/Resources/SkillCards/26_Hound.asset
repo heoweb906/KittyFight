@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 26_Hound
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 10
+  iSkillIndex: 26
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: e03b3499cab07414fad31aeb22ba69e6,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 06a2bf50d4538e144a310eea32bf1b94,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 32f12b4a4dfd3234e9514664328bd2ad,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 895762655875f39429ddbf696068e5bd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 20a202c59f004e94b8fd493d665fb95a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 762c050201c1c9a42a78b108d0aef0c5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 30803c1adcf272147b877017d62cb794,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 7a71cae86c2f86443a3324f5fbb6a431, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 1bdb073d370c08f4881f19d4d19e0d32, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 934589902ff4eb44095a39318e4125de, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 66fccb17257361d4e908653d4d1fb91b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 54f8a24310570144099005c3f56cd0dc,
+    type: 3}
+  AnimationType: 16
+  description: "<color=#FFFFFF>Tosses an egg forward! On hit, it scrambles the enemy\u2019s
+    vision</color>"

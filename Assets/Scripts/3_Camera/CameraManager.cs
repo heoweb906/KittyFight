@@ -22,14 +22,6 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    ShakeCameraPunch();
-        //}
-    }
-
 
     public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
     {
@@ -49,7 +41,8 @@ public class CameraManager : MonoBehaviour
         );
     }
 
-    public void ShakeCameraPunch(float strength = 0.2f, float duration = 0.6f, Vector3 direction = default)
+
+    public void ShakeCameraPunch(float strength = 0.2f, Vector3 direction = default, float duration = 0.6f)
     {
         if (objCamaera == null) return;
 
@@ -80,4 +73,5 @@ public class CameraManager : MonoBehaviour
             .SetEase(Ease.OutBack) // OutBack 이징 함수가 스프링 반동을 시각적으로 돕습니다.
         );
     }
+
 }

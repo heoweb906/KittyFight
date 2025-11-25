@@ -437,7 +437,7 @@ public class MainMenuController : MonoBehaviour
         if (targetImage == null) return;
 
         RectTransform targetRect = targetImage.rectTransform;
-        Vector2 targetSize = new Vector2(100f, 100f);
+        Vector2 targetSize = new Vector2(125f, 125f);
 
         // 이전 애니메이션 중지 및 초기 상태 설정
         targetRect.DOKill();

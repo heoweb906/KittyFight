@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 105_RampageRemnant
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 105
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: c67c75b2cd8b48e4dba75e4ff3966ed8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6dad152c97ba40e4dba0a57bd24a9bc3,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 73bf253f42632c345a4ac79cbe5b8a55,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b8521182eefb2574e933ed3d7cce5849,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 47f7854aa0b8f0542b5550fdd2392a2b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 67ee84a4b9fc7e4479b3e150cf2cfa62,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ddfc5dd86b1d4c746ac6b85b3e05e0f7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 397c195b63d09aa40866cbf7971e2e94,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a0953543affcdcc4486618ed9a9b074c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 800a9b7c8d4d09842bf8c62dc83e9e8e, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f0074a6b57cbcfd49925029fa8508df7, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: fda427a0eb2deb140846a8c380863e61,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: d38335604d19f75488134bd1c667b7a3,
+    type: 3}
+  AnimationType: 23
+  description: "<color=#FFFFFF>The longer you hold back, the harder you charge\u2014like
+    a bull ready to smash!</color>"

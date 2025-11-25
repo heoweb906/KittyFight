@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 23_FeatherBarrage
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: FeatherBarrae
+  iAnimalNum: 10
+  iSkillIndex: 23
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 024b0c7d9c03bd145a065c7e5e1a794a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c6d843631f910fa4a84dc9ea852f5d78,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b493b2097f915ca41ba3852302df8665,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e5d92117e3e47a54aa8694e44edc751d,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ea4b2f81f1977374d910acfeb97bc077,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 90cceef6e56ff4c4a8e667134218e88d,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: f37ad15a48cd7b9428027aa729ad6386,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1ae86d176f8aa274f8e60c4b34c862f6,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 863524f2b9d02704db7f10704cecb154,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: db8896404c5400a4ba3c924fad6aafad,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2dad487a9c429114cabcfbe1da015171,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: aca5103de338a6e478e3ec8410fa0a53,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 48c8ad4b393530e4db80721fb7518ef3,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e3cbbe37e81e2944eadd8ee063a05efd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7492348e4cf70af42b102b15a0c10a86,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 266808dccb324494a80f2c2735dccab7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0b681c992d503e940a76bf01011fa5c0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: adac1d3c8123b744092fce19012022cf,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c42f52f85fe1a094ab1399b76cdd2ead,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8b0b0ed700472e74688507124132a3fd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 94e058cdb623af8408e3b7a227dd8c47,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 0b53ec0ca3019864ea0c0c1162f840d8, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: a46d735d99f55ce4bafb9b236e77ae6d, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: bfcfd9dae1773414fb6511a65bde1bd4, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: c683157dc68783c47b639cd5ed561be9, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: f38c5895a9d436342b0bba490f63c24c,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
+    type: 3}
+  AnimationType: 11
+  description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
+    <color=#FF0000>0.5</color> damage</color>

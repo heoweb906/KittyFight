@@ -169,7 +169,6 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-
     private void Update()
     {
         if (iTimerForSelect > 0 && bTimerCheck)
@@ -197,7 +196,7 @@ public class SkillCardController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            ShowSkillCardListWithSpecific(0, false, new int[] { 7, 8, 9, 110 });
+            ShowSkillCardListWithSpecific(0, false, new int[] {3,4,104,105});
         }
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
@@ -375,8 +374,8 @@ public class SkillCardController : MonoBehaviour
 
 
             text_Timer.gameObject.SetActive(true);
-            iTimerForSelect = 15;
-            fTimerInternal = 15.0f;
+            iTimerForSelect = 10000;
+            fTimerInternal = 10000.0f;
             bTimerCheck = true;
             text_Timer.text = iTimerForSelect.ToString();
 

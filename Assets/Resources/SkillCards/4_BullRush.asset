@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 4_BullRush
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 4
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4096bbcfd3e76c4469e1841180041589,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: cc7fcbc185e960b41b8324e9f5846fbc,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4cb8c053a75f22b49b2c5b4719c0382e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9f4d6ad896348204eb369da3b454fd73,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+    type: 3}
+  AnimationType: 2
+  description: 
