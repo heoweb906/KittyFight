@@ -49,6 +49,6 @@ MonoBehaviour:
   objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 0}
   aimRange: 0
-  healAmount: 4
+  healAmount: 40
   slowDuration: 3
   slowPercent: 40
