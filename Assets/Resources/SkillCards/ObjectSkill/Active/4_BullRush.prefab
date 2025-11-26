@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3365488371481765013}
-  - component: {fileID: 833759275654908572}
+  - component: {fileID: 104904325338192969}
   m_Layer: 0
-  m_Name: 24_Eggsplosion
+  m_Name: 4_BullRush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &833759275654908572
+--- !u!114 &104904325338192969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,15 +41,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 5783421907839214963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963857149c00e8345bb34f88c32d9410, type: 3}
+  m_Script: {fileID: 11500000, guid: 53255c08fa5f36446a1d941c00202220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 6.5
-  objSkillEntity: {fileID: 3582814572584618339, guid: b9b9e83ea20d1cc46b386ad2351bb58c,
+  coolTime: 5.5
+  objSkillEntity: {fileID: 6777267630284458099, guid: 2b6bb27f5d5d9a543885f727126ea164,
     type: 3}
-  skillIcon: {fileID: 21300000, guid: eb3bbd82718f0064fa3b67d0af1883fb, type: 3}
-  aimRange: 1
-  projectileSpeed: 10
-  spawnOffset: 0.6
-  spreadAngleDeg: 12
+  skillIcon: {fileID: 0}
+  aimRange: 2.5
+  dashDuration: 0.12
+  boxHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 768
+  disableGravityDuringDash: 1
+  hitboxLifetimePadding: 0.02

@@ -45,16 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 2
+  coolTime: 13
   objSkillEntity: {fileID: 6777267630284458099, guid: 9c83d34d87639b2498c3cd4295da10d7,
     type: 3}
   skillIcon: {fileID: 0}
   aimRange: 2.5
   projectileSpeed: 12
-  collisionRadius: 0.25
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 256
   blackholePrefab: {fileID: 6777267630284458099, guid: 5fcd118e5fd74784e9402f23d885df6b,
     type: 3}
   blackholeDuration: 6

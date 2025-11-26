@@ -153,7 +153,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
-  damage: 5
+  damage: 7
   destroyOnHit: 1
   particle_Line: {fileID: 5486025720906068977}
   particle_Destroy: {fileID: 2844923944877570796, guid: 846c9add3d6ad5444ba9f59fdeeadce7,

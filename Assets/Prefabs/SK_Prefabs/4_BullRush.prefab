@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4574550274525587615}
   - component: {fileID: 1397280902516861553}
   m_Layer: 0
-  m_Name: BullRush
+  m_Name: 4_BullRush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

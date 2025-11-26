@@ -1,17 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// 마우스 방향으로 강하게 돌진하는 스킬.
-/// - 이동은 로컬 소유자만 수행(네트워크 위치 동기화에 의존)
-/// - 러시 히트박스를 생성해 플레이어에 부착(양쪽 클라이언트 모두 스폰)
-/// </summary>
-[RequireComponent(typeof(PlayerAbility))]
 public class SK_BullRush : Skill
 {
     [Header("Rush 이동")]
     [Min(0.01f)] public float dashDuration = 0.12f;
-    // [Min(0.01f)] public float aimRange = 3.5f;
     public Vector3 boxHalfExtents = new Vector3(0.5f, 0.5f, 0.5f);
     public LayerMask obstacleMask;
     public bool disableGravityDuringDash = true;
@@ -48,7 +41,7 @@ public class SK_BullRush : Skill
         Destroy(hb, dashDuration + hitboxLifetimePadding);
 
         // 실제 이동은 로컬 소유자만 수행
-        if (playerAbility.playerNumber != MatchResultStore.myPlayerNumber) return;
+        //if (playerAbility.playerNumber != MatchResultStore.myPlayerNumber) return;
 
         if (!rb)
         {
