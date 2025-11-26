@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PS_PlotArmor : MonoBehaviour
+public class PS_PlotArmor : Passive
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("ÁãÅÐ °©¿Ê ¼³Á¤")]
+    [Range(0f, 1f)]
+    [Tooltip("ÇÇ°Ý ¹«½Ã È®·ü (0~1)")]
+    public float ignoreChance = 0.25f;
+
+    protected override void Subscribe(AbilityEvents e)
     {
-        
+        base.Subscribe(e);
+        e.OnBeforeDealDamage += OnBeforeDealDamage;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Unsubscribe(AbilityEvents e)
     {
-        
+        e.OnBeforeDealDamage -= OnBeforeDealDamage;
+        base.Unsubscribe(e);
+    }
+
+    private void OnBeforeDealDamage(ref int dmg, GameObject victim)
+    {
+        if (dmg <= 0 || victim == null) return;
+        if (ability == null) return;
+        if (victim != ability.gameObject) return;
+        if (Random.value < ignoreChance)
+        {
+            dmg = 0;
+        }
     }
 }
