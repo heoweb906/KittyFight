@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4574550274525587615}
   - component: {fileID: -1800038675427722978}
   m_Layer: 17
-  m_Name: FuryBlast
+  m_Name: 113_FuryBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

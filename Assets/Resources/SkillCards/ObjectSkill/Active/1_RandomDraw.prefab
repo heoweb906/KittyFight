@@ -52,6 +52,7 @@ MonoBehaviour:
   candidateSkillPrefabs:
   - {fileID: 8206251480387968023, guid: 241e61f1b4cbde04b961ad37e13051a5, type: 3}
   - {fileID: -4357125801937595989, guid: bdb18cafaf6ac5a489f18317982d402a, type: 3}
+  - {fileID: 104904325338192969, guid: c11dea4a714d0964ba9e316de5b940cc, type: 3}
   - {fileID: 3575292399935434211, guid: a58e9801a93119e49a60773a0f8a8e1a, type: 3}
   - {fileID: -8858087752132909891, guid: 694c9ecca6777f440a39cc6848839ece, type: 3}
   - {fileID: -4474993669154622871, guid: 297d14fcf6f53584e847c1c4244c9651, type: 3}
