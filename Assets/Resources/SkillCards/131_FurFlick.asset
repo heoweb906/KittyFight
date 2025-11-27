@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 131_FurFlick
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: FeatherShot
+  iAnimalNum: 10
+  iSkillIndex: 131
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: c73463e988ec57443ab3f4ab151236f8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b6592eefa74da344d8dda0ce11171f90,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d2ac80d277bde4e41bb0401b7140469b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: eda6f79b8023ed9459ea153dcb52a6da,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4a25c5a84df877f40af0c00ab4475f9c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: daace2d557ff85440833477f6659ae2a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: bc681a6bcb414794e8ed9ac1e2c446fa,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 30f42ae581f005945a0089ab93aaaa6e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 0b53ec0ca3019864ea0c0c1162f840d8, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: a46d735d99f55ce4bafb9b236e77ae6d, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: bfcfd9dae1773414fb6511a65bde1bd4, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: c683157dc68783c47b639cd5ed561be9, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: f38c5895a9d436342b0bba490f63c24c,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
+    type: 3}
+  AnimationType: 21
+  description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
+    <color=#FF0000>0.5</color> damage</color>

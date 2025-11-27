@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 118_Unbridled
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 7
+  iSkillIndex: 118
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 89cfd6284fe560b47b05494855a99227,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ab43acfb0fc50454396547287f0848ac,
+      type: 3}
+    margins:
+      m_Left: 300
+      m_Right: -300
+      m_Top: -256
+      m_Bottom: 256
+  - sprite_Cardillustration: {fileID: 21300000, guid: a518ca9891bf12944a8a7c1d0461b2d5,
+      type: 3}
+    margins:
+      m_Left: 184
+      m_Right: -184
+      m_Top: -169
+      m_Bottom: 169
+  - sprite_Cardillustration: {fileID: 21300000, guid: 41ac60865e40c7048a999b9d01d67ce2,
+      type: 3}
+    margins:
+      m_Left: -210
+      m_Right: 210
+      m_Top: 200
+      m_Bottom: -200
+  - sprite_Cardillustration: {fileID: 21300000, guid: 96158812dee9cd342a9f84088c36ca62,
+      type: 3}
+    margins:
+      m_Left: -540
+      m_Right: 540
+      m_Top: -78
+      m_Bottom: 78
+  - sprite_Cardillustration: {fileID: 21300000, guid: 007fcfd5d3596f844a5b3693abade07b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0aae41a6a7ce5154f8fe98bf11b6d638,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: b4e131fa015d1984fb40ac7ca12ef0b0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1ff7e66ec44f65240b9a5312e97b56f7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 68856515c33b2c741964ca13e5e84433,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d6087b03e456489498abcbf84b0e3e10,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7922b4bdb5b89b345a0c0f3e9ee248e9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0cc69fc098661ca4d9a7853c5b1a82d5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: d30a57eeaf64a004199a3f89d64d21aa, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 9545338a9b1088f4cb6651a2c40d8dcf, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: c4005cb950a0e4b4ba32f6b24d24d274, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 0280ae7d83131454a93f144915b5b99b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: d170b4410f698f64ca91c78515643f58,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: d2c4c755f4994ad46b264d765472aeed,
+    type: 3}
+  AnimationType: 21
+  description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
+    damage and launching them away</color>

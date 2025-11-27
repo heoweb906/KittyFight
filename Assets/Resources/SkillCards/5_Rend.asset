@@ -130,34 +130,6 @@ MonoBehaviour:
       m_Right: -309
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: 967efc9042eaf9148a8cb0921d8b23f0,
-      type: 3}
-    margins:
-      m_Left: 651
-      m_Right: -651
-      m_Top: 442
-      m_Bottom: -442
-  - sprite_Cardillustration: {fileID: 21300000, guid: 85ad39846589b1749a1c3c9ef317eb97,
-      type: 3}
-    margins:
-      m_Left: 651
-      m_Right: -651
-      m_Top: 442
-      m_Bottom: -442
-  - sprite_Cardillustration: {fileID: 21300000, guid: 85e770cd353bd9147ac504ae04b1b730,
-      type: 3}
-    margins:
-      m_Left: 651
-      m_Right: -651
-      m_Top: 442
-      m_Bottom: -442
-  - sprite_Cardillustration: {fileID: 21300000, guid: 3e72b4890da012d42b78c89e78dd03aa,
-      type: 3}
-    margins:
-      m_Left: 651
-      m_Right: -651
-      m_Top: 442
-      m_Bottom: -442
   sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
   sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}

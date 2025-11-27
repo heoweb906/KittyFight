@@ -60,13 +60,6 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: bcb5c155b81c8774a8350360060b19ed,
-      type: 3}
-    margins:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
   - sprite_Cardillustration: {fileID: 21300000, guid: e2266c680dda82f4a98c884898799729,
       type: 3}
     margins:
@@ -82,7 +75,7 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 52472b36c09e2004d881dcac5f7f2228,
     type: 3}
-  AnimationType: 11
+  AnimationType: 18
   description: <color=#FFFFFF>Your melee strikes start weak at <color=#FF0000>0.5</color>
     damage but sharpen with every hit, gaining <color=#0080FF>0.2</color> damage
     each time</color>

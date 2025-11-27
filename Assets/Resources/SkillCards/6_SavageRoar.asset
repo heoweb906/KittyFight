@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 6_SavageRoar
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 3
+  iSkillIndex: 6
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: df2534f6d063a3d4e878d7865a77f883,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5453481275d6a8b40a99a7747f6948e0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2f0b354e92598a644bedf7c22868b773,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 620da71b8463b24419ba58e6d22a332a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7cf251b32b2bbd34e95bba9f6548fec8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d34a1685f6742d740bc30cfec3d91389,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e3d0dabe76d69b24b82be7129560546a,
+      type: 3}
+    margins:
+      m_Left: 309
+      m_Right: -309
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: 97438de9d0f3c8848a7e7991fed72840,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 99a4406793878c54d96ad8282be5e499,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: dfc14214f41885a449a2281dd06e3c42,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8bbdd554e9f5f304da12d9ee729b4a46,
+      type: 3}
+    margins:
+      m_Left: -884
+      m_Right: 884
+      m_Top: -221
+      m_Bottom: 221
+  - sprite_Cardillustration: {fileID: 21300000, guid: d10cfdcdf2b1a464a8d8210d82410d29,
+      type: 3}
+    margins:
+      m_Left: 783
+      m_Right: -783
+      m_Top: -136
+      m_Bottom: 136
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4a8a429e31ecdde49a1ab5629272465e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: eac965f75858021498f32449e6351a08,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7ed30f24384f1d84fbc7c3141d3bc163,
+      type: 3}
+    margins:
+      m_Left: -863
+      m_Right: 863
+      m_Top: 362
+      m_Bottom: -362
+  - sprite_Cardillustration: {fileID: 21300000, guid: d74c691514a70c741aa43bb70b526d9b,
+      type: 3}
+    margins:
+      m_Left: -418
+      m_Right: 418
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: 59b45591904031f48a7f01caa88151a5,
+      type: 3}
+    margins:
+      m_Left: 309
+      m_Right: -309
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: 95e97afb978fbb442a73038c50376bfb,
+      type: 3}
+    margins:
+      m_Left: 309
+      m_Right: -309
+      m_Top: -507
+      m_Bottom: 507
+  - sprite_Cardillustration: {fileID: 21300000, guid: bb22ef34060c1d448b141d6dca95d2da,
+      type: 3}
+    margins:
+      m_Left: 309
+      m_Right: -309
+      m_Top: -507
+      m_Bottom: 507
+  sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+    type: 3}
+  AnimationType: 3
+  description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
+    hit take <color=#FF0000>3.5</color> damage</color>

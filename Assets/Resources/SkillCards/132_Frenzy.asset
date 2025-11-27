@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 132_Frenzy
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 132
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 74044c15c91c3e240acda238c13b650b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e623163b0a8b179428710c9c3ec9ee69,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e48a852f1cdf588429b2b488d2bd7803,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 982a4317262d47f4d8423ac0cb945ef1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 84a6d8b9c5044d04eb897f42bcd25565,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 897a655998ba3704dbb276ddadd47286,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 7a71cae86c2f86443a3324f5fbb6a431, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: f37ae9b79c5b78748866c196b60fbdc2, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 06b7765bcce86d445b8b24c364e99348, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: e7a66917039cd274382e106cb3b7f180,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: d7c6c4e085c8c6a4680f84274786b9fc,
+    type: 3}
+  AnimationType: 30
+  description: <color=#FFFFFF>Got a weak prey? Snap it up immediately if under <color=#FF0000>10</color>%
+    health!</color>

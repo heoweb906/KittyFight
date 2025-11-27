@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 112_HotPotato
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 112
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: ecfd08c2bc77f63448b1eecda693cfb6,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c689b78123f9a314d9910dabe350b72b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0f2d419676db2fd498df22baf9c214d9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 62759fbc548c0924fb47c2fc714ded47,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e89c9039645556247b55bd151453c042,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: deccb0060bd3fba438be5a31b399a801,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 862086341200d454a96c99d3751842ac,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: e44f786580038144cbdded26ec2ea699, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: c6a8abba7058b5f4aa74b272f054f1a5, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 859ad0f32027ef74e8165eefc1cea5b7, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: eb484f9bf26142c4a949daecd7462319, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: f94e946188f5c2847ad63316fcf42fa6,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: ab62846c5c28aa244a02c3b52f2d0e89,
+    type: 3}
+  AnimationType: 26
+  description: "<color=#FFFFFF>Explosive fury erupts every <color=#0080FF>10</color>
+    seconds! <color=#FF0000>2</color> damage to all around you \u2014 yourself included!!</color>"
