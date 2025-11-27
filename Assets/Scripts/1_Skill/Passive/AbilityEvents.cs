@@ -10,6 +10,7 @@ public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
 
 public struct DashParams { public float distance; public float speed; }
 public delegate void DashWillExecuteHandler(ref DashParams p);
+public delegate void DashFinishedHandler(Vector3 start, Vector3 end);
 
 
 // 이벤트 허브
@@ -21,6 +22,7 @@ public class AbilityEvents : MonoBehaviour
     public event ModifyCooldownHandler OnModifyCooldown;    // 쿨다운 계산 직전
     public event CooldownFinalizedHandler OnCooldownFinalized;
     public event DashWillExecuteHandler OnDashWillExecute;  // 대쉬 실행 직전
+    public event DashFinishedHandler OnDashFinished; // 대쉬 종료
     public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전
     public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시
     public event RoundHandler OnRoundStart;                 // 라운드 시작
@@ -37,6 +39,9 @@ public class AbilityEvents : MonoBehaviour
 
     public void EmitDashWillExecute(ref DashParams p)
         => OnDashWillExecute?.Invoke(ref p);
+
+    public void EmitDashFinished(Vector3 start, Vector3 end)
+        => OnDashFinished?.Invoke(start, end);
 
     public void EmitBeforeDealDamage(ref int dmg, GameObject victim)
         => OnBeforeDealDamage?.Invoke(ref dmg, victim);

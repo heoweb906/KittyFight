@@ -130,5 +130,10 @@ public class SK_Dash : Skill
         if (disableGravityDuringDash) rb.useGravity = origUseGravity;
         rb.velocity = Vector3.zero;
         anim.SetBool("isDash", false);
+
+        if (events != null)
+        {
+            events.EmitDashFinished(startPos, targetPos);
+        }
     }
 }
