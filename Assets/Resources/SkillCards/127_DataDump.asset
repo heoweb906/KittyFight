@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 127_DataDump
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 9
+  iSkillIndex: 127
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4c024424eada2234d9315a54f4427306,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a193c8b4dd16c0d4188e2c11bb9df8bc,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a14ab8b5a62fa7447921212db78dea79,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c7931e55d137bd844976fd8f9f1a4804,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 40fd6d076a42f3843981085a171dc918,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4a288eba7b78c6e4087e7d3fcd37994f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: aa263867f715e5f49a60bdf181ddf7e5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7b7fc906017138a4682e59e23f3b4101,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: -340
+      m_Bottom: 340
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3ec4e7b5283469544bc0c84ccacb7f9e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: -340
+      m_Bottom: 340
+  - sprite_Cardillustration: {fileID: 21300000, guid: 16c25c6c65467b841a6cc36128707962,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ffd069c41797f9c47b07d6da9ff43232,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5e3df5660d0ec3b4c80fd12fc9590a58,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 916afc3738183204db27d7ce58910560,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0d7196b56225a894aad12442046f0aec,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: fb2f0c74835ee044487cc8b1958dbe82,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1d24d730d27cef34aacfc3bf6a25bf8f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ae419ee2b1fd6fb4eab797be80238e50,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2b0953f712b7c6d4c8aa9db3cf595ef0,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6f6c17bc8bce46c45ac551ec2ea999da,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 71fc88325bfaf7e4c8c32a3a110b5f59, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: faa92d2693658934e8e11571ae209516, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 631603f98c3225042a9fc90c22846268,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
+    type: 3}
+  AnimationType: 48
+  description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
+    by <color=#00BFFF>2</color></color>

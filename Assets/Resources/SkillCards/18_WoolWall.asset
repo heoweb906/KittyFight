@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 18_WoolWall
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 0
+  iSkillIndex: 18
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9b3881233e1b686429baa2c165778acf,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 52df4341066983b439efffe7abe415fc,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a13c7135258f49040acb2360c801114c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 94f5adba5493e294192f68c796f2650b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 12cfe557ca7963d43a4317e2a983a35c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 015efd9071157ab44a29bf410f2a51de,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7bbc63493c9a2484482a6dae85123037,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a1041916033fd4c4ca75c2b405a1b635,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: bee5b236c7929c44a804aa67f73006de, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 271ab0e5e4d8e184b9e2cb1386fbdc6b, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 6096466e5a5298943ba85a53a8a59e1a, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 93a56f3f40d616a4f9f9653b92626a65, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 0a1b6e80b3431924abd8074d355ef7e9,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 1671f109c78fd0b46807e0cf997fa097,
+    type: 3}
+  AnimationType: 15
+  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
+    seconds with a burst of static electricity</color>

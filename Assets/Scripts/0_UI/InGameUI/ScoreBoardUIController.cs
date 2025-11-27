@@ -157,8 +157,8 @@ public class ScoreBoardUIController : MonoBehaviour
 
         if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
         {
-            InGameUiController.mapBoardController.CloseMapBoardPanelVertical();
-
+            InGameUiController.mapBoardController.CloseMapBoardPanelVertical(InGameUiController.gameManager.IntMapGimicnumber);
+            
             DOVirtual.DelayedCall(1f, () => {
                 StartScoreBoardAnimation(iSumPlayerScore);
             });

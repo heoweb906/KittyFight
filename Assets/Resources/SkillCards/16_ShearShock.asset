@@ -25,98 +25,105 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 25490e97f51f8bb4580ae6e6bb360bdb,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3747d2a656295214daf66ea59153537a,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 3736c202cadadd444bf0d94000958589,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6b43e86f27800b74f97a2b1939771510,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: d4d8281c912a2004498c689ee06c6182,
+  - sprite_Cardillustration: {fileID: 21300000, guid: e74ce40fb41438646b49ed9a6c7a9fe9,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: b32d930d7382e0a448c0dcb75d534f54,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4751b83a6619bb84cb611dd2ba0ab189,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 9e4418926ebddd645a138c3c587c67bb,
+  - sprite_Cardillustration: {fileID: 21300000, guid: b3ea56c052bf3cd42a683ba711b33c09,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c55938fd396719844a59ad8d8a57095b,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 135b274ff0bbc104b859e04bbeb0e20d,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: fad24b07dcfb54a41aada7f404900d71,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 0884bbdf55631c846b02a8c0f2e966a5,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c49a62906c84ad34a832656e00473021,
+  - sprite_Cardillustration: {fileID: 21300000, guid: ad66b873705725340b09abe9922f1f9e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 12989357c2c18864da544c996ea60938,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1ce0015f101a9414c9786179c96f0f4e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 820b2fd6ae8f2964ea2b22487bcf1244,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3dc6975dde9609442a285ea3502a9240,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: bb437dedfdc3bc54c9b97e3a98da55e1,
+  - sprite_Cardillustration: {fileID: 21300000, guid: cf40745bc8f46e345b1a1a8fd60a4a78,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 8d6df84caeea1744db8c03e1757a4384,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5b222610e087b014689d2c628f2f358a,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: ad5f7bf19c60914468c821587e143d3f,
+  - sprite_Cardillustration: {fileID: 21300000, guid: bed54113e6f028e48b7988b1280e52a4,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: ce5bcc2ee47c41f4da3371f4bb0278e2,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 09cec4b5b7d8f7b40969c716917b9caf,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a1ab9a84c11bd594e8a7f19c0528ae00,
       type: 3}
     margins:
       m_Left: 0
@@ -131,6 +138,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 1671f109c78fd0b46807e0cf997fa097,
     type: 3}
-  AnimationType: 5
+  AnimationType: 13
   description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
     seconds with a burst of static electricity</color>

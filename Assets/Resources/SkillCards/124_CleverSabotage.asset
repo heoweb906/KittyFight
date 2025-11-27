@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 124_CleverSabotage
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 9
+  iSkillIndex: 124
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6695e12132f591f499a6edbcc5ec999c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8fa6e13fab3c00643a92527c80e8e3c7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: d05e47d72c78000409dbd637c0bf34ce,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: bdf37910f245a6043a544ff061abc9b9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ff19f5d87996d1f46a65ac7aa851cb37,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 36aa685253bb3cb4ba1b84c7fd50a68c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a4140bc3a3507ba419bff60e0b75ba6e,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5a349aab81ef03543aa34209b44f4507,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: -340
+      m_Bottom: 340
+  - sprite_Cardillustration: {fileID: 21300000, guid: a2408dcaaa99eeb45981cd3b5d586ed5,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: -340
+      m_Bottom: 340
+  sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 71fc88325bfaf7e4c8c32a3a110b5f59, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: faa92d2693658934e8e11571ae209516, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 631603f98c3225042a9fc90c22846268,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
+    type: 3}
+  AnimationType: 46
+  description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
+    by <color=#00BFFF>2</color></color>
