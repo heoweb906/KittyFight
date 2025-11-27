@@ -17847,14 +17847,19 @@ PrefabInstance:
       objectReference: {fileID: 1403081268}
     - target: {fileID: 6589624401035276662, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
         type: 3}
+      propertyPath: meleeSkill
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589624401035276662, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
+        type: 3}
       propertyPath: initialPassives.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6589624401035276662, guid: f5d13c371f5dee54bbcffb8fb0c351ba,
         type: 3}
       propertyPath: initialPassives.Array.data[0]
       value: 
-      objectReference: {fileID: -5247787262499739723, guid: 3f8fc182f5c6aec4ab602f7e560ce460,
+      objectReference: {fileID: -495565762542888887, guid: bcb71ecb3b1ed6f40a582a33f42408c4,
         type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

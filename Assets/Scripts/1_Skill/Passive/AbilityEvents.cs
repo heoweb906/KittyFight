@@ -8,6 +8,7 @@ public delegate void MeleeDamageIntHandler(ref int damage);
 public delegate void MeleeHitboxSpawnedHandler(AB_MeleeHitbox hb);
 public delegate void RoundHandler(int roundIndex);
 public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
+public delegate void DealtDamageHandler();
 
 public struct DashParams { public float distance; public float speed; }
 public delegate void DashWillExecuteHandler(ref DashParams p);
@@ -25,6 +26,7 @@ public class AbilityEvents : MonoBehaviour
     public event DashWillExecuteHandler OnDashWillExecute;  // 대쉬 실행 직전
     public event DashFinishedHandler OnDashFinished; // 대쉬 종료
     public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전
+    public event DealtDamageHandler OnDealtDamage;          // 상대한테 피해를 줄 때 나
     public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시
     public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위
     public event RoundHandler OnRoundStart;                 // 라운드 시작
@@ -47,6 +49,9 @@ public class AbilityEvents : MonoBehaviour
 
     public void EmitBeforeDealDamage(ref int dmg, GameObject victim)
         => OnBeforeDealDamage?.Invoke(ref dmg, victim);
+
+    public void EmitDealtDamage()
+        => OnDealtDamage?.Invoke();
 
     public void EmitMeleeDamageInt(ref int damage) => OnMeleeDamageInt?.Invoke(ref damage);
 

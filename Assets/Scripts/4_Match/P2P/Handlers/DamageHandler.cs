@@ -3,11 +3,13 @@ using UnityEngine;
 public class DamageHandler : IP2PMessageHandler
 {
     readonly PlayerHealth opponentHp;
+    readonly PlayerHealth myHp;
     readonly int myPlayerNumber;
 
-    public DamageHandler(PlayerHealth opponent, int myNumber)
+    public DamageHandler(PlayerHealth opponent, PlayerHealth mine, int myNumber)
     {
         opponentHp = opponent;
+        myHp = mine;
         myPlayerNumber = myNumber;
     }
 
@@ -22,5 +24,14 @@ public class DamageHandler : IP2PMessageHandler
             opponentHp.RemoteSetHP(d.hp, d.sourceWorldPos);
         else
             opponentHp.RemoteSetHP(d.hp);
+
+        if (d.attackPlayer == myPlayerNumber && myHp != null)
+        {
+            var ability = myHp.GetComponent<PlayerAbility>();
+            if (ability != null && ability.events != null)
+            {
+                ability.events.EmitDealtDamage();
+            }
+        }
     }
 }

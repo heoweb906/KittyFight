@@ -21,9 +21,7 @@ public class PS_PlotArmor : Passive
 
     private void OnBeforeDealDamage(ref int dmg, GameObject victim)
     {
-        if (dmg <= 0 || victim == null) return;
-        if (ability == null) return;
-        if (victim != ability.gameObject) return;
+        if (dmg <= 0) return;
         if (Random.value < ignoreChance)
         {
             dmg = 0;

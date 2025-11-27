@@ -112,6 +112,9 @@ public class PlayerHealth : MonoBehaviour
         attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
         if (amount <= 0) return;
 
+        // 수비측
+        events?.EmitBeforeDealDamage(ref amount, attacker ? attacker.gameObject : null);
+
         currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
         ability.effect?.PlayDoubleShakeAnimation(5, 6); // 내 HP
@@ -125,10 +128,11 @@ public class PlayerHealth : MonoBehaviour
 
         // 권위 판정: Ability.playerNumber 기준
         int pn = ability != null ? ability.playerNumber : 0;
+        int attackerPlayerNum = (attacker != null) ? attacker.playerNumber : 0;
         if (pn == MatchResultStore.myPlayerNumber)
         {
             P2PMessageSender.SendMessage(
-                DamageMessageBuilder.Build(pn, currentHP, pendingSourcePos));
+                DamageMessageBuilder.Build(pn, currentHP, attackerPlayerNum, pendingSourcePos));
         }
 
         if (currentHP <= 0)
@@ -156,6 +160,25 @@ public class PlayerHealth : MonoBehaviour
 
         TakeDamage(damage, attacker);
     }
+
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+
+        int prev = currentHP;
+        currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
+        if (currentHP == prev) return;
+
+        OnHPChanged?.Invoke(currentHP, maxHP);
+
+        int pn = ability != null ? ability.playerNumber : 0;
+        if (pn == MatchResultStore.myPlayerNumber)
+        {
+            P2PMessageSender.SendMessage(
+                DamageMessageBuilder.Build(pn, currentHP, 0, null));
+        }
+    }
+
 
     private IEnumerator DamageEffectCoroutine()
     {
@@ -214,9 +237,6 @@ public class PlayerHealth : MonoBehaviour
             r.sharedMaterials = originals[i];
         }
     }
-
-
-
 
     // 원격 HP 확정값 반영
     public void RemoteSetHP(int hp)
