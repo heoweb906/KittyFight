@@ -292,16 +292,16 @@ public class GameManager : MonoBehaviour
             int mapIdx = Random.Range(0, 8);
 
             int bgIdx = Random.Range(0, 4);
-            // ¸Ê ±â¹Í Ã³¸®
-            int randomValue = 0;
-            if ((IntScorePlayer_1 + IntScorePlayer_2) % 1 == 0 && (IntScorePlayer_1 + IntScorePlayer_2) > 0)
+
+            if ((IntScorePlayer_1 + IntScorePlayer_2) % 5 == 0 && (IntScorePlayer_1 + IntScorePlayer_2) > 0)
             {
-                randomValue = Random.Range(1, 13);
+                IntMapGimicnumber = Random.Range(1, 13);
+                // mapManager.ChangeMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
             }
 
             P2PMessageSender.SendMessage(
-                BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, 0)
+                BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, IntMapGimicnumber)
             );
 
             ApplyBackground(mapIdx, bgIdx, 0);
@@ -355,7 +355,9 @@ public class GameManager : MonoBehaviour
 
         ingameUIController?.StartGameTimer(61f);
 
-        yield return new WaitForSeconds(2f); 
+        yield return new WaitForSeconds(2f);
+
+        // ¸Ê °ü·Ã·Á°ü·Ã
 
         ingameUIController.ChangeReadyStartSprite(1); 
         ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 

@@ -193,11 +193,10 @@ public class SkillCardController : MonoBehaviour
         }
 
 
-
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ShowSkillCardListWithSpecific(0, false, new int[] {3,4,104,105});
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    ShowSkillCardListWithSpecific(0, false, new int[] {21, 124, 125, 127});
+        //}
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
@@ -374,8 +373,8 @@ public class SkillCardController : MonoBehaviour
 
 
             text_Timer.gameObject.SetActive(true);
-            iTimerForSelect = 10000;
-            fTimerInternal = 10000.0f;
+            iTimerForSelect = 15;
+            fTimerInternal = 15.0f;
             bTimerCheck = true;
             text_Timer.text = iTimerForSelect.ToString();
 
