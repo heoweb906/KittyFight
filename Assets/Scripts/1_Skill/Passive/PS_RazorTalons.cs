@@ -1,18 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PS_RazorTalons : MonoBehaviour
+public class PS_RazorTalons : Passive
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("범위 증가 설정")]
+    [Tooltip("근접 범위 증가율 (0.4 = 40% 증가)")]
+    [Range(0f, 2f)]
+    public float rangeIncreaseRate = 0.4f;
+
+    protected override void Subscribe(AbilityEvents e)
     {
-        
+        base.Subscribe(e);
+        e.OnMeleeHitboxSpawned += OnMeleeHitboxSpawned;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Unsubscribe(AbilityEvents e)
     {
+        e.OnMeleeHitboxSpawned -= OnMeleeHitboxSpawned;
+        base.Unsubscribe(e);
+    }
+
+    private void OnMeleeHitboxSpawned(AB_MeleeHitbox hb)
+    {
+        if (hb == null) return;
+
+        float factor = 1f + rangeIncreaseRate;   // 기본 1.4배
+
+        var tr = hb.transform;
+        Vector3 s = tr.localScale;
         
+        s.x *= factor;
+        s.y *= factor;
+
+        tr.localScale = s;
     }
 }

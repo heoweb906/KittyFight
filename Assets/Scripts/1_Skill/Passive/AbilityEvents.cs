@@ -5,6 +5,7 @@ public delegate void JumpHandler();
 public delegate void ModifyCooldownHandler(SkillType slot, ref float seconds);
 public delegate void CooldownFinalizedHandler(SkillType slot, float finalSeconds);
 public delegate void MeleeDamageIntHandler(ref int damage);
+public delegate void MeleeHitboxSpawnedHandler(AB_MeleeHitbox hb);
 public delegate void RoundHandler(int roundIndex);
 public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
 
@@ -25,6 +26,7 @@ public class AbilityEvents : MonoBehaviour
     public event DashFinishedHandler OnDashFinished; // 대쉬 종료
     public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전
     public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시
+    public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위
     public event RoundHandler OnRoundStart;                 // 라운드 시작
 
     public void EmitTick(float dt) => OnTick?.Invoke(dt);
@@ -47,6 +49,9 @@ public class AbilityEvents : MonoBehaviour
         => OnBeforeDealDamage?.Invoke(ref dmg, victim);
 
     public void EmitMeleeDamageInt(ref int damage) => OnMeleeDamageInt?.Invoke(ref damage);
+
+    public void EmitMeleeHitboxSpawned(AB_MeleeHitbox hb)
+        => OnMeleeHitboxSpawned?.Invoke(hb);
 
     public void EmitRoundStart(int roundIndex) => OnRoundStart?.Invoke(roundIndex);
 
