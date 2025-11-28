@@ -8,6 +8,7 @@ public delegate void MeleeDamageIntHandler(ref int damage);
 public delegate void MeleeHitboxSpawnedHandler(AB_MeleeHitbox hb);
 public delegate void RoundHandler(int roundIndex);
 public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
+public delegate void BeforeTakeDamageHandler(ref int dmg, GameObject attacker);
 public delegate void DealtDamageHandler();
 
 public struct DashParams { public float distance; public float speed; }
@@ -19,17 +20,18 @@ public delegate void DashFinishedHandler(Vector3 start, Vector3 end);
 [DisallowMultipleComponent]
 public class AbilityEvents : MonoBehaviour
 {
-    public event TickHandler OnTick;                        // 매 프레임
-    public event JumpHandler OnJump;                        // 점프할 때
-    public event ModifyCooldownHandler OnModifyCooldown;    // 쿨다운 계산 직전
-    public event CooldownFinalizedHandler OnCooldownFinalized;
-    public event DashWillExecuteHandler OnDashWillExecute;  // 대쉬 실행 직전
+    public event TickHandler OnTick;                        // 매 프레임 (101, 103)
+    public event JumpHandler OnJump;                        // 점프할 때 (109)
+    public event ModifyCooldownHandler OnModifyCooldown;    // 쿨다운 계산 직전 (104, 109)
+    public event CooldownFinalizedHandler OnCooldownFinalized; // (103)
+    public event DashWillExecuteHandler OnDashWillExecute;  // 대쉬 실행 직전 (103)
     public event DashFinishedHandler OnDashFinished; // 대쉬 종료
-    public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전
-    public event DealtDamageHandler OnDealtDamage;          // 상대한테 피해를 줄 때 나
-    public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시
-    public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위
-    public event RoundHandler OnRoundStart;                 // 라운드 시작
+    public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전 공격자용 (133)
+    public event BeforeTakeDamageHandler OnBeforeTakeDamage; // 데미지 계산 전 수비자용 (102)
+    public event DealtDamageHandler OnDealtDamage;          // 상대한테 피해를 줄 때 나 (107)
+    public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시 (108)
+    public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위 (106)
+    public event RoundHandler OnRoundStart;                 // 라운드 시작 (101, 108)
 
     public void EmitTick(float dt) => OnTick?.Invoke(dt);
 
@@ -49,6 +51,9 @@ public class AbilityEvents : MonoBehaviour
 
     public void EmitBeforeDealDamage(ref int dmg, GameObject victim)
         => OnBeforeDealDamage?.Invoke(ref dmg, victim);
+
+    public void EmitBeforeTakeDamage(ref int dmg, GameObject attacker)
+        => OnBeforeTakeDamage?.Invoke(ref dmg, attacker);
 
     public void EmitDealtDamage()
         => OnDealtDamage?.Invoke();

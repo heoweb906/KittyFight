@@ -113,7 +113,7 @@ public class PlayerHealth : MonoBehaviour
         if (amount <= 0) return;
 
         // ¼öºñÃø
-        events?.EmitBeforeDealDamage(ref amount, attacker ? attacker.gameObject : null);
+        events?.EmitBeforeTakeDamage(ref amount, attacker ? attacker.gameObject : null);
 
         currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
         OnHPChanged?.Invoke(currentHP, maxHP);
