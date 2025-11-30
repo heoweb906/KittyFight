@@ -69,11 +69,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: fb83a3fc6671076458aed41e1ceb2705, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 267d8c44ed33b7e4c8e4e2ae7bd9c09e, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 43511e85b6fa2a940a0ff33b2bfa332f,
+  sprite_SkillName: {fileID: 21300000, guid: 51d9bf0c02168774d8eb0c1f79649bd8, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 286b41498423c7d4ab598086e66e7d73, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 7daab9451a1d6e0439a2b1dab85b0aa6,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 76beef7d1f2fc4041917b0a59f7fce2d,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: a41b196c9c8270f47a94fe7845c68d32,
     type: 3}
-  AnimationType: 17
-  description: "<color=#FFFFFF>Do that thing you just did\u2014again.</color>"
+  AnimationType: 18
+  description: <color=#FFFFFF>A clever move that instantly resets the cooldowns of
+    all your other skills</color>

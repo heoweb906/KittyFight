@@ -48,11 +48,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: 59df8d01b60e5c4479fcaa096b3c3a3d, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: c5082827deb3eec49998070d51526ba8, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 8b3bb2419286b96479f1a6fcae977095,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: b89080137fd498347bd3c697368bedee,
     type: 3}
-  AnimationType: 2
-  description: 
+  AnimationType: 3
+  description: <color=#FFFFFF>Charges with unstoppable force! Deals <color=#FF0000>3</color>
+    damage to enemies hit and sends them flying</color>

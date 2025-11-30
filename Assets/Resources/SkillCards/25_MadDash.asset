@@ -55,12 +55,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 7a71cae86c2f86443a3324f5fbb6a431, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 1bdb073d370c08f4881f19d4d19e0d32, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 934589902ff4eb44095a39318e4125de, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 66fccb17257361d4e908653d4d1fb91b,
+  sprite_SkillName: {fileID: 21300000, guid: 8286d02e7677398408e14768832a8aab, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: c750b5f2ea1a18344b3fe91795fb829a, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 5b3c0145c85a7234e89b7f09ed3fa0cc,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 54f8a24310570144099005c3f56cd0dc,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: b0689c6dc502120449f296946564f08f,
     type: 3}
-  AnimationType: 15
-  description: "<color=#FFFFFF>Tosses an egg forward! On hit, it scrambles the enemy\u2019s
-    vision</color>"
+  AnimationType: 24
+  description: <color=#FFFFFF>Charge forward, attacking while running. Won't stop
+    until hitting a wall or taking a hit</color>

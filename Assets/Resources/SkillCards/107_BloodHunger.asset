@@ -55,12 +55,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 7a71cae86c2f86443a3324f5fbb6a431, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: f37ae9b79c5b78748866c196b60fbdc2, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 06b7765bcce86d445b8b24c364e99348, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: e7a66917039cd274382e106cb3b7f180,
+  sprite_SkillName: {fileID: 21300000, guid: 20a5532540eb48c48bdc325408848179, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 7f8f69a6d92d52f4fbffb39665ecb052, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 5e637c56a44b36f429db3c22c8d740f2,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: d7c6c4e085c8c6a4680f84274786b9fc,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: f8e0e7f840896a54bbd1984931d1327b,
     type: 3}
-  AnimationType: 20
-  description: <color=#FFFFFF>Got a weak prey? Snap it up immediately if under <color=#FF0000>10</color>%
-    health!</color>
+  AnimationType: 34
+  description: <color=#FFFFFF>Every <color=#66CCFF>3</color> hits on prey, you heal
+    <color=#00FF00>2.5</color> HP. The hunt keeps you alive</color>

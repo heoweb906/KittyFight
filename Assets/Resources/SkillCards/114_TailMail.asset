@@ -25,119 +25,119 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 1d229ccb10c318f4c90efc5cc2d52d53,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 680a5a33b92af09439955d312b093f9e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 36458c0da227f8e4f9f1a9393408b618,
+  - sprite_Cardillustration: {fileID: 21300000, guid: cd14db276d7685c49b29a3ce53c79115,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 7b28064365f169543af743e65e12c62c,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 25c718f4f0056eb4b892f5bfb48a0cb5,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 54d266fa196d39a478a033f50666949b,
+  - sprite_Cardillustration: {fileID: 21300000, guid: b11a37baf913a1b49bf935ca9ed6357d,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: e22538b808053b442b455f6e1d3510bc,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9720fd37f8c9e254cba4582256202198,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 9df836acec4b6b447b114f652e5f2e27,
+  - sprite_Cardillustration: {fileID: 21300000, guid: e5a1f152f761c5a48b570a7b4a10960a,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: e0449d0fe50a6b0408dd61139b793025,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 77cd942849cfa09469529fd1df43d6d0,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: e6927c713d7c9fe47a855706056d3189,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7fa20d0ef888d594d840914bf976f91d,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 8bda78108c187334c8990ac76bb4931d,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 762db2d988dae9b49a664c3a46e55adb,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 6a4b9052db30df842bad9637383dc728,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 583533137efa9bc4ea0245fa7e640c33,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: b93a47139b8401c4bae9d3e8bf33262c,
+  - sprite_Cardillustration: {fileID: 21300000, guid: a2e80440504b049418303af106810e06,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 5abe1c95b3bcac84b9971060d1989705,
+  - sprite_Cardillustration: {fileID: 21300000, guid: ec5af78b6921852409800335bcd35b27,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: ebea8f7b2a427e24ea9b6bf2161a45c1,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9c09bc07372679b4a9184fa1ee841f58,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 3e9ff23111d5e8248b30a8adfb7a5ca7,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6217c48535e9b3a4680de00edf1f7d81,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: bfb6ddd9452b6d3458897da64b4974d9,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 02bf747c06087a14e91b1a944fb5d334,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: d88a173d6a8a6924d9a796a560f054e4,
+  - sprite_Cardillustration: {fileID: 21300000, guid: f787298750ad488459238252948e8a09,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 4a488dea9f90f624da651236283b0205,
+  - sprite_Cardillustration: {fileID: 21300000, guid: b40b7ca941a8af24e81ba018d40e732c,
       type: 3}
     margins:
       m_Left: 0
@@ -202,12 +202,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 01fb0a0b5efefd94ea9d62a625275396, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 63efdf131f32d3b4f91b73b2f71972c6, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: f30cb485301bc11429cb11c7cf488622, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 3a079d5201968864b9bdf9a87cabb6fa, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: cdbf4a2b9857c6f47a42d4ccded817a8,
+  sprite_SkillName: {fileID: 21300000, guid: 85c105e26a51a1e48a8055f0096af928, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 9b10f5221f571b74e9b4367c7f3593d9, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 0cc49db9adbd02f43b1b27d5c0b26037,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: a6b10d83ccf7f1743b00e886814d4d8a,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: f6f8d3d304d7e754090e64b1d1c2e898,
     type: 3}
-  AnimationType: 36
-  description: <color=#FFFFFF>Fires a venomous fang that poisons foes, dealing <color=#FF0000>0.7</color>
-    damage per second for <color=#FF0000>3</color> seconds</color>
+  AnimationType: 40
+  description: <color=#FFFFFF>Ranged attack cooldown is reduced by <color=#66CCFF>1</color>
+    second, and projectiles fly straight and fast</color>

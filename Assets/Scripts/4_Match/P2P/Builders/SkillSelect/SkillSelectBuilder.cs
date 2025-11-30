@@ -9,7 +9,7 @@ public static class SkillSelectBuilder
             iSkillIndex = _skillCard_SO.iSkillIndex,  // SO 대신 인덱스만 전송
             cardPosition = cardPos,
             bIsRat = bIsRat_,
-            iRandomSkillIndex = _iRatSkillNum
+            iRandomSkillIndex = _iRatSkillNum 
         };
         return "[SKILL_SELECT]" + JsonUtility.ToJson(msg);
     }

@@ -83,12 +83,12 @@ MonoBehaviour:
       m_Bottom: 340
   sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 71fc88325bfaf7e4c8c32a3a110b5f59, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: faa92d2693658934e8e11571ae209516, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 631603f98c3225042a9fc90c22846268,
+  sprite_SkillName: {fileID: 21300000, guid: 03af4441d7907a5439d769327ac09577, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: d754713a4e30e774a9ff11087d52cb7b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 2023faed50e32634aa32eebbaa66bb5c,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 17c1ff68d455d8149b995645498a1066,
     type: 3}
-  AnimationType: 46
-  description: <color=#FFFFFF>Use that wrinkly brain all skill cooldowns reduced
-    by <color=#00BFFF>2</color></color>
+  AnimationType: 48
+  description: <color=#FFFFFF>Increases enemy skill cooldowns by <color=#FF0000>1.5</color>
+    seconds. Outsmart and outplay!</color>

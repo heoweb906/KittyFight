@@ -68,6 +68,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
     type: 3}
-  AnimationType: 7
-  description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
-    <color=#FF0000>0.5</color> damage</color>
+  AnimationType: 21
+  description: <color=#FFFFFF>Fires a small, fast feather forward, dealing <color=#FF0000>0.7</color>
+    damage to enemies hit</color>

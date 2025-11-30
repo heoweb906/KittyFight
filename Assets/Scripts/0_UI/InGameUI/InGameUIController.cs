@@ -70,6 +70,7 @@ public class InGameUIController : MonoBehaviour
         mapBoardController.Initialize(this, canvasMain.transform);
     }
 
+
     public void StartGameTimer(float duration)
     {
         gameTimer?.SetDuration(duration);

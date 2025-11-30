@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 102_PlotArmor
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 1
+  iSkillIndex: 102
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: d73a73f41f1b1b4409591ac340e8759a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1433a00011a4b0a4591910b82a2585ef,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6d117023f288202419f561069cce2324,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: e3d5683978acb1c4a9d8e5be7243dc1d,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a9a8ef2c97ed2d4498b54e544000e340,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce05c8476635dfc4da320c97090ee27b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce05c8476635dfc4da320c97090ee27b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce05c8476635dfc4da320c97090ee27b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ce05c8476635dfc4da320c97090ee27b,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2e6285ba9ccb8924aa10bc56304de88a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2e6285ba9ccb8924aa10bc56304de88a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2e6285ba9ccb8924aa10bc56304de88a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2e6285ba9ccb8924aa10bc56304de88a,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 8d4762916fe625f469d2f96d441c8b35, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 09b3f927ed957834bb2161cec7014186, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: d783e07d44e428443b4e75fbbfdd7629, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 01143095da8a6714bbc43b2d389e5ef9, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 67311484688bfde4198b7ca3d30020bc,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: cd95aadf95ebd9a46bdd79ca664161d0,
+    type: 3}
+  AnimationType: 29
+  description: <color=#FFFFFF>25% chance that pure luck saves you from taking damage</color>

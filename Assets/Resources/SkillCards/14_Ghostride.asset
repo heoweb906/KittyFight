@@ -76,12 +76,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: d30a57eeaf64a004199a3f89d64d21aa, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 9545338a9b1088f4cb6651a2c40d8dcf, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: c4005cb950a0e4b4ba32f6b24d24d274, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 0280ae7d83131454a93f144915b5b99b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: d170b4410f698f64ca91c78515643f58,
+  sprite_SkillName: {fileID: 21300000, guid: bff0ddd6cc6995942b2de1439a406308, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: b4c2a240bf10585419f2d2e299ad9851, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 576b619f281d62242b53285da9c6f56d,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: d2c4c755f4994ad46b264d765472aeed,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 23a0ec8aa1e3645419e770700aff8cf5,
     type: 3}
-  AnimationType: 7
-  description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
-    damage and launching them away</color>
+  AnimationType: 13
+  description: <color=#FFFFFF>Become invisible and dash swiftly for <color=#66CCFF>5</color>
+    seconds. Appear instantly when you attack or get hit</color>

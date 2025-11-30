@@ -93,6 +93,7 @@ public class ScoreBoardUIController : MonoBehaviour
 
     [Header("추가 효과들")]
     public C_CheeringAnimal[] cheeringAnimals;
+    public TMP_Text text_Timer;
 
     [Header("점수판 텍스트")]
     public GameObject obj_ScorePlayer1;
@@ -153,6 +154,8 @@ public class ScoreBoardUIController : MonoBehaviour
     // #. Score 패널 열기
     public void OpenScorePanel()
     {
+        text_Timer.text = "60";
+
         int iSumPlayerScore = InGameUiController.gameManager.IntScorePlayer_1 + InGameUiController.gameManager.IntScorePlayer_2;
 
         if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))

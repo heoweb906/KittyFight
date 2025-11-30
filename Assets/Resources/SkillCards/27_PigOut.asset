@@ -125,11 +125,13 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 2a2bfea16e01f484996a4f4485810680, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 4ab5bcb5b2373a741a2debf255ccb2df, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: d59851fb49427f24ba06fdc4193e77d7, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: dfc3be5f319532b44aa1d7edf9687ad1, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 6cdff575085360249aa31a5ea2cd3db5,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 8feaf1e344e76f24ba7bab5dc0bb26b0,
     type: 3}
-  AnimationType: 22
-  description: 
+  AnimationType: 26
+  description: <color=#FFFFFF>Gobble up <color=#00FF00>4</color> health instantly,
+    but your movement speed drops by <color=#FF0000>40%</color> for <color=#FF0000>3</color>
+    seconds as you waddle</color>

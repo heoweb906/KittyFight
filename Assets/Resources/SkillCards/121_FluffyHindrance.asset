@@ -139,12 +139,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: bee5b236c7929c44a804aa67f73006de, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 271ab0e5e4d8e184b9e2cb1386fbdc6b, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 6096466e5a5298943ba85a53a8a59e1a, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 93a56f3f40d616a4f9f9653b92626a65, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 0a1b6e80b3431924abd8074d355ef7e9,
+  sprite_SkillName: {fileID: 21300000, guid: fe6e6a7505b614244b73262af4990869, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 5917d0c87356654438f12ef2ef2fcec0, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: e23aa422fe0ee4449a74f0f666b30aa3,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 1671f109c78fd0b46807e0cf997fa097,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 3bd42ee402231164b8d012304d2e3d16,
     type: 3}
-  AnimationType: 36
-  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
-    seconds with a burst of static electricity</color>
+  AnimationType: 45
+  description: <color=#FFFFFF>Your attacks leave sticky wool on enemies, slowing
+    them for <color=#FF0000>3</color> seconds</color>

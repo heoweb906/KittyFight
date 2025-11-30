@@ -89,6 +89,6 @@ MonoBehaviour:
     type: 3}
   sprite_BorderLine_Right: {fileID: 21300000, guid: 54f8a24310570144099005c3f56cd0dc,
     type: 3}
-  AnimationType: 12
-  description: "<color=#FFFFFF>Tosses an egg forward! On hit, it scrambles the enemy\u2019s
-    vision</color>"
+  AnimationType: 23
+  description: "<color=#FFFFFF>Tosses an egg forward, scrambling the enemy\u2019s
+    vision on hit</color>"

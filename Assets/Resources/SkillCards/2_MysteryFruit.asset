@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 2_MysteryFruit
+  m_EditorClassIdentifier: 
+  cardType: 0
+  sSkillName: 
+  iAnimalNum: 1
+  iSkillIndex: 2
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: ac65038f965a4364c851615ba53022a6,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 708c6c56bcbcc1342bc39fb61fbbe1c8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4dcfb43d167b4564eb8ebcc80eb13fcf,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 1ef073d2aaffe9e41ae5d3cf0688473c,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 8d4762916fe625f469d2f96d441c8b35, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 09b3f927ed957834bb2161cec7014186, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: 94f7c9b8dcd5c2c4abdc7fd0a8aeccd0, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 5d8b0a2c1a788df4aa5924c36c2e9cde, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 147a52895c760434495228606c951247,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 5c435e27590f0fd47b43f7595b441719,
+    type: 3}
+  AnimationType: 1
+  description: "<color=#FFFFFF>Take a bite and hope for the best! This strange fruit
+    might heal you\u2026 or cause some trouble</color>"

@@ -69,12 +69,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: fce9c1f8981e5c3478e125281e91068c, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 7a71cae86c2f86443a3324f5fbb6a431, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 1bdb073d370c08f4881f19d4d19e0d32, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 934589902ff4eb44095a39318e4125de, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 66fccb17257361d4e908653d4d1fb91b,
+  sprite_SkillName: {fileID: 21300000, guid: 1a147a1600cbac942962847db2896c85, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: ef38966a83e2c9b4b9b6e09b6e73fcb8, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 2c244e7099e89b445aebe1002ac07384,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 54f8a24310570144099005c3f56cd0dc,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 620384d9951289d44bc81e47b3d00e93,
     type: 3}
-  AnimationType: 16
-  description: "<color=#FFFFFF>Tosses an egg forward! On hit, it scrambles the enemy\u2019s
-    vision</color>"
+  AnimationType: 25
+  description: <color=#FFFFFF>Hunting instincts kick in! Slow enemy movement speed
+    by <color=#FF0000>50%</color> for <color=#66CCFF>3</color> seconds</color>

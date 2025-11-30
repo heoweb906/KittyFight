@@ -18,7 +18,49 @@ MonoBehaviour:
   iSkillIndex: 101
   sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
   cardillustrationPivots:
-  - sprite_Cardillustration: {fileID: 21300000, guid: b0e2ff0d91fc76a4397353fa82b1d028,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 375b468db02d47649bc216a0a8b0d101,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 39c30c3a76761ba4c907948974366f39,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 918a1f7196fee694898bab4707ade1ca,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: dad34bc3cb1634740817c4ecb7997f60,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: a3d637104dc2ee042b94a35bd4a8911d,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2231c62ba94e7fd449e25e3f40f2c3cd,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 117b8ce02c53d3846a16e028cf830c70,
       type: 3}
     margins:
       m_Left: 0
@@ -27,12 +69,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 8d4762916fe625f469d2f96d441c8b35, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 09b3f927ed957834bb2161cec7014186, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 71fc88325bfaf7e4c8c32a3a110b5f59, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: faa92d2693658934e8e11571ae209516, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 631603f98c3225042a9fc90c22846268,
+  sprite_SkillName: {fileID: 21300000, guid: cd80d9490abc9fc42ac99cfdfb71d838, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: bc048bb1f942e8a418859fa7b55c29b9, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 694ee53f8aed690459bc7cf612a13423,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: a52fcbe57c274b6438d7cf23f2cbc08b,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: d438aa29152764348b379446535c7556,
     type: 3}
-  AnimationType: 9
-  description: Every 6 seconds, fate spins the wheel on your movement speed. Fast
-    or slow - it's all up to chance!
+  AnimationType: 28
+  description: <color=#FFFFFF>Every 6 seconds, fate spins the wheel on your movement
+    speed. Fast or slow - it's all up to chance!</color>

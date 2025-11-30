@@ -62,12 +62,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: d30a57eeaf64a004199a3f89d64d21aa, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 9545338a9b1088f4cb6651a2c40d8dcf, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: c4005cb950a0e4b4ba32f6b24d24d274, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 0280ae7d83131454a93f144915b5b99b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: d170b4410f698f64ca91c78515643f58,
+  sprite_SkillName: {fileID: 21300000, guid: 6dccdc6343b56684884db4c3c7602734, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 20e2db13373b8ae4e9b9860b42a2fc71, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 0aca9ce5d8edac3468afb6b418241b76,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: d2c4c755f4994ad46b264d765472aeed,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 556b41e6b65e3734daac4f0b7666d71e,
     type: 3}
-  AnimationType: 22
-  description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
-    damage and launching them away</color>
+  AnimationType: 43
+  description: <color=#FFFFFF>Activating this skill grants <color=#66CCFF>+30%</color>
+    movement speed for <color=#66CCFF>3</color> seconds</color>

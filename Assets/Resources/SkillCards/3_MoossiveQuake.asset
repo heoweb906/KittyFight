@@ -97,11 +97,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: 84619ee9da14673419f59c3111bc148d, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: b3ff09027706eff41904172d3db1a988, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 55445cb86fd14e54a9903566fd280365,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: b4b845770d5e93842ad97b626d6dc138,
     type: 3}
-  AnimationType: 1
-  description: 
+  AnimationType: 2
+  description: <color=#FFFFFF>Bull-dozes the entire map! Stuns enemies on terrain
+    for <color=#FF0000>3</color> seconds</color>

@@ -90,12 +90,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: f30a423be4510894ea1ff069ea0c1e5a, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 1b619b50d7c32ac4198306413670d358, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 800a9b7c8d4d09842bf8c62dc83e9e8e, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f0074a6b57cbcfd49925029fa8508df7, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: fda427a0eb2deb140846a8c380863e61,
+  sprite_SkillName: {fileID: 21300000, guid: 2366b71de0923154e88bb7c2647fae55, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 3cd32678d79fe0649a753c4aed206122, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 402a9c8fce824744c912b20e13d071fd,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: d38335604d19f75488134bd1c667b7a3,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 0e1ea7428cc52fe479b63ba4eccee16d,
     type: 3}
-  AnimationType: 10
+  AnimationType: 30
   description: "<color=#FFFFFF>The longer you hold back, the harder you charge\u2014like
     a bull ready to smash!</color>"

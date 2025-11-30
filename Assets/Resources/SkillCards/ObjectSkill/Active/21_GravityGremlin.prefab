@@ -48,7 +48,7 @@ MonoBehaviour:
   coolTime: 13
   objSkillEntity: {fileID: 6777267630284458099, guid: 9c83d34d87639b2498c3cd4295da10d7,
     type: 3}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: c7da716f23fd3ae498664a726855473c, type: 3}
   aimRange: 2.5
   projectileSpeed: 12
   blackholePrefab: {fileID: 6777267630284458099, guid: 5fcd118e5fd74784e9402f23d885df6b,

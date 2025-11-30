@@ -132,12 +132,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 0b53ec0ca3019864ea0c0c1162f840d8, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: a46d735d99f55ce4bafb9b236e77ae6d, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: bfcfd9dae1773414fb6511a65bde1bd4, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: c683157dc68783c47b639cd5ed561be9, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: f38c5895a9d436342b0bba490f63c24c,
+  sprite_SkillName: {fileID: 21300000, guid: aa9d29106cfefd745a1207f413beea35, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 9beb7763371dc3d41b1f6fe76ae73120, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: a487a17283808d44d87288ba106cd150,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 2b8ccccf8579e83438376f4468a53609,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 64fb4ba11f9d6ac4a802a745d7c4f7ab,
     type: 3}
-  AnimationType: 20
-  description: <color=#FFFFFF>Fires a small, fast feather forward. Enemies hit take
-    <color=#FF0000>0.5</color> damage</color>
+  AnimationType: 51
+  description: <color=#FFFFFF>Your attacks become feather-light slashes. Long range
+    meets laser precision</color>

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public enum CardAnimationType
 {
     Number_1,
+    Number_2,
     Number_3,
     Number_4,
     Number_5,
@@ -31,6 +32,7 @@ public enum CardAnimationType
     Number_27,
     Number_28,
     Number_101,
+    Number_102,
     Number_103,
     Number_104,
     Number_105,
@@ -59,7 +61,8 @@ public enum CardAnimationType
     Number_134,
     Number_135,
     Number_137,
-    Number_138
+    Number_138,
+    Number_139
 }
 
 public enum CardType

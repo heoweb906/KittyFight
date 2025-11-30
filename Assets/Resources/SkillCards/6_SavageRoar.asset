@@ -95,56 +95,56 @@ MonoBehaviour:
       m_Right: 884
       m_Top: -221
       m_Bottom: 221
-  - sprite_Cardillustration: {fileID: 21300000, guid: d10cfdcdf2b1a464a8d8210d82410d29,
+  - sprite_Cardillustration: {fileID: 21300000, guid: f20ea2d75de33884eaa0faa28d5375af,
       type: 3}
     margins:
       m_Left: 783
       m_Right: -783
       m_Top: -136
       m_Bottom: 136
-  - sprite_Cardillustration: {fileID: 21300000, guid: 4a8a429e31ecdde49a1ab5629272465e,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 04a41c0f27281a84286b6ce122fb0f37,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: eac965f75858021498f32449e6351a08,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9625d4830bee74b41be8a81173ff0014,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 7ed30f24384f1d84fbc7c3141d3bc163,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2d55125efe494114a898564ab2f806c4,
       type: 3}
     margins:
       m_Left: -863
       m_Right: 863
       m_Top: 362
       m_Bottom: -362
-  - sprite_Cardillustration: {fileID: 21300000, guid: d74c691514a70c741aa43bb70b526d9b,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4d934bca99ccc934c869d4b5fa44c3d3,
       type: 3}
     margins:
       m_Left: -418
       m_Right: 418
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: 59b45591904031f48a7f01caa88151a5,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7c8ac2237f736da4ea515ba775c71b75,
       type: 3}
     margins:
       m_Left: 309
       m_Right: -309
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: 95e97afb978fbb442a73038c50376bfb,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 4f79cf2f4818b144289e30da01d06bb1,
       type: 3}
     margins:
       m_Left: 309
       m_Right: -309
       m_Top: -507
       m_Bottom: 507
-  - sprite_Cardillustration: {fileID: 21300000, guid: bb22ef34060c1d448b141d6dca95d2da,
+  - sprite_Cardillustration: {fileID: 21300000, guid: c4c43549693a25746bb32a137335f6f9,
       type: 3}
     margins:
       m_Left: 309
@@ -153,12 +153,12 @@ MonoBehaviour:
       m_Bottom: 507
   sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: 97e31ada3dd846e469b467602ed5c0fa, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 4fb35db6a2dd30d42977173b9d520375, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: ad7e2b10f3c5e424aa01cce12374cb36,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: cb9d1e92bf3bd154a9c8d2e0c783b184,
     type: 3}
-  AnimationType: 3
-  description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
-    hit take <color=#FF0000>3.5</color> damage</color>
+  AnimationType: 5
+  description: <color=#FFFFFF>Unleash a fierce primal roar, stunning nearby enemies
+    for <color=#FF0000>2.5</color> seconds</color>

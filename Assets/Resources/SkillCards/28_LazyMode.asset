@@ -102,56 +102,56 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c291d102bdb566043869c4c702d596d2,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7685633ef449502428a385d24b532d21,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: f00d2e8eea7f1694780f9de5f5ef9c36,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 91d2e2e03b7540a4db942cb969a3a421,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 7fd25a64e8651c946a0929e1170a7596,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 78a1eae0161b4a74a8c8105ac3360e0a,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c05bbdf2861a6734899e9b69ddd874fe,
+  - sprite_Cardillustration: {fileID: 21300000, guid: d657d1b0156011f449efd3581a84c366,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: a5fb9f9ad18c68047bf1f905bba2f8d0,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9c97d6e6dc173704cb38af2e0eef2e3e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: b11d13ca77c822a46aee79128a9c00ca,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2ba701fcdedfc9b4bb1ac96b4a7d0532,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: c3ae0855cab50a8448d3e90e6daf786e,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 218ef41f6d2e4864a97a43db882cb3ac,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: bf6f27b6df5edb44e834b505741398eb,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 66d7f099493cafc468e5f5e327b2b8b0,
       type: 3}
     margins:
       m_Left: 0
@@ -160,11 +160,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 2a2bfea16e01f484996a4f4485810680, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 4ab5bcb5b2373a741a2debf255ccb2df, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: 4a82a22406ad0134a82567c8f9786c1b, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: eb75895f0917f9a4f828758a5544c71d, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: c5e1d48316922514da608f792e61014b,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 086cf3705adc8fe46ba1730913161a1e,
     type: 3}
-  AnimationType: 23
-  description: 
+  AnimationType: 27
+  description: "<color=#FFFFFF>Go full lazy pig\u2014invincible but totally useless
+    for <color=#66CCFF>1.5</color> seconds</color>"

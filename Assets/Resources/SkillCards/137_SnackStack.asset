@@ -32,56 +32,56 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 08b7cdaaa9e724d4b84598d962f990bd,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 7685633ef449502428a385d24b532d21,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 89611e77baf2b53408cd42069c090ba7,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 91d2e2e03b7540a4db942cb969a3a421,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 8cd832cefe0c58e48a960b79275e51b5,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 78a1eae0161b4a74a8c8105ac3360e0a,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: db6649b16019e06408543f5674b5fe55,
+  - sprite_Cardillustration: {fileID: 21300000, guid: d657d1b0156011f449efd3581a84c366,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 13802ad5c0c227548a0fde1be48f43d7,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 9c97d6e6dc173704cb38af2e0eef2e3e,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 61c26a69e67d5ea4aadcbb34003cea60,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 2ba701fcdedfc9b4bb1ac96b4a7d0532,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 2b9feb0d0fa775948ac23cda1a0d9c2a,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 218ef41f6d2e4864a97a43db882cb3ac,
       type: 3}
     margins:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - sprite_Cardillustration: {fileID: 21300000, guid: 93cf67896c86d40489168650c8894ad1,
+  - sprite_Cardillustration: {fileID: 21300000, guid: 66d7f099493cafc468e5f5e327b2b8b0,
       type: 3}
     margins:
       m_Left: 0
@@ -118,12 +118,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: 2a2bfea16e01f484996a4f4485810680, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 4ab5bcb5b2373a741a2debf255ccb2df, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4b9780d6e6914ff44975192b1fdf54a2, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 4abf30457bba55241ae0b02c2e6c702e, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 9cca33c8aa7a48a4396239dc2b08c0b5,
+  sprite_SkillName: {fileID: 21300000, guid: 05320351dfeff3e499ec20be544fd87e, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 44678ca0c677c8c429d8c1a93fbcc028, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 2d73590f4cd79d64da71efe7cc685a93,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 7ad3d3c15ae21b74da600e3ace05a889,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 33a106da42635e34e9626e0a47472443,
     type: 3}
-  AnimationType: 16
+  AnimationType: 57
   description: <color=#FFFFFF>Max HP drops by <color=#FF0000>5</color> then rises
-    by <color=#0080FF>2</color> each round. Eating your way to strength</color>
+    by <color=#66CCFF>1.5</color> each round. Eating your way to strength</color>

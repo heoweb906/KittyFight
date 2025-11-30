@@ -83,11 +83,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: fb83a3fc6671076458aed41e1ceb2705, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 267d8c44ed33b7e4c8e4e2ae7bd9c09e, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 43511e85b6fa2a940a0ff33b2bfa332f,
+  sprite_SkillName: {fileID: 21300000, guid: ff154169f93495245977ffa3d29b9469, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 001c651335d49fc46a1ee3c9cd39575a, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: ffeadaa3a59b296478ec7829fcc607b5,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 76beef7d1f2fc4041917b0a59f7fce2d,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 1b88932675ec4c941b55187c8e970f5f,
     type: 3}
-  AnimationType: 19
-  description: "<color=#FFFFFF>Do that thing you just did\u2014again.</color>"
+  AnimationType: 20
+  description: <color=#FFFFFF>Unleash a <color=#66CCFF>6</color>-second black hole
+    that sucks in everything like it's hungry for chaos</color>

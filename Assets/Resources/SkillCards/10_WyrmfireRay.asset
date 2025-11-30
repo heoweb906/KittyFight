@@ -48,11 +48,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: e44f786580038144cbdded26ec2ea699, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: c6a8abba7058b5f4aa74b272f054f1a5, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: b5bdf7fdcfb99bf42a54b1d7a7d8a0f2, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: d2faa399fda825842a208b1c888bce53, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: edceb318c30870046b9fc6b7e95f7296,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 3c7cbbb73e48a7146922b1bc833f6be1,
     type: 3}
-  AnimationType: 7
-  description: 
+  AnimationType: 9
+  description: <color=#FFFFFF>Unleash a blazing laser of ancient dragon fire, dealing
+    <color=#FF0000>3</color> damage to your foes</color>

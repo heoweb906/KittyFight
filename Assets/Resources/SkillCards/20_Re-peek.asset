@@ -76,11 +76,11 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: c4b37e6931e6c7747b7161bdc4c5b3c1, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 59eaeb4ca0f8d2543b13fcc90018ab91, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: fb83a3fc6671076458aed41e1ceb2705, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 267d8c44ed33b7e4c8e4e2ae7bd9c09e, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 43511e85b6fa2a940a0ff33b2bfa332f,
+  sprite_SkillName: {fileID: 21300000, guid: 0da7ce85aacaf454aacfdd2e973ed6fe, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: eb6870de7420f8c4ab88b2307ccd162e, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 97c82d10666be55459d55966eba8b0aa,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 76beef7d1f2fc4041917b0a59f7fce2d,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 9b2013d058428964fa4c74ada86d9879,
     type: 3}
-  AnimationType: 6
-  description: "<color=#FFFFFF>Do that thing you just did\u2014again.</color>"
+  AnimationType: 19
+  description: "<color=#FFFFFF>Do that thing you just did\u2014again</color>"

@@ -55,12 +55,12 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 4f8d17488790a1546b2cb5ff31c921f3, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: f473bcbc7829112409bcaf1866b0c63b, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 81b22e7f07884734990c12e075d2a30b,
+  sprite_SkillName: {fileID: 21300000, guid: 54ab6460e9aa1af4593c4e48b074fe54, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 5d22472ef41b4d548be37190a4f44f93, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 7983a2393396c904088368a8f6395f93,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 86aed7d7f2876b449b63d322ccad3a20,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: b6968c7971152bc46b9bb1fd1b3f2d97,
     type: 3}
-  AnimationType: 28
-  description: <color=#FFFFFF>Swipes fiercely ahead, tearing through enemies. Those
-    hit take <color=#FF0000>3.5</color> damage</color>
+  AnimationType: 56
+  description: "<color=#FFFFFF>Can\u2019t wait to attack! Melee cooldown down by
+    <color=#66CCFF>1</color> second</color>"

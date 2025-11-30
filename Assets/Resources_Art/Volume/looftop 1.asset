@@ -116,8 +116,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.47297296
-          value: 0.7542857
+          time: 0.5903308
+          value: 0.5806452
           inSlope: 1
           outSlope: 1
           tangentMode: 0
@@ -125,8 +125,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.82098764
-          value: 0.9139073
+          time: 0.913486
+          value: 0.6182796
           inSlope: 0.4667998
           outSlope: 0.4667998
           tangentMode: 0
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
     m_Value: {x: 0.8227436, y: 0.82041144, z: 1, w: 0.0850907}

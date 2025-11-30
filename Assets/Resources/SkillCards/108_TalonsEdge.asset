@@ -69,13 +69,13 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: a6c26e93fd9ee6b4fac46b02349dc70b, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 922a30e2bce2fb84d80ca2388315f4fa, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 7a68d57d3f01ef54aa1430b203b1244c, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: a5e38a89142f3734d8fb76db1e1bd0b1, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: d681ea0826136644081faf8cf1d67144,
+  sprite_SkillName: {fileID: 21300000, guid: b23ca7a04cd99d046947f8b7a5abd111, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: 4ade7cf7d745e084087b1dea2046948b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 19e8c903061dd0b49866325ef1a2a97c,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 52472b36c09e2004d881dcac5f7f2228,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 3bc4976d037e288468303255194a4e78,
     type: 3}
-  AnimationType: 18
-  description: <color=#FFFFFF>Your melee strikes start weak at <color=#FF0000>0.5</color>
-    damage but sharpen with every hit, gaining <color=#0080FF>0.2</color> damage
+  AnimationType: 35
+  description: <color=#FFFFFF>Your melee strikes start weak at <color=#FF0000>1</color>
+    damage but sharpen with every hit, gaining <color=#FF0000>0.4</color> damage
     each time</color>

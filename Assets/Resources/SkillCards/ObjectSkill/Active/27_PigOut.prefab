@@ -47,7 +47,7 @@ MonoBehaviour:
   playerAbility: {fileID: 0}
   coolTime: 12
   objSkillEntity: {fileID: 0}
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: 21300000, guid: 6ea2191e3b62e544aab22d644b0b722e, type: 3}
   aimRange: 0
   healAmount: 40
   slowDuration: 3

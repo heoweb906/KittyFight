@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373227eeab4a1254e9f8b347e44148f9, type: 3}
+  m_Name: 139_ChronoChaos
+  m_EditorClassIdentifier: 
+  cardType: 1
+  sSkillName: 
+  iAnimalNum: 1
+  iSkillIndex: 139
+  sprite_Icon: {fileID: 21300000, guid: 20ea66e63340c224eb5ed53ee642b61a, type: 3}
+  cardillustrationPivots:
+  - sprite_Cardillustration: {fileID: 21300000, guid: 8f53e1012146e364e9fddd85b7b2e0a9,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: c47d7c50db5b613468879c6adb5b49ac,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: f9c88e47807693d4692bd376254a0ef1,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: ddc82436e81c11c498714626a2aaf9d8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 3600ef8ca34f86d4694acefb976cb12f,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 6bc72c1f4b946f8419a738d5d5f932a7,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 5c284fa7213eae248bf8472910dd4eb8,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 51491cc0a8c738b4ab215e30ab961be2,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 51491cc0a8c738b4ab215e30ab961be2,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - sprite_Cardillustration: {fileID: 21300000, guid: 51491cc0a8c738b4ab215e30ab961be2,
+      type: 3}
+    margins:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  sprite_Frame: {fileID: 21300000, guid: 8d4762916fe625f469d2f96d441c8b35, type: 3}
+  sprite_Simbol: {fileID: 21300000, guid: 09b3f927ed957834bb2161cec7014186, type: 3}
+  sprite_SkillName: {fileID: 21300000, guid: f5528fdb7e831234f841b69a7aee9913, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: a0c761fbd16797248967ee108124c96b, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 67b337647b37b1943a4dbe5f6b55cb09,
+    type: 3}
+  sprite_BorderLine_Right: {fileID: 21300000, guid: be3a4a0f4da778941b257e2038b7b077,
+    type: 3}
+  AnimationType: 59
+  description: <color=#FFFFFF>Applies a random cooldown between -3and +5 when using
+    skills</color>

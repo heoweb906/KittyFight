@@ -76,12 +76,13 @@ MonoBehaviour:
       m_Bottom: 0
   sprite_Frame: {fileID: 21300000, guid: bee5b236c7929c44a804aa67f73006de, type: 3}
   sprite_Simbol: {fileID: 21300000, guid: 271ab0e5e4d8e184b9e2cb1386fbdc6b, type: 3}
-  sprite_SkillName: {fileID: 21300000, guid: 6096466e5a5298943ba85a53a8a59e1a, type: 3}
-  sprite_Keyword: {fileID: 21300000, guid: 93a56f3f40d616a4f9f9653b92626a65, type: 3}
-  sprite_BorderLine_Left: {fileID: 21300000, guid: 0a1b6e80b3431924abd8074d355ef7e9,
+  sprite_SkillName: {fileID: 21300000, guid: 30fc572f5a40fc647a05c7783f574e3a, type: 3}
+  sprite_Keyword: {fileID: 21300000, guid: ce9270174ad6fef4ca715c7563e1ee4f, type: 3}
+  sprite_BorderLine_Left: {fileID: 21300000, guid: 833aefc74726f164fb9e1f2371ee38c7,
     type: 3}
-  sprite_BorderLine_Right: {fileID: 21300000, guid: 1671f109c78fd0b46807e0cf997fa097,
+  sprite_BorderLine_Right: {fileID: 21300000, guid: 5cb9e2509663b9343afd19316f87a89d,
     type: 3}
-  AnimationType: 15
-  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
-    seconds with a burst of static electricity</color>
+  AnimationType: 17
+  description: <color=#FFFFFF>Summon a giant woolly wall ahead. Enemies that bump
+    into it are stunned for <color=#FF0000>3</color> seconds. You pass through just
+    fine</color>

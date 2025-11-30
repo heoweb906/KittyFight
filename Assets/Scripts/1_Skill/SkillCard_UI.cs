@@ -27,12 +27,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public Image image_Triangle;
     public TMP_Text text_Description;
 
-
-    [Header("쥐 관련 정보")]
-    public GameObject obj_BonusFrame;
-    public TMP_Text text_Description_Rat;
-
-
     [Header("Skill 스크립터블")]
     public SkillCard_SO skillCard_SO;
     private CardAnimationBase currentAnimation;
@@ -129,9 +123,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
         }
 
-        obj_BonusFrame.SetActive(bIsRat);
-
-
         // 애니메이션 컴포넌트 추가
         AddAnimationComponent(data.AnimationType);
 
@@ -207,9 +198,10 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
         // 회색 벽 알파값을 244로 (기존 이미지 색상 변경 코드 제거)
-        image_GrayWall.DOFade(248f / 255f, tweenDuration);
+        if(image_GrayWall != null) image_GrayWall.DOFade(248f / 255f, tweenDuration);
 
-        Vector2 targetPos = originalTitleAnchorPos + new Vector2(0, -100f);
+
+        Vector2 targetPos = originalTitleAnchorPos + new Vector2(0, -50f);
         image_CardTitle.rectTransform.DOAnchorPos(targetPos, tweenDuration);
         Color transparent = originalKeyWordColor;
         transparent.a = 0f;
@@ -231,7 +223,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         transform.DOScale(originalScale, tweenDuration);
 
         // 회색 벽 알파값을 0으로 (기존 이미지 색상 복원 코드 제거)
-        image_GrayWall.DOFade(0f, tweenDuration);
+        if (image_GrayWall != null)  image_GrayWall.DOFade(0f, tweenDuration);
 
         image_CardTitle.rectTransform.DOAnchorPos(originalTitleAnchorPos, tweenDuration);
         image_CardKeyWord.DOColor(originalKeyWordColor, tweenDuration);
@@ -249,7 +241,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         transform.DOScale(originalScale, tweenDuration);
 
-        image_GrayWall.DOFade(0f, tweenDuration);
+        if (image_GrayWall != null)  image_GrayWall.DOFade(0f, tweenDuration);
 
         imageGroup_illustration.DOFade(1f, tweenDuration);
         image_CardTitle.rectTransform.DOAnchorPos(originalTitleAnchorPos, tweenDuration);
@@ -261,14 +253,18 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         text_Description.DOColor(invisible, tweenDuration);
     }
 
+
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
 
         SkillCard_SO skillToEquip = skillCard_SO;
-        int randomSkillIndex = -1;
+        int randomSkillID = -1;
 
-        
+        // ⭐ [중요] 리스트의 실제 인덱스(순서)를 저장할 변수
+        int targetListIndex = -1;
+
         if (bIsRat)
         {
             // 액티브/패시브 여부에 따라 다른 배열 사용
@@ -276,27 +272,31 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
             if (skillCard_SO.iSkillIndex < 100) // 현재 보여진 카드가 액티브 구간이면
             {
-                ratSkillPool = new int[] { 1, 2 }; // 액티브 스킬 풀
+                ratSkillPool = new int[] { 1, 2}; // 액티브 스킬 풀 (스킬 ID들)
             }
             else // 패시브 구간이면
             {
-                ratSkillPool = new int[] { 101, 102, 139 }; // 패시브 스킬 풀
+                ratSkillPool = new int[] { 101, 102, 139 }; // 패시브 스킬 풀 (스킬 ID들)
             }
 
-            randomSkillIndex = ratSkillPool[Random.Range(0, ratSkillPool.Length)];
+            // 랜덤 스킬 ID 추출
+            randomSkillID = ratSkillPool[Random.Range(0, ratSkillPool.Length)];
 
-            // randomSkillIndex에 해당하는 스킬 찾기
+            // 추출한 ID에 해당하는 스킬 데이터와 '리스트 인덱스' 찾기
             for (int i = 0; i < skillCardController.skillDataList.Count; i++)
             {
-                if (skillCardController.skillDataList[i].iSkillIndex == randomSkillIndex)
+                if (skillCardController.skillDataList[i].iSkillIndex == randomSkillID)
                 {
                     skillToEquip = skillCardController.skillDataList[i];
+
+                    // ⭐ [핵심 수정] 찾았을 때 리스트의 순서(i)를 저장합니다.
+                    targetListIndex = i;
                     break;
                 }
             }
         }
 
-
+        // 스킬 오브젝트 생성 및 장착
         GameObject skillObj = skillCardController.CreateSkillInstance(skillToEquip);
         PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
             ? skillCardController.InGameUiController.gameManager.playerAbility_1
@@ -304,7 +304,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (skillToEquip.cardType == CardType.Active)
         {
-            // 액티브 스킬 처리
             Skill skillComponent = skillObj.GetComponent<Skill>();
             if (skillComponent != null)
             {
@@ -314,7 +313,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         else if (skillToEquip.cardType == CardType.Passive)
         {
-            // 패시브 스킬 처리
             Passive passiveComponent = skillObj.GetComponent<Passive>();
             if (passiveComponent != null)
             {
@@ -322,10 +320,23 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
         }
 
+        // P2P 메시지 전송 (메시지에는 식별을 위해 ID인 randomSkillID를 보냅니다)
         P2PMessageSender.SendMessage(
-     SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillToEquip.sSkillName, rectTransformMine.anchoredPosition, skillToEquip, bIsRat, randomSkillIndex)
- );
+              SkillSelectBuilder.Build(
+                  MatchResultStore.myPlayerNumber,
+                  skillToEquip.sSkillName,
+                  rectTransformMine.anchoredPosition,
 
+                  // ❌ [기존] skillToEquip (쥐 정보가 들어감 -> 상대방은 처음부터 쥐로 인식)
+                  // skillToEquip, 
+
+                  // ⭕ [수정] skillCard_SO (현재 UI에 보이는 원래 카드 정보 -> 상대방은 호랑이로 인식)
+                  skillCard_SO,
+
+                  bIsRat,
+                  randomSkillID
+              )
+          );
 
         // UI 처리
         skillCardController.SetBoolAllCardInteract(false);
@@ -334,7 +345,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (bIsRat)
         {
-            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iSkillIndex, rectTransformMine.anchoredPosition, randomSkillIndex);
+            skillCardController.HIdeSkillCardList_ForRat(skillCard_SO.iSkillIndex, transform.position, randomSkillID);
         }
         else
         {
@@ -342,69 +353,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
-
-
-
-
-    //    if (bIsRat)
-    //    {
-    //        int randomSkillIndex = new int[] { 1, 2, 101, 102, 139 }[Random.Range(0, 5)];
-    //    }
-
-
-
-
-    //    GameObject skillObj = skillCardController.CreateSkillInstance(skillCard_SO);
-    //    PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
-    //        ? skillCardController.InGameUiController.gameManager.playerAbility_1
-    //        : skillCardController.InGameUiController.gameManager.playerAbility_2;
-
-    //    if (skillCard_SO.cardType == CardType.Active)
-    //    {
-    //        // 액티브 스킬 처리
-    //        Skill skillComponent = skillObj.GetComponent<Skill>();
-    //        if (skillComponent != null)
-    //        {
-    //            SkillType targetSlot = targetPlayerAbility.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
-    //            targetPlayerAbility.SetSkill(targetSlot, skillComponent);
-    //        }
-    //    }
-    //    else if (skillCard_SO.cardType == CardType.Passive)
-    //    {
-    //        // 패시브 스킬 처리
-    //        Passive passiveComponent = skillObj.GetComponent<Passive>();
-    //        if (passiveComponent != null)
-    //        {
-    //            targetPlayerAbility.EquipPassive(passiveComponent);
-    //        }
-    //    }
-
-
-
-
-
-
-
-    //    P2PMessageSender.SendMessage(
-    //      SkillSelectBuilder.Build(MatchResultStore.myPlayerNumber, skillCard_SO.sSkillName, rectTransformMine.anchoredPosition, skillCard_SO, bIsRat)
-    //  );
-
-
-
-
-
-    //    // UI 처리
-    //    skillCardController.SetBoolAllCardInteract(false);
-    //    skillCardController.iAuthorityPlayerNum = 0;
-    //    transform.DOKill();
-
-    //    skillCardController.HideSkillCardList(skillCard_SO.iAnimalNum, rectTransformMine.anchoredPosition);
-
-    //}
-
+   
 
     private void StartBorderLineAnimation()
     {
