@@ -170,7 +170,37 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNickNameInputPanel()
     {
-        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.3f);
+        // 0.3초 동안 문이 닫히는 애니메이션 실행 -> 끝난 후(Lambda) 내부 코드 실행
+        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.3f, () =>
+        {
+            // 애니메이션 종료 후 플레이어 이동
+            // (SettingRoomNickName에서 other를 넘길 필요 없이, 이미 알고 있는 scriptPlayerCharacter 사용)
+            if (scriptPlayerCharacter != null)
+            {
+                ResetPlayerPosition(scriptPlayerCharacter.gameObject);
+            }
+        });
+    }
+
+    public void CloseInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration, System.Action onComplete = null)
+    {
+        topImage.gameObject.SetActive(true);
+        bottomImage.gameObject.SetActive(true);
+
+        float topImageHeight = topImage.rect.height;
+        float bottomImageHeight = bottomImage.rect.height;
+        float topClosedPosY = (topImageHeight / 2f);
+        float bottomClosedPosY = -(bottomImageHeight / 2f);
+
+        // topImage 애니메이션 끝에 OnComplete 연결
+        topImage.DOAnchorPosY(topClosedPosY, fDuration).SetEase(Ease.OutQuart)
+            .OnComplete(() =>
+            {
+                // 애니메이션이 끝나면 콜백 실행
+                onComplete?.Invoke();
+            });
+
+        bottomImage.DOAnchorPosY(bottomClosedPosY, fDuration).SetEase(Ease.OutQuart);
     }
 
 

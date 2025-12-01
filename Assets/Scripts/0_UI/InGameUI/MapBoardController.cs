@@ -44,6 +44,7 @@ public class MapBoardController : MonoBehaviour
     private const float UPPER_TARGET_Y = -361f;
     private const float LOWER_TARGET_Y = 360f;
 
+
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
@@ -80,18 +81,13 @@ public class MapBoardController : MonoBehaviour
     }
 
     // #. 패널 닫기 (고정된 위치로 등장)
-    public void CloseMapBoardPanelVertical(int iAnimalNum = 0, string sDescription = "NULL")
+    public void CloseMapBoardPanelVertical(int iAnimalNum = 0)
     {
         // 이미지 및 텍스트 설정
         if (iAnimalNum > 0)
         {
             iAnimalNum--;
             ChangeImage_MapBoard(iAnimalNum);
-        }
-
-        if (sDescription != "NULL")
-        {
-            ChangeDescriptionTest_MapBoard(sDescription);
         }
 
         // 오브젝트 활성화
@@ -107,6 +103,8 @@ public class MapBoardController : MonoBehaviour
             .DOAnchorPosY(LOWER_TARGET_Y, 0.5f)
             .SetEase(Ease.InQuint);
     }
+
+
 
     public void ChangeImage_MapBoard(int iindex = 0)
     {

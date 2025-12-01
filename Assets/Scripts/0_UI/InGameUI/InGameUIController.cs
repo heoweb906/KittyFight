@@ -166,9 +166,7 @@ public class InGameUIController : MonoBehaviour
             yield break; 
         }
         
-        
-
-
+       
         gameManager.ResetGame();
      
         yield return new WaitForSeconds(0.6f); 

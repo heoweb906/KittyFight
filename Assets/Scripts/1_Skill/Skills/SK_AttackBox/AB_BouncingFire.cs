@@ -26,6 +26,11 @@ public class AB_BouncingFire : AB_HitboxBase
     private float timeAlive = 0f;
     private float lowSpeedTime = 0f;
 
+    [Header("ÀÌÆåÆ®")]
+    public GameObject objEffect_Hit;
+    public float fEffectSize;
+    public GameObject[] objs_Piece;
+
     protected override void Awake()
     {
         base.Awake();
@@ -55,6 +60,7 @@ public class AB_BouncingFire : AB_HitboxBase
 
         if (timeAlive > minAliveTime && lowSpeedTime > lowSpeedDurationToDestroy)
         {
+            OnDisappearEffect();
             Destroy(gameObject);
         }
     }
@@ -64,6 +70,7 @@ public class AB_BouncingFire : AB_HitboxBase
         if (victim == null) return;
 
         victim.TakeDamage(damage, ownerAbility);
+        OnDisappearEffect();
         Destroy(gameObject);
     }
 
@@ -71,12 +78,14 @@ public class AB_BouncingFire : AB_HitboxBase
     {
         if (rb == null)
         {
+            OnDisappearEffect();
             Destroy(gameObject);
             return;
         }
 
         if (remainingBounces <= 0)
         {
+            OnDisappearEffect();
             Destroy(gameObject);
             return;
         }
@@ -88,6 +97,7 @@ public class AB_BouncingFire : AB_HitboxBase
 
         if (incoming.sqrMagnitude < 0.0001f)
         {
+            OnDisappearEffect();
             Destroy(gameObject);
             return;
         }
@@ -160,6 +170,7 @@ public class AB_BouncingFire : AB_HitboxBase
         float newSpeed = incoming.magnitude * bounceSpeedMultiplier;
         if (!float.IsFinite(newSpeed) || newSpeed < 0.01f)
         {
+            OnDisappearEffect();
             Destroy(gameObject);
             return;
         }
@@ -167,4 +178,30 @@ public class AB_BouncingFire : AB_HitboxBase
         rb.velocity = reflectedDir * newSpeed;
         remainingBounces--;
     }
+
+
+    private void OnDisappearEffect()
+    {
+        if (objEffect_Hit != null)
+        {
+            GameObject effect = Instantiate(objEffect_Hit, transform);
+            effect.transform.localPosition = Vector3.zero;
+            effect.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            effect.transform.localScale = new Vector3(fEffectSize, fEffectSize, fEffectSize);
+            effect.transform.SetParent(null);
+        }
+
+        Explode(0.5f, 5f);
+        foreach (GameObject piece in objs_Piece)
+        {
+            if (piece != null)
+            {
+                piece.transform.SetParent(null);
+            }
+        }
+
+
+
+    }
+
 }

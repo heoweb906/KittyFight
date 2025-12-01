@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         // 핸들러 등록
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myPlayer.GetComponent<PlayerHealth>(), myNum));
-        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this));
+        P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this, mapManager));
         P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum));
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
@@ -221,6 +221,8 @@ public class GameManager : MonoBehaviour
 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+
+        mapManager.StopCurrentGimmick();
 
         StartCoroutine(EndGameSequence(iLosePlayerNum));
     }
@@ -296,7 +298,7 @@ public class GameManager : MonoBehaviour
             if ((IntScorePlayer_1 + IntScorePlayer_2) % 5 == 0 && (IntScorePlayer_1 + IntScorePlayer_2) > 0)
             {
                 IntMapGimicnumber = Random.Range(1, 13);
-                // mapManager.ChangeMapGimicIndex(IntMapGimicnumber);
+                mapManager.SetMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
             }
 
@@ -359,6 +361,7 @@ public class GameManager : MonoBehaviour
 
         // 맵 관련려관련
 
+        mapManager.StartCurrentGimmick();
         ingameUIController.ChangeReadyStartSprite(1); 
         ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1); 
@@ -387,5 +390,11 @@ public class GameManager : MonoBehaviour
                 Destroy(roundObjects[i]);
         }
         roundObjects.Clear();
+    }
+
+
+    public bool GetGameEnded()
+    {
+        return gameEnded;
     }
 }

@@ -10,7 +10,6 @@ public class SettingRoomNickName : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             mainMenuController.OnNickNameInputPanel();
-            mainMenuController.ResetPlayerPosition(other.gameObject);
         }
     }
    

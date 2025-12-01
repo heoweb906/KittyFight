@@ -29,7 +29,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private List<AbstractMapGimic> gimicks;
     [HideInInspector] private AbstractMapGimic currentGimmick;
 
-    public int currentIndex = -1;
+    private int currentMapGimicIndex = -1;
 
 
 
@@ -58,8 +58,10 @@ public class MapManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (currentGimmick != null)
+        if (MatchResultStore.myPlayerNumber == 1 && gameManager.BoolAcitveMapGimic && !gameManager.GetGameEnded() && currentGimmick != null)
+        {
             currentGimmick.OnGimmickUpdate();
+        }
     }
 
 
@@ -116,24 +118,29 @@ public class MapManager : MonoBehaviour
     #region // ¸Ê ±â¹Í ÄÁÆ®·Ñ °ü·Ã
 
 
-    public void ChangeMapGimicIndex(int iGimicIndex)
+    public void SetMapGimicIndex(int iGimicIndex)
     {
-        currentIndex = iGimicIndex - 1;
+        currentMapGimicIndex = iGimicIndex;
+    }
+    public int GetMapGimicIndex()
+    {
+        return currentMapGimicIndex;
     }
 
 
-    public void ActivateGimmick()
+
+    public void StartCurrentGimmick()
     {
         if (currentGimmick != null) currentGimmick.OnGimicEnd();
 
-        if (currentIndex < 0 || currentIndex >= gimicks.Count)
+        if (currentMapGimicIndex < 0 || currentMapGimicIndex >= gimicks.Count)
         {
             currentGimmick = null;
-            currentIndex = -1;
+            currentMapGimicIndex = -1;
             return;
         }
 
-        currentGimmick = gimicks[currentIndex];
+        currentGimmick = gimicks[currentMapGimicIndex];
         currentGimmick.OnGimicStart();
     }
 
@@ -145,7 +152,7 @@ public class MapManager : MonoBehaviour
         {
             currentGimmick.OnGimicEnd();
             currentGimmick = null;
-            currentIndex = -1;
+            currentMapGimicIndex = -1;
         }
     }
     #endregion
