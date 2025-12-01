@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f747aa8e1f588740893dcf3e190c1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objSheepSneeze: {fileID: 6777267630284458099, guid: e29204c70b186f449a275cff4bcb579a,
+    type: 3}
+  interval: 5
+  spawnOffsetDistance: 1
+  verticalOffset: 0.5
