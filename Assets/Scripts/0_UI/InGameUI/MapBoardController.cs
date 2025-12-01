@@ -44,20 +44,6 @@ public class MapBoardController : MonoBehaviour
     private const float UPPER_TARGET_Y = -361f;
     private const float LOWER_TARGET_Y = 360f;
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha7))
-    //    {
-    //        int randomNum = Random.Range(1, 13);
-    //        CloseMapBoardPanelVertical(randomNum);
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Alpha8))
-    //    {
-    //        OpenMapBoardPanelVertical();
-    //    }
-    //}
-
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;

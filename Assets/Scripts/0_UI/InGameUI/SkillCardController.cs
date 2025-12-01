@@ -148,25 +148,6 @@ public class SkillCardController : MonoBehaviour
                 SelectRandomCard();
             }
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ShowSkillCardListWithSpecific(0, false, new int[] { 3,4,5,6});
-
-            // ShowSkillCardListWithSpecific(0, false, new int[] { 1,2,101,102});
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (targetPoints.Length > 1 && targetPoints[1] != null)
-            {
-                // 월드 좌표(position)를 그대로 넘기면 내부에서 UI 좌표로 자동 변환됩니다.
-                HIdeSkillCardList_ForRat(5, targetPoints[1].position, 1);
-            }
-        }
-
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)

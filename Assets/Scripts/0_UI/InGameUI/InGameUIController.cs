@@ -46,6 +46,7 @@ public class InGameUIController : MonoBehaviour
     public SkillCardController skillCardController;
     public ScoreBoardUIController scoreBoardUIController;
     public MapBoardController mapBoardController;
+    public FinalEndingController finalEndingController;
 
     [Header("¿¬Ãâ¿ë")]
     public Image image_FadeOut_White;
@@ -68,6 +69,7 @@ public class InGameUIController : MonoBehaviour
         scoreBoardUIController = this.GetComponent<ScoreBoardUIController>();
         scoreBoardUIController.Initialize(this, canvasMain.transform);
         mapBoardController.Initialize(this, canvasMain.transform);
+        finalEndingController.Initialize(this, canvasMain.transform);
     }
 
 
@@ -144,15 +146,28 @@ public class InGameUIController : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         ChangeReadyStartSprite(0);
-
         int winPlayerCurrentScore = winnerPlayerNum == 1 ? gameManager.IntScorePlayer_1 : gameManager.IntScorePlayer_2;
         int iLosePlayerNum = winnerPlayerNum == 1 ? 2 : 1;
 
-        if (winPlayerCurrentScore % 2 == 0)
+
+
+        if (gameManager.IntScorePlayer_1 >= 11 || gameManager.IntScorePlayer_2 >= 11)
+        {
+            yield return new WaitForSeconds(1.2f);
+            int winnerNum = (gameManager.IntScorePlayer_1 >= 11) ? 1 : 2;
+            finalEndingController.ShowFinalEnding(winnerNum);
+            yield break;
+        }
+
+        // ½ºÅ³ È¹µæ ºÎºÐ
+        if (winPlayerCurrentScore % 2 == 0)     
         {
             MovePlayerImageToCenter(iLosePlayerNum);
             yield break; 
         }
+        
+        
+
 
         gameManager.ResetGame();
      

@@ -11,6 +11,7 @@ public class TitleLogoAssist : MonoBehaviour
 
     [Header("타이틀 로고")]
     public SpriteRenderer image_Logo;
+    public SpriteRenderer image_Logo_2;
 
     [Header("카메라 종류 / 피사체 위치")]
     public GameObject[] objs_VirtualCamera; 
@@ -39,6 +40,8 @@ public class TitleLogoAssist : MonoBehaviour
     private void Awake()
     {
         image_Logo.DOFade(0f, 0f);
+        image_Logo_2.DOFade(0f, 0f);
+
         // ChangeVirtualCamera(0);
         objs_VirtualCamera[0].transform.position = transforms_Subject[0].position;
         testPlayerComtroller.bCanControl = false;
@@ -68,11 +71,14 @@ public class TitleLogoAssist : MonoBehaviour
 
         // DOTween.KillAll() 제거하고 이 스크립트의 트위닝만 정리
         image_Logo.DOKill();
-    
+        image_Logo_2.DOKill();
+
+
         DOTween.Kill(this); // 이 MonoBehaviour와 연관된 DOVirtual 정리
         if (currentStep == 1)
         {
             image_Logo.color = new Color(image_Logo.color.r, image_Logo.color.g, image_Logo.color.b, 1f);
+            image_Logo_2.color = new Color(image_Logo_2.color.r, image_Logo_2.color.g, image_Logo_2.color.b, 1f);
             currentStep = 2;
 
             DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
@@ -96,6 +102,14 @@ public class TitleLogoAssist : MonoBehaviour
     private void StartStep1()
     {
         currentStep = 1;
+
+        // image_Logo_2도 똑같이 페이드인 (딜레이와 시간 동일하게 설정)
+        // 로직 흐름(OnComplete)은 하나에서만 관리하면 되므로 image_Logo에만 콜백을 남겨둡니다.
+        if (image_Logo_2 != null)
+        {
+            image_Logo_2.DOFade(1f, 3f).SetDelay(1f);
+        }
+
         image_Logo.DOFade(1f, 3f).SetDelay(1f).OnComplete(() => {
             currentStep = 2;
             DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
@@ -162,6 +176,8 @@ public class TitleLogoAssist : MonoBehaviour
             image2Rect.DOAnchorPos(targetPoint.anchoredPosition, 0.85f).SetEase(Ease.InQuint);
         }
     }
+
+
     public void MoveToStart()
     {
         if (image1Rect != null && startPoint1 != null)
