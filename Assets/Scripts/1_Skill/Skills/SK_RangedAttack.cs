@@ -21,8 +21,13 @@ public class SK_RangedAttack : Skill
         var ab = proj.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
+        // 중력 끌수 있는 TailMail 용
+        if (ab != null && playerAbility != null && playerAbility.events != null)
+        {
+            playerAbility.events.EmitHitboxSpawned(ab);
+        }
 
-        if(playerAbility.playerNumber == 2)
+        if (playerAbility.playerNumber == 2)
         {
             AB_Ranged range = proj.GetComponent<AB_Ranged>();
             range.ChangeMaterial();

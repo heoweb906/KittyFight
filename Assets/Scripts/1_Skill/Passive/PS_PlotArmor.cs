@@ -10,23 +10,18 @@ public class PS_PlotArmor : Passive
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);
-        e.OnBeforeDealDamage += OnBeforeDealDamage;
+        e.OnBeforeTakeDamage += OnBeforeTakeDamage;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
-        e.OnBeforeDealDamage -= OnBeforeDealDamage;
+        e.OnBeforeTakeDamage -= OnBeforeTakeDamage;
         base.Unsubscribe(e);
     }
 
-    private void OnBeforeDealDamage(ref int dmg, GameObject victim)
+    private void OnBeforeTakeDamage(ref int dmg, GameObject attackerObj)
     {
-        if (dmg <= 0 || victim == null) return;
-        if (ability == null) return;
-        if (victim != ability.gameObject) return;
-        if (Random.value < ignoreChance)
-        {
-            dmg = 0;
-        }
+        if (dmg <= 0) return;
+        if (Random.value < ignoreChance) dmg = 0;
     }
 }

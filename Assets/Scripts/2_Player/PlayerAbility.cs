@@ -163,6 +163,8 @@ public class PlayerAbility : MonoBehaviour
         s.Execute(origin, direction);
         if (effect != null) effect.PlayShakeAnimation(SlotToIndex(type));
 
+        events?.EmitSkillExecuted(type);
+
         if (!(s is SK_Repeek))
             RecordLastActionType(type);
 
@@ -205,6 +207,22 @@ public class PlayerAbility : MonoBehaviour
         st.endTime = Time.time;
         cooldowns[slot] = st;
         OnCooldownChanged?.Invoke(slot);
+    }
+    public void ResetAllCooldowns()
+    {
+        var now = Time.time;
+        var keys = new List<SkillType>(cooldowns.Keys);
+
+        foreach (var slot in keys)
+        {
+            var st = cooldowns[slot];
+            st.active = false;
+            st.duration = 0f;
+            st.endTime = now;
+            cooldowns[slot] = st;
+
+            OnCooldownChanged?.Invoke(slot);
+        }
     }
 
     public CooldownState GetCooldown(SkillType slot) => cooldowns[slot];

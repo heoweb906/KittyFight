@@ -48,6 +48,12 @@ public class SK_MeleeAttack : Skill
         var hb = hitbox.GetComponent<AB_MeleeHitbox>();
         if (hb != null) hb.damage = damage;
 
+        // RazorTalons 등 범위 패시브용 훅
+        if (hb != null && events != null)
+        {
+            events.EmitMeleeHitboxSpawned(hb);
+        }
+
         // 공통 Init: 소유자 Ability 주입 (playerNumber도 내부에서 세팅됨)
         var ab = hitbox.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);

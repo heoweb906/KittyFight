@@ -20,10 +20,6 @@ public class PS_Finisher : Passive
         int max = hp.MaxHP;
 
         if (max <= 0 || cur <= 0) return;
-
-        if (cur <= Mathf.CeilToInt(max * threshold))
-        {
-            dmg = cur; // 이번 히트로 즉사
-        }
+        dmg = max;
     }
 }

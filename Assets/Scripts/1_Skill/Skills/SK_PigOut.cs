@@ -27,7 +27,7 @@ public class SK_PigOut : Skill
         ph.RemoteSetHP(newHP);
 
         P2PMessageSender.SendMessage(
-            DamageMessageBuilder.Build(pn, newHP, null)
+            DamageMessageBuilder.Build(pn, newHP, 0, null)
         );
 
         ApplySelfSlow();
