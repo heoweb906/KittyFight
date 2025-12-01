@@ -1,0 +1,54 @@
+using UnityEngine;
+
+public class AB_Banana : AB_HitboxBase
+{
+    [Header("바나나 스펙")]
+    [Tooltip("바나나에 피격 시 들어갈 피해량")]
+    public int damage = 40;
+
+
+    private bool installed = false;
+    private Rigidbody rb;
+    private Collider col;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+
+        var gm = FindObjectOfType<GameManager>();
+        if (gm != null)
+            gm.RegisterRoundObject(this.gameObject);
+    }
+
+    protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
+    {
+        if (victim == null) return;
+        victim.TakeDamage(damage, ownerAbility, transform.position);
+        Destroy(gameObject);
+    }
+
+    protected override void OnEnvironmentHit(Collider other)
+    {
+        if (installed) return;
+        installed = true;
+
+        if (rb == null) rb = GetComponent<Rigidbody>();
+        if (col == null) col = GetComponent<Collider>();
+
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
+
+        if (col != null)
+        {
+            col.isTrigger = true;
+        }
+    }
+}

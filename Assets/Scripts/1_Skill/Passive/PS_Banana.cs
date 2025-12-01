@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PS_Banana : MonoBehaviour
+public class PS_Banana : Passive
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("바나나 투사체 프리팹")]
+    [Tooltip("AB_Banana가 붙어 있는 바나나 투사체 프리팹")]
+    public GameObject bananaProjectilePrefab;
+
+    private Skill rangedSkill;
+    private GameObject originalProjectilePrefab;
+
+    protected override void Subscribe(AbilityEvents e)
     {
-        
+        if (ability != null)
+        {
+            rangedSkill = ability.GetSkill(SkillType.Ranged);
+        }
+
+        if (rangedSkill != null && bananaProjectilePrefab != null)
+        {
+            originalProjectilePrefab = rangedSkill.objSkillEntity;
+            rangedSkill.objSkillEntity = bananaProjectilePrefab;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Unsubscribe(AbilityEvents e)
     {
-        
+        if (rangedSkill != null && originalProjectilePrefab != null)
+        {
+            rangedSkill.objSkillEntity = originalProjectilePrefab;
+        }
     }
 }
