@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b088ef446d77e4aa98b6294333d7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotProjectilePrefab: {fileID: 6777267630284458099, guid: 793c5078cb452444dae0878544be4317,
+    type: 3}
+  hotCooldown: 5
