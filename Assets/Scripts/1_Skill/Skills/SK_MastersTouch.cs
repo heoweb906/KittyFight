@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SK_MastersTouch : Skill
 {
+    [SerializeField] private GameObject effectPrefab;
+
     private void Awake()
     {
         coolTime = 8f;
@@ -10,6 +12,12 @@ public class SK_MastersTouch : Skill
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
+
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.Euler(-90f, 0, 0)
+        );
 
         var ability = playerAbility;
 

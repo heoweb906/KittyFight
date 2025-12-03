@@ -47,3 +47,7 @@ MonoBehaviour:
   intervalSeconds: 6
   minMoveSpeed: 1.5
   maxMoveSpeed: 12.5
+  upEffectPrefab: {fileID: 5651499157938460231, guid: e25e5b6a08821474ba0f564fa242c412,
+    type: 3}
+  downEffectPrefab: {fileID: 5990862213919189110, guid: 562d6c1fe8994184182a5c36ac010af7,
+    type: 3}

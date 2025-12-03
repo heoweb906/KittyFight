@@ -43,7 +43,7 @@ public class SK_HopCrash : Skill
         var anim = owner.GetComponentInChildren<Animator>();
         if (!rb || !anim || !ph) yield break;
 
-        float startY = transform.position.y;
+        float startY = playerAbility.gameObject.transform.position.y;
         int prevHP = GetComponent<PlayerHealth>()?.CurrentHP ?? 0;
 
         // 바닥에 닿거나 피격으로 HP가 감소할 때까지
@@ -66,13 +66,13 @@ public class SK_HopCrash : Skill
             yield return new WaitForFixedUpdate();
         }
 
-        float endY = transform.position.y;
+        float endY = playerAbility.gameObject.transform.position.y;
         float fallDist = Mathf.Max(0f, startY - endY);
         float dmgF = baseDamage + fallDist * damagePerMeter;
         int dmg = Mathf.Max(1, Mathf.RoundToInt(dmgF));
 
         Quaternion rot = Quaternion.identity;
-        GameObject hitbox = Instantiate(objSkillEntity, transform.position, rot);
+        GameObject hitbox = Instantiate(objSkillEntity, playerAbility.gameObject.transform.position, rot);
 
         var abBase = hitbox.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);

@@ -6,11 +6,18 @@ public class SK_FeatherBarrage : Skill
     [Header("발사 설정")]
     [SerializeField] private float projectileSpeed = 20f;
     [SerializeField] private int projectileCount = 12;
+    [SerializeField] private GameObject effectPrefab;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;
         if (!playerAbility) return;
+
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.identity
+        );
 
         Vector3 center = playerAbility.transform.position;
         center.z = playerAbility.transform.position.z;

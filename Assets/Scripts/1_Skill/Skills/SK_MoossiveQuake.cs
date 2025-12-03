@@ -13,6 +13,9 @@ public class SK_MoossiveQuake : Skill
     [SerializeField] private float shakeStrength = 0.35f;
     [SerializeField] private float shakeDuration = 0.55f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     private void Awake()
     {
         coolTime = 10.5f;
@@ -21,6 +24,12 @@ public class SK_MoossiveQuake : Skill
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (objSkillEntity == null) return;
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.identity,
+            playerAbility.gameObject.transform
+        );
         StartCoroutine(Co_Cast(origin));
     }
 

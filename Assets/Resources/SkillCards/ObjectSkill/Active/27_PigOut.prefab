@@ -52,3 +52,5 @@ MonoBehaviour:
   healAmount: 40
   slowDuration: 3
   slowPercent: 40
+  effectPrefab: {fileID: 1869855277647009617, guid: 38cd254c70c6ccf478cce3eac84e4b1a,
+    type: 3}

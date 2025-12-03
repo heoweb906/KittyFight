@@ -4,9 +4,20 @@ public class SK_BAA : Skill
 {
     [SerializeField] private float stunDuration = 2f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+    [SerializeField] private GameObject stunEffectPrefab;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
+
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.identity,
+            playerAbility.gameObject.transform
+        );
 
         var gm = FindObjectOfType<GameManager>();
         if (!gm) return;
@@ -34,5 +45,12 @@ public class SK_BAA : Skill
         var stun = target.GetComponent<StunStatus>();
         if (!stun) stun = target.AddComponent<StunStatus>();
         stun.ApplyStun(duration, playShockAnim);
+
+        Instantiate(
+            stunEffectPrefab,
+            target.transform.position,
+            Quaternion.identity,
+            target.transform
+        );
     }
 }

@@ -9,6 +9,9 @@ public class SK_RabbitHole : Skill
 
     private bool isCasting = false;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     public bool CanTeleportPosition(Vector3 currentPos, Vector3 targetPos)
     {
         if ((targetPos - currentPos).sqrMagnitude < 0.01f)
@@ -85,6 +88,18 @@ public class SK_RabbitHole : Skill
             rb.position = finalPos;
         else
             owner.transform.position = finalPos;
+
+        Instantiate(
+            effectPrefab,
+            currentPos,
+            Quaternion.Euler(-90, 0, 0)
+        );
+
+        Instantiate(
+            effectPrefab,
+            finalPos,
+            Quaternion.Euler(-90, 0, 0)
+        );
 
         isCasting = false;
     }

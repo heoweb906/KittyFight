@@ -152,3 +152,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   stunDuration: 3
+  stunEffectPrefab: {fileID: 5129599679803903138, guid: bf3166d569fc9a1428ad633f5b49bc94,
+    type: 3}

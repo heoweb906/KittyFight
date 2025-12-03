@@ -51,3 +51,7 @@ MonoBehaviour:
   aimRange: 0
   slowDuration: 3
   slowPercent: 50
+  effectPrefab: {fileID: 9175777528781449006, guid: ea73794f0c99b5944b509661b4800ca1,
+    type: 3}
+  slowEffectPrefab: {fileID: 3988663618578305930, guid: 1e5753075aa53cc4fa8d27ffecf3c279,
+    type: 3}

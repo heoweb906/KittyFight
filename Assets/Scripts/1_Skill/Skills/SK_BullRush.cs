@@ -12,6 +12,9 @@ public class SK_BullRush : Skill
     [Header("히트박스")]
     public float hitboxLifetimePadding = 0.02f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     private Rigidbody rb;
 
     private void Awake()
@@ -24,10 +27,17 @@ public class SK_BullRush : Skill
     {
         if (!objSkillEntity || playerAbility == null) return;
 
+
         // 러시 히트박스 스폰(양쪽 모두): 플레이어 위치에 붙이고 방향 전달
         var spawnPos = playerAbility.transform.position;
         var rot = Quaternion.LookRotation(direction, Vector3.up);
         var hb = Instantiate(objSkillEntity, spawnPos, rot);
+
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.Euler(0, rot.eulerAngles.y + 180f, 0)
+        );
 
         var abBase = hb.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);

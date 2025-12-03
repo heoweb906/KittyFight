@@ -10,11 +10,14 @@ public class SK_MadDash : Skill
     [SerializeField] private LayerMask wallMask;
 
     [Header("근접 공격 설정")]
-    [SerializeField] private GameObject meleeHitboxPrefab;
+    [SerializeField] private GameObject meleeHitboxPrefab1;
+    [SerializeField] private GameObject meleeHitboxPrefab2;
     [SerializeField] private float meleeInterval = 0.5f;
 
     private AbilityEvents events;
     private bool isRunning = false;
+
+    private int effectIndex = 0;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -148,7 +151,8 @@ public class SK_MadDash : Skill
 
     private void SpawnMeleeHitbox(Vector3 origin, Vector3 direction)
     {
-        if (!meleeHitboxPrefab) return;
+        if (!meleeHitboxPrefab1) return;
+        if (!meleeHitboxPrefab2) return;
 
         Vector3 spawnPos = origin;
         spawnPos.z = playerAbility.transform.position.z;
@@ -156,13 +160,25 @@ public class SK_MadDash : Skill
         Quaternion rot = Quaternion.LookRotation(direction);
 
         int damage = 0;
-        var protoHB = meleeHitboxPrefab.GetComponent<AB_MeleeHitbox>();
-        if (protoHB != null) damage = protoHB.damage;
+        GameObject hitbox;
+
+        if (effectIndex == 0)
+        {
+            var protoHB = meleeHitboxPrefab1.GetComponent<AB_MeleeHitbox>();
+            if (protoHB != null) damage = protoHB.damage;
+            hitbox = Object.Instantiate(meleeHitboxPrefab1, spawnPos, rot);
+            effectIndex = 1;
+        }
+        else
+        {
+            var protoHB = meleeHitboxPrefab1.GetComponent<AB_MeleeHitbox>();
+            if (protoHB != null) damage = protoHB.damage;
+            hitbox = Object.Instantiate(meleeHitboxPrefab2, spawnPos, rot);
+            effectIndex = 0;
+        }
 
         // TalonsEdge 등 패시브 보정
         events?.EmitMeleeDamageInt(ref damage);
-
-        GameObject hitbox = Object.Instantiate(meleeHitboxPrefab, spawnPos, rot);
 
         var hb = hitbox.GetComponent<AB_MeleeHitbox>();
         if (hb != null) hb.damage = damage;

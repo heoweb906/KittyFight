@@ -6937,7 +6937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
-  slot: 1
+  slot: 4
   fillImage: {fileID: 1883275457}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -10037,7 +10037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
-  slot: 1
+  slot: 5
   fillImage: {fileID: 54593578}
   useChargeProgress: 1
   lerpSpeed: 0

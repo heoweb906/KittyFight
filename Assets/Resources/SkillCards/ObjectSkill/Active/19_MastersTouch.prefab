@@ -49,3 +49,5 @@ MonoBehaviour:
   objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: 30b81d9c302d39f468e09a49b2d08355, type: 3}
   aimRange: 0
+  effectPrefab: {fileID: 9199957610061076555, guid: 4bd80978c7df5104291c2b13b3de8bd3,
+    type: 3}

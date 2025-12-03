@@ -10,9 +10,18 @@ public class SK_PigOut : Skill
     [SerializeField, Range(0f, 100f)]
     private float slowPercent = 40f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
+
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.Euler(-90f, 0, 0)
+        );
 
         int pn = playerAbility.playerNumber;
         if (pn != MatchResultStore.myPlayerNumber) return;
