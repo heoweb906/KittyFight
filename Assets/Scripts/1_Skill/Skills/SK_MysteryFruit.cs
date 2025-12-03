@@ -6,8 +6,18 @@ public class SK_MysteryFruit : Skill
     [SerializeField] private int minDelta = -20;
     [SerializeField] private int maxDelta = 30;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
+        Instantiate(
+            effectPrefab,
+            playerAbility.gameObject.transform.position,
+            Quaternion.identity,
+            playerAbility.gameObject.transform
+        );
+
         int pn = playerAbility != null ? playerAbility.playerNumber : 0;
         if (pn != MatchResultStore.myPlayerNumber) return;
 

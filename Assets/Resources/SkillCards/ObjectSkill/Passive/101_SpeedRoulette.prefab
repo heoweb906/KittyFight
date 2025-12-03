@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5783421907839214963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1279.9934, y: 719.99634, z: 0.00000044648826}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,3 +47,7 @@ MonoBehaviour:
   intervalSeconds: 6
   minMoveSpeed: 1.5
   maxMoveSpeed: 12.5
+  upEffectPrefab: {fileID: 5651499157938460231, guid: e25e5b6a08821474ba0f564fa242c412,
+    type: 3}
+  downEffectPrefab: {fileID: 5990862213919189110, guid: 562d6c1fe8994184182a5c36ac010af7,
+    type: 3}

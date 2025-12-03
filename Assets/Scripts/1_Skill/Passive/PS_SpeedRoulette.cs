@@ -7,13 +7,16 @@ public class PS_SpeedRoulette : Passive
     public float intervalSeconds = 6f;
 
     [Tooltip("랜덤 이동 속도 최소값")]
-    public float minMoveSpeed = 3f;
+    public float minMoveSpeed = 1.5f;
 
     [Tooltip("랜덤 이동 속도 최대값")]
-    public float maxMoveSpeed = 25f;
+    public float maxMoveSpeed = 12.5f;
+
+    [Header("Effects")]
+    [SerializeField] private GameObject upEffectPrefab;
+    [SerializeField] private GameObject downEffectPrefab;
 
     private float timer = 0f;
-
     private float originalMoveSpeed;
     private bool hasSavedOriginal = false;
 
@@ -69,6 +72,22 @@ public class PS_SpeedRoulette : Passive
         if (ability == null) return;
 
         float newSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
+        if (newSpeed <= 5)
+        {
+            Instantiate(
+                downEffectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
+        }
+        else
+        {
+            Instantiate(
+                upEffectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
+        }
         ability.moveSpeed = newSpeed;
     }
 }

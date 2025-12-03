@@ -2,12 +2,22 @@ using UnityEngine;
 
 public class SK_WoolWall : Skill
 {
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
         if (!objSkillEntity) return;
 
         var go = Instantiate(objSkillEntity, origin, Quaternion.identity);
+        Instantiate(
+            effectPrefab,
+            origin,
+            Quaternion.identity,
+            go.transform
+        );
+
         var ab = go.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 

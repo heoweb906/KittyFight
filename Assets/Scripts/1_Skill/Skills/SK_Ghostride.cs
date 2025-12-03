@@ -8,11 +8,20 @@ public class SK_Ghostride : Skill
     [SerializeField] private float speedMultiplier = 1.8f;
     [SerializeField] private GameObject[] visualObjects;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     private bool cancelRequested = false;
     private bool hideVisual = false;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
+        Instantiate(
+            effectPrefab,
+            origin,
+            Quaternion.Euler(-90, 0, 0)
+        );
+
         if (!playerAbility) return;
 
         hideVisual = !(playerAbility.playerNumber == MatchResultStore.myPlayerNumber);
@@ -82,6 +91,12 @@ public class SK_Ghostride : Skill
                     visualObjects[i].SetActive(true);
             }
         }
+
+        Instantiate(
+            effectPrefab,
+            owner.transform.position,
+            Quaternion.Euler(-90, 0, 0)
+        );
     }
     public void NotifyAttack()
     {

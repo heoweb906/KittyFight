@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6777267630284458099}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   singleHit: 1
   lifeTime: 1
+  environmentMask:
+    serializedVersion: 2
+    m_Bits: 0
   damage: 35
   knockbackForce: 24
   upwardFactor: 0.4

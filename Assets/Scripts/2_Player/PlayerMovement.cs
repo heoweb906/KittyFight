@@ -32,6 +32,13 @@ public class PlayerMovement : MonoBehaviour
         jumpScript = GetComponent<PlayerJump>();
 
     }
+    void FixedUpdate()
+    {
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (2.0f - 1) * Time.deltaTime;
+        }
+    }
 
     public void AttachToPlatform(Transform platform)
     {

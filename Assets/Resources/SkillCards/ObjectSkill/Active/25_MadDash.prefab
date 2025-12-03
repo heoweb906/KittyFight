@@ -55,6 +55,8 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 768
-  meleeHitboxPrefab: {fileID: 7030629527735423589, guid: c41e6769c4c75854f9331459f4404bba,
+  meleeHitboxPrefab1: {fileID: 7030629527735423589, guid: c68e6c8ca9cfd9d4f8a3d5b79450ac65,
+    type: 3}
+  meleeHitboxPrefab2: {fileID: 7030629527735423589, guid: 70ad68d5c782d7043b113ba6ee5db8ed,
     type: 3}
   meleeInterval: 0.3
