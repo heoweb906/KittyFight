@@ -125,6 +125,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   damage: 40
+  objEffect: {fileID: 7773734228143141044}
 --- !u!1 &7305858789489133679
 GameObject:
   m_ObjectHideFlags: 0

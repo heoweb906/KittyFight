@@ -15,6 +15,10 @@ public class PS_FurFlick : Passive
     [Tooltip("±Í≈– º”µµ")]
     public float projectileSpeed = 20f;
 
+
+    [Header("¿Ã∆Â∆Æ")]
+    public GameObject objEffect_Use;
+
     private float timer = 0f;
 
     protected override void Subscribe(AbilityEvents e)
@@ -44,6 +48,7 @@ public class PS_FurFlick : Passive
         if (timer < interval) return;
         timer -= interval;
 
+      
         var opponent = FindOpponentAbility();
         if (opponent == null) return;
 
@@ -95,6 +100,19 @@ public class PS_FurFlick : Passive
         {
             ab.Init(ability);
         }
+
+
+        if (objEffect_Use != null)
+        {
+            GameObject effect = Instantiate(objEffect_Use, transform);
+            effect.transform.localPosition = Vector3.zero;
+
+            effect.transform.rotation = Quaternion.Euler(-90, 0, 0);
+
+            effect.transform.localScale = new Vector3(2f, 2f, 2f);
+            effect.transform.SetParent(null);
+        }
+
 
         var rb = proj.GetComponent<Rigidbody>();
         if (rb != null)

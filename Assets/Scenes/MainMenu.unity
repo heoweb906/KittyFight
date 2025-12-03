@@ -16046,7 +16046,8 @@ MonoBehaviour:
   skill2: {fileID: 0}
   events: {fileID: 0}
   passives: []
-  initialPassives: []
+  initialPassives:
+  - {fileID: -7793482626553307555, guid: 77561125517abec4f898a0ee2927ca97, type: 3}
   playerNumber: 1
   effect: {fileID: 1369997704}
   meshTrail: {fileID: 9096772134613818518}

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 6
+  coolTime: 1
   objSkillEntity: {fileID: 6777267630284458099, guid: 6e9ce2bdc83a00e419bdbefb7c322d54,
     type: 3}
   skillIcon: {fileID: 21300000, guid: 4498081f566e08b4e84aafb1f9024f7c, type: 3}
@@ -55,4 +55,6 @@ MonoBehaviour:
   pullDuration: 0.3
   hitMask:
     serializedVersion: 2
-    m_Bits: 8960
+    m_Bits: 140032
+  objEffect: {fileID: 3805102588378627191, guid: 0be72613dbf9a194b8285e91f97355eb,
+    type: 3}

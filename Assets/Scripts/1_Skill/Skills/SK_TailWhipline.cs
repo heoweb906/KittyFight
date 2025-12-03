@@ -1,3 +1,4 @@
+using Amazon.GameLift.Model;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ public class SK_TailWhipline : Skill
     [SerializeField] private LayerMask hitMask;
 
     private bool isRunning = false;
+
+    [Header("이펙트")]
+    public GameObject objEffect;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -56,6 +60,12 @@ public class SK_TailWhipline : Skill
         {
             tail = Object.Instantiate(objSkillEntity, origin, Quaternion.identity);
             tailTr = tail.transform;
+
+            var stretcher = tail.GetComponent<ProjectileStretcher>();
+            if (stretcher != null)
+            {
+                stretcher.OnLaunch(owner.transform, origin);
+            }
         }
 
         float traveled = 0f;
@@ -97,6 +107,19 @@ public class SK_TailWhipline : Skill
 
                 if (tailTr) tailTr.position = hitPoint;
 
+                // ▼▼▼ [수정됨 1] 적중 즉시 꼬리 오브젝트 삭제 ▼▼▼
+                if (tail) Object.Destroy(tail);
+                // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+                if (objEffect != null)
+                {
+                    GameObject instance = Instantiate(objEffect, hitPoint, Quaternion.LookRotation(hit.normal));
+                    instance.transform.localScale = Vector3.one * 2f;
+
+                    // ▼▼▼ [수정됨 2] 원본 프리팹 건드리는 위험한 코드 삭제 ▼▼▼
+                    // objEffect.transform.SetParent(null); <-- 이 줄은 반드시 지워야 합니다!
+                }
+
                 Debug.DrawLine(prevPos, hitPoint, Color.red, 0.3f);
                 break;
             }
@@ -116,6 +139,7 @@ public class SK_TailWhipline : Skill
 
         if (canceledByHit)
         {
+            // 혹시 loop 안에서 삭제 안 됐을 경우를 대비
             if (tail) Object.Destroy(tail);
             Restore(owner, rb, controller, movement);
             isRunning = false;
@@ -166,6 +190,7 @@ public class SK_TailWhipline : Skill
             }
         }
 
+        // 마지막 안전장치 (이미 위에서 삭제했으면 무시됨)
         if (tail) Object.Destroy(tail);
 
         Restore(owner, rb, controller, movement);
