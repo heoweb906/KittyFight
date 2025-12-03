@@ -9625,96 +9625,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &1396151412
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2254560232415713949, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: coolTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2254560232415713949, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: playerAbility
-      value: 
-      objectReference: {fileID: 6589624400339541464}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1279.9934
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 719.99634
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.00000044648826
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3365488371481765013, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5783421907839214963, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-        type: 3}
-      propertyPath: m_Name
-      value: 11_BouncingFire
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 91ab67d24eacbb0409e1b9b56b4dc09a, type: 3}
---- !u!114 &1396151413 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2254560232415713949, guid: 91ab67d24eacbb0409e1b9b56b4dc09a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1396151412}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fde6e3aed0f40c4ca67ac88be5602ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1414481392
 GameObject:
   m_ObjectHideFlags: 0
@@ -16132,7 +16042,7 @@ MonoBehaviour:
   meleeSkill: {fileID: 1266430599}
   rangedSkill: {fileID: 1323632689}
   dash: {fileID: 1536973415}
-  skill1: {fileID: 1396151413}
+  skill1: {fileID: 0}
   skill2: {fileID: 0}
   events: {fileID: 0}
   passives: []
@@ -16349,5 +16259,4 @@ SceneRoots:
   - {fileID: 1062086627}
   - {fileID: 402731094}
   - {fileID: 1931324933}
-  - {fileID: 1396151412}
   - {fileID: 409328283496868008}

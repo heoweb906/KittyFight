@@ -291,11 +291,31 @@ public class GameManager : MonoBehaviour
 
         if (MatchResultStore.myPlayerNumber == 1)
         {
-            int mapIdx = Random.Range(0, 8);
+            int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
 
-            int bgIdx = Random.Range(0, 4);
+            int mapIdx = 0;
+            int bgIdx = 0;
 
-            if ((IntScorePlayer_1 + IntScorePlayer_2) % 5 == 0 && (IntScorePlayer_1 + IntScorePlayer_2) > 0)
+            // 1. 점수 합계 5점 미만 (초반)
+            if (totalScore < 5)
+            {
+                mapIdx = Random.Range(0, 8);  // 0 ~ 7
+                bgIdx = Random.Range(0, 4);   // 0 ~ 3
+            }
+            // 2. 점수 합계 5점 이상 ~ 14점 미만 (중반)
+            else if (totalScore >= 5 && totalScore < 14)
+            {
+                mapIdx = Random.Range(8, 16); // 8 ~ 15
+                bgIdx = Random.Range(4, 8);   // 4 ~ 7
+            }
+            // 3. 점수 합계 14점 이상 (후반)
+            else
+            {
+                mapIdx = Random.Range(16, 24); // 16 ~ 23
+                bgIdx = Random.Range(8, 10);   // 8 ~ 9
+            }
+
+            if (totalScore % 5 == 0 && totalScore > 0)
             {
                 IntMapGimicnumber = Random.Range(1, 13);
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);

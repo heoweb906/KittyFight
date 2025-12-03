@@ -20594,7 +20594,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -31584,6 +31584,7 @@ MonoBehaviour:
   - {fileID: 2146233246}
   - {fileID: 1126034755}
   - {fileID: 1347251808}
+  matScreen: {fileID: 2100000, guid: 6be0d54858c2d1742b295439f734cf54, type: 2}
 --- !u!1 &1514651111
 GameObject:
   m_ObjectHideFlags: 0
@@ -36460,7 +36461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1701565684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36476,8 +36477,8 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 2172738e6af2b804c8b272da02838393, type: 2}
+  weight: 0.951
+  sharedProfile: {fileID: 11400000, guid: 3a0fbfacb425be84ba8cfc7f8b2da521, type: 2}
 --- !u!4 &1701565685
 Transform:
   m_ObjectHideFlags: 0

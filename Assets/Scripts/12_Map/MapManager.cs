@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System; 
 
 /// <summary>
 /// 맵과 배경의 로딩 및 관리를 모두 전담하는 통합 클래스입니다.
@@ -30,6 +32,12 @@ public class MapManager : MonoBehaviour
     [HideInInspector] private AbstractMapGimic currentGimmick;
 
     private int currentMapGimicIndex = -1;
+
+
+    [Header("맵 기믹 연출")]
+    public Material matScreen; 
+    private readonly string propertyName = "_BorderThick";
+    private readonly string colorPropName = "_Color";
 
 
 
@@ -62,6 +70,37 @@ public class MapManager : MonoBehaviour
         {
             currentGimmick.OnGimmickUpdate();
         }
+    }
+
+
+
+    public void PlayBorderAnimation(Color finalHitColor, Action onHitCallback = null)
+    {
+        matScreen.DOKill();
+        matScreen.SetFloat(propertyName, 0.5f);
+        matScreen.SetColor(colorPropName, Color.white);
+
+        Sequence seq = DOTween.Sequence();
+
+        // 1. [빌드업] 3회 반복
+        for (int i = 0; i < 3; i++)
+        {
+            seq.Append(matScreen.DOFloat(0.47f, propertyName, 0.6f).SetEase(Ease.OutQuad));
+            seq.Append(matScreen.DOFloat(0.5f, propertyName, 0.4f).SetEase(Ease.InQuad));
+        }
+
+        // 2. [타격 직전] 콜백 실행!
+        // 여기서 경고음이나 함수가 실행됩니다.
+        seq.AppendCallback(() =>
+        {
+            if (onHitCallback != null) onHitCallback.Invoke();
+        });
+
+        // 3. [피니시] 강하고 빠른 동작
+        seq.Append(matScreen.DOFloat(0.45f, propertyName, 0.2f).SetEase(Ease.OutQuad));
+        seq.Join(matScreen.DOColor(finalHitColor, colorPropName, 0.2f).SetEase(Ease.OutQuad));
+
+        seq.Append(matScreen.DOFloat(0.5f, propertyName, 0.2f).SetEase(Ease.InQuad));
     }
 
 

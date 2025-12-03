@@ -24,40 +24,40 @@ public abstract class AbstractMapGimic : MonoBehaviour
         // ¼öÁ¤ ÇÊ¿ä
         switch (mapManager.GetMapGimicIndex())
         {
-            case 1:
+            case 1: // Áã
                 mapManager.iamge_TestMapGimicColor.color = Color.red; // »¡°­
                 break;
-            case 2:
+            case 2:  // ¼Ò
                 mapManager.iamge_TestMapGimicColor.color = new Color(1f, 0.5f, 0f); // ÁÖÈ²
                 break;
-            case 3:
+            case 3:  // È£¶ûÀÌ
                 mapManager.iamge_TestMapGimicColor.color = Color.yellow; // ³ë¶û
                 break;
-            case 4:
+            case 4:  // Åä³¢
                 mapManager.iamge_TestMapGimicColor.color = Color.green; // ÃÊ·Ï
                 break;
-            case 5:
+            case 5:  // ¿ë
                 mapManager.iamge_TestMapGimicColor.color = Color.cyan; // ÇÏ´Ã»ö
                 break;
-            case 6:
+            case 6:  // ¹ì
                 mapManager.iamge_TestMapGimicColor.color = Color.blue; // ÆÄ¶û
                 break;
-            case 7:
+            case 7:  // ¸»
                 mapManager.iamge_TestMapGimicColor.color = new Color(0.5f, 0f, 1f); // ³²»ö
                 break;
-            case 8:
+            case 8:  // ¾ç
                 mapManager.iamge_TestMapGimicColor.color = new Color(0.5f, 0f, 0.5f); // º¸¶ó
                 break;
-            case 9:
+            case 9:  // ¿ø¼þÀÌ
                 mapManager.iamge_TestMapGimicColor.color = Color.magenta; // ÀÚÈ«
                 break;
-            case 10:
+            case 10: // ´ß
                 mapManager.iamge_TestMapGimicColor.color = new Color(1f, 0.75f, 0.8f); // ºÐÈ«
                 break;
-            case 11:
+            case 11: // °³
                 mapManager.iamge_TestMapGimicColor.color = new Color(0.6f, 0.4f, 0.2f); // °¥»ö
                 break;
-            case 12:
+            case 12: // µÅÁö
                 mapManager.iamge_TestMapGimicColor.color = Color.white; // Èò»ö
                 break;
         }
@@ -67,7 +67,6 @@ public abstract class AbstractMapGimic : MonoBehaviour
 
     public virtual void OnGimmickUpdate()
     {
-
         // Å×½ºÆ®¿ë !!!!
         // Å×½ºÆ®¿ë !!!!
         flashTimer += Time.fixedDeltaTime;
@@ -134,12 +133,7 @@ public abstract class AbstractMapGimic : MonoBehaviour
         }
         // Å×½ºÆ®¿ë !!!!  
         // Å×½ºÆ®¿ë !!!!
-
-
-
-
     }
-
 
 
     public virtual void OnGimicEnd()
@@ -147,7 +141,6 @@ public abstract class AbstractMapGimic : MonoBehaviour
         bIsActive = false;
 
         mapManager.iamge_TestMapGimicColor.color = Color.black;
-
     }
 
 }

@@ -15,12 +15,18 @@ public class MapGimic_10_Chicken : AbstractMapGimic
     public override void OnGimmickUpdate()
     {
         base.OnGimmickUpdate();
+
+     
     }
+
 
     public override void OnGimicEnd()
     {
         base.OnGimicEnd();
     }
+
+
+
 
 }
 
