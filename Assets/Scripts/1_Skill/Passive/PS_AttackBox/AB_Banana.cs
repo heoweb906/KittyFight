@@ -11,6 +11,11 @@ public class AB_Banana : AB_HitboxBase
     private Rigidbody rb;
     private Collider col;
 
+    [Tooltip("날아가는 바나나")]
+    [SerializeField] private GameObject flyingVisual;
+    [Tooltip("바닥 바나나")]
+    [SerializeField] private GameObject installedVisual;
+
     protected override void Awake()
     {
         base.Awake();
@@ -50,5 +55,11 @@ public class AB_Banana : AB_HitboxBase
         {
             col.isTrigger = true;
         }
+
+        if (flyingVisual != null)
+            flyingVisual.SetActive(false);
+
+        if (installedVisual != null)
+            installedVisual.SetActive(true);
     }
 }

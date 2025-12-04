@@ -12,8 +12,35 @@ public class PS_ChargeRush : Passive
     public float idleSinceDash = 0f;
     float nextDashCooldown = 0f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+    [SerializeField] private GameObject useEffectPrefab;
+
+    [Header("Effect Scale")]
+    [Tooltip("충전 0일 때 스케일 배수")]
+    public float minScaleMul = 1f;
+    [Tooltip("최대 충전일 때 스케일 배수")]
+    public float maxScaleMul = 2f;
+
+    // 인스턴스 된 이펙트 트랜스폼 / 기본 스케일
+    private Transform effectInstance;
+    private Vector3 effectBaseScale = Vector3.one;
+
     protected override void Subscribe(AbilityEvents e)
     {
+        if (effectPrefab != null)
+        {
+            var fx = Instantiate(
+                effectPrefab,
+                transform.position,
+                Quaternion.Euler(-90, 0, 0),
+                transform
+            );
+
+            effectInstance = fx.transform;
+            effectBaseScale = effectInstance.localScale;
+        }
+
         // 1) 매 프레임 충전
         e.OnTick += OnTick;
 
@@ -34,6 +61,17 @@ public class PS_ChargeRush : Passive
     void OnTick(float dt)
     {
         idleSinceDash = Mathf.Min(maxChargeSeconds, idleSinceDash + dt);
+        if (effectInstance != null)
+        {
+            float charged = Mathf.Max(0f, idleSinceDash);
+            float t = (maxChargeSeconds > 0f)
+                ? Mathf.Clamp01(charged / maxChargeSeconds)
+                : 0f;
+
+            float scaleMul = Mathf.Lerp(minScaleMul, maxScaleMul, t);
+
+            effectInstance.localScale = effectBaseScale * scaleMul;
+        }
     }
 
     void OnCooldownFinalized(SkillType slot, float seconds)
@@ -56,5 +94,21 @@ public class PS_ChargeRush : Passive
 
         idleSinceDash = -nextDashCooldown;
         nextDashCooldown = 0f;
+
+        Vector3 dir = p.direction;
+        float angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (angleDeg < 0f) angleDeg += 360f;
+        Quaternion rot = Quaternion.Euler(angleDeg, -90f, 90f);
+
+        Instantiate(
+            useEffectPrefab,
+            transform.position,
+            rot
+        );
+
+        if (effectInstance != null)
+        {
+            effectInstance.localScale = effectBaseScale * minScaleMul;
+        }
     }
 }

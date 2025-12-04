@@ -6,8 +6,17 @@ public class PS_RapidClaw : Passive
     [Tooltip("근접 스킬(Melee)의 쿨타임에서 줄일 시간(초)")]
     public float reduceSeconds = 1f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.identity,
+            transform
+        );
         // 쿨타임 확정 직전에 개입하는 훅
         e.OnModifyCooldown += OnModifyCooldown;
     }

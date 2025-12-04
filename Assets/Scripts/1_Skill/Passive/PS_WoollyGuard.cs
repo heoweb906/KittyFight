@@ -6,6 +6,9 @@ public class PS_WoollyGuard : Passive
     [Tooltip("받는 피해 감소")]
     public int damageDivisor = 12;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnBeforeTakeDamage += OnBeforeTakeDamage;
@@ -20,6 +23,13 @@ public class PS_WoollyGuard : Passive
     {
         if (dmg <= 0) return;
         if (damageDivisor <= 0f) return;
+
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.identity,
+            transform
+        );
 
         dmg -= damageDivisor;
     }

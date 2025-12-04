@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reductionRate: 0.4
+  effectPrefab: {fileID: 7800120435488330715, guid: c53c79eb3518b9b4f84da4214fa74d65,
+    type: 3}

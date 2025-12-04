@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 15
+  effectPrefab: {fileID: 5033839102069641448, guid: 9f5b37de0567d0b409a212c7aee5550f,
+    type: 3}

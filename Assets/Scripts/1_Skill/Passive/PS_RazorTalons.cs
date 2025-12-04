@@ -7,6 +7,9 @@ public class PS_RazorTalons : Passive
     [Range(0f, 2f)]
     public float rangeIncreaseRate = 0.4f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);
@@ -32,5 +35,11 @@ public class PS_RazorTalons : Passive
         s.y *= factor;
 
         tr.localScale = s;
+
+        Instantiate(
+            effectPrefab,
+            hb.transform.position,
+            hb.transform.rotation
+        );
     }
 }

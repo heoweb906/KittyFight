@@ -6,6 +6,9 @@ public class PS_Finisher : Passive
 {
     [Range(0f, 1f)] public float threshold = 0.10f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
         => e.OnBeforeDealDamage += OnBeforeDealDamage;
     protected override void Unsubscribe(AbilityEvents e)
@@ -21,5 +24,11 @@ public class PS_Finisher : Passive
 
         if (max <= 0 || cur <= 0) return;
         dmg = max;
+
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
     }
 }

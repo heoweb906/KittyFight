@@ -7,6 +7,9 @@ public class PS_DataDump : Passive
     public float interval = 15f;
     private float timer = 0f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -34,6 +37,11 @@ public class PS_DataDump : Passive
         {
             timer -= interval;
             ability.ResetAllCooldowns();
+            Instantiate(
+                effectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
         }
     }
 }

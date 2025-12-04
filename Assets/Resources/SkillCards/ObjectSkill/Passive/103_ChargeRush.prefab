@@ -48,3 +48,9 @@ MonoBehaviour:
   minMul: 1
   maxMul: 3
   idleSinceDash: 10
+  effectPrefab: {fileID: 8757022347555400010, guid: f727b8fd4a097354990cb9e6ac789eb3,
+    type: 3}
+  useEffectPrefab: {fileID: 5557450061180954906, guid: 377b872a5cd6c084882eb03d15322271,
+    type: 3}
+  minScaleMul: 1
+  maxScaleMul: 2

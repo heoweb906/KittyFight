@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reduceBySeconds: 2
+  effectPrefab: {fileID: 2318382935029876018, guid: e8d877558880a704da48e12e1a4208ec,
+    type: 3}

@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeIncreaseRate: 0.4
+  effectPrefab: {fileID: 4464168552390993566, guid: 98913ad244bce354fbc912ae85d8f247,
+    type: 3}

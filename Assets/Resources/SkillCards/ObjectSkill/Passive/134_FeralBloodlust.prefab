@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   extraDealDamage: 20
   extraTakenDamage: 20
-  objEffect_Use: {fileID: 0}
+  objEffect_Use: {fileID: 3733582807506178610, guid: 283b183376c07bf4e9644f1d90ab7259,
+    type: 3}

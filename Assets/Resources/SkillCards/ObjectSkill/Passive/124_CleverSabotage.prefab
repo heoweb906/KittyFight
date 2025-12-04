@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extraCooldownPerStack: 1.5
+  objEffect_Use: {fileID: 9065588183576548332, guid: ec63fec649ed1a84aab586ed63a1c614,
+    type: 3}

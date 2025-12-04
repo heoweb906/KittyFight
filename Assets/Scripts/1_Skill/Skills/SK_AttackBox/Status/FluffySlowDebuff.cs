@@ -5,7 +5,7 @@ public class FluffySlowDebuff : MonoBehaviour
     private float remainingTime = 0f;
     private float currentMultiplier = 1f;
 
-    public void Apply(PlayerAbility targetAbility, float duration, float multiplier)
+    public void Apply(PlayerAbility targetAbility, float duration, float multiplier, GameObject effectObject)
     {
         if (targetAbility == null) return;
 
@@ -24,6 +24,13 @@ public class FluffySlowDebuff : MonoBehaviour
 
         currentMultiplier = clampedMultiplier;
         ability.moveSpeed = logicalBaseSpeed * currentMultiplier;
+
+        Instantiate(
+            effectObject,
+            transform.position,
+            Quaternion.Euler(-90f, 0f, 0f),
+            transform
+        );
     }
 
     private void Update()

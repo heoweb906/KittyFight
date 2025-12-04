@@ -15,6 +15,9 @@ public class PS_HorsePower : Passive
 
     private float remainingBuffTime = 0f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -38,6 +41,12 @@ public class PS_HorsePower : Passive
         }
 
         remainingBuffTime = buffDuration;
+
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
 
         ApplyMoveSpeedBuff();
     }

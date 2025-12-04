@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class PS_Frenzy : Passive
 {
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         if (ability == null) return;
 
         ability.OnSkillEquipped += OnSkillEquipped;
         ForceConvertExistingSlots();
+
+        e.OnMeleeHitboxSpawned += OnMeleeHitboxSpawned;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
@@ -16,6 +21,8 @@ public class PS_Frenzy : Passive
         {
             ability.OnSkillEquipped -= OnSkillEquipped;
         }
+
+        e.OnMeleeHitboxSpawned -= OnMeleeHitboxSpawned;
     }
 
     private void ForceConvertExistingSlots()
@@ -57,5 +64,17 @@ public class PS_Frenzy : Passive
         if (skill == melee) return;
 
         ability.SetSkill(type, melee);
+    }
+
+    private void OnMeleeHitboxSpawned(AB_MeleeHitbox hb)
+    {
+        if (hb == null) return;
+        if (effectPrefab == null) return;
+
+        Instantiate(
+            effectPrefab,
+            hb.transform.position,
+            hb.transform.rotation
+        );
     }
 }

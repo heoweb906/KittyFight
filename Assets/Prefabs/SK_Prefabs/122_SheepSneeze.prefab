@@ -153,6 +153,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   stunDuration: 1
+  stunEffectPrefab: {fileID: 5364587883125947957, guid: d06ddee8428869644aa7e8167d87a33e,
+    type: 3}
 --- !u!114 &-8557290405415736421
 MonoBehaviour:
   m_ObjectHideFlags: 0

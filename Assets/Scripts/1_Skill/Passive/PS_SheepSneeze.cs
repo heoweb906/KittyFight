@@ -21,6 +21,9 @@ public class PS_SheepSneeze : Passive
 
     private float _timer = 0f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject useEffectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -53,6 +56,12 @@ public class PS_SheepSneeze : Passive
 
     private void SpawnHairballs()
     {
+        Instantiate(
+            useEffectPrefab,
+            transform.position,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
+
         Transform t = ability.transform;
         Vector3 origin = t.position + Vector3.up * verticalOffset;
 

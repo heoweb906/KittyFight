@@ -8,8 +8,17 @@ public class PS_IQ20000 : Passive
 
     private GameObject auraFxInstance;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.Euler(-90f, 0f, 0f),
+            transform
+        );
         // 쿨타임 계산 직전에 2초 감소
         e.OnModifyCooldown += HandleModifyCooldown;
     }

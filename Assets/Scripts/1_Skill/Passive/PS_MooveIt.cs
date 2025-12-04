@@ -7,8 +7,17 @@ public class PS_MooveIt : Passive
     [Range(0f, 1f)]
     public float reductionRate = 0.4f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.identity,
+            transform
+        );
         e.OnModifyCooldown += OnModifyCooldown;
     }
 

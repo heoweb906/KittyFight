@@ -13,7 +13,7 @@ public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
 public delegate void BeforeTakeDamageHandler(ref int dmg, GameObject attacker);
 public delegate void DealtDamageHandler();
 
-public struct DashParams { public float distance; public float speed; }
+public struct DashParams { public float distance; public float speed; public Vector3 direction; }
 public delegate void DashWillExecuteHandler(ref DashParams p);
 public delegate void DashFinishedHandler(Vector3 start, Vector3 end);
 

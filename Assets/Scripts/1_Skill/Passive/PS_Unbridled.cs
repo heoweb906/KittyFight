@@ -14,6 +14,18 @@ public class PS_Unbridled : Passive
     private float currentBonus;
     private bool initializedBaseSpeed = false;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
+    [Header("Effect Scale")]
+    [Tooltip("충전 0일 때 스케일 배수")]
+    public float minScaleMul = 1f;
+    [Tooltip("최대 충전일 때 스케일 배수")]
+    public float maxScaleMul = 2f;
+
+    private Transform effectInstance;
+    private Vector3 effectBaseScale = Vector3.one;
+
     public override void OnEquip(PlayerAbility a)
     {
         base.OnEquip(a);
@@ -33,6 +45,20 @@ public class PS_Unbridled : Passive
 
     protected override void Subscribe(AbilityEvents e)
     {
+        if (effectPrefab != null)
+        {
+            var fx = Instantiate(
+                effectPrefab,
+                transform.position,
+                Quaternion.Euler(-90, 0, 0),
+                transform
+            );
+
+            effectInstance = fx.transform;
+            effectBaseScale = effectInstance.localScale;
+            effectInstance.localScale = effectBaseScale * minScaleMul;
+        }
+
         e.OnTick += OnTick;
         e.OnBeforeTakeDamage += OnBeforeTakeDamage;
         e.OnRoundStart += OnRoundStart;
@@ -59,6 +85,7 @@ public class PS_Unbridled : Passive
         currentBonus = Mathf.Clamp(currentBonus, 0f, maxBonus);
 
         ApplyMoveSpeed();
+        UpdateEffectScale();
     }
 
     private void OnBeforeTakeDamage(ref int dmg, GameObject attacker)
@@ -88,5 +115,24 @@ public class PS_Unbridled : Passive
         {
             ability.moveSpeed = baseMoveSpeed;
         }
+
+        if (effectInstance != null)
+        {
+            effectInstance.localScale = effectBaseScale * minScaleMul;
+        }
+    }
+
+    private void UpdateEffectScale()
+    {
+        if (effectInstance == null) return;
+        if (maxBonus <= 0f)
+        {
+            effectInstance.localScale = effectBaseScale * minScaleMul;
+            return;
+        }
+
+        float t = Mathf.Clamp01(currentBonus / maxBonus);
+        float scaleMul = Mathf.Lerp(minScaleMul, maxScaleMul, t);
+        effectInstance.localScale = effectBaseScale * scaleMul;
     }
 }

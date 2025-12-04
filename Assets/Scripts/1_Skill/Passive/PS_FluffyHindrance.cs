@@ -7,6 +7,9 @@ public class PS_FluffyHindrance : Passive
     [Range(0.01f, 1f)]
     public float slowMultiplier = 0.5f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnDealtDamage += OnDealtDamage;
@@ -26,7 +29,7 @@ public class PS_FluffyHindrance : Passive
         if (debuff == null)
             debuff = victimAbility.gameObject.AddComponent<FluffySlowDebuff>();
 
-        debuff.Apply(victimAbility, slowDuration, slowMultiplier);
+        debuff.Apply(victimAbility, slowDuration, slowMultiplier, effectPrefab);
     }
 
     private PlayerAbility FindOpponentAbility()

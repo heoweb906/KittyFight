@@ -5,6 +5,9 @@ public class PS_CleverSabotage : Passive
     [Tooltip("패시브 1개당 상대 스킬 쿨타임에 더해질 시간(초)")]
     public float extraCooldownPerStack = 1.5f;
 
+    [Header("이펙트")]
+    public GameObject objEffect_Use;
+
     public override void OnEquip(PlayerAbility a)
     {
         base.OnEquip(a);
@@ -15,6 +18,15 @@ public class PS_CleverSabotage : Passive
     {
         ModifyOpponentStack(-1);
         base.OnUnequip();
+    }
+    protected override void Subscribe(AbilityEvents e)
+    {
+        e.OnRoundStart += OnRoundStart;
+    }
+
+    protected override void Unsubscribe(AbilityEvents e)
+    {
+        e.OnRoundStart -= OnRoundStart;
     }
 
     private void ModifyOpponentStack(int deltaStack)
@@ -59,5 +71,19 @@ public class PS_CleverSabotage : Passive
         if (ability.playerNumber == 2) return pa1;
 
         return null;
+    }
+
+    void OnRoundStart(int roundIndex)
+    {
+        if (objEffect_Use != null)
+        {
+            GameObject effect = Instantiate(objEffect_Use, transform);
+            effect.transform.localPosition = Vector3.zero;
+
+            effect.transform.rotation = Quaternion.Euler(-90, 0, 0);
+
+            effect.transform.localScale = new Vector3(1f, 1f, 1f);
+            effect.transform.SetParent(null);
+        }
     }
 }

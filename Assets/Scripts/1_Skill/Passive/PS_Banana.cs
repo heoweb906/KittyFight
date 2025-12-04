@@ -9,8 +9,12 @@ public class PS_Banana : Passive
     private Skill rangedSkill;
     private GameObject originalProjectilePrefab;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
+        e.OnSkillExecuted += OnSkillExecuted;
         if (ability != null)
         {
             rangedSkill = ability.GetSkill(SkillType.Ranged);
@@ -28,6 +32,18 @@ public class PS_Banana : Passive
         if (rangedSkill != null && originalProjectilePrefab != null)
         {
             rangedSkill.objSkillEntity = originalProjectilePrefab;
+        }
+        e.OnSkillExecuted -= OnSkillExecuted;
+    }
+
+    private void OnSkillExecuted(SkillType slot)
+    {
+        if(slot == SkillType.Ranged) { 
+            Instantiate(
+                effectPrefab,
+                transform.position,
+                Quaternion.identity
+            );
         }
     }
 }

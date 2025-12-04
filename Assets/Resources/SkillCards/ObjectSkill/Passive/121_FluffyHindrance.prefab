@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowDuration: 4
   slowMultiplier: 0.5
+  effectPrefab: {fileID: 7564431618811425615, guid: 71ae276dd45a4214a8d2bcd7b7df415b,
+    type: 3}

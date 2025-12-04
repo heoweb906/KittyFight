@@ -31,7 +31,11 @@ public class PS_FeralBloodlust : Passive
         dmg += extraDealDamage;
 
         // 피해 입혔을 때 상대방에게서도 이펙트 생성해야 함
-
+        Instantiate(
+            objEffect_Use,
+            victim.transform.position,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
     }
 
     private void OnBeforeTakeDamage(ref int dmg, GameObject attacker)

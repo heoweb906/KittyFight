@@ -66,7 +66,7 @@ public class SK_Dash : Skill
         if (events != null)
         {
             Debug.Log("?");
-            var p = new DashParams { distance = baseDistance, speed = baseSpeed };
+            var p = new DashParams { distance = baseDistance, speed = baseSpeed, direction = direction };
             events.EmitDashWillExecute(ref p); // Charge Rush가 여기서 거리(및 속도) 변경
             desiredDistance = Mathf.Max(0f, p.distance);
             if (p.speed > 0f) desiredSpeed = p.speed; // 속도 보정도 지원(선택)
