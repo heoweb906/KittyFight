@@ -16,6 +16,9 @@ public class PS_RampageRemnant : Passive
     [Tooltip("폭발 Z좌표를 플레이어 Z로 고정할지 여부")]
     public bool lockZToOwner = true;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);
@@ -38,6 +41,14 @@ public class PS_RampageRemnant : Passive
 
     private IEnumerator SpawnExplosionsRoutine(Vector3 start, Vector3 end)
     {
+        int count = Mathf.Max(1, segmentCount);
+
+        for (int i = 0; i < count; i++)
+        {
+            float t = (count == 1) ? 1f : (float)i / (count - 1);
+            Vector3 pos = Vector3.Lerp(start, end, t);
+            SpawnOneEffect(pos);
+        }
         if (delayAfterDash > 0f)
             yield return new WaitForSeconds(delayAfterDash);
 
@@ -54,7 +65,6 @@ public class PS_RampageRemnant : Passive
             yield break;
         }
 
-        int count = Mathf.Max(1, segmentCount);
 
         for (int i = 0; i < count; i++)
         {
@@ -72,11 +82,19 @@ public class PS_RampageRemnant : Passive
         }
 
         var go = Object.Instantiate(explosionPrefab, pos, Quaternion.identity);
-
         var hitbox = go.GetComponent<AB_HitboxBase>();
         if (hitbox != null && ability != null)
         {
             hitbox.Init(ability);
         }
+    }
+
+    private void SpawnOneEffect(Vector3 pos)
+    {
+        Instantiate(
+           effectPrefab,
+           pos,
+           Quaternion.Euler(-90f, 0f, 0f)
+       );
     }
 }

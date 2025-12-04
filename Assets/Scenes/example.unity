@@ -31478,7 +31478,7 @@ MonoBehaviour:
   - {fileID: 2146233246}
   - {fileID: 1126034755}
   - {fileID: 1347251808}
-  currentIndex: -1
+  matScreen: {fileID: 0}
 --- !u!1 &1514651111
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,3 +47,5 @@ MonoBehaviour:
   objEntity: {fileID: 6777267630284458099, guid: e59bfd30126ce9446adcdd1fe1ed4f5f,
     type: 3}
   spawnYOffset: 0
+  effectPrefab: {fileID: 4043810825061425606, guid: ac8c0c1da504a4c4fad97c0faf5bccb8,
+    type: 3}

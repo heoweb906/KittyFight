@@ -42,7 +42,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1756866354894342980}
   serializedVersion: 8
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -10476,8 +10476,8 @@ ParticleSystem:
   m_GameObject: {fileID: 1968577806212416095}
   serializedVersion: 8
   lengthInSec: 3.5
-  simulationSpeed: 1
-  stopAction: 0
+  simulationSpeed: 1.75
+  stopAction: 2
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -15331,7 +15331,7 @@ ParticleSystem:
   m_GameObject: {fileID: 2921332147062260641}
   serializedVersion: 8
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -20414,7 +20414,7 @@ ParticleSystem:
   m_GameObject: {fileID: 3388246850777551322}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -25233,7 +25233,7 @@ ParticleSystem:
   m_GameObject: {fileID: 3418599154863628147}
   serializedVersion: 8
   lengthInSec: 1.6
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0
@@ -30054,7 +30054,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4044648423717668787}
   serializedVersion: 8
   lengthInSec: 0.5
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -34963,7 +34963,7 @@ ParticleSystem:
   m_GameObject: {fileID: 6122769008686766446}
   serializedVersion: 8
   lengthInSec: 0.5
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -39863,7 +39863,7 @@ ParticleSystem:
   m_GameObject: {fileID: 6370818414342468013}
   serializedVersion: 8
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -44888,7 +44888,7 @@ ParticleSystem:
   m_GameObject: {fileID: 7975105860322853641}
   serializedVersion: 8
   lengthInSec: 1.75
-  simulationSpeed: 1
+  simulationSpeed: 1.75
   stopAction: 0
   cullingMode: 3
   ringBufferMode: 0

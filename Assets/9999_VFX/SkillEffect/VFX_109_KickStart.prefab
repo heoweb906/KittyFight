@@ -9693,8 +9693,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.366654, y: 0.61109, z: 0.366654}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.6666667, z: 0.4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6715177633852890136}
   - {fileID: 7708734280465051554}
@@ -9710,7 +9710,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

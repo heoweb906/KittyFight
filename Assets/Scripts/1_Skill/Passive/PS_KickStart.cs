@@ -6,6 +6,9 @@ public class PS_Kickstart : Passive
     public float penaltyPerUse = 5.0f;   // 스킬 사용 시 +5초
     public float reducePerJump = 0.6f;   // 점프할 때마다 -0.6초(진행 중 쿨타임에 즉시 적용)
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnModifyCooldown += OnModifyCooldown; // 스킬 쿨타임 시작 직전 +5s
@@ -28,5 +31,10 @@ public class PS_Kickstart : Passive
     {
         // 진행 중인 모든 쿨타임을 즉시 0.6초 감소
         ability?.ReduceAllCooldowns(Mathf.Max(0f, reducePerJump));
+        Instantiate(
+            effectPrefab,
+            transform.position,
+            Quaternion.identity
+        );
     }
 }

@@ -7,6 +7,9 @@ public class PS_PlotArmor : Passive
     [Tooltip("피격 무시 확률 (0~1)")]
     public float ignoreChance = 0.25f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);
@@ -22,6 +25,14 @@ public class PS_PlotArmor : Passive
     private void OnBeforeTakeDamage(ref int dmg, GameObject attackerObj)
     {
         if (dmg <= 0) return;
-        if (Random.value < ignoreChance) dmg = 0;
+        if (Random.value < ignoreChance)
+        {
+            dmg = 0;
+            Instantiate(
+                effectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
+        }
     }
 }

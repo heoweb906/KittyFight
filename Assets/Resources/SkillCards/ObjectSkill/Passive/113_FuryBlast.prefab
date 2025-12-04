@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319a8c7f67fbc664e91953268dd7dae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 10
+  interval: 8
   selfDamage: 10
   selfDamageLocalOnly: 0
   blastHitboxPrefab: {fileID: 6777267630284458099, guid: 4893bcb7972e8e341ae6afbd9daa19aa,
     type: 3}
-  explosionFxPrefab: {fileID: 0}
-  fxLife: 2
+  explosionFxPrefab: {fileID: 3082395371585726239, guid: f360d6f60557efb4ea163797b20358b4,
+    type: 3}
+  chargeTime: 1.7

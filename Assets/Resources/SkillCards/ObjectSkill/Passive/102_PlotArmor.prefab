@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreChance: 0.25
+  effectPrefab: {fileID: 6605471995031134500, guid: b9065c2e8ff162f4d95178f3cbe6bf5a,
+    type: 3}

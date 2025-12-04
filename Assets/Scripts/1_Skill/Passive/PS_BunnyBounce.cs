@@ -11,6 +11,9 @@ public class PS_BunnyBounce : Passive
 
     private Transform feetAnchor;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);
@@ -31,6 +34,11 @@ public class PS_BunnyBounce : Passive
         pos.y += spawnYOffset;
 
         var go = Object.Instantiate(objEntity, pos, Quaternion.identity);
+        Instantiate(
+            effectPrefab,
+            pos,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
 
         var hb = go.GetComponent<AB_HitboxBase>();
         if (hb != null)
