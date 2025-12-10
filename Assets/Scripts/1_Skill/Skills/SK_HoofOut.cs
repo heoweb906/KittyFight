@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class SK_HoofOut : Skill
 {
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (objSkillEntity == null) return;
@@ -30,5 +35,10 @@ public class SK_HoofOut : Skill
 
             hoof.SetLateralSign(sign);
         }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+
+
     }
 }

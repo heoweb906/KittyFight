@@ -13,6 +13,11 @@ public class SK_PigOut : Skill
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -39,6 +44,8 @@ public class SK_PigOut : Skill
             DamageMessageBuilder.Build(pn, newHP, 0, null)
         );
 
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
         ApplySelfSlow();
     }
 

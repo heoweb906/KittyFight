@@ -54,3 +54,5 @@ MonoBehaviour:
     type: 3}
   stunEffectPrefab: {fileID: 5384173237070464858, guid: a219fb887f601fa448cfcc1cd6b84981,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

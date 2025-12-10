@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
-  coolTime: 9
+  coolTime: 7
   objSkillEntity: {fileID: 6777267630284458099, guid: def0fbd6ec1ad9c4ea08d67cc1bf0de2,
     type: 3}
   skillIcon: {fileID: 21300000, guid: b6405c45ef07d634da371cb224857b31, type: 3}
@@ -54,5 +54,5 @@ MonoBehaviour:
   lockHorizontal: 1
   baseDamage: 45
   damagePerMeter: 10
-  shakeStrength: 0.12
-  shakeDuration: 0.25
+  shakeStrength: 0.4
+  shakeDuration: 0.7

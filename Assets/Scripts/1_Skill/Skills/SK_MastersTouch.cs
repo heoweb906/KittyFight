@@ -4,6 +4,10 @@ public class SK_MastersTouch : Skill
 {
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     private void Awake()
     {
         coolTime = 8f;
@@ -35,5 +39,9 @@ public class SK_MastersTouch : Skill
             if (slot == assignedSlot) continue;
             ability.CancelCooldown(slot);
         }
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
 }

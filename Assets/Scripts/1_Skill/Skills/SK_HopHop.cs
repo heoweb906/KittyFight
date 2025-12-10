@@ -10,6 +10,10 @@ public class SK_HopHop : Skill
     private PlayerMovement movement;
     private PlayerAbility ability;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     private void Awake()
     {
         if (playerAbility != null)
@@ -41,5 +45,9 @@ public class SK_HopHop : Skill
         Vector3 v = rb.velocity;
         v.y = ability.jumpForce * jumpMultiplier;
         rb.velocity = v;
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+
     }
 }

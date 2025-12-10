@@ -56,3 +56,5 @@ MonoBehaviour:
     m_Bits: 8960
   effectPrefab: {fileID: 1157491805394910203, guid: e9d4f09128de63040b04eaab092105c2,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

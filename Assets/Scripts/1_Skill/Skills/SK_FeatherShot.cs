@@ -7,6 +7,10 @@ public class SK_FeatherShot : Skill
     public float spawnOffset = 0.6f;
     public float spreadAngleDeg = 20f;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;
@@ -29,6 +33,9 @@ public class SK_FeatherShot : Skill
                 }
             }
         }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
     private Collider FireOne(Vector3 origin, Vector3 dir)
     {

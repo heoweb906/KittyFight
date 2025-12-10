@@ -77,7 +77,7 @@ public class PlayerHealth : MonoBehaviour
         float mag = Mathf.Clamp01(strength);
         if (dir.sqrMagnitude < 1e-8f) dir = Vector3.right;
 
-        cam.ShakeCameraPunch(mag, dir, duration);
+        cam.ShakeCameraPunch(mag, duration, dir);
     }
 
     private Vector3 ComputePunchDirFromSource(Vector3 sourceWorldPos)

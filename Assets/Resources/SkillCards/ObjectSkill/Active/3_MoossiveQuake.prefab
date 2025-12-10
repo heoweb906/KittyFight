@@ -52,7 +52,7 @@ MonoBehaviour:
   aimRange: 0
   castDelay: 0.7
   stunDuration: 3
-  shakeStrength: 0.35
-  shakeDuration: 0.55
+  shakeAmount: 1
+  shakeDuration: 1.5
   effectPrefab: {fileID: 8162153870496393649, guid: 5a05026fc028a7c40be4001b20a0e18d,
     type: 3}

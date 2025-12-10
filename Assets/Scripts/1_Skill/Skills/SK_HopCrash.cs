@@ -33,10 +33,10 @@ public class SK_HopCrash : Skill
         bool isGround = anim.GetBool("isGround");
         if (isGround) return;
 
-        StartCoroutine(Co_HopCrash(owner));
+        StartCoroutine(Co_HopCrash(owner, direction));
     }
 
-    private IEnumerator Co_HopCrash(GameObject owner)
+    private IEnumerator Co_HopCrash(GameObject owner, Vector3 direction)
     {
         var rb = owner.GetComponent<Rigidbody>();
         var ph = owner.GetComponent<PlayerHealth>();
@@ -80,10 +80,13 @@ public class SK_HopCrash : Skill
         var hop = hitbox.GetComponent<AB_HopCrash>();
         if (hop != null) hop.damage = dmg;
 
-        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
-        {
-            var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCamera(shakeStrength, shakeDuration);
-        }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration, direction);
+
+        //if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        //{
+          
+        //}
     }
 }

@@ -16,5 +16,6 @@ public class SK_Repeek : Skill
         Vector3 newOrigin, newDir;
         AttackUtils.GetAimPointAndDirection(playerAbility.transform, range, out newOrigin, out newDir);
         target.Execute(newOrigin, newDir);
+
     }
 }

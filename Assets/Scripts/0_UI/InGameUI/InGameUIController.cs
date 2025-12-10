@@ -211,8 +211,7 @@ public class InGameUIController : MonoBehaviour
                            }
                            else
                            {
-                               // 승리한 플레이어는 대기 상태로 설정 (메시지 받을 준비)
-                               skillCardController.iAuthorityPlayerNum = iLosePlayerNum;
+                               skillCardController.iAuthorityPlayerNum = iLosePlayerNum; 
                            }
                        });
                    });

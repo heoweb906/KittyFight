@@ -11,6 +11,11 @@ public class SK_Hound : Skill
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private GameObject slowEffectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -40,6 +45,8 @@ public class SK_Hound : Skill
         {
             ApplySlow(enemy.gameObject);
         }
+
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
 
     private void ApplySlow(GameObject target)

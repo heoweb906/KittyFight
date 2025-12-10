@@ -51,3 +51,5 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: acc1ce8be590a8947bdb46e3c8ea9796, type: 3}
   aimRange: 1
   projectileSpeed: 18
+  shakeAmount: 0.3
+  shakeDuration: 0.6

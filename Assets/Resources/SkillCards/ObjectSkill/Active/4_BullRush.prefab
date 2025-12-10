@@ -59,3 +59,5 @@ MonoBehaviour:
   hitboxLifetimePadding: 0.02
   effectPrefab: {fileID: 6879201674162243803, guid: 6731405501d88fd448ff335c7ddb16e7,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.7

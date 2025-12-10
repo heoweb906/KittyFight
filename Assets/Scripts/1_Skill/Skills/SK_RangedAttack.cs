@@ -6,7 +6,8 @@ public class SK_RangedAttack : Skill
 
 
     [Header("Ä«¸Þ¶ó")]
-    public float shakeAmount = 0.06f;
+    public float shakeAmount;
+    public float shakeDuration;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -44,13 +45,17 @@ public class SK_RangedAttack : Skill
         if (playerAbility.playerNumber == 0)
         {
             var cm = FindObjectOfType<CameraManager>();
-            cm?.ShakeCamera(shakeAmount, 0.2f);
+            cm?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
         }
-
         else if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+        }
+        else
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
         }
     }
 

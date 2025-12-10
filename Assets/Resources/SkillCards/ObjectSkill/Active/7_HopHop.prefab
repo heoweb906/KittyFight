@@ -51,3 +51,5 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: f5214be825011da4797771fafb70d196, type: 3}
   aimRange: 0
   jumpMultiplier: 2
+  shakeAmount: 0.3
+  shakeDuration: 0.7

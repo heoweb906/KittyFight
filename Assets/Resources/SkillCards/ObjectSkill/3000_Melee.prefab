@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2499996, y: 1.25, z: 1.2499996}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,5 +53,6 @@ MonoBehaviour:
   events: {fileID: 0}
   meleeEffectPrefab: {fileID: 7243278475803563119, guid: 1a45ae6741eb29d4d99d4547ec940881,
     type: 3}
-  shakeAmount: 0.24
+  shakeAmount: 0.3
+  shakeDeration: 0.7
   attackAnimDuration: 1

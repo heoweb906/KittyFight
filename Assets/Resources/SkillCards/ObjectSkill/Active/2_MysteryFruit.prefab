@@ -53,3 +53,5 @@ MonoBehaviour:
   maxDelta: 30
   effectPrefab: {fileID: 6768841129781769225, guid: 97351cb5b36dca849ae778af864299b9,
     type: 3}
+  shakeAmount: 0.2
+  shakeDeration: 0.5

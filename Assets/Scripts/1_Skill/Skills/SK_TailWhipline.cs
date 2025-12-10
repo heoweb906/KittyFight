@@ -11,6 +11,10 @@ public class SK_TailWhipline : Skill
 
     private bool isRunning = false;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     [Header("이펙트")]
     public GameObject objEffect;
 
@@ -28,6 +32,12 @@ public class SK_TailWhipline : Skill
         if (maxDist <= 0f) maxDist = 6f;
 
         var owner = playerAbility.gameObject;
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+
+
         StartCoroutine(Co_TailRoutine(owner, start, dir, maxDist));
     }
 

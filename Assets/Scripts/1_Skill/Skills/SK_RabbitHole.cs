@@ -12,6 +12,10 @@ public class SK_RabbitHole : Skill
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public bool CanTeleportPosition(Vector3 currentPos, Vector3 targetPos)
     {
         if ((targetPos - currentPos).sqrMagnitude < 0.01f)
@@ -44,8 +48,15 @@ public class SK_RabbitHole : Skill
         Vector3 targetPos = currentPos + offset;
         targetPos.z = currentPos.z;
 
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+
+
         StartCoroutine(Co_CastAndTeleport(owner, targetPos));
     }
+
+
 
     private IEnumerator Co_CastAndTeleport(GameObject owner, Vector3 targetPos)
     {

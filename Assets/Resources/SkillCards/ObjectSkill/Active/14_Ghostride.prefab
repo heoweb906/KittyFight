@@ -54,3 +54,5 @@ MonoBehaviour:
   visualObjects: []
   effectPrefab: {fileID: 6670015322275300116, guid: 8d407e80c54e9d846ac629c02ee385f5,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

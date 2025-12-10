@@ -5,6 +5,10 @@ public class SK_BouncingFire : Skill
     [Header("투사체 설정")]
     [SerializeField] private float projectileSpeed = 10f;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -20,5 +24,8 @@ public class SK_BouncingFire : Skill
 
         var rb = proj.GetComponent<Rigidbody>();
         if (rb) rb.velocity = direction * projectileSpeed;
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
 }

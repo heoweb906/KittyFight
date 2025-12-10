@@ -14,6 +14,11 @@ public class SK_Ghostride : Skill
     private bool cancelRequested = false;
     private bool hideVisual = false;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         Instantiate(
@@ -42,6 +47,12 @@ public class SK_Ghostride : Skill
         }
 
         var owner = playerAbility.gameObject;
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+
+
         StartCoroutine(Co_Ghostride(owner));
     }
 

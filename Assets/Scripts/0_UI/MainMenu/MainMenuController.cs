@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour
     public MatchManager matchManager;
     public TestPlayerComtroller scriptPlayerCharacter;
     public TitleLogoAssist titleLogoAssist;
+    public CameraManager cameraManager;
 
     public List<GameObject> panels; // 인덱스로 관리
     private int currentIndex = -1;
@@ -82,30 +83,39 @@ public class MainMenuController : MonoBehaviour
 
 
     // #. 부드러운 패널 교체
-    public void SwitchPanel_ByButton(int targetIndex) // 버튼용 함수
+    public void SwitchPanel_ByButton(int targetIndex)
     {
         if (targetIndex < 0 || targetIndex >= panels.Count || targetIndex == currentIndex)
             return;
+
         if (currentIndex >= 0)
         {
             panels[currentIndex].SetActive(false);
         }
 
-
-        if (targetIndex == 0) scriptPlayerCharacter.bCanControl = false;
+        if (targetIndex == 0)
+        {
+            scriptPlayerCharacter.bCanControl = false;
+        }
         else if (targetIndex == 1)
         {
-            scriptPlayerCharacter.bCanControl = true;
-            SetNickName();
+            SetNickName(); // 닉네임 설정은 즉시 실행
+            StartCoroutine(EnableControlRoutine(1f)); // 0.5초 딜레이 코루틴 시작
         }
-            
-
 
         panels[targetIndex].SetActive(true);
         currentIndex = targetIndex;
-
-        // StartCoroutine(SwitchRoutine(targetIndex));
     }
+
+    // 딜레이를 처리할 코루틴 함수 추가
+    private IEnumerator EnableControlRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        cameraManager.UpdateOriginalPosition();
+        scriptPlayerCharacter.bCanControl = true;
+    }
+
+
 
     //private IEnumerator SwitchRoutine(int targetIndex)
     //{
@@ -386,7 +396,7 @@ public class MainMenuController : MonoBehaviour
 
                 // 4. UI 닫힘 애니메이션이 끝날 즈음에 캐릭터 조작을 허용
                 //    (0.3초 + 0.2초 지연 후)
-                DOVirtual.DelayedCall(0.2f, () => {
+                DOVirtual.DelayedCall(0.5f, () => {
                     scriptPlayerCharacter.bCanControl = true;
                 });
             });

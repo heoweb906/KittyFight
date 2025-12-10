@@ -17,6 +17,12 @@ public class SK_BullRush : Skill
 
     private Rigidbody rb;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
+
     private void Awake()
     {
         coolTime = 4.0f;
@@ -45,10 +51,24 @@ public class SK_BullRush : Skill
         var bull = hb.GetComponent<AB_BullRush>();
         if (bull != null) bull.SetRushDirection(direction);
 
+
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+        }
+        else
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
+        }
+
+
         // 플레이어에 부착해서 함께 이동
         hb.transform.SetParent(playerAbility.transform, true);
         // 생명주기: 대쉬 시간 + 약간의 패딩 후 파괴
         Destroy(hb, dashDuration + hitboxLifetimePadding);
+
 
         // 실제 이동은 로컬 소유자만 수행
         //if (playerAbility.playerNumber != MatchResultStore.myPlayerNumber) return;

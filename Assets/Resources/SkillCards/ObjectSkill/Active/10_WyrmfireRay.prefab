@@ -53,3 +53,5 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 768
+  shakeAmount: 0.3
+  shakeDuration: 0.6

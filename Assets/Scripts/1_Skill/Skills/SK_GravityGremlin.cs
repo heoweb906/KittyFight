@@ -13,6 +13,11 @@ public class SK_GravityGremlin : Skill
     [SerializeField] private float shakeStrength = 0.25f;
     [SerializeField] private float shakeDuration = 0.35f;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration_camera;
+
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -54,5 +59,9 @@ public class SK_GravityGremlin : Skill
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             rb.velocity = direction * projectileSpeed;
         }
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration_camera, direction);
     }
 }

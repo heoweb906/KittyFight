@@ -5,6 +5,11 @@ public class SK_WoolWall : Skill
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -17,6 +22,9 @@ public class SK_WoolWall : Skill
             Quaternion.identity,
             go.transform
         );
+
+      
+
 
         var ab = go.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
@@ -38,5 +46,7 @@ public class SK_WoolWall : Skill
         var gm = FindObjectOfType<GameManager>();
         if (gm != null)
             gm.RegisterRoundObject(go);
+
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
 }

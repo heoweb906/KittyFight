@@ -16,7 +16,8 @@ public class SK_Dash : Skill
     public AbilityEvents events;                      // Charge Rush 등에서 거리/속도 보정용
 
     [Header("카메라")]
-    public float shakeAmount = 0.09f;
+    public float shakeAmount;
+    public float shakeDuration;
 
     private Animator anim;
 
@@ -99,13 +100,18 @@ public class SK_Dash : Skill
         if (playerAbility.playerNumber == 0)
         {
             var cm = FindObjectOfType<CameraManager>();
-            cm?.ShakeCamera(shakeAmount, 0.2f);
+            Debug.Log("여기가 작동하고 있음");
+            cm?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
         }
-
         else if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
+            gm?.cameraManager? .ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+        }
+        else
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
         }
     }
 

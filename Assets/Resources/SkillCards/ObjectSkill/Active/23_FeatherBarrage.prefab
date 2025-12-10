@@ -54,3 +54,5 @@ MonoBehaviour:
   projectileCount: 12
   effectPrefab: {fileID: 4987433572573670198, guid: 4ed458bf058c29240be9e1d0d2860eb8,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

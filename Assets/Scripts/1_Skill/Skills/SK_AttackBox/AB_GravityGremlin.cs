@@ -48,7 +48,7 @@ public class AB_GravityGremlin : AB_HitboxBase
 
         // 카메라 쉐이크
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCamera(shakeStrength, shakeDuration);
+        gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration);
 
         // 투사체 제거
         Destroy(gameObject);

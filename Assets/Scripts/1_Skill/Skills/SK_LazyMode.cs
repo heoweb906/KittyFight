@@ -8,6 +8,11 @@ public class SK_LazyMode : Skill
 
     private bool isRunning = false;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;
@@ -23,6 +28,10 @@ public class SK_LazyMode : Skill
         {
             health.SetSkillInvincible(lazyDuration);
         }
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
 
         StartCoroutine(Co_LazyMode(owner));
     }

@@ -107,7 +107,7 @@ public class VFX_MeshTrail : MonoBehaviour
                     }
 
                     // Material 할당 (자동으로 인스턴스 생성됨)
-                    if (iPlayerNum == 1) mr.material = mat_Red;
+                    if (iPlayerNum <= 1) mr.material = mat_Red;
                     if (iPlayerNum == 2) mr.material = mat_Blue;
 
                     // ✨ 그림자 제거 설정 ✨

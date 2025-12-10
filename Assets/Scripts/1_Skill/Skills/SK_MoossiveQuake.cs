@@ -10,8 +10,8 @@ public class SK_MoossiveQuake : Skill
     [SerializeField] private float stunDuration = 3f;
 
     [Header("카메라 연출")]
-    [SerializeField] private float shakeStrength = 0.35f;
-    [SerializeField] private float shakeDuration = 0.55f;
+    public float shakeAmount;
+    public float shakeDuration;
 
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
@@ -45,6 +45,7 @@ public class SK_MoossiveQuake : Skill
         if (ab != null) ab.Init(playerAbility);
 
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCamera(shakeStrength, shakeDuration);
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
+
 }

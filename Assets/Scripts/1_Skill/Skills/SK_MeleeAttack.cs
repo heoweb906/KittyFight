@@ -10,6 +10,7 @@ public class SK_MeleeAttack : Skill
 
     [Header("Ä«¸Þ¶ó")]
     public float shakeAmount = 0.24f;
+    public float shakeDeration = 0.5f;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
     private Animator anim;
@@ -66,13 +67,17 @@ public class SK_MeleeAttack : Skill
         if (playerAbility.playerNumber == 0)
         {
             var cm = FindObjectOfType<CameraManager>();
-            cm?.ShakeCamera(shakeAmount, 0.2f);
+            cm?.ShakeCameraPunch(shakeAmount, shakeDeration, direction);
         }
-
         else if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCamera(shakeAmount, 0.2f);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDeration, direction);
+        }
+        else
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDeration * 0.5f, direction);
         }
     }
     private IEnumerator ResetAttackAnimState()

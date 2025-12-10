@@ -8,6 +8,11 @@ public class SK_FeatherBarrage : Skill
     [SerializeField] private int projectileCount = 12;
     [SerializeField] private GameObject effectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;
@@ -53,6 +58,9 @@ public class SK_FeatherBarrage : Skill
                 }
             }
         }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
     }
 
     private Collider FireOne(Vector3 center, Vector3 dir)

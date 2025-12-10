@@ -51,3 +51,5 @@ MonoBehaviour:
   aimRange: 0
   effectPrefab: {fileID: 9199957610061076555, guid: 4bd80978c7df5104291c2b13b3de8bd3,
     type: 3}
+  shakeAmount: 0
+  shakeDuration: 0

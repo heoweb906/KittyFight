@@ -56,5 +56,5 @@ MonoBehaviour:
     m_Bits: 8960
   disableGravityDuringDash: 1
   events: {fileID: 0}
-  shakeAmount: 0.09
-  meshTrail: {fileID: 0}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

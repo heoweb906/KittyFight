@@ -56,3 +56,5 @@ MonoBehaviour:
   blackholeDuration: 6
   shakeStrength: 0.25
   shakeDuration: 0.35
+  shakeAmount: 0.3
+  shakeDuration_camera: 0.6

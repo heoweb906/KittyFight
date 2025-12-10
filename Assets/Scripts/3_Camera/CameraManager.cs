@@ -22,27 +22,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-
-    public void ShakeCamera(float strength = 0.3f, float duration = 0.2f)
-    {
-        originalCameraPosition = objCamaera.transform.position;
-        if (objCamaera == null) return;
-        Vector3 shakeStrength = new Vector3(strength, strength * 0.5f, 0f);
-        if (shakeSequence != null)
-        {
-            shakeSequence.Kill();
-        }
-        objCamaera.transform.DOKill();
-        objCamaera.transform.position = originalCameraPosition;
-        shakeSequence = DOTween.Sequence();
-        shakeSequence.Append(
-            objCamaera.transform.DOShakePosition(duration, shakeStrength, vibrato: 30, randomness: 3, snapping: false, fadeOut: true)
-                .SetEase(Ease.OutQuad)
-        );
-    }
-
-
-    public void ShakeCameraPunch(float strength = 0.2f, Vector3 direction = default, float duration = 0.6f)
+    public void ShakeCameraPunch(float strength = 0.2f, float duration = 0.6f, Vector3 direction = default)
     {
         if (objCamaera == null) return;
 
@@ -72,6 +52,15 @@ public class CameraManager : MonoBehaviour
             )
             .SetEase(Ease.OutBack) // OutBack 이징 함수가 스프링 반동을 시각적으로 돕습니다.
         );
+    }
+
+
+    public void UpdateOriginalPosition()
+    {
+        if (objCamaera != null)
+        {
+            originalCameraPosition = objCamaera.transform.position;
+        }
     }
 
 }

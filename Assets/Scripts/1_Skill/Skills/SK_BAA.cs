@@ -8,6 +8,12 @@ public class SK_BAA : Skill
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private GameObject stunEffectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
@@ -32,6 +38,10 @@ public class SK_BAA : Skill
                 ? gm.playerAbility_2
                 : gm.playerAbility_1;
         }
+
+
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+
 
         ApplyStun(playerAbility.gameObject, stunDuration, false);
         if (enemy != null)

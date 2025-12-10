@@ -9,6 +9,9 @@ public class SK_MysteryFruit : Skill
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    public float shakeAmount;
+    public float shakeDeration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         Instantiate(
@@ -36,5 +39,11 @@ public class SK_MysteryFruit : Skill
         P2PMessageSender.SendMessage(
             DamageMessageBuilder.Build(pn, newHP, 0, null)
         );
+
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+        }
     }
 }
