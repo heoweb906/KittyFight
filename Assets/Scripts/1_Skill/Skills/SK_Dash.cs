@@ -79,9 +79,22 @@ public class SK_Dash : Skill
         if (obstacleMask == 0) obstacleMask = LayerMask.GetMask("Ground");
 
         float maxDistance = desiredDistance;
+        const float skin = 0.1f;
+        Vector3 castStart = startPos - direction * skin;
+        float castDistance = maxDistance + skin;
+
         RaycastHit hit;
-        if (Physics.BoxCast(startPos, boxHalfExtents, direction, out hit, Quaternion.identity, maxDistance, obstacleMask))
-            maxDistance = hit.distance;
+        if (Physics.BoxCast(
+                castStart,
+                boxHalfExtents,
+                direction,
+                out hit,
+                Quaternion.identity,
+                castDistance,
+                obstacleMask))
+        {
+            maxDistance = Mathf.Max(0f, hit.distance - skin);
+        }
 
         Vector3 targetPos = startPos + direction * maxDistance;
 
