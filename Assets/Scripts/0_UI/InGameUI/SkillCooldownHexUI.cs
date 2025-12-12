@@ -13,6 +13,7 @@ public class SkillCooldownHexUI : MonoBehaviour
     public SkillType slot;
 
     [Header("채움 이미지 (반드시 Filled/Vertical/Bottom)")]
+    [SerializeField] private Image bgImage;
     [SerializeField] private Image fillImage;
 
     [Tooltip("True면 (1 - 남은비율)로 '충전차오름'처럼 표시")]
@@ -190,6 +191,8 @@ public class SkillCooldownHexUI : MonoBehaviour
         var c = fillImage.color;
         if (s != null && s.skillIcon != null)
         {
+            bgImage.sprite = s.skillIcon;
+            bgImage.color = new Color32(25, 25, 25, 255);
             fillImage.sprite = s.skillIcon;
             c.a = visibleAlphaWhenIcon;
             fillImage.color = c;

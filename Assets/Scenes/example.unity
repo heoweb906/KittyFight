@@ -305,7 +305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 2
+  bgImage: {fileID: 1363907087}
   fillImage: {fileID: 1375282595}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -671,14 +672,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ca08707fc64071c4aa321d4750e4b85b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 187d78294474a3044bea5467e042d594, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4311,14 +4312,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ca08707fc64071c4aa321d4750e4b85b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 187d78294474a3044bea5467e042d594, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -9361,7 +9362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 4
+  bgImage: {fileID: 2015298399}
   fillImage: {fileID: 1904441444}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -9831,7 +9833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 4
+  bgImage: {fileID: 587316011}
   fillImage: {fileID: 1856398157}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -10793,6 +10796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
   slot: 3
+  bgImage: {fileID: 424879486}
   fillImage: {fileID: 1945703185}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -12175,7 +12179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 5
+  bgImage: {fileID: 26652661}
   fillImage: {fileID: 2111178633}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -14294,14 +14299,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ca08707fc64071c4aa321d4750e4b85b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 187d78294474a3044bea5467e042d594, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -15336,7 +15341,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 3
+  bgImage: {fileID: 195777207}
   fillImage: {fileID: 1447743244}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -18517,6 +18523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
   slot: 1
+  bgImage: {fileID: 1296395777}
   fillImage: {fileID: 1204289400}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -31474,7 +31481,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
-  slot: 1
+  slot: 5
+  bgImage: {fileID: 178053818}
   fillImage: {fileID: 1020704891}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -36655,6 +36663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
   slot: 1
+  bgImage: {fileID: 1510729346}
   fillImage: {fileID: 1299704359}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -46457,6 +46466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 0}
   slot: 2
+  bgImage: {fileID: 1761675858}
   fillImage: {fileID: 1381702243}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -52892,14 +52902,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ca08707fc64071c4aa321d4750e4b85b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 187d78294474a3044bea5467e042d594, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
