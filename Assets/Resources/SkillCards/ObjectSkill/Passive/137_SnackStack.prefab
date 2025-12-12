@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b8c5ea4accd7e4ca75b2280d7d4cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 1855a0015e8da9d4b8037129a47fc88f, type: 3}
   initialMaxHP: 50
   growPerRound: 20
   keepRatioOnChange: 0

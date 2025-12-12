@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319a8c7f67fbc664e91953268dd7dae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: adc606adab068c646bed6c2b8c6abc54, type: 3}
   interval: 8
   selfDamage: 10
   selfDamageLocalOnly: 0

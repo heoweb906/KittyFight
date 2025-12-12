@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d704973041d8af419f245f055c82094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 0a096986cbc579b44a6c10ba0aef30e0, type: 3}
   hitsPerHeal: 3
   healAmount: 20
   objEffect_Use: {fileID: 1997545929368001207, guid: 66d4bc5677882514e9605dc7370be071,

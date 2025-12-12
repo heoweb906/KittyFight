@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b088ef446d77e4aa98b6294333d7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: f98e5aa6fa33b24448acc3a819fc0acc, type: 3}
   hotProjectilePrefab: {fileID: 6777267630284458099, guid: 793c5078cb452444dae0878544be4317,
     type: 3}
   hotCooldown: 5

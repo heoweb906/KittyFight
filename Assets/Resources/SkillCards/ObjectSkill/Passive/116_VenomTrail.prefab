@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37ce90ffa6c2394ea614bfa9a8b6468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: fb9d08af003d97f4685a88393e54f3eb, type: 3}
   venomCloudPrefab: {fileID: 6777267630284458099, guid: 2b5b727e099726b4c9d29efaaa654170,
     type: 3}
   spawnInterval: 0.1

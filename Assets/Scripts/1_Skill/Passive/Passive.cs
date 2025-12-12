@@ -5,6 +5,8 @@ public abstract class Passive : MonoBehaviour
     protected PlayerAbility ability;
     protected AbilityEvents events;
 
+    public Sprite skillIcon;
+
     public virtual void OnEquip(PlayerAbility a)
     {
         ability = a;

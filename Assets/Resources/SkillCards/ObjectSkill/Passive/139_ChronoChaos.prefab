@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03ab75d404484846895808470e6db8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 1693d39cde4e66f49b7f240e19f11436, type: 3}
   offsets: fdfffffffeffffffffffffff0100000002000000030000000400000005000000
   effectPrefab: {fileID: 147907476795944818, guid: cacbcab845ee20d498d388b2de812946,
     type: 3}

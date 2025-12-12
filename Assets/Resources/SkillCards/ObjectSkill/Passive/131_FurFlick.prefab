@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3d2eff963a36a4786157796adf7963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 5b346afe4ac3c12468397d9ebe7e0654, type: 3}
   featherProjectilePrefab: {fileID: 551775367249106992, guid: df0ecc19bb7e4324cb9ce190349a348c,
     type: 3}
   interval: 3

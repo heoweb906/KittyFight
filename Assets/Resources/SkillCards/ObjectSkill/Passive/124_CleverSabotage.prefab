@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019f51dec38d49b4a99bdad252c7b5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: a4cdcaf564fe38e479147569878a05d9, type: 3}
   extraCooldownPerStack: 1.5
   objEffect_Use: {fileID: 9065588183576548332, guid: ec63fec649ed1a84aab586ed63a1c614,
     type: 3}

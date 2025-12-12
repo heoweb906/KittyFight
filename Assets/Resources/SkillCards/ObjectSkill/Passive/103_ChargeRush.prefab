@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232f8a100acdd4248a2e25a63e560a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 984f99ab9055b914893a540341229c7d, type: 3}
   maxChargeSeconds: 10
   minMul: 1
   maxMul: 3

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efa4fdc2d5f04e4585ca1b5fedb19f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: b233fecb446abb244b7f7f4aa1f88f0e, type: 3}
   extraDealDamage: 20
   extraTakenDamage: 20
   objEffect_Use: {fileID: 3733582807506178610, guid: 283b183376c07bf4e9644f1d90ab7259,

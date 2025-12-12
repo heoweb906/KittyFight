@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9ed5eadbbbfbe46a34a5537982ce60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 96e4736c4c895cf4fbd8e5977fd42f18, type: 3}
   intervalSeconds: 6
   minMoveSpeed: 1.5
   maxMoveSpeed: 12.5

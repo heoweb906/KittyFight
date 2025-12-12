@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d5ad2f2e1ac864d9677389f67b0ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 2a8f72ea17748ac4386008d95c264476, type: 3}
   bananaProjectilePrefab: {fileID: 6777267630284458099, guid: a20667cf9cb92974eaca72d02b744c26,
     type: 3}
   effectPrefab: {fileID: 5388040702814143646, guid: 06780bb3460286043bbe68e5e5e60dbe,
