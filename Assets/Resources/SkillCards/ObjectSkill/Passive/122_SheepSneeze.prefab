@@ -51,3 +51,5 @@ MonoBehaviour:
   verticalOffset: 0.5
   useEffectPrefab: {fileID: 6604110065057846880, guid: 65db925685b4cfc438d036cad92b2dc9,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

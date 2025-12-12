@@ -49,3 +49,5 @@ MonoBehaviour:
   spawnYOffset: 0
   effectPrefab: {fileID: 4043810825061425606, guid: ac8c0c1da504a4c4fad97c0faf5bccb8,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

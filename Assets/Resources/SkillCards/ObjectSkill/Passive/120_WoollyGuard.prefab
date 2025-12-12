@@ -47,3 +47,5 @@ MonoBehaviour:
   damageDivisor: 12
   effectPrefab: {fileID: 6785905406223076095, guid: ae6ae1e9de67f664fa4eb0b115afe183,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

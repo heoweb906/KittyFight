@@ -48,3 +48,5 @@ MonoBehaviour:
   reducePerJump: 0.6
   effectPrefab: {fileID: 7684307510729435506, guid: 8422c90592cbe994289b2e15bc055f6e,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

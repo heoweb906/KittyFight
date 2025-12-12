@@ -119,7 +119,7 @@ public class PlayerHealth : MonoBehaviour
         OnHPChanged?.Invoke(currentHP, maxHP);
         ability.effect?.PlayDoubleShakeAnimation(5, 6); // ³» HP
 
-        float selfShake = 0.15f + Mathf.FloorToInt(amount / 10) * 0.08f;
+        float selfShake = 0.3f + Mathf.FloorToInt(amount / 10) * 0.08f;
 
         Vector3 dir = pendingPunchDir
             ?? (Vector3.Dot(transform.forward, Vector3.right) >= 0f ? Vector3.right : Vector3.left);

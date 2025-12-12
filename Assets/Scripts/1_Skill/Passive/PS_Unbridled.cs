@@ -20,7 +20,7 @@ public class PS_Unbridled : Passive
     [Header("Effect Scale")]
     [Tooltip("충전 0일 때 스케일 배수")]
     public float minScaleMul = 1f;
-    [Tooltip("최대 충전일 때 스케일 배수")]
+    [Tooltip("최대 충전일 때 스케일 배수")] 
     public float maxScaleMul = 2f;
 
     private Transform effectInstance;

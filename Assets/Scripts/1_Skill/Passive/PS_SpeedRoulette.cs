@@ -16,6 +16,12 @@ public class PS_SpeedRoulette : Passive
     [SerializeField] private GameObject upEffectPrefab;
     [SerializeField] private GameObject downEffectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
+
     private float timer = 0f;
     private float originalMoveSpeed;
     private bool hasSavedOriginal = false;
@@ -89,5 +95,13 @@ public class PS_SpeedRoulette : Passive
             );
         }
         ability.moveSpeed = newSpeed;
+
+
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+
+
     }
 }

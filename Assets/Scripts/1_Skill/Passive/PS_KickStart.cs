@@ -9,6 +9,10 @@ public class PS_Kickstart : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnModifyCooldown += OnModifyCooldown; // 스킬 쿨타임 시작 직전 +5s
@@ -36,5 +40,8 @@ public class PS_Kickstart : Passive
             transform.position,
             Quaternion.identity
         );
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
 }

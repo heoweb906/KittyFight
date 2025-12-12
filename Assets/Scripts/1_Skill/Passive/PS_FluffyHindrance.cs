@@ -10,6 +10,10 @@ public class PS_FluffyHindrance : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnDealtDamage += OnDealtDamage;
@@ -50,6 +54,8 @@ public class PS_FluffyHindrance : Passive
 
         if (ability.playerNumber == 1) return pa2;
         if (ability.playerNumber == 2) return pa1;
+
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
 
         return null;
     }

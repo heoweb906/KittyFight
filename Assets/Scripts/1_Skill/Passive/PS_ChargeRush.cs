@@ -22,6 +22,11 @@ public class PS_ChargeRush : Passive
     [Tooltip("최대 충전일 때 스케일 배수")]
     public float maxScaleMul = 2f;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     // 인스턴스 된 이펙트 트랜스폼 / 기본 스케일
     private Transform effectInstance;
     private Vector3 effectBaseScale = Vector3.one;
@@ -110,5 +115,11 @@ public class PS_ChargeRush : Passive
         {
             effectInstance.localScale = effectBaseScale * minScaleMul;
         }
+
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+
     }
 }

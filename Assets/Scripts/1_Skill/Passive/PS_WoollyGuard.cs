@@ -9,6 +9,10 @@ public class PS_WoollyGuard : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnBeforeTakeDamage += OnBeforeTakeDamage;

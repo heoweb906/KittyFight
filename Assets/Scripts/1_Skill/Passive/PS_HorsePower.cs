@@ -18,6 +18,11 @@ public class PS_HorsePower : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -69,6 +74,9 @@ public class PS_HorsePower : Passive
 
         float multiplier = 1f + moveSpeedBonusRate; // 30% 증가
         ability.moveSpeed = baseMoveSpeed * multiplier;
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
 
     private void RestoreBaseMoveSpeed()

@@ -24,6 +24,10 @@ public class PS_SheepSneeze : Passive
     [Header("Effects")]
     [SerializeField] private GameObject useEffectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -70,6 +74,10 @@ public class PS_SheepSneeze : Passive
 
         SpawnOne(origin, dirLeft);
         SpawnOne(origin, dirRight);
+
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
 
     private void SpawnOne(Vector3 origin, Vector3 dir)

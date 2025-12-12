@@ -48,3 +48,5 @@ MonoBehaviour:
   moveSpeedBonusRate: 0.3
   effectPrefab: {fileID: 7068814587398485630, guid: b221cb3e87360db499b5a964da30892f,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

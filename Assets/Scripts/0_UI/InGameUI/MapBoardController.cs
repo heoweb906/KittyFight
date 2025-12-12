@@ -94,13 +94,20 @@ public class MapBoardController : MonoBehaviour
         mapBoardElement_Upper.objMine.SetActive(true);
         mapBoardElement_Lower.objMine.SetActive(true);
 
-        // 고정된 목표 위치 이동
+        // [수정] 틈새 방지를 위한 오버랩 수치 (약 10픽셀 정도 서로 더 깊게 이동)
+        float overlapOffset = 10f;
+
+        // [수정] 타격감을 위해 시간 약간 단축 (0.5f -> 0.35f 권장)
+        float duration = 0.35f;
+
+        // 상단 패널: 목표 위치보다 더 아래로 내려오게 설정 (- 값)
         mapBoardElement_Upper.rectTransform_BackGround
-            .DOAnchorPosY(UPPER_TARGET_Y, 0.5f)
+            .DOAnchorPosY(UPPER_TARGET_Y - overlapOffset, duration)
             .SetEase(Ease.InQuint);
 
+        // 하단 패널: 목표 위치보다 더 위로 올라가게 설정 (+ 값)
         mapBoardElement_Lower.rectTransform_BackGround
-            .DOAnchorPosY(LOWER_TARGET_Y, 0.5f)
+            .DOAnchorPosY(LOWER_TARGET_Y + overlapOffset, duration)
             .SetEase(Ease.InQuint);
     }
 

@@ -9,6 +9,11 @@ public class PS_Finisher : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
+
     protected override void Subscribe(AbilityEvents e)
         => e.OnBeforeDealDamage += OnBeforeDealDamage;
     protected override void Unsubscribe(AbilityEvents e)
@@ -30,5 +35,8 @@ public class PS_Finisher : Passive
             transform.position,
             Quaternion.Euler(-90f, 0f, 0f)
         );
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
 }

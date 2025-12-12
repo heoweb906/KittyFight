@@ -48,3 +48,5 @@ MonoBehaviour:
   healAmount: 20
   objEffect_Use: {fileID: 1997545929368001207, guid: 66d4bc5677882514e9605dc7370be071,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

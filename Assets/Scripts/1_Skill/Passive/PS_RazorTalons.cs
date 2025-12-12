@@ -10,6 +10,7 @@ public class PS_RazorTalons : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);

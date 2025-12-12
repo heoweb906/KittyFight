@@ -12,6 +12,11 @@ public class PS_SnackStack : Passive
     public GameObject objEffect_Use;
 
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnRoundStart += OnRoundStart;
@@ -44,6 +49,9 @@ public class PS_SnackStack : Passive
             effect.transform.localScale = new Vector3(1f, 1f, 1f);
             effect.transform.SetParent(null);
         }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
 
     }
 }

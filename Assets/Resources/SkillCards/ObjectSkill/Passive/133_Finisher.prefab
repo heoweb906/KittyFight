@@ -47,3 +47,5 @@ MonoBehaviour:
   threshold: 0.1
   effectPrefab: {fileID: 6952679052617503758, guid: 9b6515e163fe174428467b0e744661bf,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

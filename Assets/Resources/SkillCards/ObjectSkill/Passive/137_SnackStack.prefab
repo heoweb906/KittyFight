@@ -49,3 +49,5 @@ MonoBehaviour:
   keepRatioOnChange: 0
   objEffect_Use: {fileID: 6571195345819596782, guid: 8120b356ab4f8c9478d3225fb5fd9274,
     type: 3}
+  shakeAmount: 0.3
+  shakeDuration: 0.6

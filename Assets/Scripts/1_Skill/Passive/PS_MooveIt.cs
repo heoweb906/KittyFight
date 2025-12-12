@@ -31,5 +31,6 @@ public class PS_MooveIt : Passive
         if (slot != SkillType.Dash) return;
         float factor = 1f - reductionRate;
         seconds *= factor;
+
     }
 }

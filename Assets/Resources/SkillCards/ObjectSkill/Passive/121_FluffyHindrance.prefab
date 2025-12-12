@@ -48,3 +48,5 @@ MonoBehaviour:
   slowMultiplier: 0.5
   effectPrefab: {fileID: 7564431618811425615, guid: 71ae276dd45a4214a8d2bcd7b7df415b,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

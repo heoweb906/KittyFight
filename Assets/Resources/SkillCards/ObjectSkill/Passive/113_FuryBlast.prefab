@@ -52,3 +52,5 @@ MonoBehaviour:
   explosionFxPrefab: {fileID: 3082395371585726239, guid: f360d6f60557efb4ea163797b20358b4,
     type: 3}
   chargeTime: 1.7
+  shakeAmount: 0.3
+  shakeDuration: 0.6

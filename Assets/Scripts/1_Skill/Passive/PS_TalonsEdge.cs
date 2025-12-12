@@ -8,6 +8,11 @@ public class PS_TalonsEdge : Passive
 
     private int currentPoints;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnRoundStart += HandleRoundStart;
@@ -26,12 +31,20 @@ public class PS_TalonsEdge : Passive
     void HandleRoundStart(int _)
     {
         currentPoints = basePoints;
+        shakeAmount = 0.1f;
     }
+
 
     void HandleMeleeDamageInt(ref int damage)
     {
         damage = currentPoints;
 
         currentPoints += addPerUse;
+
+        var gm = FindObjectOfType<GameManager>();
+
+        shakeAmount += 0.1f;
+
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
     }
 }

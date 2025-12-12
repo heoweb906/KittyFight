@@ -54,3 +54,5 @@ MonoBehaviour:
     type: 3}
   minScaleMul: 1
   maxScaleMul: 2
+  shakeAmount: 0.6
+  shakeDuration: 0.6

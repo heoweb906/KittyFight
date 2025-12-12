@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoints: 5
   addPerUse: 2
+  shakeAmount: 0.1
+  shakeDuration: 0.6

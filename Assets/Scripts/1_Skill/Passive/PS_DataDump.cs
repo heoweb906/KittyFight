@@ -10,6 +10,10 @@ public class PS_DataDump : Passive
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -42,6 +46,9 @@ public class PS_DataDump : Passive
                 transform.position,
                 Quaternion.Euler(-90f, 0f, 0f)
             );
+
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
         }
     }
 }

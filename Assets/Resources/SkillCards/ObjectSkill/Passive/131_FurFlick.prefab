@@ -51,3 +51,5 @@ MonoBehaviour:
   projectileSpeed: 20
   objEffect_Use: {fileID: 6041927523125233054, guid: d6500bc8c2540a54f89428d9abf6b377,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3

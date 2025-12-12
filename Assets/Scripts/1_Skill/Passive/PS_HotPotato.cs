@@ -12,6 +12,7 @@ public class PS_HotPotato : Passive
     private Skill rangedSkill;
     private GameObject originalProjectilePrefab;
 
+
     protected override void Subscribe(AbilityEvents e)
     {
         base.Subscribe(e);

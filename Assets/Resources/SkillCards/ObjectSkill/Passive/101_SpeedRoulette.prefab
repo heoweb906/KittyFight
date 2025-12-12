@@ -51,3 +51,5 @@ MonoBehaviour:
     type: 3}
   downEffectPrefab: {fileID: 5990862213919189110, guid: 562d6c1fe8994184182a5c36ac010af7,
     type: 3}
+  shakeAmount: 0.2
+  shakeDuration: 0.3
