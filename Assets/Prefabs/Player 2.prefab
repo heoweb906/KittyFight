@@ -1107,6 +1107,7 @@ GameObject:
   - component: {fileID: 898473161637626695}
   - component: {fileID: 1559159667772888511}
   - component: {fileID: -8924510803427197770}
+  - component: {fileID: -1536443845118205074}
   m_Layer: 13
   m_Name: Player 2
   m_TagString: Player
@@ -1360,6 +1361,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b42cbf84dee4b468bc62161b3605f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1536443845118205074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001395786464291979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d12edf8b5f6bbe4ab767cbc0e28f039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 0.2
+  trailScaleMultiplier: 6
+  customMeshes:
+  - {fileID: 7565170725400818026, guid: f50cca500d9bea54dab5042f83914442, type: 3}
+  - {fileID: -3292925553009838691, guid: f50cca500d9bea54dab5042f83914442, type: 3}
+  - {fileID: -3996760141626369306, guid: f50cca500d9bea54dab5042f83914442, type: 3}
+  - {fileID: -3531946766418785785, guid: f50cca500d9bea54dab5042f83914442, type: 3}
+  meshRefreshRate: 0.02
+  meshDestroyDelay: 2
+  mat_Red: {fileID: 2100000, guid: 3e9f4e7ccca987346aed1c819380245a, type: 2}
+  mat_Blue: {fileID: 2100000, guid: ae2d23e8ab30d05418b7b09c0f2b334b, type: 2}
+  shaderVarRef: _Alpha
+  shaderVarRate: 0.2
+  shadervarRefreshRate: 0.03
+  vec3_1: {x: 0, y: 50, z: 90}
+  vec3_2: {x: 0, y: -50, z: -90}
 --- !u!1 &5490376169691697828
 GameObject:
   m_ObjectHideFlags: 0
