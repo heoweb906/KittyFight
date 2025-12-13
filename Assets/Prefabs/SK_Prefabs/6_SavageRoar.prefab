@@ -123,6 +123,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 0
   stunDuration: 2.5
 --- !u!1 &4940818340295206281
 GameObject:
@@ -247,6 +248,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 0
   stunDuration: 2.5
 --- !u!1 &5972952298674427652
 GameObject:
@@ -371,6 +373,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 0
   stunDuration: 2.5
 --- !u!1 &6312472998875430883
 GameObject:
@@ -425,6 +428,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 1
   stunDuration: 2.5
 --- !u!1001 &212485854810299423
 PrefabInstance:

@@ -124,6 +124,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 2
   damage: 45
 --- !u!1001 &2465966157912383614
 PrefabInstance:

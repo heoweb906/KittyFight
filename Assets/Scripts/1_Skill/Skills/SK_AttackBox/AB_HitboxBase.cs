@@ -2,6 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
 using RayFire;
+public enum WallCheckMode
+{
+    None,
+    FromAttacker,
+    FromHitbox
+}
 
 /// <summary>
 /// 모든 근접 히트박스/투사체가 공통으로 갖는 판정/소유/친선무시/권위 체크 로직
@@ -21,6 +27,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
     [Header("환경 충돌 설정")]
     [Tooltip("환경으로 간주할 레이어(벽/바닥 등)")]
     [SerializeField] protected LayerMask environmentMask;
+    [SerializeField] protected WallCheckMode wallCheckMode = WallCheckMode.None;
 
     // 이미 맞춘 대상(중복 히트 방지)
     private readonly HashSet<PlayerHealth> _hitOnce = new HashSet<PlayerHealth>();
@@ -89,6 +96,8 @@ public abstract class AB_HitboxBase : MonoBehaviour
         if (singleHit && _hitOnce.Contains(victimHealth)) return false;
         _hitOnce.Add(victimHealth);
 
+        if (IsBlockedByWall(other)) return false;
+
         // 실제 효과 적용
         ApplyEffects(victimHealth, other);
         return true;
@@ -97,6 +106,37 @@ public abstract class AB_HitboxBase : MonoBehaviour
     protected bool IsEnvironment(int otherLayer)
     {
         return (environmentMask.value & (1 << otherLayer)) != 0;
+    }
+
+    private bool IsBlockedByWall(Collider victimCol)
+    {
+        if (wallCheckMode == WallCheckMode.None)
+            return false;
+
+        Vector3 origin;
+
+        if (wallCheckMode == WallCheckMode.FromAttacker)
+        {
+            // 사용자 중심 기준
+            origin = ownerAbility.transform.position;
+        }
+        else
+        {
+            // 설치형 기준
+            origin = transform.position;
+        }
+
+        Vector3 target = victimCol.bounds.center;
+
+        origin.z = 0f;
+        target.z = 0f;
+
+        return Physics.Linecast(
+            origin,
+            target,
+            environmentMask,
+            QueryTriggerInteraction.Ignore
+        );
     }
 
 

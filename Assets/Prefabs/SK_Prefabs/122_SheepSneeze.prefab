@@ -152,6 +152,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 2
   stunDuration: 1
   stunEffectPrefab: {fileID: 5364587883125947957, guid: d06ddee8428869644aa7e8167d87a33e,
     type: 3}
