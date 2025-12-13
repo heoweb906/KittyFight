@@ -35956,6 +35956,8 @@ MonoBehaviour:
     type: 3}
   playerAbility_1: {fileID: 0}
   playerAbility_2: {fileID: 0}
+  opponentStateTimeout: 3
+  fallbackSceneName: MainMenu
 --- !u!1 &1426357097
 GameObject:
   m_ObjectHideFlags: 0

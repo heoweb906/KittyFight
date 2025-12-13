@@ -106,6 +106,8 @@ public class GameManager : MonoBehaviour
         CheckOpponentStateTimeout();
     }
 
+
+    // #. 상대방과 게임 도중 연결 끊김 감지 
     private void CheckOpponentStateTimeout()
     {
         if (returningToMenu) return;

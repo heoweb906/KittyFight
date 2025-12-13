@@ -82,8 +82,10 @@ public class PlayerJump : MonoBehaviour
 
             UpdateManager.EnqueueEventOnce("Jump");
 
-            var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(0.1f, 0.3f, Vector3.up);
+
+            var cm = FindObjectOfType<CameraManager>();
+            cm?.ShakeCameraPunch(0.02f, 0.7f, Vector3.up);
+
 
             if (jumpResetRoutine != null)
             {
@@ -102,6 +104,7 @@ public class PlayerJump : MonoBehaviour
             }
         }
     }
+
     private IEnumerator ResetJumpFlagAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -129,6 +132,10 @@ public class PlayerJump : MonoBehaviour
             if (landEffectPrefab != null)
             {
                 Instantiate(landEffectPrefab, effectAnchor.position, Quaternion.identity);
+
+                //var cm = FindObjectOfType<CameraManager>();
+                //cm?.ShakeCameraPunch(0.02f, 0.7f, Vector3.down);
+
             }
         }
     }

@@ -246,10 +246,10 @@ AnimatorStateMachine:
     m_Position: {x: 1010, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4847212082387703101}
-    m_Position: {x: 1010, y: 190, z: 0}
+    m_Position: {x: 1010, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -9189525330278805914}
-    m_Position: {x: 1010, y: 240, z: 0}
+    m_Position: {x: 1010, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4849705474139182545}
     m_Position: {x: 1010, y: 140, z: 0}
@@ -377,7 +377,7 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: d063ae3bc52438d44a60c6e91c17315a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: isGround
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1101 &2315095370000920908
