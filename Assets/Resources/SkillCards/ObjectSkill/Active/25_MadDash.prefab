@@ -60,3 +60,5 @@ MonoBehaviour:
   meleeHitboxPrefab2: {fileID: 7030629527735423589, guid: 70ad68d5c782d7043b113ba6ee5db8ed,
     type: 3}
   meleeInterval: 0.3
+  shakeAmount: 0.3
+  shakeDuration: 0.6

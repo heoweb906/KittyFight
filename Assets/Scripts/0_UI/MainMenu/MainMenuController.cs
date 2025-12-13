@@ -50,9 +50,13 @@ public class MainMenuController : MonoBehaviour
     public Image image_LeftBackGround;
     public Image image_RightBackGround;
 
-    [Header("설정창 관련")]  
-    private bool bOpenMenuPanel;    // Panel On/Off 상태
-    public GameObject panelMenu;
+    [Header("설정창 관련")]
+    public GameObject obj_Gausian;
+    public GameObject obj_PlayerPanel;
+    public GameObject[] panelMenu;
+    private int iPanelNum;    // 패널 번호
+    private bool bOtherPanel;       // 닉네임 수정 중 or 매칭 중
+  
    
     
 
@@ -75,6 +79,77 @@ public class MainMenuController : MonoBehaviour
         if(matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this; 
         if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this; 
         if(matchStartCollision_3 != null) matchStartCollision_3.mainMenuController = this;
+
+        bOtherPanel = false;
+        obj_Gausian.SetActive(false);
+
+        iPanelNum = 0;
+        scriptPlayerCharacter.bCanControl = false;
+    }
+
+
+    private void Update()
+    {
+        if (titleLogoAssist.bTitleAssistFinish == true && bOtherPanel == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // 0번이면 1번 열기
+                if (iPanelNum == 0)
+                {
+                    ChangePanel(1);
+                }
+                else if (iPanelNum == 1)
+                {
+                    ChangePanel(0);
+                }
+                else if (iPanelNum >= 2)
+                {
+                    ChangePanel(1);
+                }
+            }
+        }
+    }
+
+
+    public void ChangePanel(int _iPanelIdx)
+    {
+        if (panelMenu == null) return;
+       
+        // 1. 상태 변수 갱신
+        iPanelNum = _iPanelIdx;
+
+        // 2. 패널 활성화/비활성화 로직 (0번 비움, 1번부터 시작)
+        for (int i = 1; i < panelMenu.Length; i++)
+        {
+            if (panelMenu[i] == null) continue;
+            bool isActive = (iPanelNum > 0) && (i == iPanelNum);
+            panelMenu[i].SetActive(isActive);
+        }
+
+        // 3. [요청하신 부분] 가우시안 배경 처리
+        if (obj_Gausian != null)
+        {
+            if (_iPanelIdx == 1)
+            {
+                // 1번: 켜기
+                obj_Gausian.SetActive(true);
+                obj_PlayerPanel.SetActive(false);
+                scriptPlayerCharacter.bCanControl = false;
+                scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
+            }
+            else if (_iPanelIdx == 0)
+            {
+              
+
+                obj_Gausian.SetActive(false);
+                obj_PlayerPanel.SetActive(true);
+                scriptPlayerCharacter.bCanControl = true;
+                scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = false;
+            }
+        }
+
+        // for (int i = 0; i < buttons_Menu.Length; i++) buttons_Menu[i].OnClearButton();
     }
 
 
@@ -100,7 +175,7 @@ public class MainMenuController : MonoBehaviour
         else if (targetIndex == 1)
         {
             SetNickName(); // 닉네임 설정은 즉시 실행
-            StartCoroutine(EnableControlRoutine(1f)); // 0.5초 딜레이 코루틴 시작
+            StartCoroutine(EnableControlRoutine(1.5f)); // 0.5초 딜레이 코루틴 시작
         }
 
         panels[targetIndex].SetActive(true);
@@ -113,6 +188,7 @@ public class MainMenuController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         cameraManager.UpdateOriginalPosition();
         scriptPlayerCharacter.bCanControl = true;
+        titleLogoAssist.bTitleAssistFinish = true;
     }
 
 
@@ -180,6 +256,9 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNickNameInputPanel()
     {
+        bOtherPanel = true;
+        ChangePanel(0);
+
         // 0.3초 동안 문이 닫히는 애니메이션 실행 -> 끝난 후(Lambda) 내부 코드 실행
         CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.3f, () =>
         {
@@ -288,6 +367,8 @@ public class MainMenuController : MonoBehaviour
         isButtonCooldown = true;
         yield return new WaitForSeconds(2f);
         isButtonCooldown = false;
+
+        bOtherPanel = false;
     }
 
     public void CloseInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
@@ -326,6 +407,8 @@ public class MainMenuController : MonoBehaviour
     public void StartMatching()
     {
         scriptPlayerCharacter.bCanControl = false;
+        bOtherPanel = true;
+        ChangePanel(0);
 
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
 

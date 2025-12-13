@@ -45,6 +45,7 @@ public class MapBoardController : MonoBehaviour
     private const float LOWER_TARGET_Y = 360f;
 
 
+
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
@@ -54,6 +55,8 @@ public class MapBoardController : MonoBehaviour
 
         OpenMapBoardPanelVertical();
     }
+
+
 
     // #. 패널 열기 (화면 밖으로 밀어냄)
     public void OpenMapBoardPanelVertical()
@@ -80,7 +83,9 @@ public class MapBoardController : MonoBehaviour
             });
     }
 
-    // #. 패널 닫기 (고정된 위치로 등장)
+
+
+    // #. 패널 닫기 (고정된 위치로 등장) 
     public void CloseMapBoardPanelVertical(int iAnimalNum = 0)
     {
         // 이미지 및 텍스트 설정
@@ -94,21 +99,21 @@ public class MapBoardController : MonoBehaviour
         mapBoardElement_Upper.objMine.SetActive(true);
         mapBoardElement_Lower.objMine.SetActive(true);
 
-        // [수정] 틈새 방지를 위한 오버랩 수치 (약 10픽셀 정도 서로 더 깊게 이동)
-        float overlapOffset = 10f;
+        // 틈새 방지 오버랩 (유지)
+        float overlapOffset = 0f;
 
-        // [수정] 타격감을 위해 시간 약간 단축 (0.5f -> 0.35f 권장)
-        float duration = 0.35f;
+        // [수정] CloseScorePanel과 동일한 시간 (0.35f -> 0.15f)
+        float duration = 0.15f;
 
-        // 상단 패널: 목표 위치보다 더 아래로 내려오게 설정 (- 값)
+        // 상단 패널
         mapBoardElement_Upper.rectTransform_BackGround
             .DOAnchorPosY(UPPER_TARGET_Y - overlapOffset, duration)
-            .SetEase(Ease.InQuint);
+            .SetEase(Ease.OutQuart); // [수정] InQuint -> OutQuart
 
-        // 하단 패널: 목표 위치보다 더 위로 올라가게 설정 (+ 값)
+        // 하단 패널
         mapBoardElement_Lower.rectTransform_BackGround
             .DOAnchorPosY(LOWER_TARGET_Y + overlapOffset, duration)
-            .SetEase(Ease.InQuint);
+            .SetEase(Ease.OutQuart); // [수정] InQuint -> OutQuart
     }
 
 

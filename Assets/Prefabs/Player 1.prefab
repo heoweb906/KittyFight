@@ -224,7 +224,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1914,7 +1914,7 @@ MonoBehaviour:
   - {fileID: 4822837345495584127}
   - {fileID: 5004611715059856357}
   - {fileID: 5287904308667395048}
-  flashMaterial: {fileID: 2100000, guid: 94c97fdf8c2a65b4cb4d836b65d07e64, type: 2}
+  flashMaterial: {fileID: 2100000, guid: cea1a668d43a78b41a78d6aee3023222, type: 2}
   flashDuration: 0.2
 --- !u!114 &1559159667772888511
 MonoBehaviour:

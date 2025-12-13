@@ -51,3 +51,5 @@ MonoBehaviour:
   lockZToOwner: 1
   effectPrefab: {fileID: 1968577806212416095, guid: b6c019b6f630a90458aff4d1f983a382,
     type: 3}
+  shakeAmount: 0.5
+  shakeDuration: 0.9

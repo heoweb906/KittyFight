@@ -19,6 +19,11 @@ public class SK_MadDash : Skill
 
     private int effectIndex = 0;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;
@@ -131,6 +136,9 @@ public class SK_MadDash : Skill
             {
                 meleeTimer -= meleeInterval;
                 SpawnMeleeHitbox(pos + dashDir*aimRange, dashDir);
+
+                var gm = FindObjectOfType<GameManager>();
+                gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
             }
 
             yield return null;

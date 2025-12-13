@@ -1266,6 +1266,8 @@ MonoBehaviour:
   - {fileID: 4763938425455259964}
   - {fileID: 7766016238420592866}
   - {fileID: 2103469853704188922}
+  shakeAmount: 0.4
+  shakeDuration: 0.8
 --- !u!1 &7766016238420592866
 GameObject:
   m_ObjectHideFlags: 0

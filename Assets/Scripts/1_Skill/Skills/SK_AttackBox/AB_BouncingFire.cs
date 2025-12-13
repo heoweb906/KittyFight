@@ -31,6 +31,12 @@ public class AB_BouncingFire : AB_HitboxBase
     public float fEffectSize;
     public GameObject[] objs_Piece;
 
+
+    [Header("카메라 연출")]
+    public float shakeAmount;
+    public float shakeDuration;
+    
+
     protected override void Awake()
     {
         base.Awake();
@@ -103,6 +109,9 @@ public class AB_BouncingFire : AB_HitboxBase
         }
 
         Vector3 dir = incoming.normalized;
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
 
         float radius = 0.2f;
         var sphereCol = GetComponent<SphereCollider>();
@@ -190,6 +199,9 @@ public class AB_BouncingFire : AB_HitboxBase
             effect.transform.localScale = new Vector3(fEffectSize, fEffectSize, fEffectSize);
             effect.transform.SetParent(null);
         }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
 
         Explode(0.5f, 5f);
         foreach (GameObject piece in objs_Piece)

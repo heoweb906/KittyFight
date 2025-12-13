@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4574550274525587615}
   - component: {fileID: -6825050013190031920}
   m_Layer: 17
-  m_Name: 104_RampageRemnant
+  m_Name: 105_RampageRemnant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

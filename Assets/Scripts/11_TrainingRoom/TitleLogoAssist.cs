@@ -37,6 +37,9 @@ public class TitleLogoAssist : MonoBehaviour
     private RectTransform image2Rect;
 
 
+    public bool bTitleAssistFinish;
+
+
     private void Awake()
     {
         image_Logo.DOFade(0f, 0f);
@@ -50,6 +53,8 @@ public class TitleLogoAssist : MonoBehaviour
 
         if (iamge_Left != null) image1Rect = iamge_Left.GetComponent<RectTransform>();
         if (iamge_Right != null) image2Rect = iamge_Right.GetComponent<RectTransform>();
+
+        bTitleAssistFinish = false;
     }
     private void Start()
     {
