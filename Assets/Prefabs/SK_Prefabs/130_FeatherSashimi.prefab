@@ -14670,5 +14670,6 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 1
   damage: 15
   objEffect: {fileID: 5804286335858808282}

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2d098648a6b1f64b9ff80342b4985fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: fe03b4954219b4c4bb0d41c954516438, type: 3}
   featherEffectPrefab: {fileID: 7030629527735423589, guid: 95e32cab3c7488b45884925c70bde017,
     type: 3}
   newCooldown: 1

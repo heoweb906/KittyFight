@@ -24358,6 +24358,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 1
   damage: 40
   knockbackForce: 10
   disableControlSeconds: 0.5

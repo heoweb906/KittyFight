@@ -28,15 +28,24 @@ public class PS_Finisher : Passive
         int max = hp.MaxHP;
 
         if (max <= 0 || cur <= 0) return;
-        dmg = max;
 
-        Instantiate(
-            effectPrefab,
-            transform.position,
-            Quaternion.Euler(-90f, 0f, 0f)
-        );
+        float ratio = (float)cur / max;
 
-        var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+        if (ratio <= threshold)
+        {
+            dmg = max;
+
+            if (effectPrefab)
+            {
+                Instantiate(
+                    effectPrefab,
+                    transform.position,
+                    Quaternion.Euler(-90f, 0f, 0f)
+                );
+            }
+
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+        }
     }
 }

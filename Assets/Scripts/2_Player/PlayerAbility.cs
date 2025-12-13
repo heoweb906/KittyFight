@@ -72,11 +72,13 @@ public class PlayerAbility : MonoBehaviour
 
     // 스킬 장착 알림 (UI 아이콘 주입용)
     public event System.Action<SkillType, Skill> OnSkillEquipped;
+    public event System.Action<int, Passive> OnPassiveSlotChanged;
 
     private void Awake()
     {
         Health = GetComponent<PlayerHealth>();
         if (!events) events = GetComponent<AbilityEvents>();
+        if (!meshTrail) meshTrail = GetComponent<VFX_MeshTrail>();
     }
 
     void Start()
@@ -251,18 +253,38 @@ public class PlayerAbility : MonoBehaviour
 
     public Passive EquipPassive(Passive prefab)
     {
-        var inst = Instantiate(prefab, transform);
-        inst.OnEquip(this);
-        passives.Add(inst);
+        if (!prefab) return null;
+
+        Passive inst = (prefab.transform.root == transform.root)
+            ? prefab
+            : Instantiate(prefab, transform);
+
+        if (!passives.Contains(inst))
+        {
+            inst.OnEquip(this);
+            passives.Add(inst);
+
+            int slotIndex = Mathf.Clamp(passives.Count - 1, 0, 1);
+            OnPassiveSlotChanged?.Invoke(slotIndex, inst);
+        }
+
         return inst;
     }
+
 
     public void UnequipPassive(Passive p)
     {
         if (!p) return;
-        p.OnUnequip();
-        passives.Remove(p);
-        Destroy(p.gameObject);
+        int idx = passives.IndexOf(p);
+
+        if (idx >= 0)
+        {
+            p.OnUnequip();
+            passives.RemoveAt(idx);
+            Destroy(p.gameObject);
+
+            OnPassiveSlotChanged?.Invoke(idx, null);
+        }
     }
 
     // PS_KickStart 용

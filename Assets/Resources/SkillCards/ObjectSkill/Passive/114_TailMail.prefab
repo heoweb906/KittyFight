@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e444c843fb839384f8488b32007507ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 55947f47f7a0eb44782f810de58d6769, type: 3}
   cooldownReduction: 1

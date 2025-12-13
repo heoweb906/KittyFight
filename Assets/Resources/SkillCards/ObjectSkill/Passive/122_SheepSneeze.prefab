@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f747aa8e1f588740893dcf3e190c1b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: cde45f6e570e6784194648969660a841, type: 3}
   objSheepSneeze: {fileID: 6777267630284458099, guid: e29204c70b186f449a275cff4bcb579a,
     type: 3}
   interval: 5

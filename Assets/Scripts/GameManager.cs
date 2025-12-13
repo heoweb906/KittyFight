@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,13 @@ public class GameManager : MonoBehaviour
 
     private readonly List<GameObject> roundObjects = new List<GameObject>();
 
+    [Header("P2P Disconnect Detect")]
+    [SerializeField] private float opponentStateTimeout = 3.0f;
+    [SerializeField] private string fallbackSceneName = "MainMenu";
+    private float lastOpponentStateReceivedTime = -999f;
+    private bool hasReceivedOpponentStateOnce = false;
+    private bool returningToMenu = false;
+
     // #. 양측 플레이어 점수
     public int IntScorePlayer_1 { get; set; }
     public int IntScorePlayer_2 { get; set; }
@@ -77,7 +85,13 @@ public class GameManager : MonoBehaviour
 
         IntMapGimicnumber = 0; 
         BoolAcitveMapGimic = false; 
-    } 
+    }
+
+    public void NotifyOpponentStateReceived()
+    {
+        hasReceivedOpponentStateOnce = true;
+        lastOpponentStateReceivedTime = Time.time;
+    }
 
     private void Update()
     {
@@ -88,6 +102,30 @@ public class GameManager : MonoBehaviour
         }
 
         if(!gameEnded) ingameUIController?.TickGameTimer();
+
+        CheckOpponentStateTimeout();
+    }
+
+    private void CheckOpponentStateTimeout()
+    {
+        if (returningToMenu) return;
+
+        if (!hasReceivedOpponentStateOnce) return;
+
+        if (Time.time - lastOpponentStateReceivedTime >= opponentStateTimeout)
+        {
+            ReturnToTrainingByDisconnect();
+        }
+    }
+
+    private void ReturnToTrainingByDisconnect()
+    {
+        if (returningToMenu) return;
+        returningToMenu = true;
+
+        Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
+
+        SceneManager.LoadScene(fallbackSceneName);
     }
 
     private void InitializeGame()
@@ -147,7 +185,7 @@ public class GameManager : MonoBehaviour
         EquipDefaultSkills(oppAbility);
 
         // 핸들러 등록
-        P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum));
+        P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum, this));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myPlayer.GetComponent<PlayerHealth>(), myNum));
         P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this, mapManager)); 
         P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum)); 

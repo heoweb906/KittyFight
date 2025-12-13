@@ -123,4 +123,5 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 1
   damageToOthers: 20

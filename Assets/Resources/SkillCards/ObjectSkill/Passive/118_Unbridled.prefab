@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acef8345867b6c94db013f0691e76c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 5969ea465ba96454ab75951d445c561d, type: 3}
   maxBonus: 1
   bonusPerSecond: 0.1
   effectPrefab: {fileID: 7604860870248484802, guid: e2cc8d0dfc07d46449ff7a09796c18e6,

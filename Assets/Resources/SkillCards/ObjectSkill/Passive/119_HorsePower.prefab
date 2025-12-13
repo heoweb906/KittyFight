@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08dc23b74dbbafb408ba7aa0720dd342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillIcon: {fileID: 21300000, guid: 1adce056a37e0da408802fcdba646bb8, type: 3}
   buffDuration: 3
   moveSpeedBonusRate: 0.3
   effectPrefab: {fileID: 7068814587398485630, guid: b221cb3e87360db499b5a964da30892f,

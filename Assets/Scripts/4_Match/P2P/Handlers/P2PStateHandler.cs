@@ -5,18 +5,22 @@ public class P2PStateHandler : IP2PMessageHandler
     private GameObject opponentPlayer;
     private Animator anim;
     private int myPlayerNumber;
+    private GameManager gameManager;
 
-    public P2PStateHandler(GameObject opponentObj, int myNumber)
+    public P2PStateHandler(GameObject opponentObj, int myNumber, GameManager gm)
     {
         opponentPlayer = opponentObj;
         anim = opponentObj.GetComponentInChildren<Animator>();
         myPlayerNumber = myNumber;
+        gameManager = gm;
     }
 
     public bool CanHandle(string msg) => msg.StartsWith("[MOVE]");
 
     public void Handle(string msg)
     {
+        gameManager?.NotifyOpponentStateReceived();
+
         var state = JsonUtility.FromJson<PlayerState>(msg.Substring(6));
         if (state.player == myPlayerNumber) return;
         if (opponentPlayer == null) return;

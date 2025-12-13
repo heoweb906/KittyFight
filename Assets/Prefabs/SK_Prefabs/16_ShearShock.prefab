@@ -5010,6 +5010,7 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 1
   stunDuration: 2
   obj_Effect: {fileID: 7178487523375811240}
 --- !u!1 &5992684300175979207
