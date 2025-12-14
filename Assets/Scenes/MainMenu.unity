@@ -7650,6 +7650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
   slot: 1
+  bgImage: {fileID: 0}
   fillImage: {fileID: 181532601}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -8097,6 +8098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
   slot: 4
+  bgImage: {fileID: 0}
   fillImage: {fileID: 1883275457}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -8501,6 +8503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
   slot: 3
+  bgImage: {fileID: 0}
   fillImage: {fileID: 1650755029}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -11452,6 +11455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
   slot: 2
+  bgImage: {fileID: 0}
   fillImage: {fileID: 694909017}
   useChargeProgress: 1
   lerpSpeed: 0
@@ -11729,6 +11733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityRef: {fileID: 6589624400339541464}
   slot: 5
+  bgImage: {fileID: 0}
   fillImage: {fileID: 54593578}
   useChargeProgress: 1
   lerpSpeed: 0

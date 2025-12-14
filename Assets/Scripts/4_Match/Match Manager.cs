@@ -186,11 +186,13 @@ public class MatchManager : MonoBehaviour
             if (BoolMatchSucces) yield break;
 
             float elapsed = Time.time - matchStartTime;
-            AppendLog($"Match Searching \n{Mathf.FloorToInt(elapsed)}s");
+            AppendLog($"Match Searching \n{Mathf.FloorToInt(elapsed)} seconds");
 
             yield return new WaitForSeconds(1f);
         }
     }
+
+
 
 
     public async void OnCancelMatchButtonClicked()

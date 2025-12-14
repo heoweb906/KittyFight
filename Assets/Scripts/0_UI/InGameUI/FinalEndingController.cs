@@ -90,12 +90,16 @@ public class FinalEndingController : MonoBehaviour
 
         if (iamge_Left != null) image1Rect = iamge_Left.GetComponent<RectTransform>();
         if (iamge_Right != null) image2Rect = iamge_Right.GetComponent<RectTransform>();
+
+  
     }
 
 
 
     public void ShowFinalEnding(int _iWinnerPlayerNum)
     {
+        InGameUiController.bFinalEndingStart = true;
+
         FadePanelOnOff(true, () =>
         {
             obj_FinalPanel.SetActive(true);

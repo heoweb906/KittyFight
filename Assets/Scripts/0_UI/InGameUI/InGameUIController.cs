@@ -23,9 +23,12 @@ public class InGameUIController : MonoBehaviour
     public PassiveSlotUI passiveUI1_Player1; // 슬롯 0
     public PassiveSlotUI passiveUI2_Player1; // 슬롯 1
 
+        
+    public Image image_UpperArea;       // 기본 가림막 (위)
+    public Image image_LowerArea;       // 기본 가림막 (아래)
+    //    ingameUIController.CloseFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0f);   
+    //    ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);  
 
-    public Image image_UpperArea;
-    public Image image_LowerArea;
     public Image image_ReadyStart;
     public Sprite[] sprites_ReadyStart;
 
@@ -35,8 +38,8 @@ public class InGameUIController : MonoBehaviour
     public SkillCooldownHexUI skillUI_Player2;     // Player2 - Melee
     public SkillCooldownHexUI skillUI2_Player2;    // Player2 - Ranged
     public SkillCooldownHexUI skillUI3_Player2;    // Player2 - Dash
-    public SkillCooldownHexUI skillUI4_Player2;    // Player2 - Skill1
-    public SkillCooldownHexUI skillUI5_Player2;    // Player2 - Skill2
+    public SkillCooldownHexUI skillUI4_Player2;    // Player2 - Skill1 
+    public SkillCooldownHexUI skillUI5_Player2;    // Player2 - Skill2 
     public SkillEffectAnimation effectPlayer2;
     public PassiveSlotUI passiveUI1_Player2; // 슬롯 0
     public PassiveSlotUI passiveUI2_Player2; // 슬롯 1
@@ -54,6 +57,14 @@ public class InGameUIController : MonoBehaviour
 
     [Header("연출용")]
     public Image image_FadeOut_White;
+    public bool bFinalEndingStart;
+
+
+    [Header("설정창 관련")]
+    public GameObject obj_Gausian;
+    public GameObject obj_PlayerPanel;
+    public GameObject[] panelMenu;
+    private int iPanelNum;    // 패널 번호
 
     private void Awake()
     {
@@ -74,7 +85,64 @@ public class InGameUIController : MonoBehaviour
         scoreBoardUIController.Initialize(this, canvasMain.transform);
         mapBoardController.Initialize(this, canvasMain.transform);
         finalEndingController.Initialize(this, canvasMain.transform);
+
+        bFinalEndingStart = false;
+
+        obj_Gausian.SetActive(false);
+        iPanelNum = 0;
     }
+
+    private void Update()
+    {
+        if (!bFinalEndingStart)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (iPanelNum == 0 && !gameManager.gameEnded)
+                {
+                    ChangePanel(1);
+                }
+                else if (iPanelNum == 1)
+                {
+                    ChangePanel(0);
+                }
+                else if (iPanelNum >= 2)
+                {
+                    ChangePanel(1);
+                }
+            }
+        }
+    }
+
+    public void ChangePanel(int _iPanelIdx)
+    {
+        if (panelMenu == null) return;
+        iPanelNum = _iPanelIdx;
+
+        for (int i = 1; i < panelMenu.Length; i++)
+        {
+            if (panelMenu[i] == null) continue;
+            bool isActive = (iPanelNum > 0) && (i == iPanelNum);
+            panelMenu[i].SetActive(isActive);
+        }
+
+        if (obj_Gausian != null)
+        {
+            if (_iPanelIdx == 1)
+            {
+                // 1번: 켜기
+                obj_Gausian.SetActive(true);
+                obj_PlayerPanel.SetActive(false);
+            }
+            else if (_iPanelIdx == 0)
+            {
+                obj_Gausian.SetActive(false);
+                obj_PlayerPanel.SetActive(true);
+ 
+            }
+        }
+    }
+
 
 
     public void StartGameTimer(float duration)
@@ -238,8 +306,6 @@ public class InGameUIController : MonoBehaviour
         image_ReadyStart.sprite = sprites_ReadyStart[iIdx];
     }
 
-
-
     public void PlayStartPriteAnimation(RectTransform targetRect)
     {
         if (targetRect == null) return;
@@ -261,7 +327,6 @@ public class InGameUIController : MonoBehaviour
                 targetRect.localScale = originalScale;
             });
     }
-
 
     public void CloseFadePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
     {

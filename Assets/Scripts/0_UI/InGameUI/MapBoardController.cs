@@ -28,6 +28,8 @@ public class C_MapBoardElement
     }
 }
 
+
+
 public class MapBoardController : MonoBehaviour
 {
     public InGameUIController InGameUiController { get; set; }
@@ -35,6 +37,7 @@ public class MapBoardController : MonoBehaviour
     [Header("실제로 사용할 패널들")]
     public C_MapBoardElement mapBoardElement_Upper;
     public C_MapBoardElement mapBoardElement_Lower;
+    public TMP_Text text_MapGimic;
 
     [Header("각 동물별 mapBoard image")]
     public Sprite[] spritesUpper;
@@ -52,6 +55,7 @@ public class MapBoardController : MonoBehaviour
 
         mapBoardElement_Upper.StoreInitialPosition();
         mapBoardElement_Lower.StoreInitialPosition();
+        text_MapGimic.text = ""; 
 
         OpenMapBoardPanelVertical();
     }
@@ -120,18 +124,48 @@ public class MapBoardController : MonoBehaviour
 
     public void ChangeImage_MapBoard(int iindex = 0)
     {
+        // 1. 상단 이미지 교체
         if (spritesUpper != null && iindex >= 0 && iindex < spritesUpper.Length)
         {
             if (mapBoardElement_Upper.image_board != null)
                 mapBoardElement_Upper.image_board.sprite = spritesUpper[iindex];
         }
 
+        // 2. 하단 이미지 교체
         if (spritesLower != null && iindex >= 0 && iindex < spritesLower.Length)
         {
             if (mapBoardElement_Lower.image_board != null)
                 mapBoardElement_Lower.image_board.sprite = spritesLower[iindex];
         }
+
+        // 3. [추가됨] 맵 기믹 텍스트 교체
+        if (text_MapGimic != null)
+        {
+            if (iindex >= 0 && iindex < mapDescriptions.Length)
+            {
+                text_MapGimic.text = mapDescriptions[iindex];
+            }
+            else
+            {
+                text_MapGimic.text = ""; // 인덱스 범위를 벗어나면 빈 값 처리
+            }
+        }
     }
+    private readonly string[] mapDescriptions = new string[]
+    {
+        "All players' HP is halved.",           // 0
+        "Beware of the Earthquake!",            // 1
+        "Fight fair and square up close!",      // 2
+        "Let's jump even higher!",              // 3
+        "Beware of the Dragon's Rage!",         // 4
+        "Poison is going to hurt... a lot.",    // 5
+        "Hurry! Faster! Faster!",               // 6
+        "The walls and floors are now fluffy.", // 7
+        "Players swap positions!",              // 8
+        "Cloudy with a chance of Eggs!",        // 9
+        "Stronger! Hit harder!",                // 10
+        "Grab your emergency food!"             // 11
+    };
 
     public void ChangeDescriptionTest_MapBoard(string sDescription)
     {

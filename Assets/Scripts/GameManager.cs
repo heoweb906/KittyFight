@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening.Core.Easing;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
     private GameObject player1;
     private GameObject player2;
     private int myNum;
-    private bool gameEnded = true;
+    public bool gameEnded = true;
     private PlayerAbility myAbility;
 
     [Header("양측 플레이어 Ability 참조")]
@@ -122,12 +123,25 @@ public class GameManager : MonoBehaviour
 
     private void ReturnToTrainingByDisconnect()
     {
+        // 중복 호출 방지
         if (returningToMenu) return;
         returningToMenu = true;
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 
-        SceneManager.LoadScene(fallbackSceneName);
+        // 1. UI 패널 닫기 실행
+        // (Tip: 0f는 '즉시' 닫힙니다. 부드럽게 닫히길 원하면 0.5f 정도로 변경하세요)
+        ingameUIController.CloseFadePanel_Vertical(
+            ingameUIController.image_UpperArea.rectTransform,
+            ingameUIController.image_LowerArea.rectTransform,
+            0.5f // <- 0f 대신 0.5초 정도 애니메이션 시간을 주는 것을 추천합니다.
+        );
+
+        // 2. 2초 딜레이 후 씬 로드 (Lambda 식 활용)
+        DOVirtual.DelayedCall(2f, () =>
+        {
+            SceneManager.LoadScene(fallbackSceneName);
+        });
     }
 
     private void InitializeGame()

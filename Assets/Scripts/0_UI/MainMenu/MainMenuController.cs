@@ -41,7 +41,6 @@ public class MainMenuController : MonoBehaviour
     public GameObject[] successEffectObjs;
     public Button buttonCancel;
 
-
     public Image image_LoadingSpiner;
     private Tween currentSpinTween;
 
@@ -49,6 +48,7 @@ public class MainMenuController : MonoBehaviour
     [Header("SceneChnageAssist 관련")]
     public Image image_LeftBackGround;
     public Image image_RightBackGround;
+
 
     [Header("설정창 관련")]
     public GameObject obj_Gausian;
@@ -256,6 +256,8 @@ public class MainMenuController : MonoBehaviour
 
     public void OnNickNameInputPanel()
     {
+        if (bOtherPanel) return;
+
         bOtherPanel = true;
         ChangePanel(0);
 
@@ -406,6 +408,8 @@ public class MainMenuController : MonoBehaviour
 
     public void StartMatching()
     {
+        if (bOtherPanel) return;
+
         scriptPlayerCharacter.bCanControl = false;
         bOtherPanel = true;
         ChangePanel(0);
