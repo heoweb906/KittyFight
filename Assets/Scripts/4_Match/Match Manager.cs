@@ -40,6 +40,7 @@ public class MatchManager : MonoBehaviour
     public async void OnMatchButtonClicked()
     {
         if (isMatching) return;
+        MatchResultStore.Reset();
 
         matchStartTime = 0;
         isMatching = true;

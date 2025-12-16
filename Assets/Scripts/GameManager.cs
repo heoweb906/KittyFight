@@ -129,6 +129,8 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 
+        MatchResultStore.Reset();
+
         // 1. UI 패널 닫기 실행
         // (Tip: 0f는 '즉시' 닫힙니다. 부드럽게 닫히길 원하면 0.5f 정도로 변경하세요)
         ingameUIController.CloseFadePanel_Vertical(

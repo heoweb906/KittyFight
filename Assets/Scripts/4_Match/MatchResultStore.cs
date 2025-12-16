@@ -9,4 +9,30 @@ public static class MatchResultStore
     public static int opponentPort;
     public static int myPort;
     public static UdpClient udpClient;
+
+    public static void Reset()
+    {
+        try
+        {
+            if (udpClient != null)
+            {
+                udpClient.Close();
+                udpClient.Dispose();
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+            udpClient = null;
+        }
+
+        myPlayerNumber = 0;
+        myNickname = null;
+        opponentNickname = null;
+        opponentIp = null;
+        opponentPort = 0;
+        myPort = 0;
+    }
 }
