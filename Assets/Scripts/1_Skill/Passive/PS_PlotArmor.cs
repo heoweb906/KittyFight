@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_PlotArmor : Passive
 {
+    public override int PassiveId => 102;
+
     [Header("ÁãÅÐ °©¿Ê ¼³Á¤")]
     [Range(0f, 1f)]
     [Tooltip("ÇÇ°Ý ¹«½Ã È®·ü (0~1)")]
@@ -28,18 +30,40 @@ public class PS_PlotArmor : Passive
 
     private void OnBeforeTakeDamage(ref int dmg, GameObject attackerObj)
     {
+        if (!IsAuthority) return;
         if (dmg <= 0) return;
         if (Random.value < ignoreChance)
         {
             dmg = 0;
-            Instantiate(
-                effectPrefab,
-                transform.position,
-                Quaternion.Euler(-90f, 0f, 0f)
+
+            PlayFx(transform.position);
+            SendProc(
+                PassiveProcType.FxOnly,
+                pos: transform.position,
+                dir: Vector3.up,
+                i0: 0,
+                f0: 0f,
+                targetPlayer: 0
             );
+
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
         }
 
-        var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+    }
+    private void PlayFx(Vector3 pos)
+    {
+        if (!effectPrefab) return;
+
+        Instantiate(
+            effectPrefab,
+            pos,
+            Quaternion.Euler(-90f, 0f, 0f)
+        );
+    }
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        var pos = new Vector3(msg.px, msg.py, msg.pz);
+        PlayFx(pos);
     }
 }

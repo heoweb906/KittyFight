@@ -204,7 +204,8 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.RegisterHandler(new P2PStateHandler(opponentPlayer, myNum, this));
         P2PMessageDispatcher.RegisterHandler(new DamageHandler(opponentPlayer.GetComponent<PlayerHealth>(), myPlayer.GetComponent<PlayerHealth>(), myNum));
         P2PMessageDispatcher.RegisterHandler(new BackgroundColorHandler(this, mapManager)); 
-        P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum)); 
+        P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum));
+        P2PMessageDispatcher.RegisterHandler(new PassiveProcHandler(oppAbility, myNum));
 
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));

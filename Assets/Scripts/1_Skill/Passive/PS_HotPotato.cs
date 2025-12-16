@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_HotPotato : Passive
 {
+    public override int PassiveId => 112;
+
     [Header("투사체 프리팹")]
     public GameObject hotProjectilePrefab;
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_FuryBlast : Passive
 {
+    public override int PassiveId => 113;
+
     [Header("주기/자해")]
     public float interval = 8f;        // 10초마다
     public int selfDamage = 10;         // 본인은 1 데미지
@@ -21,6 +23,10 @@ public class PS_FuryBlast : Passive
     public float shakeAmount;
     public float shakeDuration;
 
+    // procType 구분용
+    private const int PROC_CHARGE = 1;
+    private const int PROC_BLAST = 2;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -33,31 +39,47 @@ public class PS_FuryBlast : Passive
         e.OnTick -= OnTick;
     }
 
-    void OnTick(float dt)
+    private void OnTick(float dt)
     {
-        if (!ability) return;
+        if (!IsAuthority) return;
+        if (ability == null) return;
 
         timer += dt;
-
         float chargeThreshold = Mathf.Max(0f, interval - chargeTime);
 
         if (!isCharging && timer >= chargeThreshold)
         {
-            SpawnChargeFx();
             isCharging = true;
+
+            SpawnChargeFx_Local();
+            SendProc(
+                PassiveProcType.FxOnly,
+                pos: ability.transform.position,
+                dir: Vector3.up,
+                i0: PROC_CHARGE
+            );
         }
 
         if (timer < interval) return;
+
         timer -= interval;
         isCharging = false;
 
-        TriggerBlast();
+        TriggerBlast_Local();
+        SendProc(
+            PassiveProcType.Spawn,
+            pos: ability.transform.position,
+            dir: Vector3.up,
+            i0: PROC_BLAST
+        );
     }
-    void SpawnChargeFx()
+
+    private void SpawnChargeFx_Local()
     {
         if (!explosionFxPrefab) return;
+
         var pos = ability.transform.position;
-        var fx = Object.Instantiate(
+        Object.Instantiate(
             explosionFxPrefab,
             pos,
             Quaternion.Euler(-90, 0, 0),
@@ -65,11 +87,10 @@ public class PS_FuryBlast : Passive
         );
     }
 
-    void TriggerBlast()
+    private void TriggerBlast_Local()
     {
         var pos = ability.transform.position;
 
-        // 히트박스(Trigger) 한 번 스폰 → 주변 적에게 2 데미지
         if (blastHitboxPrefab)
         {
             var go = Object.Instantiate(blastHitboxPrefab, pos, Quaternion.identity);
@@ -77,7 +98,15 @@ public class PS_FuryBlast : Passive
             if (hb != null) hb.Init(ability);
         }
 
-        // 자기 자신 1 데미지
+        if (explosionFxPrefab)
+        {
+            Object.Instantiate(
+                explosionFxPrefab,
+                pos,
+                Quaternion.Euler(-90, 0, 0)
+            );
+        }
+
         if (!selfDamageLocalOnly)
         {
             var myHp = ability.GetComponent<PlayerHealth>();
@@ -86,5 +115,43 @@ public class PS_FuryBlast : Passive
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+    }
+
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        if (ability == null) return;
+
+        var pos = new Vector3(msg.px, msg.py, msg.pz);
+
+        if (msg.i0 == PROC_CHARGE)
+        {
+            if (!explosionFxPrefab) return;
+            Object.Instantiate(
+                explosionFxPrefab,
+                pos,
+                Quaternion.Euler(-90, 0, 0),
+                transform
+            );
+            return;
+        }
+
+        if (msg.i0 == PROC_BLAST)
+        {
+            if (blastHitboxPrefab)
+            {
+                var go = Object.Instantiate(blastHitboxPrefab, pos, Quaternion.identity);
+                var hb = go.GetComponent<AB_HitboxBase>();
+                if (hb != null) hb.Init(ability);
+            }
+
+            if (explosionFxPrefab)
+            {
+                Object.Instantiate(
+                    explosionFxPrefab,
+                    pos,
+                    Quaternion.Euler(-90, 0, 0)
+                );
+            }
+        }
     }
 }

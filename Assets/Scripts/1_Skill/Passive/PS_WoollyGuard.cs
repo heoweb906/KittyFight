@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_WoollyGuard : Passive
 {
+    public override int PassiveId => 120;
+
     [Header("받는 피해 감소 설정")]
     [Tooltip("받는 피해 감소")]
     public int damageDivisor = 12;
@@ -25,16 +27,35 @@ public class PS_WoollyGuard : Passive
 
     private void OnBeforeTakeDamage(ref int dmg, GameObject attacker)
     {
+        if (!IsAuthority) return;
         if (dmg <= 0) return;
-        if (damageDivisor <= 0f) return;
+        if (damageDivisor <= 0) return;
+
+        dmg -= damageDivisor;
+        if (dmg < 0) dmg = 0;
+
+        PlayFx(transform.position);
+        SendProc(
+            PassiveProcType.FxOnly,
+            pos: transform.position,
+            dir: Vector3.up
+        );
+    }
+
+    private void PlayFx(Vector3 pos)
+    {
+        if (!effectPrefab) return;
 
         Instantiate(
             effectPrefab,
-            transform.position,
+            pos,
             Quaternion.identity,
             transform
         );
-
-        dmg -= damageDivisor;
+    }
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        var pos = new Vector3(msg.px, msg.py, msg.pz);
+        PlayFx(pos);
     }
 }

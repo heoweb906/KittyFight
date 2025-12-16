@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_FurFlick : Passive
 {
+    public override int PassiveId => 131;
+
     [Header("πﬂªÁ º≥¡§")]
     [Tooltip("±Í≈– ≈ıªÁ√º «¡∏Æ∆’")]
     public GameObject featherProjectilePrefab;
@@ -26,6 +28,9 @@ public class PS_FurFlick : Passive
     public float shakeAmount;
     public float shakeDuration;
 
+
+    private const int PROC_FIRE = 1;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -40,11 +45,13 @@ public class PS_FurFlick : Passive
 
     private void OnRoundStart(int roundIndex)
     {
+        if (!IsAuthority) return;
         timer = 0f;
     }
 
     private void OnTick(float dt)
     {
+        if (!IsAuthority) return;
         if (ability == null) return;
         if (featherProjectilePrefab == null) return;
         if (interval <= 0f) return;
@@ -53,7 +60,6 @@ public class PS_FurFlick : Passive
         if (timer < interval) return;
         timer -= interval;
 
-      
         var opponent = FindOpponentAbility();
         if (opponent == null) return;
 
@@ -63,12 +69,17 @@ public class PS_FurFlick : Passive
         Vector3 dir = targetPos - origin;
         dir.z = 0f;
 
-        if (dir.sqrMagnitude < 0.0001f)
-            return;
-
+        if (dir.sqrMagnitude < 0.0001f) return;
         dir.Normalize();
 
         FireOne(origin, dir);
+        SendProc(
+            PassiveProcType.Spawn,
+            pos: origin,
+            dir: dir,
+            i0: PROC_FIRE,
+            f0: 0f
+        );
     }
 
     private PlayerAbility FindOpponentAbility()
@@ -81,8 +92,7 @@ public class PS_FurFlick : Passive
         var pa1 = gm.playerAbility_1;
         var pa2 = gm.playerAbility_2;
 
-        if (pa1 == null || pa2 == null)
-            return null;
+        if (pa1 == null || pa2 == null) return null;
 
         if (ability == pa1) return pa2;
         if (ability == pa2) return pa1;
@@ -102,22 +112,16 @@ public class PS_FurFlick : Passive
 
         var ab = proj.GetComponent<AB_HitboxBase>();
         if (ab != null)
-        {
             ab.Init(ability);
-        }
-
 
         if (objEffect_Use != null)
         {
             GameObject effect = Instantiate(objEffect_Use, transform);
             effect.transform.localPosition = Vector3.zero;
-
             effect.transform.rotation = Quaternion.Euler(-90, 0, 0);
-
             effect.transform.localScale = new Vector3(2f, 2f, 2f);
             effect.transform.SetParent(null);
         }
-
 
         var rb = proj.GetComponent<Rigidbody>();
         if (rb != null)
@@ -128,8 +132,22 @@ public class PS_FurFlick : Passive
             rb.velocity = dir * projectileSpeed;
         }
 
-
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+    }
+
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        if (ability == null) return;
+        if (featherProjectilePrefab == null) return;
+        if (msg.i0 != PROC_FIRE) return;
+
+        Vector3 origin = new Vector3(msg.px, msg.py, msg.pz);
+        Vector3 dir = new Vector3(msg.dx, msg.dy, msg.dz);
+
+        if (dir.sqrMagnitude < 0.0001f) return;
+        dir.Normalize();
+
+        FireOne(origin, dir);
     }
 }

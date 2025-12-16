@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_Unbridled : Passive
 {
+    public override int PassiveId => 118;
+
     [Header("이속 증가 설정")]
     [Tooltip("최대 이속 증가 비율 (1.0 = +100% = 2배 이속)")]
     [Range(0f, 2f)]

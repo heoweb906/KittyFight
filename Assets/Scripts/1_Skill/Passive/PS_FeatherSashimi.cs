@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_FeatherSashimi : Passive
 {
+    public override int PassiveId => 130;
+
     [Header("Feather Sashimi º≥¡§")]
     [Tooltip("±Í≈– ±Ÿ¡¢ ∞¯∞› ¿Ã∆Â∆Æ «¡∏Æ∆’ (øπ: Slash VFX)")]
     public GameObject featherEffectPrefab;

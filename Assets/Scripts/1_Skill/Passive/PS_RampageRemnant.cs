@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PS_RampageRemnant : Passive
 {
+    public override int PassiveId => 105;
+
     [Header("Æø¹ß ÇÁ¸®ÆÕ")]
     public GameObject explosionPrefab;
 

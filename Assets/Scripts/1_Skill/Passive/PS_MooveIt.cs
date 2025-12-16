@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_MooveIt : Passive
 {
+    public override int PassiveId => 104;
+
     [Header("쿨타임 감소 설정")]
     [Tooltip("대쉬 쿨타임 감소 비율 (0.4 = 40% 감소)")]
     [Range(0f, 1f)]

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_HorsePower : Passive
 {
+    public override int PassiveId => 119;
+
     [Header("이동 속도 버프 설정")]
     [Tooltip("버프 지속 시간 (초)")]
     public float buffDuration = 3f;

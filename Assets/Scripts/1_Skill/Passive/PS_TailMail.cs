@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_TaiMail : Passive
 {
+    public override int PassiveId => 114;
+
     [Header("Tai Mail Settings")]
     [Tooltip("원거리 공격 쿨타임 감소량 (초 단위)")]
     public float cooldownReduction = 1.0f;
