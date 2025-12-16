@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class PS_SheepSneeze : Passive
 {
+    public override int PassiveId => 122;
+
     [Header("발사 설정")]
     [Tooltip("털뭉치로 사용할 프리팹(AB_SheepSneeze가 붙어 있는 오브젝트)")]
     public GameObject objSheepSneeze;
@@ -28,6 +30,8 @@ public class PS_SheepSneeze : Passive
     public float shakeAmount;
     public float shakeDuration;
 
+    private const int PROC_FIRE = 1;
+
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
@@ -42,11 +46,13 @@ public class PS_SheepSneeze : Passive
 
     private void OnRoundStart(int roundIndex)
     {
+        if (!IsAuthority) return;
         _timer = 0f;
     }
 
     private void OnTick(float dt)
     {
+        if (!IsAuthority) return;
         if (ability == null) return;
         if (objSheepSneeze == null) return;
 
@@ -54,17 +60,29 @@ public class PS_SheepSneeze : Passive
         if (_timer >= interval)
         {
             _timer -= interval;
+
             SpawnHairballs();
+
+            SendProc(
+                PassiveProcType.Spawn,
+                pos: ability.transform.position,
+                dir: Vector3.up,
+                i0: PROC_FIRE,
+                f0: 0f
+            );
         }
     }
 
     private void SpawnHairballs()
     {
-        Instantiate(
-            useEffectPrefab,
-            transform.position,
-            Quaternion.Euler(-90f, 0f, 0f)
-        );
+        if (useEffectPrefab != null)
+        {
+            Instantiate(
+                useEffectPrefab,
+                transform.position,
+                Quaternion.Euler(-90f, 0f, 0f)
+            );
+        }
 
         Transform t = ability.transform;
         Vector3 origin = t.position + Vector3.up * verticalOffset;
@@ -74,7 +92,6 @@ public class PS_SheepSneeze : Passive
 
         SpawnOne(origin, dirLeft);
         SpawnOne(origin, dirRight);
-
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
@@ -98,5 +115,15 @@ public class PS_SheepSneeze : Passive
         var gm = FindObjectOfType<GameManager>();
         if (gm != null)
             gm.RegisterRoundObject(go);
+    }
+
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        if (ability == null) return;
+        if (objSheepSneeze == null) return;
+
+        if (msg.i0 != PROC_FIRE) return;
+
+        SpawnHairballs();
     }
 }

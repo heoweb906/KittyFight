@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_RazorTalons : Passive
 {
+    public override int PassiveId => 106;
+
     [Header("범위 증가 설정")]
     [Tooltip("근접 범위 증가율 (0.4 = 40% 증가)")]
     [Range(0f, 2f)]

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_Kickstart : Passive
 {
+    public override int PassiveId => 109;
+
     [Header("Kickstart Settings")]
     public float penaltyPerUse = 5.0f;   // 스킬 사용 시 +5초
     public float reducePerJump = 0.6f;   // 점프할 때마다 -0.6초(진행 중 쿨타임에 즉시 적용)
@@ -33,15 +35,43 @@ public class PS_Kickstart : Passive
 
     void OnJump()
     {
-        // 진행 중인 모든 쿨타임을 즉시 0.6초 감소
-        ability?.ReduceAllCooldowns(Mathf.Max(0f, reducePerJump));
-        Instantiate(
-            effectPrefab,
-            transform.position,
-            Quaternion.identity
+        if (!IsAuthority) return;
+        if (ability == null) return;
+
+        float reduce = Mathf.Max(0f, reducePerJump);
+
+        ability.ReduceAllCooldowns(reduce);
+
+        PlayFx(transform.position);
+        SendProc(
+            PassiveProcType.Value,
+            pos: transform.position,
+            dir: Vector3.up,
+            i0: 1,
+            f0: reduce
         );
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+    }
+
+    void PlayFx(Vector3 pos)
+    {
+        if (!effectPrefab) return;
+        Instantiate(effectPrefab, pos, Quaternion.identity);
+    }
+
+    public override void RemoteExecute(PassiveProcMessage msg)
+    {
+        if (ability == null) return;
+
+        if (msg.i0 == 1)
+        {
+            float reduce = Mathf.Max(0f, msg.f0);
+            ability.ReduceAllCooldowns(reduce);
+
+            var pos = new Vector3(msg.px, msg.py, msg.pz);
+            PlayFx(pos);
+        }
     }
 }

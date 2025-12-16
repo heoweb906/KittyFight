@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_Banana : Passive
 {
+    public override int PassiveId => 125;
+
     [Header("바나나 투사체 프리팹")]
     [Tooltip("AB_Banana가 붙어 있는 바나나 투사체 프리팹")]
     public GameObject bananaProjectilePrefab;

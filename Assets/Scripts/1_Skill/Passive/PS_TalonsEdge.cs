@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_TalonsEdge : Passive
 {
+    public override int PassiveId => 108;
+
     [Header("Talons' Edge")]
     public int basePoints = 5;    // 라운드 시작마다 이 값으로
     public int addPerUse = 2;     // 근접 "사용"할 때마다 +0.2

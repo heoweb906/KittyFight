@@ -318,4 +318,51 @@ public class PlayerAbility : MonoBehaviour
             OnCooldownChanged?.Invoke(slot); // UI 갱신 등
         }
     }
+
+    // 원격 패시브용
+    public Passive GetPassiveById(int passiveId)
+    {
+        if (passives == null) return null;
+
+        for (int i = 0; i < passives.Count; i++)
+        {
+            var p = passives[i];
+            if (!p) continue;
+            if (p.PassiveId == passiveId) return p;
+        }
+        return null;
+    }
+
+    public void RemoteExecutePassive(PassiveProcMessage msg)
+    {
+        if (msg == null) return;
+
+        var p = GetPassiveById(msg.passiveId);
+        if (p == null) return;
+
+        p.RemoteExecute(msg);
+    }
+
+    // ChronoChaos 용
+    public void ApplyCooldownDelta(SkillType slot, float deltaSeconds)
+    {
+        if (Mathf.Abs(deltaSeconds) < 1e-6f) return;
+
+        var st = cooldowns[slot];
+        if (!st.active) return;
+
+        float now = Time.time;
+        float remaining = Mathf.Max(0f, st.endTime - now);
+
+        float newRemaining = Mathf.Max(0f, remaining + deltaSeconds);
+
+        float newDuration = Mathf.Max(0f, st.duration + deltaSeconds);
+
+        st.duration = newDuration;
+        st.endTime = now + newRemaining;
+        st.active = newRemaining > 0f;
+
+        cooldowns[slot] = st;
+        OnCooldownChanged?.Invoke(slot);
+    }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_IQ20000 : Passive
 {
+    public override int PassiveId => 123;
+
     [Header("Cooldown")]
     [Tooltip("모든 스킬 쿨타임에서 뺄 초 단위 수치")]
     public float reduceBySeconds = 2f;

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_Frenzy : Passive
 {
+    public override int PassiveId => 132;
+
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 

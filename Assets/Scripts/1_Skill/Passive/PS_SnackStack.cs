@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_SnackStack : Passive
 {
+    public override int PassiveId => 137;
+
     [Header("Snack & Stack")]
     public int initialMaxHP = 50;   // 장착 즉시 5
     public int growPerRound = 20;    // 라운드 시작마다 +2

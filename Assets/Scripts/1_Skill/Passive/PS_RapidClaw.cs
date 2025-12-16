@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_RapidClaw : Passive
 {
+    public override int PassiveId => 135;
+
     [Header("근접 쿨타임 감소량")]
     [Tooltip("근접 스킬(Melee)의 쿨타임에서 줄일 시간(초)")]
     public float reduceSeconds = 1f;

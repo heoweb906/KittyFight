@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PS_VenomTrail : Passive
 {
+    public override int PassiveId => 116;
+
     [Header("독구름 프리팹 (AB_VenomTrail)")]
     public GameObject venomCloudPrefab;
 

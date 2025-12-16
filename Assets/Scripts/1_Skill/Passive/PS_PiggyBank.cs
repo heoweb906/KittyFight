@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_PiggyBank : Passive
 {
+    public override int PassiveId => 138;
+
     [Header("회복량 설정")]
     [Tooltip("스킬 사용 시 회복할 HP 양")]
     public int healAmount = 10;

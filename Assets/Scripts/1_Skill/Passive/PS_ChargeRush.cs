@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PS_ChargeRush : Passive
 {
+    public override int PassiveId => 103;
+
     [Header("Charge Settings")]
     [Tooltip("최대 충전 시간(초)")]
     public float maxChargeSeconds = 10f;   // 0~10

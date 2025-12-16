@@ -1,6 +1,8 @@
 using UnityEngine;
 public class PS_CleverSabotage : Passive
 {
+    public override int PassiveId => 124;
+
     [Header("쿨타임 증가 설정")]
     [Tooltip("패시브 1개당 상대 스킬 쿨타임에 더해질 시간(초)")]
     public float extraCooldownPerStack = 1.5f;
