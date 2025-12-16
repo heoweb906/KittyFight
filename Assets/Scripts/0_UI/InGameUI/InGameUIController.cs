@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 public class InGameUIController : MonoBehaviour
 {
@@ -148,6 +149,8 @@ public class InGameUIController : MonoBehaviour
     public void StartGameTimer(float duration)
     {
         gameTimer?.SetDuration(duration);
+
+        
     }
 
     public void TickGameTimer()
