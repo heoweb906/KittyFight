@@ -56,3 +56,4 @@ MonoBehaviour:
   damagePerMeter: 10
   shakeStrength: 0.4
   shakeDuration: 0.7
+  attackAnimDuration: 0.5

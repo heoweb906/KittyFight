@@ -60,3 +60,4 @@ MonoBehaviour:
   shakeDuration: 0.6
   objEffect: {fileID: 3805102588378627191, guid: 0be72613dbf9a194b8285e91f97355eb,
     type: 3}
+  attackAnimDuration: 0.5

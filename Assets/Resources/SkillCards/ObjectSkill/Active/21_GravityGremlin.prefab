@@ -58,3 +58,4 @@ MonoBehaviour:
   shakeDuration: 0.35
   shakeAmount: 0.3
   shakeDuration_camera: 0.6
+  attackAnimDuration: 0.5
