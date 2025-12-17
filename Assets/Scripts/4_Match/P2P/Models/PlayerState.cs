@@ -15,4 +15,5 @@ public class PlayerState
     public bool isHanging;
     public float speedY;
     public bool isShock;
+    public bool isHangRight;
 }

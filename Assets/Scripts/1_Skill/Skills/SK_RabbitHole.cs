@@ -16,6 +16,14 @@ public class SK_RabbitHole : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public bool CanTeleportPosition(Vector3 currentPos, Vector3 targetPos)
     {
         if ((targetPos - currentPos).sqrMagnitude < 0.01f)
@@ -52,7 +60,6 @@ public class SK_RabbitHole : Skill
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
 
-
         StartCoroutine(Co_CastAndTeleport(owner, targetPos));
     }
 
@@ -66,6 +73,10 @@ public class SK_RabbitHole : Skill
         var movement = owner.GetComponent<PlayerMovement>();
 
         movement?.AttachToPlatform(null);
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
 
         if (rb != null)
             rb.velocity = Vector3.zero;
@@ -84,6 +95,8 @@ public class SK_RabbitHole : Skill
             isCasting = false;
             yield break;
         }
+
+        anim.SetBool("isAttack", false);
 
         Vector3 currentPos = owner.transform.position;
         if (!CanTeleportPosition(currentPos, targetPos))

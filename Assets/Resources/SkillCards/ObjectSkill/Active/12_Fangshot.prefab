@@ -53,3 +53,4 @@ MonoBehaviour:
   projectileSpeed: 18
   shakeAmount: 0.3
   shakeDuration: 0.6
+  attackAnimDuration: 0.5

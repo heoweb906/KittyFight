@@ -22,10 +22,12 @@ public class SK_BullRush : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    private Animator anim;
 
     private void Awake()
     {
         coolTime = 4.0f;
+        anim = playerAbility.GetComponentInChildren<Animator>();
         if (obstacleMask == 0) obstacleMask = LayerMask.GetMask("Default", "Ground");
     }
 
@@ -38,6 +40,9 @@ public class SK_BullRush : Skill
         var spawnPos = playerAbility.transform.position;
         var rot = Quaternion.LookRotation(direction, Vector3.up);
         var hb = Instantiate(objSkillEntity, spawnPos, rot);
+
+        anim.SetBool("isDash", true);
+        anim.SetTrigger("Dash");
 
         Instantiate(
             effectPrefab,
@@ -113,5 +118,6 @@ public class SK_BullRush : Skill
 
         if (disableGravityDuringDash) rb.useGravity = origUseGravity;
         rb.velocity = Vector3.zero;
+        anim.SetBool("isDash", false);
     }
 }

@@ -56,3 +56,4 @@ MonoBehaviour:
   shakeDuration: 1.5
   effectPrefab: {fileID: 8162153870496393649, guid: 5a05026fc028a7c40be4001b20a0e18d,
     type: 3}
+  attackAnimDuration: 0.5

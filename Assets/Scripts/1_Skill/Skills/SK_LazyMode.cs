@@ -13,6 +13,14 @@ public class SK_LazyMode : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;
@@ -65,6 +73,10 @@ public class SK_LazyMode : Skill
 
         if (controller) controller.enabled = false;
         if (movement) movement.enabled = false;
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 5);
+
         yield return new WaitForSeconds(lazyDuration);
 
         if (controller) controller.enabled = true;
@@ -75,6 +87,10 @@ public class SK_LazyMode : Skill
             Object.Destroy(barrierInstance);
         }
 
+        anim.SetTrigger("Attack");
+        anim.SetInteger("AttackType", 6);
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
         isRunning = false;
     }
 }

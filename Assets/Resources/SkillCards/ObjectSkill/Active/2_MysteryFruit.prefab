@@ -55,3 +55,4 @@ MonoBehaviour:
     type: 3}
   shakeAmount: 0.2
   shakeDeration: 0.5
+  attackAnimDuration: 0.5

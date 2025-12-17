@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_SavageRoar : Skill
 {
@@ -6,9 +7,21 @@ public class SK_SavageRoar : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 3);
+        StartCoroutine(ResetAttackAnimState());
 
         var rot = Quaternion.LookRotation(direction, Vector3.up);
         var go = Instantiate(objSkillEntity, origin, rot);
@@ -26,5 +39,10 @@ public class SK_SavageRoar : Skill
             var gm = FindObjectOfType<GameManager>();
             gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
         }
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_RangedAttack : Skill
 {
@@ -8,6 +9,20 @@ public class SK_RangedAttack : Skill
     [Header("카메라")]
     public float shakeAmount;
     public float shakeDuration;
+
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
+    public override void Bind(PlayerAbility ability)
+    {
+        base.Bind(ability);
+        anim = ability.GetComponentInChildren<Animator>();
+    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -33,7 +48,12 @@ public class SK_RangedAttack : Skill
             AB_Ranged range = proj.GetComponent<AB_Ranged>();
             range.ChangeMaterial();
         }
-        
+
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 2);
+        StartCoroutine(ResetAttackAnimState());
 
         ApplyPerPlayerMaterial(proj);
 
@@ -76,5 +96,11 @@ public class SK_RangedAttack : Skill
             // 새 머테리얼 적용
             r.material = newMat;
         }
+    }
+
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

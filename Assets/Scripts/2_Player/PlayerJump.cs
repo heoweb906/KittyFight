@@ -46,6 +46,12 @@ public class PlayerJump : MonoBehaviour
         anim.SetBool("isHanging", isTouchingWall);
         anim.SetFloat("speedY", rb.velocity.y);
 
+        if (isTouchingWall)
+        {
+            bool isHangRight = transform.forward.x < 0f;
+            anim.SetBool("isHangRight", isHangRight);
+        }
+
         IsWalking = isGrounded && Mathf.Abs(rb.velocity.x) > walkSpeedThreshold;
 
         if (walkLoopFx)

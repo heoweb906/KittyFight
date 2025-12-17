@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_MysteryFruit : Skill
 {
@@ -12,8 +13,21 @@ public class SK_MysteryFruit : Skill
     public float shakeAmount;
     public float shakeDeration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 3);
+        StartCoroutine(ResetAttackAnimState());
+
         Instantiate(
             effectPrefab,
             playerAbility.gameObject.transform.position,
@@ -45,5 +59,11 @@ public class SK_MysteryFruit : Skill
             var gm = FindObjectOfType<GameManager>();
             gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
         }
+    }
+
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

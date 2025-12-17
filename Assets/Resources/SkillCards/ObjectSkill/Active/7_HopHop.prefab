@@ -53,3 +53,4 @@ MonoBehaviour:
   jumpMultiplier: 2
   shakeAmount: 0.3
   shakeDuration: 0.7
+  attackAnimDuration: 0.5

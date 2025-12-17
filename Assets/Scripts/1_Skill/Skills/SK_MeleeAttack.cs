@@ -61,6 +61,7 @@ public class SK_MeleeAttack : Skill
 
         anim.SetTrigger("Attack");
         anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 1);
         StartCoroutine(ResetAttackAnimState());
 
         // ÈÆ·ÃÀå¿ë

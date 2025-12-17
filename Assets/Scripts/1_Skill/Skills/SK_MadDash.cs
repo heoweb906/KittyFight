@@ -24,6 +24,13 @@ public class SK_MadDash : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;
@@ -131,6 +138,8 @@ public class SK_MadDash : Skill
                 owner.transform.position = newPos;
             }
 
+            anim.SetBool("isAttack", true);
+
             // 근접공격
             if (meleeTimer >= meleeInterval)
             {
@@ -153,6 +162,7 @@ public class SK_MadDash : Skill
         if (controller) controller.enabled = true;
         if (movement) movement.enabled = true;
 
+        anim.SetBool("isAttack", false);
 
         isRunning = false;
     }
@@ -175,6 +185,9 @@ public class SK_MadDash : Skill
             var protoHB = meleeHitboxPrefab1.GetComponent<AB_MeleeHitbox>();
             if (protoHB != null) damage = protoHB.damage;
             hitbox = Object.Instantiate(meleeHitboxPrefab1, spawnPos, rot);
+
+            anim.SetTrigger("Attack");
+            anim.SetInteger("AttackType", 1);
             effectIndex = 1;
         }
         else
@@ -182,6 +195,9 @@ public class SK_MadDash : Skill
             var protoHB = meleeHitboxPrefab1.GetComponent<AB_MeleeHitbox>();
             if (protoHB != null) damage = protoHB.damage;
             hitbox = Object.Instantiate(meleeHitboxPrefab2, spawnPos, rot);
+
+            anim.SetTrigger("Attack");
+            anim.SetInteger("AttackType", 2);
             effectIndex = 0;
         }
 

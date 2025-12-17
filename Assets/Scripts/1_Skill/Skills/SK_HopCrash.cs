@@ -7,6 +7,7 @@ public class SK_HopCrash : Skill
     {
         coolTime = 9.0f;
         aimRange = 0.1f;
+        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     [Header("낙하 제어")]
@@ -20,6 +21,9 @@ public class SK_HopCrash : Skill
     [Header("카메라 연출")]
     [SerializeField] private float shakeStrength = 0.12f;
     [SerializeField] private float shakeDuration = 0.25f;
+
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -74,6 +78,11 @@ public class SK_HopCrash : Skill
         Quaternion rot = Quaternion.identity;
         GameObject hitbox = Instantiate(objSkillEntity, playerAbility.gameObject.transform.position, rot);
 
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
+        StartCoroutine(ResetAttackAnimState());
+
         var abBase = hitbox.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);
 
@@ -88,5 +97,11 @@ public class SK_HopCrash : Skill
         //{
           
         //}
+    }
+
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }
