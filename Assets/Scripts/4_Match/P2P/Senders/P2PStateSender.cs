@@ -23,7 +23,7 @@ public class P2PStateSender : P2PManager
         var pj = myPlayer.GetComponent<PlayerJump>();
         if (pj != null) walking = pj.IsWalking;
 
-        bool isGround = false, isRun = false, isHanging = false, isShock = false;
+        bool isGround = false, isRun = false, isHanging = false, isShock = false, isHangRight = false;
         float speedY = 0f;
 
         if (anim != null)
@@ -34,6 +34,7 @@ public class P2PStateSender : P2PManager
             isHanging = anim.GetBool("isHanging");
             speedY = anim.GetFloat("speedY");
             isShock = anim.GetBool("isShock");
+            isHangRight = anim.GetBool("isHangRight");
         }
 
         var msg = PlayerStateMessageBuilder.Build(
@@ -46,7 +47,8 @@ public class P2PStateSender : P2PManager
             isRun,
             isHanging,
             speedY,
-            isShock
+            isShock,
+            isHangRight
         );
 
         P2PMessageSender.SendMessage(msg);
