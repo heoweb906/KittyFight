@@ -25,6 +25,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (InGameUIController.Instance.iPanelNum != 0)
+        {
+            moveInput = Vector2.zero; 
+            return;
+        }
+
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
         jumpInput = Input.GetKeyDown(KeyCode.Space);
         meleeInput = Input.GetMouseButtonDown(0);

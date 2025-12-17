@@ -133,9 +133,21 @@ public class MapManager : MonoBehaviour
     public void ChangeBackground(int bgIndex)
     {
         if (bgIndex < 0 || bgIndex >= backgroundSprites.Length) return;
+
         if (backgroundSpriteRenderer != null)
         {
             backgroundSpriteRenderer.sprite = backgroundSprites[bgIndex];
+
+            // 8, 9, 10번 인덱스일 때 스케일 조절
+            if (bgIndex >= 8 && bgIndex <= 10)
+            {
+                backgroundSpriteRenderer.transform.localScale = Vector3.one * 0.9f;
+            }
+            else
+            {
+                // 다른 배경으로 바뀔 때 원래 크기로 복구 (필수)
+                backgroundSpriteRenderer.transform.localScale = Vector3.one;
+            }
         }
     }
 

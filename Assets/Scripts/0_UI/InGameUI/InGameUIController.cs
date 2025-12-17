@@ -25,10 +25,10 @@ public class InGameUIController : MonoBehaviour
     public PassiveSlotUI passiveUI2_Player1; // 슬롯 1
 
         
-    public Image image_UpperArea;       // 기본 가림막 (위)
-    public Image image_LowerArea;       // 기본 가림막 (아래)
-    //    ingameUIController.CloseFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0f);   
-    //    ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);  
+    public Image image_UpperArea;       // 기본 가림막 (위)   
+    public Image image_LowerArea;       // 기본 가림막 (아래) 
+    // ingameUIController.CloseFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0f);   
+    // ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);  
 
     public Image image_ReadyStart;
     public Sprite[] sprites_ReadyStart;
@@ -65,7 +65,7 @@ public class InGameUIController : MonoBehaviour
     public GameObject obj_Gausian;
     public GameObject obj_PlayerPanel;
     public GameObject[] panelMenu;
-    private int iPanelNum;    // 패널 번호
+    public int iPanelNum;    // 패널 번호
 
     private void Awake()
     {
@@ -75,7 +75,7 @@ public class InGameUIController : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
 
         //canvasMain = FindObjectOfType<Canvas>();
         //if (canvasMain == null) return;

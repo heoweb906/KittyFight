@@ -83,10 +83,6 @@ public class PlayerJump : MonoBehaviour
             UpdateManager.EnqueueEventOnce("Jump");
 
 
-            var cm = FindObjectOfType<CameraManager>();
-            cm?.ShakeCameraPunch(0.02f, 0.7f, Vector3.up);
-
-
             if (jumpResetRoutine != null)
             {
                 StopCoroutine(jumpResetRoutine);

@@ -45,9 +45,7 @@ public class MapBoardController : MonoBehaviour
 
     // 고정 이동 거리
     private const float UPPER_TARGET_Y = -361f;
-    private const float LOWER_TARGET_Y = 360f;
-
-
+    private const float LOWER_TARGET_Y = 370f;
 
     public void Initialize(InGameUIController temp, Transform parent)
     {

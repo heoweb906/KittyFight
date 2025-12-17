@@ -90,10 +90,10 @@ public class FinalEndingController : MonoBehaviour
 
         if (iamge_Left != null) image1Rect = iamge_Left.GetComponent<RectTransform>();
         if (iamge_Right != null) image2Rect = iamge_Right.GetComponent<RectTransform>();
-
-  
     }
 
+
+   
 
 
     public void ShowFinalEnding(int _iWinnerPlayerNum)
@@ -211,10 +211,8 @@ public class FinalEndingController : MonoBehaviour
         {
             // 커튼을 닫습니다 (true). 
             // 만약 커튼을 여는 걸 원하셨다면 false로 바꾸세요.
-            FadePanelOnOff(true, () =>
+            FadePanelOnOff_2(true, () =>
             {
-                // 커튼이 다 닫히고 나면 실행되는 콜백
-
                 // 또 2초 대기 후 다음 로직 실행
                 DOVirtual.DelayedCall(2.0f, () =>
                 {
@@ -222,13 +220,9 @@ public class FinalEndingController : MonoBehaviour
                     // 예: 씬 이동, 게임 재시작, 로비로 이동 등
                     Debug.Log("모든 엔딩 종료. 2초 뒤 다음 로직 실행!");
 
-                    // 책갈피 
-                    // 책갈피 
-                    // 책갈피 
-                    // 책갈피 
-                    // 책갈피 
+                    InGameUIController.Instance.gameManager.ReturnToTrainingByDisconnect();
 
-                    // 메인메뉴 씬으로 넘어가야 함
+
                 });
             });
         });
@@ -257,6 +251,29 @@ public class FinalEndingController : MonoBehaviour
 
             if (image2Rect != null && startPoint2 != null)
                 image2Rect.DOAnchorPos(startPoint2.anchoredPosition, 0.75f).SetEase(Ease.OutQuint)
+                    .OnComplete(() => onComplete?.Invoke()); // <-- 여기가 핵심, 이거 없으면 다음 동작 안 함
+        }
+    }
+
+    public void FadePanelOnOff_2(bool _bbb, System.Action onComplete = null)
+    {
+        if (_bbb)
+        {
+            if (image1Rect != null && targetPoint != null)
+            {
+                image1Rect.DOAnchorPos(targetPoint.anchoredPosition, 1.2f).SetEase(Ease.InQuint);
+                image2Rect.DOAnchorPos(targetPoint.anchoredPosition, 1.2f).SetEase(Ease.InQuint)
+                    .OnComplete(() => onComplete?.Invoke());
+            }
+        }
+        else
+        {
+            // [수정됨] 커튼 열기 로직에도 OnComplete 추가
+            if (image1Rect != null && startPoint1 != null)
+                image1Rect.DOAnchorPos(startPoint1.anchoredPosition, 1.2f).SetEase(Ease.OutQuint);
+
+            if (image2Rect != null && startPoint2 != null)
+                image2Rect.DOAnchorPos(startPoint2.anchoredPosition, 1.2f).SetEase(Ease.OutQuint)
                     .OnComplete(() => onComplete?.Invoke()); // <-- 여기가 핵심, 이거 없으면 다음 동작 안 함
         }
     }

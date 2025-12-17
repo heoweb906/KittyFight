@@ -28,10 +28,6 @@ public class GameManager : MonoBehaviour
     public CameraManager cameraManager;
 
 
-    [Header("배경")]
-    public GameObject backgroundPlane;
-
-
     [Header("기본 스킬 프리팹 (Skill 컴포넌트 포함)")]
     public GameObject meleeSkillPrefab;
     public GameObject rangedSkillPrefab;
@@ -121,7 +117,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ReturnToTrainingByDisconnect()
+    public void ReturnToTrainingByDisconnect()
     {
         // 중복 호출 방지
         if (returningToMenu) return;
