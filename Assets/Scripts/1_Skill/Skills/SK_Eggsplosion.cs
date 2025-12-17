@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,22 @@ public class SK_Eggsplosion : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity) return;
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 2);
+        StartCoroutine(ResetAttackAnimState());
 
         Vector3 dirC = direction.normalized;
         Vector3 dirL = Quaternion.AngleAxis(+spreadAngleDeg, Vector3.forward) * dirC;
@@ -57,5 +71,10 @@ public class SK_Eggsplosion : Skill
             rb.velocity = dir * projectileSpeed;
         }
         return proj.GetComponent<Collider>();
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

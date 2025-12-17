@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_HopHop : Skill
 {
@@ -14,10 +15,15 @@ public class SK_HopHop : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
     private void Awake()
     {
         if (playerAbility != null)
             CacheComponents(playerAbility);
+
+        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     private void CacheComponents(PlayerAbility a)
@@ -36,6 +42,11 @@ public class SK_HopHop : Skill
 
         if (ability == null || rb == null) return;
 
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
+        StartCoroutine(ResetAttackAnimState());
+
         Vector3 hitboxPos = origin + Vector3.down * 0.4f;
         Quaternion hitboxRot = Quaternion.identity;
         var hitbox = Instantiate(objSkillEntity, hitboxPos, hitboxRot);
@@ -49,5 +60,10 @@ public class SK_HopHop : Skill
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
 
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

@@ -16,13 +16,21 @@ public class SK_MoossiveQuake : Skill
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
     private void Awake()
     {
         coolTime = 10.5f;
+        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 5);
+
         if (objSkillEntity == null) return;
         Instantiate(
             effectPrefab,
@@ -46,6 +54,15 @@ public class SK_MoossiveQuake : Skill
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
-    }
 
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 6);
+        StartCoroutine(ResetAttackAnimState());
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
+    }
 }

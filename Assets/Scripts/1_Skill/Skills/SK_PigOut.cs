@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class SK_PigOut : Skill
 {
     [Header("HP È¸º¹")]
@@ -18,9 +18,22 @@ public class SK_PigOut : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
+        StartCoroutine(ResetAttackAnimState());
 
         Instantiate(
             effectPrefab,
@@ -58,5 +71,10 @@ public class SK_PigOut : Skill
         if (!slow) slow = target.AddComponent<SlowStatus>();
 
         slow.ApplySlowPercent(slowPercent, slowDuration);
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

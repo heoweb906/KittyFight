@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class SK_MastersTouch : Skill
 {
     [SerializeField] private GameObject effectPrefab;
@@ -8,14 +8,24 @@ public class SK_MastersTouch : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
     private void Awake()
     {
         coolTime = 8f;
+        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 6);
+        StartCoroutine(ResetAttackAnimState());
+
 
         Instantiate(
             effectPrefab,
@@ -43,5 +53,11 @@ public class SK_MastersTouch : Skill
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+    }
+
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SK_BAA : Skill
 {
@@ -13,6 +14,13 @@ public class SK_BAA : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
@@ -24,6 +32,11 @@ public class SK_BAA : Skill
             Quaternion.identity,
             playerAbility.gameObject.transform
         );
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
+        StartCoroutine(ResetAttackAnimState());
 
         var gm = FindObjectOfType<GameManager>();
         if (!gm) return;
@@ -62,5 +75,10 @@ public class SK_BAA : Skill
             Quaternion.identity,
             target.transform
         );
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }

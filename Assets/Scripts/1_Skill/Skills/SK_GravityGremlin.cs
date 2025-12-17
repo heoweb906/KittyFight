@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class SK_GravityGremlin : Skill
 {
     [Header("Projectile Settings")]
@@ -17,12 +17,24 @@ public class SK_GravityGremlin : Skill
     public float shakeAmount;
     public float shakeDuration_camera;
 
+    [SerializeField] private float attackAnimDuration = 0.5f;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = playerAbility.GetComponentInChildren<Animator>();
+    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!playerAbility) return;
         if (!objSkillEntity) return;
         if (!blackholePrefab) return;
+
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 3);
+        StartCoroutine(ResetAttackAnimState());
 
         direction.z = 0f;
         origin.z = playerAbility.transform.position.z;
@@ -63,5 +75,10 @@ public class SK_GravityGremlin : Skill
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration_camera, direction);
+    }
+    private IEnumerator ResetAttackAnimState()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        anim.SetBool("isAttack", false);
     }
 }
