@@ -9,7 +9,6 @@ public class MapGimic_5_Dragon : AbstractMapGimic
     public override void OnGimicStart()
     {
         base.OnGimicStart();
-
     }
 
     public override void OnGimmickUpdate()

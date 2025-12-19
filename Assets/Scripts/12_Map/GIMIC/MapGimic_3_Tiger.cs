@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class MapGimic_3_Tiger : AbstractMapGimic
 { 
-
     public override void OnGimicStart()
     {
         base.OnGimicStart(); 
-
     }
 
     public override void OnGimmickUpdate()

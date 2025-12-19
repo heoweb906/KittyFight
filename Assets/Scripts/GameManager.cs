@@ -210,8 +210,11 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.RegisterHandler(new SkillExecuteHandler(oppAbility, myNum));
         P2PMessageDispatcher.RegisterHandler(new PassiveProcHandler(oppAbility, myNum));
 
+
         P2PMessageDispatcher.RegisterHandler(new P2PSkillSelectHandler(oppAbility, ingameUIController.skillCardController, myNum));
         P2PMessageDispatcher.RegisterHandler(new P2PSkillShowHandler(ingameUIController.skillCardController, myNum));
+
+        P2PMessageDispatcher.RegisterHandler(new MapGimicHandler(this, mapManager, myNum));
 
 
         var myNicknameText = myPlayer ? myPlayer.GetComponentInChildren<TextMeshProUGUI>() : null;
@@ -373,9 +376,15 @@ public class GameManager : MonoBehaviour
                 bgIdx = Random.Range(8, 10);   // 8 ~ 9
             }
 
-            if (totalScore % 5 == 0 && totalScore > 0)
+            if (totalScore % 1 == 0 && totalScore > 0)
             {
-                IntMapGimicnumber = Random.Range(1, 13);
+                // 책갈피
+                // 책갈피
+                IntMapGimicnumber = Random.Range(1, 2);
+                // 책갈피
+                // 책갈피
+
+
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
             }
@@ -439,15 +448,13 @@ public class GameManager : MonoBehaviour
 
         ingameUIController?.StartGameTimer(61f);
 
-        yield return new WaitForSeconds(0.6f);
-        ingameUIController.scoreBoardUIController.OpenScorePanel();
+        yield return new WaitForSeconds(0.6f);                         
+        ingameUIController.scoreBoardUIController.OpenScorePanel();    
 
-        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
+        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;     
 
-        if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);
-        else  yield return new WaitForSeconds(1f);
-
-
+        if (totalScore % 1 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
+        else  yield return new WaitForSeconds(1f);                                          
 
         mapManager.StartCurrentGimmick();
         ingameUIController.ChangeReadyStartSprite(1); 

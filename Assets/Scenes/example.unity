@@ -4890,7 +4890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7cd6a335836b834b875e56b29444df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &141855416
 GameObject:
@@ -22676,7 +22676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb0336b5f5e52d448403717dcfba260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &685942328
 GameObject:
@@ -30398,7 +30398,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &969771551
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37115,7 +37115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055f7a4a4b2c753448151ca106190851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1129375274
 GameObject:
@@ -37862,7 +37862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94d13faf9849ed4f9f82587258e6ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1154088946
 GameObject:
@@ -41231,7 +41231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3879039db2ba04d83b359c9fefcadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1260613767
 GameObject:
@@ -43860,7 +43860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777c3310f25acfb4ca6cc98cdebaf785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1347759824
 GameObject:
@@ -46168,7 +46168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78446ecb46dc45d43a890e5b2faa3c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1395225063
 GameObject:
@@ -47370,7 +47370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc864b8ed0292264ead7081f59cdd842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1444353925
 GameObject:
@@ -49420,7 +49420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7e04b9c7264b94d87b5e1457fee0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &1491436529
 GameObject:
@@ -62926,8 +62926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d107a35649efbf9488478cbf0b6b8dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
+  activationInterval: 3
 --- !u!1 &1975108280
 GameObject:
   m_ObjectHideFlags: 0
@@ -68528,7 +68529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1cf1fb914601d43929a4ec2a07b4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1 &2147372883
 GameObject:
@@ -68574,7 +68575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73db0f905d5a468479e9e661f49470d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManger: {fileID: 0}
+  gameManager: {fileID: 0}
   mapManager: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

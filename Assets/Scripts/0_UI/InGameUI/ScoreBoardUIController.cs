@@ -158,7 +158,7 @@ public class ScoreBoardUIController : MonoBehaviour
 
         int iSumPlayerScore = InGameUiController.gameManager.IntScorePlayer_1 + InGameUiController.gameManager.IntScorePlayer_2;
 
-        if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
+        if ((iSumPlayerScore % 1 == 0 && (iSumPlayerScore) > 0))
         {
             InGameUiController.mapBoardController.CloseMapBoardPanelVertical(InGameUiController.gameManager.mapManager.GetMapGimicIndex());
             
@@ -196,7 +196,7 @@ public class ScoreBoardUIController : MonoBehaviour
 
                 OnOffScoreTextObj(true);
 
-                if ((iSumPlayerScore % 5 == 0 && (iSumPlayerScore) > 0))
+                if ((iSumPlayerScore % 1 == 0 && (iSumPlayerScore) > 0))
                 {
                     DOVirtual.DelayedCall(1f, () => {
                         InGameUiController.mapBoardController.OpenMapBoardPanelVertical();
