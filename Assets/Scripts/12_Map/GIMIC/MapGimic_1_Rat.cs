@@ -81,8 +81,8 @@ public class MapGimic_1_Rat : AbstractMapGimic
         ApplyHP(p1Health, averageHP);
 
         // 3. 패킷 전송 (주석 해제 권장)
-        // string packet = MapGimicBuilder.BuildRat_SyncHP(gameManager.mapManager.GetMapGimicIndex(), averageHP);
-        // P2PMessageSender.SendMessage(packet); 
+        string packet = MapGimicBuilder.BuildRat_SyncHP(gameManager.mapManager.GetMapGimicIndex(), averageHP);
+        P2PMessageSender.SendMessage(packet); 
     }
 
     public void ReceiveSyncHP(int targetHP)

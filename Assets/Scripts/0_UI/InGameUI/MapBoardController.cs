@@ -95,9 +95,8 @@ public class MapBoardController : MonoBehaviour
     public void CloseMapBoardPanelVertical(int iAnimalNum = 0)
     {
         // 1. 이미지 및 텍스트 갱신
-        if (iAnimalNum > 0)
+        if (iAnimalNum >= 0)
         {
-            iAnimalNum--; // 1-based index 보정인 경우
             ChangeImage_MapBoard(iAnimalNum);
         }
 

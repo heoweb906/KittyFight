@@ -9,7 +9,7 @@ public class Model_MapGimic
 [System.Serializable]
 public class Packet_1_Rat : Model_MapGimic
 {
-    public int targetHpSync; // ★ 추가: 동기화할 목표 체력
+    public int targetHpSync;
 }
 
 [System.Serializable]

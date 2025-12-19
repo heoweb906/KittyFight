@@ -171,6 +171,8 @@ public class MapManager : MonoBehaviour
 
     public void SetMapGimicIndex(int iGimicIndex)
     {
+        iGimicIndex--;
+
         currentMapGimicIndex = iGimicIndex;
 
         // 인덱스가 유효하면 미리 변수에 넣어둡니다 (실행은 안 함)
@@ -183,6 +185,9 @@ public class MapManager : MonoBehaviour
             currentGimmick = null;
         }
     }
+
+
+
     public int GetMapGimicIndex()
     {
         return currentMapGimicIndex;
