@@ -97,6 +97,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
 
         if (victimPN == MatchResultStore.myPlayerNumber)
         {
+            // 실제 효과 적용
             ApplyEffects(victimHealth, other);
         }
         else
@@ -104,8 +105,6 @@ public abstract class AB_HitboxBase : MonoBehaviour
             OnRemoteHit(victimHealth, other);
         }
 
-        // 실제 효과 적용
-        ApplyEffects(victimHealth, other);
         return true;
     }
 
