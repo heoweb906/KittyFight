@@ -22,7 +22,7 @@ public class PS_FurFlick : Passive
     public GameObject objEffect_Use;
 
     private float timer = 0f;
-
+    private bool roundActive = false;
 
     [Header("카메라 연출")]
     public float shakeAmount;
@@ -35,6 +35,9 @@ public class PS_FurFlick : Passive
     {
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+
+        roundActive = false;
+        timer = 0f;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
@@ -46,12 +49,14 @@ public class PS_FurFlick : Passive
     private void OnRoundStart(int roundIndex)
     {
         if (!IsAuthority) return;
+        roundActive = true;
         timer = 0f;
     }
 
     private void OnTick(float dt)
     {
         if (!IsAuthority) return;
+        if (!roundActive) return;
         if (ability == null) return;
         if (featherProjectilePrefab == null) return;
         if (interval <= 0f) return;

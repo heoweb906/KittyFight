@@ -37,8 +37,8 @@ public class SK_RangedAttack : Skill
 
         if (playerAbility.playerNumber == 2)
         {
-            AB_Ranged range = proj.GetComponent<AB_Ranged>();
-            range.ChangeMaterial();
+            var range = proj.GetComponent<AB_Ranged>();
+            if (range != null) range.ChangeMaterial();
         }
 
 
