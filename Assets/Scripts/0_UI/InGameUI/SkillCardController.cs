@@ -546,7 +546,7 @@ public class SkillCardController : MonoBehaviour
 
                                 DOVirtual.DelayedCall(0.6f, () =>
                                 {
-                                    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                                    // InGameUiController.scoreBoardUIController.OpenScorePanel();
                                 });
 
                             });
@@ -566,7 +566,7 @@ public class SkillCardController : MonoBehaviour
 
                     DOVirtual.DelayedCall(0.6f, () =>
                     {
-                        InGameUiController.scoreBoardUIController.OpenScorePanel();
+                        // InGameUiController.scoreBoardUIController.OpenScorePanel();
                     });
                 });
             }
@@ -701,7 +701,7 @@ public class SkillCardController : MonoBehaviour
                                                         InGameUiController.gameManager.ResetGame(); 
                                                         DOVirtual.DelayedCall(0.6f, () => 
                                                         {
-                                                            InGameUiController.scoreBoardUIController.OpenScorePanel(); 
+                                                            // InGameUiController.scoreBoardUIController.OpenScorePanel(); 
                                                         });
                                                     });
                                                 });
@@ -954,10 +954,10 @@ public class SkillCardController : MonoBehaviour
                 DOVirtual.DelayedCall(0.9f, () =>
                 {
                     InGameUiController.gameManager.ResetGame();
-                    DOVirtual.DelayedCall(0.6f, () =>
-                    {
-                        InGameUiController.scoreBoardUIController.OpenScorePanel();
-                    });
+                    //DOVirtual.DelayedCall(0.6f, () =>
+                    //{
+                    //    InGameUiController.scoreBoardUIController.OpenScorePanel();
+                    //});
                 });
             });
         });

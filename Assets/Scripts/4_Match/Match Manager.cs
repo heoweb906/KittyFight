@@ -30,6 +30,8 @@ public class MatchManager : MonoBehaviour
 
     public bool BoolMatchSucces { get; set; }    // 매칭 성공
 
+    private const float MATCH_TIMEOUT_SECONDS = 59f;
+
 
     private void Awake()
     {
@@ -183,11 +185,19 @@ public class MatchManager : MonoBehaviour
     {
         while (isMatching)
         {
-            // BoolMatchSucces를 먼저 확인하여 로그 출력을 방지합니다.
             if (BoolMatchSucces) yield break;
 
             float elapsed = Time.time - matchStartTime;
             AppendLog($"Match Searching \n{Mathf.FloorToInt(elapsed)} seconds");
+
+            // [추가된 부분] 타임아웃 체크
+            if (elapsed >= MATCH_TIMEOUT_SECONDS)
+            {
+                AppendLog("Matching Timed Out.");
+                mainMenuController.OnClickStopMatchingButton(); // 취소 버튼 로직 호출
+
+                yield break; // 코루틴 종료
+            }
 
             yield return new WaitForSeconds(1f);
         }

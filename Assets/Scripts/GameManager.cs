@@ -428,11 +428,21 @@ public class GameManager : MonoBehaviour
         ResetPlayerAnimation(player1);
         ResetPlayerAnimation(player2);
 
+        playerAbility_1.ResetAllCooldowns();
+        playerAbility_2.ResetAllCooldowns();
+
+
         ingameUIController?.StartGameTimer(61f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.6f);
+        ingameUIController.scoreBoardUIController.OpenScorePanel();
 
-        // 맵 관련려관련
+        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
+
+        if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);
+        else  yield return new WaitForSeconds(1f);
+
+
 
         mapManager.StartCurrentGimmick();
         ingameUIController.ChangeReadyStartSprite(1); 

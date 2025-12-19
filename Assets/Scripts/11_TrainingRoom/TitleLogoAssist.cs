@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
 public class TitleLogoAssist : MonoBehaviour
 {
     public MainMenuController mainMenuController;
@@ -56,18 +58,18 @@ public class TitleLogoAssist : MonoBehaviour
 
         bTitleAssistFinish = false;
     }
-    private void Start()
-    {
-        StartStep1();
-    }
+
+
 
     private void Update()
     {
-        if (Input.anyKeyDown)
+        if (currentStep != 0 && Input.anyKeyDown)
         {
             SkipCurrentStep();
         }
     }
+
+
 
 
     private void SkipCurrentStep()
@@ -103,22 +105,35 @@ public class TitleLogoAssist : MonoBehaviour
     }
 
 
-    // 로고의 알파값이 1이됨, 그리고 대기
-    private void StartStep1()
+    public void StartStep1()
     {
-        currentStep = 1;
+        MoveToTarget(0f);
 
-        // image_Logo_2도 똑같이 페이드인 (딜레이와 시간 동일하게 설정)
-        // 로직 흐름(OnComplete)은 하나에서만 관리하면 되므로 image_Logo에만 콜백을 남겨둡니다.
-        if (image_Logo_2 != null)
+        // 2. 문이 다 닫히고(0.85초) + 1초 더 기다린 뒤 실행
+        DOVirtual.DelayedCall(0.85f + 1.0f, () =>
         {
-            image_Logo_2.DOFade(1f, 3f).SetDelay(1f);
-        }
+            // 3. 문을 엽니다. (0.75초 소요)
+            MoveToStart();
 
-        image_Logo.DOFade(1f, 3f).SetDelay(1f).OnComplete(() => {
-            currentStep = 2;
-            DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
-        });
+            // 4. 문이 다 열릴 때까지 기다림 (0.8초)
+            DOVirtual.DelayedCall(0.8f, () =>
+            {
+                // 5. 이제 로고 연출 시작하며 스킵 가능 상태로 전환
+                currentStep = 1;
+
+                if (image_Logo_2 != null)
+                {
+                    image_Logo_2.DOFade(1f, 3f).SetDelay(1f);
+                }
+
+                image_Logo.DOFade(1f, 3f).SetDelay(1f).OnComplete(() => {
+                    currentStep = 2;
+                    DOVirtual.DelayedCall(3f, StartStep3).SetId(this);
+                });
+
+            }).SetId(this);
+
+        }).SetId(this);
     }
 
     // 카메라가 아래 방향까지 이동
@@ -137,7 +152,7 @@ public class TitleLogoAssist : MonoBehaviour
     {
         currentStep = 4;
 
-        MoveToTarget();
+        MoveToTarget(0.85f);
 
         DOVirtual.DelayedCall(1.0f, () => {
             objs_VirtualCamera[0].transform.DOKill();
@@ -173,12 +188,12 @@ public class TitleLogoAssist : MonoBehaviour
 
 
 
-    public void MoveToTarget()
+    public void MoveToTarget(float fDuartion)
     {
         if (image1Rect != null && targetPoint != null)
         {
-            image1Rect.DOAnchorPos(targetPoint.anchoredPosition, 0.85f).SetEase(Ease.InQuint);
-            image2Rect.DOAnchorPos(targetPoint.anchoredPosition, 0.85f).SetEase(Ease.InQuint);
+            image1Rect.DOAnchorPos(targetPoint.anchoredPosition, fDuartion).SetEase(Ease.InQuint);
+            image2Rect.DOAnchorPos(targetPoint.anchoredPosition, fDuartion).SetEase(Ease.InQuint);
         }
     }
 

@@ -240,17 +240,17 @@ public class InGameUIController : MonoBehaviour
 
         // ½ºÅ³ È¹µæ ºÎºÐ
         if (winPlayerCurrentScore % 2 == 0)     
-        {
+        { 
             MovePlayerImageToCenter(iLosePlayerNum);
             yield break; 
-        }
+        } 
         
        
         gameManager.ResetGame();
      
-        yield return new WaitForSeconds(0.6f); 
+        yield return new WaitForSeconds(0.6f);    
  
-        scoreBoardUIController.OpenScorePanel(); 
+        // scoreBoardUIController.OpenScorePanel();  
     }
 
 

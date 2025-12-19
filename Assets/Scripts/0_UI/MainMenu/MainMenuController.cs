@@ -457,8 +457,7 @@ public class MainMenuController : MonoBehaviour
         });
     }
 
-
-    private void ExecuteStopMatchingLogic()
+    public void ExecuteStopMatchingLogic()
     {
         // 1. 매칭 취소 신호 및 플레이어 리셋 (애니메이션 전에 수행)
         matchManager.OnCancelMatchButtonClicked();
