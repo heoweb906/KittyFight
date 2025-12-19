@@ -89,14 +89,20 @@ public abstract class AB_HitboxBase : MonoBehaviour
         // 아군/자기 자신 무시
         if (victimPN == ownerPN) return false;
 
-        // 이 클라이언트가 "맞은 당사자(=나)"일 때만 처리 (권위 일원화)
-        if (victimPN != MatchResultStore.myPlayerNumber) return false;
-
         // 중복 히트 방지
         if (singleHit && _hitOnce.Contains(victimHealth)) return false;
         _hitOnce.Add(victimHealth);
 
         if (IsBlockedByWall(other)) return false;
+
+        if (victimPN == MatchResultStore.myPlayerNumber)
+        {
+            ApplyEffects(victimHealth, other);
+        }
+        else
+        {
+            OnRemoteHit(victimHealth, other);
+        }
 
         // 실제 효과 적용
         ApplyEffects(victimHealth, other);
@@ -193,4 +199,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
     /// 실제 효과 구현부: 파생 클래스에서 효과를 정의
     /// </summary>
     protected abstract void ApplyEffects(PlayerHealth victim, Collider victimCollider);
+
+    // 사실상 BouncingFire 용
+    protected virtual void OnRemoteHit(PlayerHealth victim, Collider victimCollider) { }
 }
