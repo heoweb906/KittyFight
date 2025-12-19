@@ -113,6 +113,7 @@ public class PlayerAbility : MonoBehaviour
     {
         if (skill == null) return;
         skill.SetNewBasicValue(this);
+        skill.Bind(this);
         skill.SetAssignedSlot(type);
 
         switch (type)

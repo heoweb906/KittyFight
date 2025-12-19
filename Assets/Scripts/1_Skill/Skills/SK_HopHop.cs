@@ -16,14 +16,11 @@ public class SK_HopHop : Skill
     public float shakeDuration;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
 
     private void Awake()
     {
         if (playerAbility != null)
             CacheComponents(playerAbility);
-
-        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     private void CacheComponents(PlayerAbility a)

@@ -66,6 +66,10 @@ public class InGameUIController : MonoBehaviour
     public GameObject obj_PlayerPanel;
     public GameObject[] panelMenu;
     public int iPanelNum;    // 패널 번호
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
     private void Awake()
     {

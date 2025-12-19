@@ -72,8 +72,11 @@ public class GameManager : MonoBehaviour
     };
 
 
-    private void Start() 
+    private void Start()
     {
+        P2PManager.Dispose();
+        P2PMessageDispatcher.ClearAllHandlers();
+
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this); 
         P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort); 
 
@@ -125,6 +128,8 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 
+        P2PManager.Dispose();
+        P2PMessageDispatcher.ClearAllHandlers();
         MatchResultStore.Reset();
 
         // 1. UI 패널 닫기 실행

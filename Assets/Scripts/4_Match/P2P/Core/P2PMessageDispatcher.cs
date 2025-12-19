@@ -28,4 +28,8 @@ public static class P2PMessageDispatcher
 
         UnityEngine.Debug.LogWarning($"Unhandled P2P message: {msg}");
     }
+    public static void ClearAllHandlers()
+    {
+        handlers.Clear();
+    }
 }

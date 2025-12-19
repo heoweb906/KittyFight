@@ -24,13 +24,6 @@ public class SK_MadDash : Skill
     public float shakeAmount;
     public float shakeDuration;
 
-    private Animator anim;
-
-    private void Awake()
-    {
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
-
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;

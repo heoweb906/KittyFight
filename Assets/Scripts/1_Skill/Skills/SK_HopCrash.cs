@@ -7,7 +7,6 @@ public class SK_HopCrash : Skill
     {
         coolTime = 9.0f;
         aimRange = 0.1f;
-        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     [Header("³«ÇÏ Á¦¾î")]
@@ -23,7 +22,6 @@ public class SK_HopCrash : Skill
     [SerializeField] private float shakeDuration = 0.25f;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {

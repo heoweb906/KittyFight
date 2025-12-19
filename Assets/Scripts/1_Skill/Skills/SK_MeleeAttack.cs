@@ -13,19 +13,16 @@ public class SK_MeleeAttack : Skill
     public float shakeDeration = 0.5f;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
 
     private void Awake()
     {
         if (!events && playerAbility) events = playerAbility.events;
-        anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     public override void Bind(PlayerAbility ability)
     {
         base.Bind(ability);
         events = ability.events;
-        anim = ability.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)
