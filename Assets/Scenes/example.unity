@@ -50130,6 +50130,7 @@ MonoBehaviour:
   iamge_TestMapGimicColor: {fileID: 969771552}
   gimicks:
   - {fileID: 1966749921}
+  - {fileID: 1966749921}
   - {fileID: 136839023}
   - {fileID: 680903473}
   - {fileID: 1440611856}
