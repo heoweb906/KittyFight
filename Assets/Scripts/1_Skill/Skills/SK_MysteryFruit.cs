@@ -14,12 +14,6 @@ public class SK_MysteryFruit : Skill
     public float shakeDeration;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
-
-    private void Awake()
-    {
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {

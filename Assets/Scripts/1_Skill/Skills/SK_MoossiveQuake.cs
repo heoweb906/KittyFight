@@ -17,13 +17,6 @@ public class SK_MoossiveQuake : Skill
     [SerializeField] private GameObject effectPrefab;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
-
-    private void Awake()
-    {
-        coolTime = 10.5f;
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {

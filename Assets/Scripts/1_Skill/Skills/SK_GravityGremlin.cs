@@ -18,12 +18,6 @@ public class SK_GravityGremlin : Skill
     public float shakeDuration_camera;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
-
-    private void Awake()
-    {
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {

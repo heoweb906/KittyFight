@@ -17,12 +17,6 @@ public class SK_RabbitHole : Skill
     public float shakeDuration;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
-
-    private void Awake()
-    {
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
 
     public bool CanTeleportPosition(Vector3 currentPos, Vector3 targetPos)
     {

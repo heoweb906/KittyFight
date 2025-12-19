@@ -39325,9 +39325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objCamaera: {fileID: 478477361}
-  enableSway: 1
-  swayAmount: 0.5
-  swaySpeed: 0.5
 --- !u!4 &1260943389
 Transform:
   m_ObjectHideFlags: 0

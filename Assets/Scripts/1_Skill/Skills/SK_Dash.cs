@@ -19,8 +19,6 @@ public class SK_Dash : Skill
     public float shakeAmount;
     public float shakeDuration;
 
-    private Animator anim;
-
     private void Awake()
     {
         if (playerAbility != null)
@@ -34,7 +32,6 @@ public class SK_Dash : Skill
     {
         base.Bind(ability);
         events = ability.events;
-        anim = ability.GetComponentInChildren<Animator>();
     }
 
     public override void Execute(Vector3 origin, Vector3 direction)

@@ -9,13 +9,6 @@ public class SK_MastersTouch : Skill
     public float shakeDuration;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
-    private Animator anim;
-
-    private void Awake()
-    {
-        coolTime = 8f;
-        anim = playerAbility.GetComponentInChildren<Animator>();
-    }
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
