@@ -71,6 +71,13 @@ public class AB_BouncingFire : AB_HitboxBase
         }
     }
 
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
+        OnDisappearEffect();
+        Destroy(gameObject);
+    }
+
+
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
         if (victim == null) return;
