@@ -18,6 +18,11 @@ public class SK_RangedAttack : Skill
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
+        if (playerAbility != null && sfxClip != null)
+        {
+            playerAbility.PlaySFX(sfxClip);
+        }
+
         Vector3 spawnPos = origin;
         Quaternion rot = Quaternion.LookRotation(direction);
 

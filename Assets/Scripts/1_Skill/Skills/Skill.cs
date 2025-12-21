@@ -13,6 +13,9 @@ public abstract class Skill : MonoBehaviour, ISKILL
     public PlayerAbility playerAbility;
     public Animator anim;
 
+    [Header("Audio")]
+    public AudioClip sfxClip;
+
     [Header("스킬 설정(데이터)")]
     public float coolTime;   // Ability가 참조하는 데이터 
     public GameObject objSkillEntity;

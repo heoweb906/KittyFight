@@ -40,6 +40,11 @@ public class SK_Dash : Skill
         //if (playerAbility == null || playerAbility.playerNumber != MatchResultStore.myPlayerNumber)
         //    return;
 
+        if (playerAbility != null && sfxClip != null)
+        {
+            playerAbility.PlaySFX(sfxClip);
+        }
+
         if (!rb)
         {
             rb = playerAbility ? playerAbility.GetComponent<Rigidbody>() : GetComponentInParent<Rigidbody>();

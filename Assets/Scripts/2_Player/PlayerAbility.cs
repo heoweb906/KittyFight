@@ -39,6 +39,9 @@ public class PlayerAbility : MonoBehaviour
     [Header("스킬 애니메이션")]
     public SkillEffectAnimation effect;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+
     // Re-peek 용
     private bool _hasLastActionType;
     private SkillType _lastActionType;
@@ -365,5 +368,11 @@ public class PlayerAbility : MonoBehaviour
 
         cooldowns[slot] = st;
         OnCooldownChanged?.Invoke(slot);
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (!clip || !sfxSource) return;
+        sfxSource.PlayOneShot(clip);
     }
 }
