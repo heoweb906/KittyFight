@@ -56,7 +56,7 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < gimicks.Count; ++i) gimicks[i].gameManger = gameManager;
+        for (int i = 0; i < gimicks.Count; ++i) gimicks[i].gameManager = gameManager;
         for (int i = 0; i < gimicks.Count; ++i) gimicks[i].mapManager = this;
 
         currentGimmick = null;
@@ -171,8 +171,23 @@ public class MapManager : MonoBehaviour
 
     public void SetMapGimicIndex(int iGimicIndex)
     {
+        iGimicIndex--;
+
         currentMapGimicIndex = iGimicIndex;
+
+        // 인덱스가 유효하면 미리 변수에 넣어둡니다 (실행은 안 함)
+        if (iGimicIndex >= 0 && iGimicIndex < gimicks.Count)
+        {
+            currentGimmick = gimicks[iGimicIndex];
+        }
+        else
+        {
+            currentGimmick = null;
+        }
     }
+
+
+
     public int GetMapGimicIndex()
     {
         return currentMapGimicIndex;
@@ -182,17 +197,11 @@ public class MapManager : MonoBehaviour
 
     public void StartCurrentGimmick()
     {
-        if (currentGimmick != null) currentGimmick.OnGimicEnd();
-
-        if (currentMapGimicIndex < 0 || currentMapGimicIndex >= gimicks.Count)
+        // 혹시 모르니 null 체크 후 시작
+        if (currentGimmick != null)
         {
-            currentGimmick = null;
-            currentMapGimicIndex = -1;
-            return;
+            currentGimmick.OnGimicStart();
         }
-
-        currentGimmick = gimicks[currentMapGimicIndex];
-        currentGimmick.OnGimicStart();
     }
 
 
@@ -207,4 +216,33 @@ public class MapManager : MonoBehaviour
         }
     }
     #endregion
+
+
+
+    public void ExecuteGimic_Rat(Packet_1_Rat packet)
+    {
+        // 현재 활성화된 기믹이 '쥐'인지 확인만 하고
+        if (currentGimmick is MapGimic_1_Rat ratGimic)
+        {
+            // 데이터만 던져준다. (끝)
+            // 만약 패킷에 다른 변수가 더 있다면 여기서 함수 인자로 더 넘겨주면 됨
+            if (packet.targetHpSync > 0)
+            {
+                ratGimic.ReceiveSyncHP(packet.targetHpSync);
+            }
+        }
+    }
+
+    //public void ExecuteGimic_Cow(Packet_2_Cow packet)
+    //{
+    //    // 리스트 1번이 소(Cow) 스크립트라고 가정
+    //    if (gimicks.Count > 1 && gimicks[1] is Gimic_2_Cow cow)
+    //    {
+    //        StopCurrentGimmick();
+    //        cow.SetupData(packet);
+    //        SetMapGimicIndex(1);
+    //        StartCurrentGimmick();
+    //    }
+    //}
+
 }

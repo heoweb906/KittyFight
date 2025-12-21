@@ -9,7 +9,6 @@ public class MapGimic_4_Rabbit : AbstractMapGimic
     public override void OnGimicStart()
     {
         base.OnGimicStart();
-
     }
 
     public override void OnGimmickUpdate()
