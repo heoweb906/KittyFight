@@ -39,6 +39,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Material flashMaterial;   // 순백 머테리얼 (Toony Colors Pro 2 등)
     [SerializeField] private float flashDuration = 0.2f;
 
+    [Header("보조 변수들")]
+    public bool bDogGimickOn = false;
+
 
     private void Awake()
     {
@@ -107,6 +110,9 @@ public class PlayerHealth : MonoBehaviour
         //pendingSourcePos = null;
 
         int amount = Mathf.Max(0, damage);
+        if (bDogGimickOn) amount = Mathf.RoundToInt(damage * 1.3f);
+
+
 
         // 공격자
         attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
@@ -170,6 +176,8 @@ public class PlayerHealth : MonoBehaviour
         if (currentHP == prev) return;
 
         OnHPChanged?.Invoke(currentHP, maxHP);
+
+        ability.effect?.PlayDoubleShakeAnimation(5, 6);
 
         int pn = ability != null ? ability.playerNumber : 0;
         if (pn == MatchResultStore.myPlayerNumber)

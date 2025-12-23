@@ -66,15 +66,24 @@ public abstract class AbstractMapGimic : MonoBehaviour
 
     public virtual void OnGimmickUpdate() { }
 
+
     public virtual void OnGimicEnd()
     {
         bIsActive = false;
 
         mapManager.iamge_TestMapGimicColor.color = Color.black;
+
+        mapManager.ResetScreenEffect();
     }
 
 
     public virtual void OnReceivePacket(Model_MapGimic packet) { }
+
+    public void SendTween(float duration, float thick)
+    {
+        mapManager.TweenScreenBorder(duration, thick);
+        P2PMessageSender.SendMessage(MapGimicBuilder.BuildScreen_Tween(duration, thick));
+    }
 
 
 }

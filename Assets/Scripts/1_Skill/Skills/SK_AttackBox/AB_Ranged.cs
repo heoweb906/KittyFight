@@ -49,6 +49,11 @@ public class AB_Ranged : AB_HitboxBase
         Destroy(gameObject);
     }
 
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
+        OnDisappearEffect();
+        Destroy(gameObject);
+    }
 
 
     private void OnDisappearEffect()

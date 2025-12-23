@@ -38,8 +38,8 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - ALWAYS
-  - SHADOWCASTER
   - DepthOnly
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3

@@ -152,7 +152,7 @@ public class MapBoardController : MonoBehaviour
     "All players' HP is halved.",           // 0
         "Beware of the Earthquake!",            // 1
         "Fight fair and square up close!",      // 2
-        "Let's jump even higher!",              // 3
+        "Gravity decreases!",              // 3
         "Beware of the Dragon's Rage!",         // 4
         "Poison is going to hurt... a lot.",    // 5
         "Hurry! Faster! Faster!",               // 6

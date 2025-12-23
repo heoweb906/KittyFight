@@ -45,6 +45,13 @@ public class AB_Eggsplosion : AB_HitboxBase
     }
 
 
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
+        OnDisappearEffect();
+        Destroy(gameObject);
+    }
+
+
     protected override void OnEnvironmentHit(Collider other)
     {
         OnDisappearEffect();

@@ -9,9 +9,7 @@ public enum WallCheckMode
     FromHitbox
 }
 
-/// <summary>
-/// 모든 근접 히트박스/투사체가 공통으로 갖는 판정/소유/친선무시/권위 체크 로직
-/// </summary>
+
 public abstract class AB_HitboxBase : MonoBehaviour
 {
     [Header("공통 데이터")]
@@ -28,6 +26,8 @@ public abstract class AB_HitboxBase : MonoBehaviour
     [Tooltip("환경으로 간주할 레이어(벽/바닥 등)")]
     [SerializeField] protected LayerMask environmentMask;
     [SerializeField] protected WallCheckMode wallCheckMode = WallCheckMode.None;
+
+    public bool bMiddleState = false;  // 중립 오브젝트 
 
     // 이미 맞춘 대상(중복 히트 방지)
     private readonly HashSet<PlayerHealth> _hitOnce = new HashSet<PlayerHealth>();
@@ -74,30 +74,36 @@ public abstract class AB_HitboxBase : MonoBehaviour
 
     private bool TryApplyHit(Collider other)
     {
-        // 소유자 미세팅이면 판정 불가
-        if (ownerAbility == null) return false;
+        if (!bMiddleState && ownerAbility == null) return false;
 
-        // 피격자 탐색(자식 콜라이더 대응)
+        // 2. 피격자 탐색
         var victimHealth = other.GetComponentInParent<PlayerHealth>();
         var victimAbility = other.GetComponentInParent<PlayerAbility>();
 
         if (victimHealth == null || victimAbility == null) return false;
 
-        int ownerPN = ownerAbility.playerNumber;
+        // [수정] victimPN 선언을 위로 올림 (공통 사용)
         int victimPN = victimAbility.playerNumber;
 
-        // 아군/자기 자신 무시
-        if (victimPN == ownerPN) return false;
+        // 3. 중립 상태가 아닐 때만 '아군/자신 무시' 로직 수행
+        if (!bMiddleState)
+        {
+            // ownerAbility는 위에서 null 체크가 끝났으므로 안전함
+            int ownerPN = ownerAbility.playerNumber;
 
-        // 중복 히트 방지
+            if (victimPN == ownerPN) return false;
+        }
+
+        // 4. 중복 히트 방지
         if (singleHit && _hitOnce.Contains(victimHealth)) return false;
         _hitOnce.Add(victimHealth);
 
+        // 5. 벽 체크
         if (IsBlockedByWall(other)) return false;
 
+        // 6. 효과 적용 (여기서 victimPN 사용 가능)
         if (victimPN == MatchResultStore.myPlayerNumber)
         {
-            // 실제 효과 적용
             ApplyEffects(victimHealth, other);
         }
         else
@@ -106,6 +112,48 @@ public abstract class AB_HitboxBase : MonoBehaviour
         }
 
         return true;
+
+
+
+
+
+
+
+
+
+
+        //// 소유자 미세팅이면 판정 불가 
+        //if (!bMiddleState && ownerAbility == null) return false;
+
+        //// 피격자 탐색(자식 콜라이더 대응)
+        //var victimHealth = other.GetComponentInParent<PlayerHealth>();
+        //var victimAbility = other.GetComponentInParent<PlayerAbility>();
+
+        //if (victimHealth == null || victimAbility == null) return false;
+
+        //int ownerPN = ownerAbility.playerNumber;
+        //int victimPN = victimAbility.playerNumber;
+
+        //// 아군/자기 자신 무시
+        //if (victimPN == ownerPN) return false;
+
+        //// 중복 히트 방지
+        //if (singleHit && _hitOnce.Contains(victimHealth)) return false;
+        //_hitOnce.Add(victimHealth);
+
+        //if (IsBlockedByWall(other)) return false;
+
+        //if (victimPN == MatchResultStore.myPlayerNumber)
+        //{
+        //    // 실제 효과 적용
+        //    ApplyEffects(victimHealth, other);
+        //}
+        //else
+        //{
+        //    OnRemoteHit(victimHealth, other);
+        //}
+
+        //return true;
     }
 
     protected bool IsEnvironment(int otherLayer)

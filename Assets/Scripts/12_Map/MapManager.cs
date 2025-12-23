@@ -168,7 +168,6 @@ public class MapManager : MonoBehaviour
 
     #region // 맵 기믹 컨트롤 관련
 
-
     public void SetMapGimicIndex(int iGimicIndex)
     {
         iGimicIndex--;
@@ -185,15 +184,10 @@ public class MapManager : MonoBehaviour
             currentGimmick = null;
         }
     }
-
-
-
     public int GetMapGimicIndex()
     {
         return currentMapGimicIndex;
     }
-
-
 
     public void StartCurrentGimmick()
     {
@@ -203,8 +197,6 @@ public class MapManager : MonoBehaviour
             currentGimmick.OnGimicStart();
         }
     }
-
-
 
     public void StopCurrentGimmick()
     {
@@ -216,6 +208,29 @@ public class MapManager : MonoBehaviour
         }
     }
     #endregion
+
+
+
+    public void ResetScreenEffect()
+    {
+        matScreen.DOKill(); 
+        matScreen.DOFloat(0.5f, propertyName, 1.0f);
+    }
+
+    public void SetScreenColor(Color color)
+    {
+        matScreen.SetColor(colorPropName, color);
+    }
+
+    public void TweenScreenBorder(float duration, float targetThick)
+    {
+        // 중복 실행 방지를 위해 기존 트윈 제거
+        matScreen.DOKill();
+
+        // duration초에 걸쳐 targetThick까지 부드럽게 변경
+        matScreen.DOFloat(targetThick, propertyName, duration);
+    }
+
 
 
 
@@ -233,16 +248,119 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    //public void ExecuteGimic_Cow(Packet_2_Cow packet)
-    //{
-    //    // 리스트 1번이 소(Cow) 스크립트라고 가정
-    //    if (gimicks.Count > 1 && gimicks[1] is Gimic_2_Cow cow)
-    //    {
-    //        StopCurrentGimmick();
-    //        cow.SetupData(packet);
-    //        SetMapGimicIndex(1);
-    //        StartCurrentGimmick();
-    //    }
-    //}
+
+    public void ExecuteGimic_Cow(Packet_2_Cow packet)
+    {
+        if (currentGimmick is MapGimic_2_Cow cowGimic)
+        {
+            // 다른 애들처럼 함수 호출로 값만 전달
+            cowGimic.ReceiveCowSync(packet.actionType);
+        }
+    }
+
+
+    public void ExecuteGimic_Tiger(Packet_3_Tiger packet)
+    {
+        if (currentGimmick is MapGimic_3_Tiger tiger)
+        {
+            // 패킷의 isStart 값에 따라 분기 처리
+            tiger.ReceiveTigerSync(packet.isStart);
+        }
+    }
+
+    public void ExecuteGimic_Rabbit(Packet_4_Rabbit packet)
+    {
+        if (currentGimmick is MapGimic_4_Rabbit rabbit)
+        {
+            rabbit.ReceiveRabbitSync(packet.isStart);
+        }
+    }
+
+    public void ExecuteGimic_Dragon(Packet_5_Dragon packet)
+    {
+        if (currentGimmick is MapGimic_5_Dragon dragon)
+        {
+            dragon.ReceiveSpawnSync(packet.x, packet.y, packet.z, packet.angleZ);
+        }
+    }
+
+
+    public void ExecuteGimic_Snake(Packet_6_Snake packet)
+    {
+        if (currentGimmick is MapGimic_6_Snake snake)
+        {
+            snake.ReceiveSpawnSync(packet.x, packet.y, packet.z);
+        }
+    }
+
+
+    public void ExecuteGimic_Horse(Packet_7_Horse packet)
+    {
+        if (currentGimmick is MapGimic_7_Horse horse)
+        {
+            horse.ReceiveHorseSync(packet.isStart);
+        }
+    }
+
+    public void ExecuteGimic_Sheep(Packet_8_Sheep packet)
+    {
+        if (currentGimmick is MapGimic_8_Sheep sheep)
+        {
+            sheep.ReceiveSpawnSync(packet.x, packet.y, packet.z);
+        }
+    }
+
+
+    public void ExecuteGimic_Monkey(Packet_9_Monkey packet)
+    {
+        if (currentGimmick is MapGimic_9_Monkey monkey)
+        {
+            monkey.ReceiveMonkeySync();
+        }
+    }
+
+    public void ExecuteGimic_Chicken(Packet_10_Chicken packet)
+    {
+        if (currentGimmick is MapGimic_10_Chicken chicken)
+        {
+            // 비율과 회전값을 넘겨줍니다.
+            chicken.ReceiveSpawnSync(packet.spawnRatio, packet.randomRotationZ);
+        }
+    }
+
+
+    public void ExecuteGimic_Dog(Packet_11_Dog packet)
+    {
+        if (currentGimmick is MapGimic_11_Dog dog)
+        {
+            dog.ReceiveDogSync(packet.isActive);
+        }
+    }
+
+    public void ExecuteGimic_Pig(Packet_12_Pig packet)
+    {
+        if (currentGimmick is MapGimic_12_Pig pig)
+        {
+            pig.ReceiveSpawnSync(packet.x, packet.y, packet.z);
+        }
+    }
+
+
+
+    public void ExecuteScreenEffect(Packet_ScreenEffect packet)
+    {
+        switch (packet.effectType)
+        {
+            case 0: // Reset
+                ResetScreenEffect();
+                break;
+            case 1: // SetColor
+                SetScreenColor(new Color(packet.r, packet.g, packet.b));
+                break;
+            case 2: // Tween
+                TweenScreenBorder(packet.duration, packet.targetThick);
+                break;
+        }
+    }
 
 }

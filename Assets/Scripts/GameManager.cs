@@ -380,7 +380,7 @@ public class GameManager : MonoBehaviour
             {
                 // 책갈피
                 // 책갈피
-                IntMapGimicnumber = Random.Range(1, 2);
+                IntMapGimicnumber = Random.Range(8, 9);
                 // 책갈피
                 // 책갈피
 
@@ -456,7 +456,6 @@ public class GameManager : MonoBehaviour
         if (totalScore % 1 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
         else  yield return new WaitForSeconds(1f);                                          
 
-        mapManager.StartCurrentGimmick();
         ingameUIController.ChangeReadyStartSprite(1); 
         ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1); 
@@ -467,7 +466,8 @@ public class GameManager : MonoBehaviour
         var myRb = myPlayer.GetComponent<Rigidbody>();
         if (myRb != null) myRb.isKinematic = false;
 
-        myAbility.events?.EmitRoundStart(0); 
+        myAbility.events?.EmitRoundStart(0);
+        mapManager.StartCurrentGimmick();
     }
 
 

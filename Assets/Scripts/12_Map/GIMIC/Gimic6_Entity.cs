@@ -1,0 +1,48 @@
+using System.Collections;
+using UnityEngine;
+
+public class Gimic6_Entity : MonoBehaviour
+{
+    [Header("Settings")]
+    public GameObject targetObject; // 독가스 프리팹
+    public float delayTime;
+    public float fDestroyDelay;
+
+    void Start()
+    {
+        StartCoroutine(Co_SpawnProcess());
+    }
+
+    private IEnumerator Co_SpawnProcess()
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        if (targetObject != null)
+        {
+            targetObject.SetActive(true);
+
+            GameObject gas = targetObject;
+
+            // [중요 2] 히트박스 찾기 (본체 혹은 자식에 있을 수 있음)
+            var hitbox = gas.GetComponent<AB_HitboxBase>();
+            if (hitbox == null) hitbox = gas.GetComponentInChildren<AB_HitboxBase>();
+
+            if (hitbox != null)
+            {
+                // [핵심] 중립 상태 설정 -> 소유자가 없어도 누구든 때릴 수 있게 됨
+                hitbox.bMiddleState = true;
+
+                // 소유자는 없음(null)으로 설정
+                hitbox.Init(null);
+            }
+
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(0.6f, 0.4f);
+        }
+
+        yield return new WaitForSeconds(fDestroyDelay);
+
+        // 경고 장판(나 자신) 삭제
+        Destroy(gameObject);
+    }
+}
