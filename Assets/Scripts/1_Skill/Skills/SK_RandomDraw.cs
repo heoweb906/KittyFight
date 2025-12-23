@@ -55,6 +55,7 @@ public class SK_RandomDraw : Skill
 
             var inst = Instantiate(prefab, playerAbility.transform);
 
+            inst.Bind(playerAbility);
             inst.SetNewBasicValue(playerAbility);
             inst.SetAssignedSlot(assignedSlot);
 

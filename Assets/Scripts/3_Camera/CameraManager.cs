@@ -9,6 +9,10 @@ public class CameraManager : MonoBehaviour
     [Header("카메라")]
     public GameObject objCamaera;
 
+    [Header("Camera Shake Option (0~1)")]
+    [Range(0f, 1f)]
+    public float shakeMultiplier = 1f;
+
     private Sequence shakeSequence;
     private Vector3 originalCameraPosition;
 
@@ -37,10 +41,13 @@ public class CameraManager : MonoBehaviour
         // (주의: originalCameraPosition이 Start에서 정확히 설정되었는지 확인 필수)
         objCamaera.transform.position = originalCameraPosition;
 
+        float finalStrength = strength * Mathf.Clamp01(shakeMultiplier);
+        if (finalStrength <= 0f) return;
+
         shakeSequence = DOTween.Sequence();
 
         // 기본 방향을 우측으로 설정 (인수 없을 시 Vector3.right 사용)
-        Vector3 punchVector = (direction == Vector3.zero) ? Vector3.right * strength : direction.normalized * strength;
+        Vector3 punchVector = (direction == Vector3.zero) ? Vector3.right * finalStrength : direction.normalized * finalStrength;
 
         // DOPunchPosition 적용
         shakeSequence.Append(
