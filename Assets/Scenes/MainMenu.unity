@@ -1324,7 +1324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &97747696
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11240,7 +11240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &812487007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11992,7 +11992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &849776352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12968,7 +12968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &926954009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19408,7 +19408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1542862545
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27171,6 +27171,7 @@ MonoBehaviour:
   flashTargets: []
   flashMaterial: {fileID: 0}
   flashDuration: 0.2
+  bDogGimickOn: 0
 --- !u!65 &1135219770940976284
 BoxCollider:
   m_ObjectHideFlags: 0
