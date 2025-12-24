@@ -5,6 +5,10 @@ public class MapGimic_3_Tiger : AbstractMapGimic
 {
     private readonly Color orangeColor = new Color(1f, 0.5f, 0f); // 주황색
 
+    private Skill _p1OriginalRanged;
+    private Skill _p2OriginalRanged;
+    private bool _tigerApplied;
+
     public override void OnGimicStart()
     {
         base.OnGimicStart();
@@ -91,11 +95,34 @@ public class MapGimic_3_Tiger : AbstractMapGimic
     // --- 실제 기능 구현부 ---
     private void ChangeWeaponToMelee()
     {
-        // 실제 무기 변경 코드
+        if (gameManager == null) return;
+        if (_tigerApplied) return;
+
+        var a1 = gameManager.playerAbility_1;
+        var a2 = gameManager.playerAbility_2;
+        if (a1 == null || a2 == null) return;
+
+        _p1OriginalRanged = a1.rangedSkill;
+        _p2OriginalRanged = a2.rangedSkill;
+
+        a1.SetSkill(SkillType.Ranged, a1.meleeSkill);
+        a2.SetSkill(SkillType.Ranged, a2.meleeSkill);
+
+        _tigerApplied = true;
     }
 
     private void ChangeWeaponToRange()
     {
-        // 실제 무기 복구 코드
+        if (gameManager == null) return;
+        if (!_tigerApplied) return;
+
+        var a1 = gameManager.playerAbility_1;
+        var a2 = gameManager.playerAbility_2;
+        if (a1 == null || a2 == null) return;
+
+        if (_p1OriginalRanged != null) a1.SetSkill(SkillType.Ranged, _p1OriginalRanged);
+        if (_p2OriginalRanged != null) a2.SetSkill(SkillType.Ranged, _p2OriginalRanged);
+
+        _tigerApplied = false;
     }
 }

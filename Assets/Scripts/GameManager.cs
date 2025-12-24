@@ -380,7 +380,7 @@ public class GameManager : MonoBehaviour
             {
                 // 책갈피
                 // 책갈피
-                IntMapGimicnumber = Random.Range(8, 9);
+                IntMapGimicnumber = Random.Range(3, 4);
                 // 책갈피
                 // 책갈피
 
