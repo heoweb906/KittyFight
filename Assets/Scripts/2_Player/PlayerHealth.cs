@@ -188,18 +188,22 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
+
     private IEnumerator DamageEffectCoroutine()
     {
         isInvincible = true;
 
         // 하얗게 점멸
-        //yield return
         StartCoroutine(WhiteFlashSwapOnce());
 
         Quaternion rot = ComputeHitEffectRotation();
 
         if (hitEffectPrefab)
-            Instantiate(hitEffectPrefab, transform.position, rot);
+        {
+            // [수정] 생성된 이펙트를 변수에 담고 크기를 2배로 키웁니다.
+            GameObject effectObj = Instantiate(hitEffectPrefab, transform.position, rot);
+            effectObj.transform.localScale *= 1.5f; 
+        }
 
         // 무적
         yield return new WaitForSeconds(invincibleTime);
@@ -209,6 +213,8 @@ public class PlayerHealth : MonoBehaviour
         pendingSourcePos = null;
         anim.SetBool("isDamage", false);
     }
+
+
 
     // === [ADD] 머테리얼 스왑 코루틴 (sharedMaterials만 교체/복원) ===
     private IEnumerator WhiteFlashSwapOnce()

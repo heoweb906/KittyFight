@@ -378,11 +378,8 @@ public class GameManager : MonoBehaviour
 
             if (totalScore % 1 == 0 && totalScore > 0)
             {
-                // 책갈피
-                // 책갈피
+
                 IntMapGimicnumber = Random.Range(3, 4);
-                // 책갈피
-                // 책갈피
 
 
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);

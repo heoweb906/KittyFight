@@ -263,7 +263,6 @@ public class MapManager : MonoBehaviour
     {
         if (currentGimmick is MapGimic_3_Tiger tiger)
         {
-            // 패킷의 isStart 값에 따라 분기 처리
             tiger.ReceiveTigerSync(packet.isStart);
         }
     }
