@@ -51,16 +51,21 @@ public class PS_PlotArmor : Passive
         }
 
     }
+
     private void PlayFx(Vector3 pos)
     {
         if (!effectPrefab) return;
 
-        Instantiate(
+        GameObject instance = Instantiate(
             effectPrefab,
             pos,
             Quaternion.Euler(-90f, 0f, 0f)
         );
+
+        // [수정] 부모 관계 해제
+        instance.transform.SetParent(null);
     }
+
     public override void RemoteExecute(PassiveProcMessage msg)
     {
         var pos = new Vector3(msg.px, msg.py, msg.pz);
