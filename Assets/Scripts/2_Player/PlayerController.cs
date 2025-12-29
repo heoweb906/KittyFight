@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerJump))]
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private bool dashInput;
     private bool skill1Input;
     private bool skill2Input;
+
+    Coroutine disableRoutine;
 
     private void Awake()
     {
@@ -82,5 +85,25 @@ public class PlayerController : MonoBehaviour
         AttackUtils.GetAimPointAndDirection(transform, range, out origin, out dir);
 
         ability.TryExecuteSkill(type, origin, dir);
+    }
+
+    public void DisableControlFor(float seconds)
+    {
+        if (disableRoutine != null)
+        {
+            StopCoroutine(disableRoutine);
+        }
+
+        disableRoutine = StartCoroutine(CoDisableControl(seconds));
+    }
+
+    IEnumerator CoDisableControl(float seconds)
+    {
+        enabled = false;
+
+        yield return new WaitForSeconds(seconds);
+
+        enabled = true;
+        disableRoutine = null;
     }
 }

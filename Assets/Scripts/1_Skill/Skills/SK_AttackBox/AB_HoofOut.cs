@@ -50,17 +50,12 @@ public class AB_HoofOut : AB_HitboxBase
         var controller = victim.GetComponent<PlayerController>();
         if (controller != null)
         {
-            StartCoroutine(ReenableAfter(controller, disableControlSeconds));
+            controller.DisableControlFor(disableControlSeconds);
         }
         // µ¥¹ÌÁö
         victim.TakeDamage(damage, ownerAbility, transform.position);
     }
-    private System.Collections.IEnumerator ReenableAfter(MonoBehaviour m, float delay)
-    {
-        if (m != null) m.enabled = false;
-        yield return new WaitForSeconds(delay);
-        if (m != null) m.enabled = true;
-    }
+
     protected override void StartEffect()
     {
         if (obj_Effeect != null)
