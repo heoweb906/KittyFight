@@ -78,6 +78,9 @@ public class SK_TailWhipline : Skill
             tail = Object.Instantiate(objSkillEntity, origin, Quaternion.identity);
             tailTr = tail.transform;
 
+            var abBase = tail.GetComponent<AB_HitboxBase>();
+            if (abBase != null) abBase.Init(playerAbility);
+
             var stretcher = tail.GetComponent<ProjectileStretcher>();
             if (stretcher != null)
             {
