@@ -93,12 +93,19 @@ public class FinalEndingController : MonoBehaviour
     }
 
 
-   
-
 
     public void ShowFinalEnding(int _iWinnerPlayerNum)
     {
         InGameUiController.bFinalEndingStart = true;
+
+        // [추가] 승리한 플레이어 번호와 내 번호를 비교하여 닉네임 설정
+        if (text_PlayerName != null)
+        {
+            if (_iWinnerPlayerNum == MatchResultStore.myPlayerNumber)
+                text_PlayerName.text = MatchResultStore.myNickname;
+            else
+                text_PlayerName.text = MatchResultStore.opponentNickname;
+        }
 
         FadePanelOnOff(true, () =>
         {

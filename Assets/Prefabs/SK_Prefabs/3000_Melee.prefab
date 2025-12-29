@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: -0.0267, z: 0.2921}
-  m_LocalScale: {x: 0.65025, y: 0.9523039, z: 1.8845353}
+  m_LocalScale: {x: 0.65025, y: 0.9523039, z: 2.3730068}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7073485029184815013}
@@ -125,6 +125,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   wallCheckMode: 1
+  bMiddleState: 0
   damage: 40
   objEffect: {fileID: 7773734228143141044}
 --- !u!1 &7305858789489133679
@@ -4982,8 +4983,8 @@ Transform:
   m_GameObject: {fileID: 7773734228143141044}
   serializedVersion: 2
   m_LocalRotation: {x: -0.67320997, y: 0.17458887, z: -0.21630606, w: 0.68521446}
-  m_LocalPosition: {x: 0, y: 0.028037267, z: 0.392}
-  m_LocalScale: {x: 0.6044155, y: -0.8908397, z: 0.5143576}
+  m_LocalPosition: {x: 0, y: 0.028037267, z: 0.138}
+  m_LocalScale: {x: 0.6044155, y: -0.6114902, z: 0.5143576}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6398618074839859951}

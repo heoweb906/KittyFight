@@ -148,20 +148,20 @@ public class MapBoardController : MonoBehaviour
     }
 
     private readonly string[] mapDescriptions = new string[]
-    {
-    "All players' HP is halved.",           // 0
-        "Beware of the Earthquake!",            // 1
-        "Fight fair and square up close!",      // 2
-        "Gravity decreases!",              // 3
-        "Beware of the Dragon's Rage!",         // 4
-        "Poison is going to hurt... a lot.",    // 5
-        "Hurry! Faster! Faster!",               // 6
-        "The walls and floors are now fluffy.", // 7
-        "Players swap positions!",              // 8
-        "Cloudy with a chance of Eggs!",        // 9
-        "Stronger! Hit harder!",                // 10
-        "Grab your emergency food!"             // 11
-      };
+{
+    "Perfect Balance! HP is shared periodically.",  // 0: 체력 공평 분배 
+    "Earthquake! Jump or get stunned!",             // 1: 지진 (점프 안 하면 스턴) 
+    "Up close and personal! No ranged attacks.",    // 2: 근접 강제 (원거리 불가) 
+    "Gravity is fading... Feel the float!",         // 3: 저중력 
+    "Dodge the Dragon's Breath from all sides!",    // 4: 용의 불꽃 (사방에서 공격) 
+    "Toxic Hazard! Watch where you step.",          // 5: 독 구역 생성 
+    "Speed limit broken! Gotta go fast!",           // 6: 이동속도 증가 
+    "High Voltage! Avoid the electric traps.",      // 7: 감전 오브젝트 (정전기) 
+    "Limit break! Cooldowns reset periodically.",   // 8: 쿨타임 초기화 
+    "It's raining Eggs! Cloudy with a chance of protein.", // 9: 달걀 낙하 (영화 패러디) 
+    "Berserker Mode! Damage taken increased.",      // 10: 받는 피해 증가 
+    "Survival time! Look for healing zones."        // 11: 회복 구역 생성 
+};
 
     public void ChangeDescriptionTest_MapBoard(string sDescription)
     {

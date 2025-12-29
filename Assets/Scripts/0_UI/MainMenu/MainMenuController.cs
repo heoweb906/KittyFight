@@ -73,10 +73,11 @@ public class MainMenuController : MonoBehaviour
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0f);
         OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f);
 
-        matchManager.MyNickname = "Kitty";
+        if(MatchResultStore.myNickname == null) matchManager.MyNickname = "Kitty";
 
 
-        if(matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this; 
+
+        if (matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this; 
         if(matchStartCollision_2 != null) matchStartCollision_2.mainMenuController = this; 
         if(matchStartCollision_3 != null) matchStartCollision_3.mainMenuController = this;
 
@@ -174,7 +175,9 @@ public class MainMenuController : MonoBehaviour
         }
         else if (targetIndex == 1)
         {
-            SetNickName(); // 닉네임 설정은 즉시 실행
+            if(MatchResultStore.myNickname != null) SetNickName(MatchResultStore.myNickname);
+            else SetNickName("KITTY"); // 닉네임 설정은 즉시 실행
+
             StartCoroutine(EnableControlRoutine(1.5f)); // 0.5초 딜레이 코루틴 시작
         }
 
@@ -326,6 +329,8 @@ public class MainMenuController : MonoBehaviour
         {
             nickname = "Kitty";
             matchManager.MyNickname = nickname;
+            MatchResultStore.myNickname = nickname;
+
             SetNickName(matchManager.MyNickname);
             scriptPlayerCharacter.bCanControl = true;
             OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f);
@@ -516,7 +521,7 @@ public class MainMenuController : MonoBehaviour
     }
 
 
-    public void SetNickName(string sName = "Kitty")
+    public void SetNickName(string sName)
     {
         scriptPlayerCharacter.text_nickname.text = sName;
     }

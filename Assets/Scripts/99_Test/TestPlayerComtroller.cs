@@ -31,7 +31,10 @@ public class TestPlayerComtroller : MonoBehaviour
         jump = GetComponent<PlayerJump>();
         ability = GetComponent<PlayerAbility>();
 
-        text_nickname.text = matchManager.MyNickname;
+        if (MatchResultStore.myNickname != null) text_nickname.text = MatchResultStore.myNickname;
+        else text_nickname.text = matchManager.MyNickname;
+
+
     }
 
     private void Update()

@@ -320,6 +320,11 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
         }
 
+
+        int realEquippedSkillID = bIsRat ? randomSkillID : skillCard_SO.iSkillIndex;
+        skillCardController.MarkSkillAsUsed(realEquippedSkillID);
+
+
         // P2P 메시지 전송 (메시지에는 식별을 위해 ID인 randomSkillID를 보냅니다)
         P2PMessageSender.SendMessage(
               SkillSelectBuilder.Build(

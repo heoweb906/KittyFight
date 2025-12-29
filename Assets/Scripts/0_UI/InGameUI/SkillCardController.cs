@@ -49,6 +49,8 @@ public class SkillCardController : MonoBehaviour
     public Transform rasnform_RatIconRight;
     private Dictionary<int, Sprite> skillIconMap = new Dictionary<int, Sprite>();
 
+    public HashSet<int> usedSkillIDs = new HashSet<int>();
+
     public void Initialize(InGameUIController temp, Transform parent)
     {
         InGameUiController = temp;
@@ -260,21 +262,26 @@ public class SkillCardController : MonoBehaviour
 
             // 조건에 맞는 스킬만 필터링
             List<int> filteredIndices = new List<int>();
-            int[] excludedSkillIndices = { 1, 2, 101, 102, 139 }; // 제외할 스킬 인덱스들
+            int[] excludedSkillIndices = { 1, 2, 101, 102, 139 };
 
             for (int i = 0; i < skillDataList.Count; i++)
             {
-                // 제외 대상 스킬인지 확인
-                if (excludedSkillIndices.Contains(skillDataList[i].iSkillIndex))
-                    continue;
+                int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
 
-                bool isActive = skillDataList[i].iSkillIndex < 100;
+                // 1. 하드코딩된 제외 스킬 확인
+                if (excludedSkillIndices.Contains(currentSkillID)) continue;
+
+                // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
+                if (usedSkillIDs.Contains(currentSkillID)) continue;
+
+                // 3. 액티브/패시브 구분
+                bool isActive = currentSkillID < 100;
                 if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
                 {
                     filteredIndices.Add(i);
                 }
             }
-            // 사용 가능한 스킬이 없으면 종료
+
             if (filteredIndices.Count == 0)
             {
                 IsAnimating = false;
@@ -979,6 +986,14 @@ public class SkillCardController : MonoBehaviour
         rect.anchoredPosition = anchoredPos;
         rect.localScale = Vector3.one * 1.5f;
         return effectObj;
+    }
+
+    public void MarkSkillAsUsed(int skillID)
+    {
+        if (!usedSkillIDs.Contains(skillID))
+        {
+            usedSkillIDs.Add(skillID);
+        }
     }
 
 

@@ -20,11 +20,16 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
         var model = JsonUtility.FromJson<Model_SkillSelect>(msg.Substring("[SKILL_SELECT]".Length));
         if (model.iPlayer == myPlayerNumber) return;
 
+        // 1. 장착할 스킬 ID 확인
+        int equipSkillID = model.bIsRat ? model.iRandomSkillIndex : model.iSkillIndex;
+
+        // [추가] 상대방이 이 스킬을 가져갔으므로, 내 게임에서도 앞으로 안 나오게 등록
+        skillCardController.MarkSkillAsUsed(equipSkillID);
+
         // =================================================================================
         // 1. [장착용 데이터 결정] 
         // 쥐라면 '숨겨진 스킬(RandomIndex)'을 장착하고, 아니면 '보낸 스킬(SkillIndex)'을 장착
         // =================================================================================
-        int equipSkillID = model.bIsRat ? model.iRandomSkillIndex : model.iSkillIndex;
 
         SkillCard_SO skillToEquip = skillCardController.FindSkillCardByIndex(equipSkillID);
 
