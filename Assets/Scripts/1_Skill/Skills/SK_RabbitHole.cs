@@ -50,9 +50,15 @@ public class SK_RabbitHole : Skill
         Vector3 targetPos = currentPos + offset;
         targetPos.z = currentPos.z;
 
-
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
+        }
 
         StartCoroutine(Co_CastAndTeleport(owner, targetPos));
     }

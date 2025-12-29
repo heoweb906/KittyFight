@@ -19,6 +19,8 @@ public class P2PStateHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         gameManager?.NotifyOpponentStateReceived();
 
         var state = JsonUtility.FromJson<PlayerState>(msg.Substring(6));

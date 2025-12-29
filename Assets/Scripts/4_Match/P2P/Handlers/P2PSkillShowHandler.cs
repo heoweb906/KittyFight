@@ -11,6 +11,8 @@ public class P2PSkillShowHandler : IP2PMessageHandler
     public bool CanHandle(string msg) => msg.StartsWith("[SKILL_SHOW]");
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         var model = JsonUtility.FromJson<Model_SkillShow>(msg.Substring("[SKILL_SHOW]".Length));
         if (model.iPlayer == myPlayerNumber) return;
 

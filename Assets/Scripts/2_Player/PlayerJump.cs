@@ -14,11 +14,14 @@ public class PlayerJump : MonoBehaviour
     private bool isJump = false;
     private bool isGrounded = false;
     private bool isTouchingWall = false;
+    public bool IsTouchingWall => isTouchingWall;
     public bool IsGrounded => isGrounded;
     public bool IsJump => isJump;
 
     public float wallSlideSpeed = 0.5f;
     private int wallSlideDisableCount = 0;
+
+    private bool visualFlippedForHang = false;
 
     [Header("Effects")]
     [SerializeField] public GameObject jumpEffectPrefab;
@@ -51,7 +54,34 @@ public class PlayerJump : MonoBehaviour
         {
             bool isHangRight = transform.forward.x < 0f;
             anim.SetBool("isHangRight", isHangRight);
+
+            if (movementScript != null && movementScript.visualPivot != null && rb.velocity.y < 0f)
+            {
+                movementScript.visualPivot.localRotation =
+                    Quaternion.Euler(0f, isHangRight ? 310f : 130f, 0f);
+
+                visualFlippedForHang = !isHangRight;
+            }
+            else if(rb.velocity.y >= 0f)
+            {
+                if (visualFlippedForHang &&
+                    movementScript != null && movementScript.visualPivot != null)
+                {
+                    movementScript.visualPivot.localRotation = Quaternion.Euler(0f, 50f, 0f);
+                    visualFlippedForHang = false;
+                }
+            }
         }
+        else
+        {
+            if (visualFlippedForHang &&
+                movementScript != null && movementScript.visualPivot != null)
+            {
+                movementScript.visualPivot.localRotation = Quaternion.Euler(0f, 50f, 0f);
+                visualFlippedForHang = false;
+            }
+        }
+
 
         IsWalking = isGrounded && Mathf.Abs(rb.velocity.x) > walkSpeedThreshold;
 

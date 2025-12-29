@@ -17,9 +17,16 @@ public class DamageHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         var d = JsonUtility.FromJson<DamageMessage>(msg.Substring(5));
         if (d.targetPlayer == myPlayerNumber) return;
-        
+
+        if (d.maxHp > 0)
+        {
+            opponentHp.SetMaxHP(d.maxHp, keepCurrentRatio: false);
+        }
+
         if (d.hasSource)
             opponentHp.RemoteSetHP(d.hp, d.sourceWorldPos);
         else

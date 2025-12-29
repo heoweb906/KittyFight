@@ -15,6 +15,8 @@ public class BackgroundColorHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         string json = msg.Substring(7);
         var data = JsonUtility.FromJson<BackgroundColorMessage>(json);
 

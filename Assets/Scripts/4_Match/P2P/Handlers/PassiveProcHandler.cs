@@ -17,6 +17,8 @@ public class PassiveProcHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         var json = msg.Substring(PassiveMessageBuilder.Prefix.Length);
         var data = JsonUtility.FromJson<PassiveProcMessage>(json);
         if (data == null) return;

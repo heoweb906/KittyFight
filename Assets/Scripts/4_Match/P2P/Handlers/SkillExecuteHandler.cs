@@ -15,6 +15,7 @@ public class SkillExecuteHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
         if (opponentAbility == null) return;
 
         var json = msg.Substring(SkillMessageBuilder.Prefix.Length);

@@ -138,7 +138,7 @@ public class PlayerHealth : MonoBehaviour
         if (pn == MatchResultStore.myPlayerNumber)
         {
             P2PMessageSender.SendMessage(
-                DamageMessageBuilder.Build(pn, currentHP, attackerPlayerNum, pendingSourcePos));
+                DamageMessageBuilder.Build(pn, currentHP, attackerPlayerNum, pendingSourcePos, maxHP));
         }
 
         if (currentHP <= 0)
@@ -183,7 +183,7 @@ public class PlayerHealth : MonoBehaviour
         if (pn == MatchResultStore.myPlayerNumber)
         {
             P2PMessageSender.SendMessage(
-                DamageMessageBuilder.Build(pn, currentHP, 0, null));
+                DamageMessageBuilder.Build(pn, currentHP, 0, null, maxHP));
         }
     }
 

@@ -98,14 +98,14 @@ public class PS_FuryBlast : Passive
             if (hb != null) hb.Init(ability);
         }
 
-        if (explosionFxPrefab)
-        {
-            Object.Instantiate(
-                explosionFxPrefab,
-                pos,
-                Quaternion.Euler(-90, 0, 0)
-            );
-        }
+        //if (explosionFxPrefab)
+        //{
+        //    Object.Instantiate(
+        //        explosionFxPrefab,
+        //        pos,
+        //        Quaternion.Euler(-90, 0, 0)
+        //    );
+        //}
 
         if (!selfDamageLocalOnly)
         {
@@ -144,14 +144,14 @@ public class PS_FuryBlast : Passive
                 if (hb != null) hb.Init(ability);
             }
 
-            if (explosionFxPrefab)
-            {
-                Object.Instantiate(
-                    explosionFxPrefab,
-                    pos,
-                    Quaternion.Euler(-90, 0, 0)
-                );
-            }
+            //if (explosionFxPrefab)
+            //{
+            //    Object.Instantiate(
+            //        explosionFxPrefab,
+            //        pos,
+            //        Quaternion.Euler(-90, 0, 0)
+            //    );
+            //}
         }
     }
 }

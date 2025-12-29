@@ -30,11 +30,11 @@ public class SK_SavageRoar : Skill
         var gm = FindObjectOfType<GameManager>();
         if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
         }
         else
         {
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
         }
     }
     private IEnumerator ResetAttackAnimState()

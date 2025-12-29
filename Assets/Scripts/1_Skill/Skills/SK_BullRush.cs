@@ -57,12 +57,12 @@ public class SK_BullRush : Skill
         if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
         }
         else
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeAmount * 0.5f, direction);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
         }
 
 
