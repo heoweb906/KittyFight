@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
+  anim: {fileID: 0}
+  sfxClip: {fileID: 0}
   coolTime: 7
   objSkillEntity: {fileID: 6777267630284458099, guid: def0fbd6ec1ad9c4ea08d67cc1bf0de2,
     type: 3}
@@ -54,6 +56,11 @@ MonoBehaviour:
   lockHorizontal: 1
   baseDamage: 45
   damagePerMeter: 10
+  stopLayerMask:
+    serializedVersion: 2
+    m_Bits: 8960
+  castRadius: 0.25
+  castExtra: 0.15
   shakeStrength: 0.4
   shakeDuration: 0.7
   attackAnimDuration: 0.5
