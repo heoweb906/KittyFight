@@ -889,9 +889,6 @@ AnimatorStateTransition:
     m_ConditionEvent: isRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isHanging
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
     m_ConditionEvent: isDash
     m_EventTreshold: 0
   - m_ConditionMode: 2
