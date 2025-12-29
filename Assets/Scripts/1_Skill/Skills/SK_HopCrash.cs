@@ -17,6 +17,12 @@ public class SK_HopCrash : Skill
     [SerializeField] private float baseDamage = 45f;
     [SerializeField] private float damagePerMeter = 10f;  // 낙하 거리 1m당 추가 피해
 
+    [Header("착지 판정 (Layer 기반)")]
+    [SerializeField] private LayerMask stopLayerMask; // Player | Wall | Ground
+    [SerializeField] private float castRadius = 0.25f;
+    [SerializeField] private float castExtra = 0.15f; // 프레임 보정 여유
+
+
     [Header("카메라 연출")]
     [SerializeField] private float shakeStrength = 0.12f;
     [SerializeField] private float shakeDuration = 0.25f;
@@ -43,12 +49,20 @@ public class SK_HopCrash : Skill
         var rb = owner.GetComponent<Rigidbody>();
         var ph = owner.GetComponent<PlayerHealth>();
         var anim = owner.GetComponentInChildren<Animator>();
+        var pj = owner.GetComponent<PlayerJump>();
+
         if (!rb || !anim || !ph) yield break;
+        if (pj != null) pj.PushDisableWallSlide();
 
         float startY = playerAbility.gameObject.transform.position.y;
         int prevHP = GetComponent<PlayerHealth>()?.CurrentHP ?? 0;
 
-        // 바닥에 닿거나 피격으로 HP가 감소할 때까지
+        anim.SetTrigger("Attack");
+        anim.SetBool("isAttack", true);
+        anim.SetInteger("AttackType", 4);
+        StartCoroutine(ResetAttackAnimState());
+
+        // 바닥 / 벽 / 플레이어에 닿거나 피격되면 종료
         while (true)
         {
             // 피격 중단
@@ -56,17 +70,40 @@ public class SK_HopCrash : Skill
             if (curHP < prevHP) yield break;
             prevHP = curHP;
 
-            // 빠른 하강(수직 속도 강제)
+            // 수직 낙하 강제
             Vector3 v = rb.velocity;
             v.y = -Mathf.Abs(diveSpeed);
             if (lockHorizontal) v.x = 0f;
             v.z = 0f;
             rb.velocity = v;
 
-            if (anim.GetBool("isGround")) break;
+            // 이번 FixedUpdate에서 내려갈 거리 + 여유
+            float stepDown = Mathf.Abs(rb.velocity.y) * Time.fixedDeltaTime + castExtra;
+
+            Vector3 castOrigin = owner.transform.position;
+
+            // Layer 기반 착지 판정
+            if (Physics.SphereCast(
+                    castOrigin,
+                    castRadius,
+                    Vector3.down,
+                    out RaycastHit hit,
+                    stepDown,
+                    stopLayerMask,
+                    QueryTriggerInteraction.Ignore))
+            {
+                // 충돌 지점에 살짝 띄워서 보정
+                Vector3 p = rb.position;
+                p.y = hit.point.y + castRadius;
+                rb.position = p;
+
+                break;
+            }
 
             yield return new WaitForFixedUpdate();
         }
+
+        if (pj != null) pj.PopDisableWallSlide();
 
         float endY = playerAbility.gameObject.transform.position.y;
         float fallDist = Mathf.Max(0f, startY - endY);
@@ -75,11 +112,6 @@ public class SK_HopCrash : Skill
 
         Quaternion rot = Quaternion.identity;
         GameObject hitbox = Instantiate(objSkillEntity, playerAbility.gameObject.transform.position, rot);
-
-        anim.SetTrigger("Attack");
-        anim.SetBool("isAttack", true);
-        anim.SetInteger("AttackType", 4);
-        StartCoroutine(ResetAttackAnimState());
 
         var abBase = hitbox.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);

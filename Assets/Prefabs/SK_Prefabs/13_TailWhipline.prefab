@@ -242,7 +242,9 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
-  stunDuration: 0.3
+  wallCheckMode: 0
+  bMiddleState: 0
+  stunDuration: 0.5
   damage: 20
   objEffect: {fileID: 0}
 --- !u!114 &11413157568790619

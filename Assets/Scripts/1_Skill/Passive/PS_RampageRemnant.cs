@@ -13,7 +13,7 @@ public class PS_RampageRemnant : Passive
     public float delayAfterDash = 1.0f;
 
     [Tooltip("대쉬 경로를 몇 개 구간으로 나눌지 (폭발 개수)")]
-    public int segmentCount = 5;
+    public int segmentCount = 4;
 
     [Tooltip("폭발 Z좌표를 플레이어 Z로 고정할지 여부")]
     public bool lockZToOwner = true;

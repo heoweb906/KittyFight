@@ -56,9 +56,13 @@ public class AB_FangShot : AB_HitboxBase
         Destroy(gameObject);
     }
 
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
+        OnDisappearEffect();
+        Destroy(gameObject);
+    }
 
 
-    
     private void OnDisappearEffect()
     {
         if (objEffect_Hit != null)
