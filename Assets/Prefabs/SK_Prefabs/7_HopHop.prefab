@@ -125,7 +125,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallCheckMode: 2
+  bMiddleState: 0
   damage: 30
+  effectRoot: {fileID: 6854636022559137752}
 --- !u!1001 &5373732491387858745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,6 +200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778921495922924052, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: stopAction
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2930662050524701825, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}

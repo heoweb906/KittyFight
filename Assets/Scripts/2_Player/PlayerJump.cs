@@ -18,6 +18,7 @@ public class PlayerJump : MonoBehaviour
     public bool IsJump => isJump;
 
     public float wallSlideSpeed = 0.5f;
+    private int wallSlideDisableCount = 0;
 
     [Header("Effects")]
     [SerializeField] public GameObject jumpEffectPrefab;
@@ -116,6 +117,7 @@ public class PlayerJump : MonoBehaviour
 
     public void HandleWallSlide()
     {
+        if (IsWallSlideDisabled) return;
         if (isTouchingWall && !isGrounded && rb.velocity.y < -wallSlideSpeed)
         {
             Vector3 velocity = rb.velocity;
@@ -146,4 +148,16 @@ public class PlayerJump : MonoBehaviour
     {
         isTouchingWall = value;
     }
+
+    public void PushDisableWallSlide()
+    {
+        wallSlideDisableCount++;
+    }
+
+    public void PopDisableWallSlide()
+    {
+        wallSlideDisableCount = Mathf.Max(0, wallSlideDisableCount - 1);
+    }
+
+    public bool IsWallSlideDisabled => wallSlideDisableCount > 0;
 }
