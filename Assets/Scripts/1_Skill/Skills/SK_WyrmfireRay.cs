@@ -55,7 +55,14 @@ public class SK_WyrmfireRay : Skill
         if (ab != null) ab.Init(playerAbility);
 
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
+        }
     }
 
     private IEnumerator ResetAttackAnimState()

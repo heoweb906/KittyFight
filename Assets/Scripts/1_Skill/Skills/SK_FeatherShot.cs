@@ -44,7 +44,14 @@ public class SK_FeatherShot : Skill
         }
 
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
+        }
     }
     private Collider FireOne(Vector3 origin, Vector3 dir)
     {

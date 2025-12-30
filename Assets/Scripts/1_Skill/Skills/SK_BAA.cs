@@ -46,8 +46,14 @@ public class SK_BAA : Skill
                 : gm.playerAbility_1;
         }
 
-
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
+        }
 
 
         ApplyStun(playerAbility.gameObject, stunDuration, false);

@@ -9,11 +9,13 @@ public class PS_TalonsEdge : Passive
     public int addPerUse = 2;     // 근접 "사용"할 때마다 +0.2
 
     private int currentPoints;
-
+    private int swingCount;
 
     [Header("카메라 연출")]
-    public float shakeAmount;
-    public float shakeDuration;
+    public float baseShake = 0.10f;
+    public float shakeStep = 0.07f;     // 반복할수록 더 강하게
+    public float maxShake = 0.45f;      // 상한
+    public float shakeDuration = 0.12f;
 
     protected override void Subscribe(AbilityEvents e)
     {
@@ -33,20 +35,20 @@ public class PS_TalonsEdge : Passive
     void HandleRoundStart(int _)
     {
         currentPoints = basePoints;
-        shakeAmount = 0.1f;
+    swingCount = 0;
     }
 
 
     void HandleMeleeDamageInt(ref int damage)
     {
         damage = currentPoints;
-
         currentPoints += addPerUse;
 
+        swingCount++;
+
+        float strength = Mathf.Clamp(baseShake + swingCount * shakeStep, baseShake, maxShake);
+
         var gm = FindObjectOfType<GameManager>();
-
-        shakeAmount += 0.1f;
-
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+        gm?.cameraManager?.ShakeCameraPunch(strength, shakeDuration);
     }
 }

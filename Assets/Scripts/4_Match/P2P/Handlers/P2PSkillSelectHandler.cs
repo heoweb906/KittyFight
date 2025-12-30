@@ -17,6 +17,8 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         var model = JsonUtility.FromJson<Model_SkillSelect>(msg.Substring("[SKILL_SELECT]".Length));
         if (model.iPlayer == myPlayerNumber) return;
 

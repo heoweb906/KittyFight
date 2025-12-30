@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
+  anim: {fileID: 0}
+  sfxClip: {fileID: 0}
   coolTime: 2
   objSkillEntity: {fileID: 7030629527735423589, guid: c41e6769c4c75854f9331459f4404bba,
     type: 3}
@@ -55,4 +57,4 @@ MonoBehaviour:
     type: 3}
   shakeAmount: 0.3
   shakeDeration: 0.7
-  attackAnimDuration: 1
+  attackAnimDuration: 0.2

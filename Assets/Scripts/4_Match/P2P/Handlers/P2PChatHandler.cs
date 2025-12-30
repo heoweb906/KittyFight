@@ -16,6 +16,8 @@ public class P2PChatHandler : IP2PMessageHandler
 
     public void Handle(string msg)
     {
+        if (AppLifecycle.IsDisconnecting) return;
+
         string chatMsg = msg.Substring(6);
         string logMsg = $"[{opponentNickname}] {chatMsg}";
         Debug.Log(logMsg);

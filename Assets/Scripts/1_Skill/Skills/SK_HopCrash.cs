@@ -119,13 +119,18 @@ public class SK_HopCrash : Skill
         var hop = hitbox.GetComponent<AB_HopCrash>();
         if (hop != null) hop.damage = dmg;
 
-
         var gm = FindObjectOfType<GameManager>();
-        gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration, direction);
-
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeStrength * 0.5f, shakeDuration * 0.5f, direction);
+        }
         //if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         //{
-          
+
         //}
     }
 

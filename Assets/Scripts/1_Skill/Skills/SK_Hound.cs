@@ -54,7 +54,14 @@ public class SK_Hound : Skill
             ApplySlow(enemy.gameObject);
         }
 
-        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
+        }
     }
 
     private void ApplySlow(GameObject target)

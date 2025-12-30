@@ -47,8 +47,8 @@ public class InGameUIController : MonoBehaviour
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
-    public GameObject blindOverlay;
-    
+    [SerializeField] private BlindEggOverlayUI blindEggOverlay;
+
 
     [Header("관리하는 UI 컨트롤러들")]
     public SkillCardController skillCardController;
@@ -165,20 +165,9 @@ public class InGameUIController : MonoBehaviour
             FindObjectOfType<GameManager>()?.EndByTimer();
         }
     }
-
-
-    public void ShowBlindOverlay(float duration)
+    public void ShowBlindEggs(float duration, int eggCount = 3)
     {
-        if (blindOverlay == null) return;
-
-        blindOverlay.SetActive(true);
-        StartCoroutine(HideBlindAfterDelay(duration));
-    }
-
-    private System.Collections.IEnumerator HideBlindAfterDelay(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        blindOverlay.SetActive(false);
+        blindEggOverlay?.Play(duration, eggCount);
     }
 
     // 게임 시작 시 각 UI 위젯에 abilityRef/slot 할당 (GameManager에서 호출)

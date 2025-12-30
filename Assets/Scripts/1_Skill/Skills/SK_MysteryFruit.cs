@@ -11,7 +11,7 @@ public class SK_MysteryFruit : Skill
     [SerializeField] private GameObject effectPrefab;
 
     public float shakeAmount;
-    public float shakeDeration;
+    public float shakeDuration;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
@@ -51,7 +51,12 @@ public class SK_MysteryFruit : Skill
         if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {
             var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeAmount, direction);
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
+        }
+        else
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
         }
     }
 

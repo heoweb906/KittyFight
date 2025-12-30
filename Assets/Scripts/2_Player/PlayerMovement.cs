@@ -94,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
             Vector3 newForward = new Vector3(input.x, 0, 0);
             transform.forward = newForward;
 
-            if (visualPivot != null)
+            bool hanging = (jumpScript != null && jumpScript.IsTouchingWall);
+            if (visualPivot != null && !hanging)
             {
                 float yaw = input.x > 0 ? 50f : 310f;
                 visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
