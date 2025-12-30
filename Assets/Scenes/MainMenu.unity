@@ -7312,6 +7312,7 @@ MonoBehaviour:
   panels:
   - {fileID: 336316004}
   - {fileID: 824454933}
+  sfxSource: {fileID: 47809541}
   image_UpperArea: {fileID: 1950915353}
   image_LowerArea: {fileID: 488291316}
   nicknameInput: {fileID: 315751889}
@@ -22270,6 +22271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleLogoAssist: {fileID: 1115538165}
+  mainMenuController: {fileID: 489576581}
   obj_BackBoard: {fileID: 2077993460}
   obj_Plate: {fileID: 0}
   image_Plate: {fileID: 1129754457}
@@ -22278,6 +22280,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 47ee212d239abbf438f931fbdfb58f97, type: 3}
   text_Description: {fileID: 123252545}
   plateMoveSpeed: 2
+  audioclips_Dialogue:
+  - {fileID: 8300000, guid: 3c4f8924e7d80b646a21caf1563ac249, type: 3}
+  - {fileID: 8300000, guid: ac6de3dca93c34c43ada73744cf6960c, type: 3}
+  - {fileID: 8300000, guid: d350d36c668a9c449870b504c6ca5484, type: 3}
+  - {fileID: 8300000, guid: e8fcab79c10c98341981c7d615df3227, type: 3}
+  - {fileID: 8300000, guid: 570ca45c8e4f98745b59b4598b102bcc, type: 3}
+  - {fileID: 8300000, guid: 4f4f579ab025f874f9b9192036972adc, type: 3}
 --- !u!1 &1830783709
 GameObject:
   m_ObjectHideFlags: 0
