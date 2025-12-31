@@ -10,18 +10,21 @@ public class DisplayOptionsUI : MonoBehaviour
     [SerializeField] private Toggle fullscreenToggle;
 
     [SerializeField] private TMP_Text fullscreenLabel;
+    [SerializeField] private Image fullscreenIcon;
+    [SerializeField] private Sprite fullscreenOnSprite;
+    [SerializeField] private Sprite fullscreenOffSprite;
 
     private const string PREF_RESOLUTION_INDEX = "opt_resolution_index";
     private const string PREF_FULLSCREEN = "opt_fullscreen"; // 0/1
 
     private readonly (int w, int h)[] _resolutions =
     {
-        (2560, 1440),
-        (1920, 1080),
-        (1600, 900),
-        (1366, 768),
-        (1280, 720),
         (1024, 576),
+        (1280, 720),
+        (1366, 768),
+        (1600, 900),
+        (1920, 1080),
+        (2560, 1440),
     };
 
     private bool _syncing;
@@ -53,7 +56,7 @@ public class DisplayOptionsUI : MonoBehaviour
 
         var options = new List<string>(_resolutions.Length);
         for (int i = 0; i < _resolutions.Length; i++)
-            options.Add($"{_resolutions[i].w}¡¿{_resolutions[i].h}");
+            options.Add($"{_resolutions[i].w} X {_resolutions[i].h}");
 
         resolutionDropdown.AddOptions(options);
     }
@@ -62,7 +65,7 @@ public class DisplayOptionsUI : MonoBehaviour
     {
         _syncing = true;
 
-        int index = PlayerPrefs.GetInt(PREF_RESOLUTION_INDEX, 1); // ±âº»: 1920x1080
+        int index = PlayerPrefs.GetInt(PREF_RESOLUTION_INDEX, 1);
         index = Mathf.Clamp(index, 0, _resolutions.Length - 1);
 
         bool fullscreen = PlayerPrefs.GetInt(PREF_FULLSCREEN, 1) == 1;
@@ -113,5 +116,10 @@ public class DisplayOptionsUI : MonoBehaviour
     {
         if (!fullscreenLabel) return;
         fullscreenLabel.text = isFullscreen ? "ON" : "OFF";
+
+        if (fullscreenIcon)
+            fullscreenIcon.sprite = isFullscreen
+                ? fullscreenOnSprite
+                : fullscreenOffSprite;
     }
 }
