@@ -14,6 +14,7 @@ public class UserData
 public class FirstRunManager : MonoBehaviour
 {
     public TitleLogoAssist titleLogoAssist;
+    [SerializeField] private MainMenuController mainMenuController;
 
     private string saveFilePath;
 
@@ -31,6 +32,14 @@ public class FirstRunManager : MonoBehaviour
     // [수정] 떨리기 전 원래 위치를 저장할 변수
     private Vector2 originalPlatePos;
 
+
+
+    [Header("사운드")]
+    public AudioClip[] audioclips_Dialogue;
+
+
+
+
     private void Awake()
     {
         saveFilePath = Path.Combine(Application.persistentDataPath, "userdata.json");
@@ -40,6 +49,33 @@ public class FirstRunManager : MonoBehaviour
     {
         CheckFirstRun();
     }
+
+
+
+    private void Update()
+    {
+#if UNITY_EDITOR || UNITY_STANDALONE
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ResetToFirstRun();
+        }
+#endif
+    }
+
+    private void ResetToFirstRun()
+    {
+        // 초기값(isFirstRun = true)으로 생성
+        UserData data = new UserData();
+
+        // 덮어쓰기
+        SaveUserData(data);
+
+        Debug.Log("<color=yellow>[System] 데이터 초기화 완료. 게임을 재시작하면 컷씬이 재생됩니다.</color>");
+    }
+
+
+
+
 
 
 
@@ -130,11 +166,22 @@ public class FirstRunManager : MonoBehaviour
 
 
         // --- 연출 스케줄링 ---
-        float currentTime = 3.0f + backBoardMoveTime; // 7.0초
+        float currentTime = 4.0f + backBoardMoveTime; // 7.0초
 
         // T+8.0
-        currentTime += 1.0f;
-        DOVirtual.DelayedCall(currentTime, () => WriteDescription("On the first day of each year, a guardian is chosen to protect the year"));
+        DOVirtual.DelayedCall(currentTime, () =>
+        {
+            WriteDescription("On the first day of each year, a guardian is chosen to protect the year");
+            mainMenuController.PlaySFX(audioclips_Dialogue[0]);
+        });
+        currentTime += 3.0f;
+
+
+        DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
+        currentTime += 0.75f;
+
+
+
 
         // T+9.0
         currentTime += 1.0f;

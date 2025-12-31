@@ -19,6 +19,10 @@ public class MainMenuController : MonoBehaviour
     private int currentIndex = -1;
 
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+
+
     [Header("Panel_InputNickName ฐüทร")]
     public Image image_UpperArea;
     public Image image_LowerArea;
@@ -680,5 +684,12 @@ public class MainMenuController : MonoBehaviour
         buttonCancel.interactable = isInteractable;
     }
 
- 
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (!clip || !sfxSource) return;
+        sfxSource.PlayOneShot(clip);
+    }
+
+
 }
