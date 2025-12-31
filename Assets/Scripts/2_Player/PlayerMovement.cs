@@ -22,6 +22,13 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform groundCheck;
 
+    [Header("Skill Facing Lock")]
+    private const float DEFAULT_SKILL_LOCK_SEC = 0.25f;
+    private bool facingLocked;
+    private float facingUnlockTime;
+    private Vector3 lockedForward;
+    private float lockedYaw;
+
     Vector3 moveDirection;
 
     private void Awake()
@@ -89,7 +96,11 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = !onSlope;
 
         anim.SetBool("isRun", input.x != 0f);
-        if (input.x != 0)
+
+        bool locked = IsFacingLocked();
+        if (locked) ApplyLockedFacing();
+
+        if (!locked && input.x != 0)
         {
             Vector3 newForward = new Vector3(input.x, 0, 0);
             transform.forward = newForward;
@@ -120,5 +131,47 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    public void LockFacing(Vector3 dir)
+    {
+        LockFacingInternal(dir, DEFAULT_SKILL_LOCK_SEC);
+    }
+    public void LockFacing(Vector3 dir, float duration)
+    {
+        LockFacingInternal(dir, duration);
+    }
+
+    private void LockFacingInternal(Vector3 dir, float duration)
+    {
+        if (dir.sqrMagnitude < 0.0001f) return;
+
+        float x = dir.x;
+        if (Mathf.Abs(x) < 0.0001f) return;
+
+        lockedForward = new Vector3(x > 0f ? 1f : -1f, 0f, 0f);
+        lockedYaw = lockedForward.x > 0f ? 50f : 310f;
+
+        facingLocked = true;
+        facingUnlockTime = Time.time + duration;
+
+        ApplyLockedFacing();
+    }
+
+    private bool IsFacingLocked()
+    {
+        if (!facingLocked) return false;
+        if (Time.time < facingUnlockTime) return true;
+
+        facingLocked = false;
+        return false;
+    }
+
+    private void ApplyLockedFacing()
+    {
+        transform.forward = lockedForward;
+
+        if (visualPivot != null)
+            visualPivot.localRotation = Quaternion.Euler(0f, lockedYaw, 0f);
     }
 }

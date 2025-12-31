@@ -42,6 +42,8 @@ public class PlayerAbility : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource sfxSource;
 
+    private PlayerMovement movement;
+
     // Re-peek ¿ë
     private bool _hasLastActionType;
     private SkillType _lastActionType;
@@ -82,6 +84,7 @@ public class PlayerAbility : MonoBehaviour
         Health = GetComponent<PlayerHealth>();
         if (!events) events = GetComponent<AbilityEvents>();
         if (!meshTrail) meshTrail = GetComponent<VFX_MeshTrail>();
+        movement = GetComponent<PlayerMovement>();
     }
 
     void Start()
@@ -173,6 +176,14 @@ public class PlayerAbility : MonoBehaviour
 
         if (!(s is SK_Repeek))
             RecordLastActionType(type);
+
+        if (movement != null)
+        {
+            if (s is SK_Dash dashSkill)
+                movement.LockFacing(direction, dashSkill.dashDuration);
+            else
+                movement.LockFacing(direction);
+        }
 
         if (!force)
         {
