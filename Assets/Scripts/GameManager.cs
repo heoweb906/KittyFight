@@ -358,52 +358,66 @@ public class GameManager : MonoBehaviour
 
             int mapIdx = 0;
             int bgIdx = 0;
-            int newThemeIndex = 0; // 이번에 결정된 테마 인덱스
+            int newThemeIndex = 0;
 
-            // 1. 점수 합계 5점 미만 (초반) -> 테마 0
+            // --- [테마/BGM 결정 로직 (기존 동일)] ---
             if (totalScore < 5)
             {
                 newThemeIndex = 0;
-                mapIdx = Random.Range(0, 8);  // 0 ~ 7
-                bgIdx = Random.Range(0, 4);   // 0 ~ 3
+                mapIdx = Random.Range(0, 8);
+                bgIdx = Random.Range(0, 4);
             }
-            // 2. 점수 합계 5점 이상 ~ 14점 미만 (중반) -> 테마 1
             else if (totalScore >= 5 && totalScore < 14)
             {
                 newThemeIndex = 1;
-                mapIdx = Random.Range(8, 16); // 8 ~ 15
-                bgIdx = Random.Range(4, 8);   // 4 ~ 7
+                mapIdx = Random.Range(8, 16);
+                bgIdx = Random.Range(4, 8);
             }
-            // 3. 점수 합계 14점 이상 (후반) -> 테마 2
             else
             {
                 newThemeIndex = 2;
-                mapIdx = Random.Range(16, 24); // 16 ~ 23
-                bgIdx = Random.Range(8, 10);   // 8 ~ 9
+                mapIdx = Random.Range(16, 24);
+                bgIdx = Random.Range(8, 10);
             }
 
-            // [추가됨] 테마 단계가 바뀌었을 때만 BGM 변경 요청
             if (newThemeIndex != currentThemeIndex)
             {
                 currentThemeIndex = newThemeIndex;
-
-                // 인덱스 안전 검사 후 BGM 재생
                 if (ingameUIController.bgmClips.Length > newThemeIndex)
                 {
                     ingameUIController.PlayBGM(ingameUIController.bgmClips[newThemeIndex]);
                 }
             }
+            // ------------------------------------
 
-            if (totalScore % 1 == 0 && totalScore > 0)
+            // [수정된 부분] 5의 배수마다 기믹 교체 & 유지 로직
+
+            // 1. 5점 이상부터 기믹 활성화
+            if (totalScore >= 5)
             {
-                IntMapGimicnumber = Random.Range(3, 4);
+                // 2. 5의 배수일 때만 '새로운' 기믹 번호 뽑기 (5, 10, 15...)
+                // 5의 배수가 아닐 땐(6, 7...) 기존 IntMapGimicnumber 값이 그대로 유지됨
+                if (totalScore % 5 == 0)
+                {
+                    // 기믹 ID는 1~12번 (Random.Range 정수는 Max 제외이므로 1, 13)
+                    IntMapGimicnumber = Random.Range(1, 13);
+                }
 
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
             }
+            else
+            {
+                // 5점 미만일 때는 기믹 없음
+                BoolAcitveMapGimic = false;
+                IntMapGimicnumber = 0; // 혹은 초기화
+            }
+
+            // 패킷 전송 시, 기믹이 비활성화 상태면 0을 보냄
+            int gimicToSend = BoolAcitveMapGimic ? IntMapGimicnumber : 0;
 
             P2PMessageSender.SendMessage(
-                BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, IntMapGimicnumber)
+                BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, gimicToSend)
             );
 
             ApplyBackground(mapIdx, bgIdx, 0);
@@ -466,7 +480,7 @@ public class GameManager : MonoBehaviour
 
         int totalScore = IntScorePlayer_1 + IntScorePlayer_2;     
 
-        if (totalScore % 1 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
+        if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
         else  yield return new WaitForSeconds(1f);                                          
 
         ingameUIController.ChangeReadyStartSprite(1);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapGimic_11_Dog : AbstractMapGimic
 {
     // °ËºÓÀº »ö (Dark Red)
-    private readonly Color dogColor = new Color(0.5f, 0f, 0f);
+    private readonly Color dogColor = new Color(0.5f, 0.1f, 0f);
 
     public override void OnGimicStart()
     {

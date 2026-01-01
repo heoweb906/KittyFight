@@ -219,6 +219,11 @@ public class InGameUIController : MonoBehaviour
     // #. 허재승이 추가한 함수들
     public void ComeToTheEndGame(int winnerPlayerNum)
     {
+        if (iPanelNum != 0)
+        {
+            ChangePanel(0);
+        }
+
         scoreBoardUIController.CloseScorePanel(winnerPlayerNum, winnerPlayerNum == 1 ? ++gameManager.IntScorePlayer_1 : ++gameManager.IntScorePlayer_2 , true);
         scoreBoardUIController.OnOffCheering(true);
 

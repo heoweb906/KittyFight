@@ -63,18 +63,6 @@ public class MapManager : MonoBehaviour
     }
 
 
-    public MapGimic_3_Tiger dddd;
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z)) dddd.ChangeWeaponToMelee();
-        if (Input.GetKeyDown(KeyCode.X)) dddd.ChangeWeaponToRange();
-
-
-    }
-
-
 
     private void FixedUpdate()
     {
