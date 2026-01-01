@@ -47,7 +47,9 @@ public class FirstRunManager : MonoBehaviour
 
     private void Start()
     {
-        CheckFirstRun();
+        PlayOpeningCutscene();
+
+        //CheckFirstRun();
     }
 
 
@@ -139,19 +141,29 @@ public class FirstRunManager : MonoBehaviour
 
         if (titleLogoAssist != null) titleLogoAssist.MoveToTarget(0);
 
-        // 플레이트 무한 회전
+        // ★ [핵심 수정] Sequence를 사용하여 "등속 운동" -> "마지막 감속" 연결
         if (image_Plate != null)
         {
-            image_Plate.rectTransform
-                .DORotate(new Vector3(0, 0, -360), 30f, RotateMode.FastBeyond360)
-                .SetEase(Ease.Linear)
-                .SetLoops(-1, LoopType.Incremental);
+            image_Plate.rectTransform.localRotation = Quaternion.identity;
+
+            Sequence rotateSeq = DOTween.Sequence();
+
+            // 1단계: 15초 동안 10바퀴를 '일정한 속도(Linear)'로 맹렬히 돕니다.
+            // (15초, -3600도)
+            rotateSeq.Append(image_Plate.rectTransform
+                .DORotate(new Vector3(0, 0, -360 * 3), 15.0f, RotateMode.FastBeyond360)
+                .SetEase(Ease.Linear));
+
+
+            rotateSeq.Append(image_Plate.rectTransform
+                .DORotate(new Vector3(0, 0, -360 * 1f), 5.0f, RotateMode.FastBeyond360)
+                .SetEase(Ease.OutQuad));
         }
 
         // --- [T+1.5] : 문 열기 ---
         DOVirtual.DelayedCall(1.5f, () =>
         {
-            if (titleLogoAssist != null) titleLogoAssist.MoveToStart();
+            if (titleLogoAssist != null) titleLogoAssist.MoveToStart(1.5f);
         });
 
         // --- [T+3.0] : 백보드 이동 (4초) ---
@@ -165,43 +177,53 @@ public class FirstRunManager : MonoBehaviour
         });
 
 
+        mainMenuController.PlayBGM(mainMenuController.bgmClips[0]);
+
+
         // --- 연출 스케줄링 ---
         float currentTime = 4.0f + backBoardMoveTime; // 7.0초
 
-        // T+8.0
         DOVirtual.DelayedCall(currentTime, () =>
         {
             WriteDescription("On the first day of each year, a guardian is chosen to protect the year");
             mainMenuController.PlaySFX(audioclips_Dialogue[0]);
         });
-        currentTime += 3.0f;
-
-
+        currentTime += 2.75f;
         DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
         currentTime += 0.75f;
 
 
-
-
-        // T+9.0
-        currentTime += 1.0f;
-        DOVirtual.DelayedCall(currentTime, () => WriteDescription("We call them the [Zodiacs]"));
-
-        // T+10.0
-        currentTime += 1.0f;
-        DOVirtual.DelayedCall(currentTime, () => WriteDescription("The Zodiac consisted of twelve animals"));
-
-        // T+11.0 "Until now..."
-        currentTime += 1.0f;
-        DOVirtual.DelayedCall(currentTime, () => WriteDescription("Until now..."));
-
-        // T+12.0 자막 지움
-        currentTime += 1.0f;
+        DOVirtual.DelayedCall(currentTime, () =>
+        {
+            WriteDescription("We call them the [Zodiacs]");
+            mainMenuController.PlaySFX(audioclips_Dialogue[1]);
+        });
+        currentTime += 2f;
         DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
+        currentTime += 0.75f;
 
 
-        // [T+13.0] 이동하며 떨리기 시작 (3초간)
-        currentTime += 1.0f;
+        DOVirtual.DelayedCall(currentTime, () =>
+        {
+            WriteDescription("The Zodiac consisted of twelve animals");
+            mainMenuController.PlaySFX(audioclips_Dialogue[2]);
+        });
+        currentTime += 2f;
+        DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
+        currentTime += 0.75f;
+
+
+        DOVirtual.DelayedCall(currentTime, () =>
+        {
+            WriteDescription("Until now...");
+            mainMenuController.PlaySFX(audioclips_Dialogue[3]);
+        });
+        currentTime += 1.5f;
+        DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
+        currentTime += 1f; // 여기서 총 시간 약 18.5초 지점 (회전 종료 직후)
+
+
+        // --- [Plate 낙하 연출] ---
         float dration_1 = 3f;
         DOVirtual.DelayedCall(currentTime, () =>
         {
@@ -211,8 +233,6 @@ public class FirstRunManager : MonoBehaviour
                 float startY = originalPlatePos.y;
                 float targetY = -5940f;
 
-                image_Plate.rectTransform.DOKill();
-                image_Plate.rectTransform.DORotate(Vector3.zero, 1.0f).SetEase(Ease.OutQuad);
                 image_Plate.rectTransform.DOScale(1.0f, dration_1).SetEase(Ease.OutQuad);
 
                 DOVirtual.Float(startY, targetY, dration_1 - 0.5f, (currentY) =>
@@ -230,7 +250,7 @@ public class FirstRunManager : MonoBehaviour
         });
 
 
-        // [T+17.0] 고양이 등장 (떨림 종료)
+        // [T+17.0 + @] 고양이 등장 (떨림 종료)
         currentTime += dration_1;
         DOVirtual.DelayedCall(currentTime, () =>
         {
@@ -238,22 +258,29 @@ public class FirstRunManager : MonoBehaviour
 
             if (image_Plate != null)
             {
-                // Y 위치 유지 (-5940)
                 image_Plate.rectTransform.anchoredPosition = new Vector2(originalPlatePos.x, -5940f);
             }
 
             if (sprites_Plate.Length > 1) image_Plate.sprite = sprites_Plate[1];
 
-            // 팝 효과
             Sequence popSeq = DOTween.Sequence();
             popSeq.Append(image_Plate.rectTransform.DOScale(1.2f, 0.1f).SetEase(Ease.OutQuad));
             popSeq.Append(image_Plate.rectTransform.DOScale(1.0f, 0.3f).SetEase(Ease.OutBack));
         });
 
 
-        // 1초 뒤 자막
-        currentTime += 1.0f;
-        DOVirtual.DelayedCall(currentTime, () => WriteDescription("This year, it has been decided that the Cat will join as the 13th Zodiac!"));
+        currentTime += 1f;
+
+
+        DOVirtual.DelayedCall(currentTime, () =>
+        {
+            WriteDescription("This year, it has been decided that the Cat will join as the 13th Zodiac!");
+            mainMenuController.PlaySFX(audioclips_Dialogue[4]);
+        });
+        currentTime += 2.75f;
+
+
+        DOVirtual.DelayedCall(currentTime, () => WriteDescription(""));
 
 
         // --- [복귀 애니메이션] ---
@@ -264,7 +291,6 @@ public class FirstRunManager : MonoBehaviour
         {
             if (image_Plate != null)
             {
-                // 최초 위치/크기로 복귀
                 image_Plate.rectTransform.DOAnchorPos(originalPlatePos, duration_2).SetEase(Ease.InOutSine);
                 image_Plate.rectTransform.DOScale(originalPlateScale, duration_2).SetEase(Ease.InOutSine);
             }
@@ -272,24 +298,22 @@ public class FirstRunManager : MonoBehaviour
 
 
         // --- [마지막 단계] ---
-        // 복귀 애니메이션 끝난 후 (duration_2 만큼 시간 흐름)
         currentTime += duration_2;
 
         DOVirtual.DelayedCall(currentTime, () =>
         {
             WriteDescription("On the first day of each year, a guardian is chosen to protect the year");
+            mainMenuController.PlaySFX(audioclips_Dialogue[5]);
 
-            // [요청하신 로직 추가]
-            // 1. 2초 뒤에 AAA() 실행
             DOVirtual.DelayedCall(2.0f, () =>
             {
                 titleLogoAssist.MoveToTarget(0.85f);
-
-                // 2. AAA 실행 후, 또 2초 뒤에 EnterLobby() 실행
                 DOVirtual.DelayedCall(2.0f, EnterLobby);
             });
         });
     }
+
+
 
 
     private void EnterLobby()
@@ -300,6 +324,7 @@ public class FirstRunManager : MonoBehaviour
 
         if (titleLogoAssist != null)
         {
+            mainMenuController.PlayBGM(mainMenuController.bgmClips[1]);
             titleLogoAssist.StartStep1();
         }
     }
@@ -311,4 +336,5 @@ public class FirstRunManager : MonoBehaviour
             text_Description.text = _text;
         }
     }
+
 }

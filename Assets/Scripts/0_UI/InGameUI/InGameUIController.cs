@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
-using Unity.VisualScripting;
-using JetBrains.Annotations;
+using System.IO;
 
 public class InGameUIController : MonoBehaviour
 {
@@ -59,6 +58,13 @@ public class InGameUIController : MonoBehaviour
     [Header("연출용")]
     public Image image_FadeOut_White;
     public bool bFinalEndingStart;
+
+    [Header("사운드")]
+    [SerializeField] private AudioSource sfxSource;
+    public AudioClip[] sfxClips;
+
+    [SerializeField] private AudioSource bgmSource;
+    public AudioClip[] bgmClips;
 
 
     [Header("설정창 관련")]
@@ -350,6 +356,51 @@ public class InGameUIController : MonoBehaviour
             });
         bottomImage.DOAnchorPosY(bottomTargetY, fDuration).SetEase(Ease.InQuint);
     }
+
+
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (!clip || !sfxSource) return;
+        sfxSource.PlayOneShot(clip);
+    }
+
+
+    public void PlayBGM(AudioClip clip)
+    {
+        if (!clip || !bgmSource) return;
+
+        if (bgmSource.clip == clip && bgmSource.isPlaying) return;
+
+        // 혹시 이전에 실행 중이던 BGM 관련 트윈이 있다면 즉시 중단 (중복 실행 방지)
+        bgmSource.DOKill();
+
+        // 1. 복구할 목표 볼륨값 저장
+        // (현재 볼륨이 0이면 꺼져있는 상태니 1로 가정, 아니면 현재 볼륨 유지)
+        float targetVolume = bgmSource.volume > 0.01f ? bgmSource.volume : 1f;
+
+        Sequence bgmSeq = DOTween.Sequence();
+
+        // 2. [Fade Out] 현재 재생 중이라면 볼륨을 0으로 줄임
+        if (bgmSource.isPlaying)
+        {
+            bgmSeq.Append(bgmSource.DOFade(0f, 1.0f).SetEase(Ease.Linear));
+        }
+
+        // 3. [Swap] 볼륨이 0이 된 후 클립 교체 및 재생
+        bgmSeq.AppendCallback(() =>
+        {
+            bgmSource.Stop();
+            bgmSource.clip = clip;
+            bgmSource.loop = true;
+            bgmSource.volume = 0f; // 확실하게 0에서 시작
+            bgmSource.Play();
+        });
+
+        // 4. [Fade In] 다시 원래 볼륨으로 복구
+        bgmSeq.Append(bgmSource.DOFade(targetVolume, 1.0f).SetEase(Ease.Linear));
+    }
+
 
 
 }
