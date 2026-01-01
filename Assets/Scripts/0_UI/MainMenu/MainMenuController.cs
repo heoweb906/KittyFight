@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.Rendering;
-using System.Text.RegularExpressions;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -21,6 +19,12 @@ public class MainMenuController : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource sfxSource;
+    public AudioClip[] sfxClips;
+    // 
+
+    [SerializeField] private AudioSource bgmSource;
+    public AudioClip[] bgmClips;
+    
 
 
     [Header("Panel_InputNickName 관련")]
@@ -61,10 +65,7 @@ public class MainMenuController : MonoBehaviour
     private int iPanelNum;    // 패널 번호
     private bool bOtherPanel;       // 닉네임 수정 중 or 매칭 중
   
-   
-    
-
-
+  
 
     void Start()
     {
@@ -660,17 +661,17 @@ public class MainMenuController : MonoBehaviour
 
             .OnComplete(() =>
             {
-                // 애니메이션 완료 후 최종 정리
                 targetRect.DOKill();
                 targetObject.SetActive(false);
 
-                // 스케일을 원래대로 복원 (다음에 다시 켜질 때를 대비)
                 targetRect.localScale = currentScale;
 
-                // 콜백 실행
                 onCompleteCallback?.Invoke();
             });
     }
+
+
+
 
 
     public void SetCancelButtonVisibilityAndInteractable(bool isVisible, bool isInteractable)
@@ -690,6 +691,45 @@ public class MainMenuController : MonoBehaviour
         if (!clip || !sfxSource) return;
         sfxSource.PlayOneShot(clip);
     }
+
+
+    public void PlayBGM(AudioClip clip)
+    {
+        if (!clip || !bgmSource) return;
+
+        if (bgmSource.clip == clip && bgmSource.isPlaying) return;
+
+        // 혹시 이전에 실행 중이던 BGM 관련 트윈이 있다면 즉시 중단 (중복 실행 방지)
+        bgmSource.DOKill();
+
+        // 1. 복구할 목표 볼륨값 저장
+        // (현재 볼륨이 0이면 꺼져있는 상태니 1로 가정, 아니면 현재 볼륨 유지)
+        float targetVolume = bgmSource.volume > 0.01f ? bgmSource.volume : 1f;
+
+        Sequence bgmSeq = DOTween.Sequence();
+
+        // 2. [Fade Out] 현재 재생 중이라면 볼륨을 0으로 줄임
+        if (bgmSource.isPlaying)
+        {
+            bgmSeq.Append(bgmSource.DOFade(0f, 1.0f).SetEase(Ease.Linear));
+        }
+
+        // 3. [Swap] 볼륨이 0이 된 후 클립 교체 및 재생
+        bgmSeq.AppendCallback(() =>
+        {
+            bgmSource.Stop();
+            bgmSource.clip = clip;
+            bgmSource.loop = true;
+            bgmSource.volume = 0f; // 확실하게 0에서 시작
+            bgmSource.Play();
+        });
+
+        // 4. [Fade In] 다시 원래 볼륨으로 복구
+        bgmSeq.Append(bgmSource.DOFade(targetVolume, 1.0f).SetEase(Ease.Linear));
+    }
+
+
+
 
 
 }

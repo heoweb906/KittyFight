@@ -198,16 +198,16 @@ public class TitleLogoAssist : MonoBehaviour
     }
 
 
-    public void MoveToStart()
+    public void MoveToStart(float fDuration = 0.75f)
     {
         if (image1Rect != null && startPoint1 != null)
         {
-            image1Rect.DOAnchorPos(startPoint1.anchoredPosition, 0.75f).SetEase(Ease.OutQuint);
+            image1Rect.DOAnchorPos(startPoint1.anchoredPosition, fDuration).SetEase(Ease.OutQuint);
         }
 
         if (image2Rect != null && startPoint2 != null)
         {
-            image2Rect.DOAnchorPos(startPoint2.anchoredPosition, 0.75f).SetEase(Ease.OutQuint);
+            image2Rect.DOAnchorPos(startPoint2.anchoredPosition, fDuration).SetEase(Ease.OutQuint);
         }
     }
 
