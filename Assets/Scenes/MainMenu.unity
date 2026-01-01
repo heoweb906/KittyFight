@@ -1495,6 +1495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 119055066}
   text_ButtonText: {fileID: 2134608719}
 --- !u!1 &123252544
@@ -1563,8 +1564,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2203,6 +2204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 164924184}
   text_ButtonText: {fileID: 1684763538}
 --- !u!1 &167881412
@@ -4885,6 +4887,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &300923082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 300923083}
+  - component: {fileID: 300923085}
+  - component: {fileID: 300923084}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &300923083
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300923082}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1129754456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.2, y: 478.5}
+  m_SizeDelta: {x: 613, y: 1038}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &300923084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300923082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 458788d54e518f845852f277c16c7efa, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &300923085
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300923082}
+  m_CullTransparentMesh: 1
 --- !u!1001 &303189501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7313,7 +7390,12 @@ MonoBehaviour:
   - {fileID: 336316004}
   - {fileID: 824454933}
   sfxSource: {fileID: 47809541}
-  sfxClips: []
+  sfxClips:
+  - {fileID: 8300000, guid: be5fb988d4ebd3d4cbee5188b1bf0604, type: 3}
+  - {fileID: 8300000, guid: 33bcfe1d8e4269941aeed50fb51c8c2e, type: 3}
+  - {fileID: 8300000, guid: f62253284cb87d94b8dc3cacd29add97, type: 3}
+  - {fileID: 8300000, guid: cdc68a4df5aa0ba44b92a37a0aa12186, type: 3}
+  - {fileID: 8300000, guid: ac7203a1a7deacc4eb2fed6263c79085, type: 3}
   bgmSource: {fileID: 1978963040}
   bgmClips:
   - {fileID: 8300000, guid: 97fb32fe7c0d10d4daeda8e5f85a0ff2, type: 3}
@@ -7344,6 +7426,12 @@ MonoBehaviour:
   - {fileID: 539526201}
   - {fileID: 1072557281}
   - {fileID: 239043059}
+  buttonsMainMenu:
+  - {fileID: 119055069}
+  - {fileID: 164924187}
+  - {fileID: 1618150676}
+  - {fileID: 1470586562}
+  - {fileID: 1831225415}
 --- !u!1 &490754251
 GameObject:
   m_ObjectHideFlags: 0
@@ -8103,6 +8191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 572625220}
   text_ButtonText: {fileID: 837043379}
 --- !u!114 &572625220
@@ -11241,7 +11330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 812487007}
   m_Layer: 5
-  m_Name: UI_FinalWinner
+  m_Name: UI_FirstCutscene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14595,7 +14684,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4704855, y: 0.4704855, z: 0.4704855}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 300923083}
   m_Father: {fileID: 2077993461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 250}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -18579,6 +18669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 1470586559}
   text_ButtonText: {fileID: 1584090857}
 --- !u!1 &1483291292
@@ -20361,6 +20452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 1618150673}
   text_ButtonText: {fileID: 69095675}
 --- !u!1 &1631193218
@@ -22283,6 +22375,7 @@ MonoBehaviour:
   sprites_Plate:
   - {fileID: 21300000, guid: f92a0e1558f68c34a977e77955093aa0, type: 3}
   - {fileID: 21300000, guid: 47ee212d239abbf438f931fbdfb58f97, type: 3}
+  sprite_QuestionMark: {fileID: 0}
   text_Description: {fileID: 123252545}
   plateMoveSpeed: 2
   audioclips_Dialogue:
@@ -22419,6 +22512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6181044aa8dbd4e46bc5bddce6c096d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuController: {fileID: 0}
   buttton: {fileID: 1831225416}
   text_ButtonText: {fileID: 223358786}
 --- !u!114 &1831225416
@@ -27132,6 +27226,9 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 1538119190}
   fullscreenToggle: {fileID: 153406433}
   fullscreenLabel: {fileID: 2122019617}
+  fullscreenIcon: {fileID: 0}
+  fullscreenOnSprite: {fileID: 0}
+  fullscreenOffSprite: {fileID: 0}
 --- !u!114 &601900708546681993
 MonoBehaviour:
   m_ObjectHideFlags: 0

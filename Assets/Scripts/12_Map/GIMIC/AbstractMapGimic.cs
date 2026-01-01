@@ -17,6 +17,11 @@ public abstract class AbstractMapGimic : MonoBehaviour
     // 테스트용 !!!!
     // 테스트용 !!!!
 
+
+   
+
+
+
     public virtual void OnGimicStart()
     {
         bIsActive = true;

@@ -59,14 +59,16 @@ public class MapBoardController : MonoBehaviour
 
         // 시작하자마자 열어두기 (화면 밖으로 치우기)
         // 만약 처음에 닫혀있어야 한다면 이 줄 주석 처리
-        OpenMapBoardPanelVertical();
+        OpenMapBoardPanelVertical(false);
     }
 
 
     // #. 패널 열기 (초기 위치 기준 위/아래로 1000만큼 이동)
-    public void OpenMapBoardPanelVertical()
+    public void OpenMapBoardPanelVertical(bool bSound = true)
     {
         if (mapBoardElement_Upper.rectTransform_BackGround == null || mapBoardElement_Lower.rectTransform_BackGround == null) return;
+
+        if(bSound) InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[1]);
 
         // 1. 상단 패널: 초기 위치 + 1000 (위로)
         mapBoardElement_Upper.rectTransform_BackGround.DOKill();
@@ -92,7 +94,7 @@ public class MapBoardController : MonoBehaviour
     }
 
     // #. 패널 닫기 (초기 위치로 복귀)
-    public void CloseMapBoardPanelVertical(int iAnimalNum = 0)
+    public void CloseMapBoardPanelVertical(int iAnimalNum = 0, bool bSound = true)
     {
         // 1. 이미지 및 텍스트 갱신
         if (iAnimalNum >= 0)
@@ -100,8 +102,11 @@ public class MapBoardController : MonoBehaviour
             ChangeImage_MapBoard(iAnimalNum);
         }
 
-        // 2. 오브젝트 활성화 (이동 전 켜야 보임)
-        mapBoardElement_Upper.objMine.SetActive(true);
+        if(bSound) InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[1]);
+
+
+        // 2. 오브젝트 활성화 (이동 전 켜야 보임)
+        mapBoardElement_Upper.objMine.SetActive(true);
         mapBoardElement_Lower.objMine.SetActive(true);
 
         // 3. 상단 패널: 초기 위치로 이동

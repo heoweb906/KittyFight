@@ -74,7 +74,7 @@ public class MapGimic_3_Tiger : AbstractMapGimic
         else ChangeWeaponToRange();
     }
 
-    private void ChangeWeaponToMelee()
+    public void ChangeWeaponToMelee()
     {
         if (gameManager == null) return;
         if (_tigerApplied) return;
@@ -89,11 +89,15 @@ public class MapGimic_3_Tiger : AbstractMapGimic
         a1.SetSkill(SkillType.Ranged, a1.meleeSkill);
         a2.SetSkill(SkillType.Ranged, a2.meleeSkill);
 
+        a1.effect.PlayShakeAnimation(0);
+        a2.effect.PlayShakeAnimation(0);
+
+
         _tigerApplied = true;
     }
 
 
-    private void ChangeWeaponToRange()
+    public void ChangeWeaponToRange()
     {
         if (gameManager == null) return;
         if (!_tigerApplied) return;
@@ -104,6 +108,9 @@ public class MapGimic_3_Tiger : AbstractMapGimic
 
         if (_p1OriginalRanged != null) a1.SetSkill(SkillType.Ranged, _p1OriginalRanged);
         if (_p2OriginalRanged != null) a2.SetSkill(SkillType.Ranged, _p2OriginalRanged);
+
+        a1.effect.PlayShakeAnimation(0);
+        a2.effect.PlayShakeAnimation(0);
 
         _tigerApplied = false;
     }

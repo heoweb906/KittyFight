@@ -200,6 +200,9 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // 회색 벽 알파값을 244로 (기존 이미지 색상 변경 코드 제거)
         if(image_GrayWall != null) image_GrayWall.DOFade(248f / 255f, tweenDuration);
 
+        skillCardController.InGameUiController.PlaySFX(skillCardController.InGameUiController.sfxClips_InGameSystem[8]);
+
+
 
         Vector2 targetPos = originalTitleAnchorPos + new Vector2(0, -50f);
         image_CardTitle.rectTransform.DOAnchorPos(targetPos, tweenDuration);

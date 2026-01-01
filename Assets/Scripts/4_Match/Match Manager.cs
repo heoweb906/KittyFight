@@ -98,6 +98,10 @@ public class MatchManager : MonoBehaviour
         }
 
         AppendLog("Match Completed");
+        mainMenuController.PlaySFX(mainMenuController.sfxClips[4]);
+        mainMenuController.PlayBGM(null);
+
+
 
         // 매칭 성공 응답 후, 취소 요청이 있었는지 확인 (경쟁 조건 방지)
         if (!isMatching)

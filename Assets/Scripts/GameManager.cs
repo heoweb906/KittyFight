@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
     public int IntMapGimicnumber { get; set; }      // 현재 적용되어 있는 맵 미기 번호
     public bool BoolAcitveMapGimic { get; set; }    // 현재 맵 기믹이 적용되어 있음
 
+    private int currentThemeIndex = -1;
+
 
     private readonly Color[] backgroundColorCandidates = new Color[]
     {
@@ -356,31 +358,45 @@ public class GameManager : MonoBehaviour
 
             int mapIdx = 0;
             int bgIdx = 0;
+            int newThemeIndex = 0; // 이번에 결정된 테마 인덱스
 
-            // 1. 점수 합계 5점 미만 (초반)
+            // 1. 점수 합계 5점 미만 (초반) -> 테마 0
             if (totalScore < 5)
             {
+                newThemeIndex = 0;
                 mapIdx = Random.Range(0, 8);  // 0 ~ 7
                 bgIdx = Random.Range(0, 4);   // 0 ~ 3
             }
-            // 2. 점수 합계 5점 이상 ~ 14점 미만 (중반)
+            // 2. 점수 합계 5점 이상 ~ 14점 미만 (중반) -> 테마 1
             else if (totalScore >= 5 && totalScore < 14)
             {
+                newThemeIndex = 1;
                 mapIdx = Random.Range(8, 16); // 8 ~ 15
                 bgIdx = Random.Range(4, 8);   // 4 ~ 7
             }
-            // 3. 점수 합계 14점 이상 (후반)
+            // 3. 점수 합계 14점 이상 (후반) -> 테마 2
             else
             {
+                newThemeIndex = 2;
                 mapIdx = Random.Range(16, 24); // 16 ~ 23
                 bgIdx = Random.Range(8, 10);   // 8 ~ 9
             }
 
+            // [추가됨] 테마 단계가 바뀌었을 때만 BGM 변경 요청
+            if (newThemeIndex != currentThemeIndex)
+            {
+                currentThemeIndex = newThemeIndex;
+
+                // 인덱스 안전 검사 후 BGM 재생
+                if (ingameUIController.bgmClips.Length > newThemeIndex)
+                {
+                    ingameUIController.PlayBGM(ingameUIController.bgmClips[newThemeIndex]);
+                }
+            }
+
             if (totalScore % 1 == 0 && totalScore > 0)
             {
-
                 IntMapGimicnumber = Random.Range(3, 4);
-
 
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
@@ -453,7 +469,10 @@ public class GameManager : MonoBehaviour
         if (totalScore % 1 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
         else  yield return new WaitForSeconds(1f);                                          
 
-        ingameUIController.ChangeReadyStartSprite(1); 
+        ingameUIController.ChangeReadyStartSprite(1);
+
+        ingameUIController.PlaySFX(ingameUIController.sfxClips_InGameSystem[2]);
+
         ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
         player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1); 
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2); 

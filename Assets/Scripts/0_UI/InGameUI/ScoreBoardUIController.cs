@@ -110,16 +110,14 @@ public class ScoreBoardUIController : MonoBehaviour
         scoreImageElement_Player1.imageSkillIcon.gameObject.SetActive(false);
         scoreImageElement_Player2.imageSkillIcon.gameObject.SetActive(false);
 
-        OpenScorePanel();
-
-        // OnOffCheering(false);
+        OpenScorePanel(false);
     }
 
 
 
 
     // #. Score 패널 닫기
-    public void CloseScorePanel(int iWinnerPlayerNum, int iWinnerPlayerScore)
+    public void CloseScorePanel(int iWinnerPlayerNum, int iWinnerPlayerScore, bool bSoundOn = true)
     {
         UpdateScoreText();
         SkillIconImageOnOff(false);
@@ -148,11 +146,20 @@ public class ScoreBoardUIController : MonoBehaviour
 
             OnOffCheering(true);
         }
+
+
+        int randomIndex = Random.Range(11, 13);
+
+        if (InGameUiController != null && bSoundOn)
+        {
+            InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[randomIndex]);
+        }
+
     }
 
 
     // #. Score 패널 열기
-    public void OpenScorePanel()
+    public void OpenScorePanel(bool bSound = true)
     {
         text_Timer.text = "60";
 
@@ -160,7 +167,7 @@ public class ScoreBoardUIController : MonoBehaviour
 
         if ((iSumPlayerScore % 1 == 0 && (iSumPlayerScore) > 0))
         {
-            InGameUiController.mapBoardController.CloseMapBoardPanelVertical(InGameUiController.gameManager.mapManager.GetMapGimicIndex());
+            InGameUiController.mapBoardController.CloseMapBoardPanelVertical(InGameUiController.gameManager.mapManager.GetMapGimicIndex(), false);
             
             DOVirtual.DelayedCall(1f, () => {
                 StartScoreBoardAnimation(iSumPlayerScore);
@@ -170,6 +177,10 @@ public class ScoreBoardUIController : MonoBehaviour
         {
             StartScoreBoardAnimation(iSumPlayerScore);
         }
+
+        if(bSound) InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[1]);
+
+
     }
 
     private void StartScoreBoardAnimation(int iSumPlayerScore)

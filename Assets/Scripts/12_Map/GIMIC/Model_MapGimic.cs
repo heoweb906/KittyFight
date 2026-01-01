@@ -78,8 +78,6 @@ public class Packet_8_Sheep : Model_MapGimic
     public float z;
 }
 
-
-
 [System.Serializable]
 public class Packet_9_Monkey : Model_MapGimic
 {
@@ -109,14 +107,6 @@ public class Packet_12_Pig : Model_MapGimic
     public float y;
     public float z;
 }
-
-
-
-
-
-
-
-
 
 [System.Serializable]
 public class Packet_ScreenEffect : Model_MapGimic

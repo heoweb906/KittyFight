@@ -221,6 +221,10 @@ public class SkillCardController : MonoBehaviour
     public void ShowSkillCardList(int iPlayernum = 0, bool bActivePassive = true, int[] iCardArray = null)
     {
         if (skillDataList.Count == 0 || IsAnimating) return;
+
+        InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[6]);
+
+
         iAuthorityPlayerNum = iPlayernum;
         IsAnimating = true;
 
@@ -462,6 +466,9 @@ public class SkillCardController : MonoBehaviour
         SetBoolAllCardInteract(false);
 
 
+        InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[9]);
+
+
         // floating 애니메이션 정지
         for (int i = 0; i < instances.Length; i++)
         {
@@ -543,6 +550,8 @@ public class SkillCardController : MonoBehaviour
                         InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = skillIconSprite;
                         InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
 
+                        InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[7]);
+
                         DOVirtual.DelayedCall(0.1f, () =>
                         {
                             FadeImage(0f, 1f);
@@ -588,6 +597,8 @@ public class SkillCardController : MonoBehaviour
         if (IsAnimating) return;
         IsAnimating = true;
         SetBoolAllCardInteract(false);
+
+        InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[9]);
 
         Vector2 uiAnchoredPos = WorldToCanvasPoint(clickedWorldPosition);
 
@@ -694,7 +705,9 @@ public class SkillCardController : MonoBehaviour
 
                                                 InGameUiController.scoreBoardUIController.scoreImageElement_Player1.imageSkillIcon.sprite = rewardIcon; 
                                                 InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = rewardIcon; 
-                                                InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true); 
+                                                InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
+
+                                                InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[7]);
 
                                                 DOVirtual.DelayedCall(0.1f, () => 
                                                 { 

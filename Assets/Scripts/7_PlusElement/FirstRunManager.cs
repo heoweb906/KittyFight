@@ -23,6 +23,7 @@ public class FirstRunManager : MonoBehaviour
     public GameObject obj_Plate;
     public Image image_Plate;
     public Sprite[] sprites_Plate;
+    public Image sprite_QuestionMark;
     public TMP_Text text_Description;
 
     [Header("Plate 이동 설정")]
@@ -47,34 +48,10 @@ public class FirstRunManager : MonoBehaviour
 
     private void Start()
     {
-        PlayOpeningCutscene();
+        // PlayOpeningCutscene();
 
-        //CheckFirstRun();
+        CheckFirstRun();
     }
-
-
-
-    private void Update()
-    {
-#if UNITY_EDITOR || UNITY_STANDALONE
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ResetToFirstRun();
-        }
-#endif
-    }
-
-    private void ResetToFirstRun()
-    {
-        // 초기값(isFirstRun = true)으로 생성
-        UserData data = new UserData();
-
-        // 덮어쓰기
-        SaveUserData(data);
-
-        Debug.Log("<color=yellow>[System] 데이터 초기화 완료. 게임을 재시작하면 컷씬이 재생됩니다.</color>");
-    }
-
 
 
 
@@ -262,6 +239,7 @@ public class FirstRunManager : MonoBehaviour
             }
 
             if (sprites_Plate.Length > 1) image_Plate.sprite = sprites_Plate[1];
+            sprite_QuestionMark.gameObject.SetActive(false);
 
             Sequence popSeq = DOTween.Sequence();
             popSeq.Append(image_Plate.rectTransform.DOScale(1.2f, 0.1f).SetEase(Ease.OutQuad));

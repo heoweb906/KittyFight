@@ -63,6 +63,18 @@ public class MapManager : MonoBehaviour
     }
 
 
+    public MapGimic_3_Tiger dddd;
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z)) dddd.ChangeWeaponToMelee();
+        if (Input.GetKeyDown(KeyCode.X)) dddd.ChangeWeaponToRange();
+
+
+    }
+
+
 
     private void FixedUpdate()
     {
@@ -234,116 +246,102 @@ public class MapManager : MonoBehaviour
 
 
 
-    public void ExecuteGimic_Rat(Packet_1_Rat packet)
+    public void ExecuteGimic_Rat(Packet_1_Rat packet) // Index 0
     {
-        // 현재 활성화된 기믹이 '쥐'인지 확인만 하고
-        if (currentGimmick is MapGimic_1_Rat ratGimic)
+        if (gimicks.Count > 0 && gimicks[0] is MapGimic_1_Rat ratGimic)
         {
-            // 데이터만 던져준다. (끝)
-            // 만약 패킷에 다른 변수가 더 있다면 여기서 함수 인자로 더 넘겨주면 됨
             if (packet.targetHpSync > 0)
-            {
                 ratGimic.ReceiveSyncHP(packet.targetHpSync);
-            }
         }
     }
 
-
-    public void ExecuteGimic_Cow(Packet_2_Cow packet)
+    public void ExecuteGimic_Cow(Packet_2_Cow packet) // Index 1
     {
-        if (currentGimmick is MapGimic_2_Cow cowGimic)
+        if (gimicks.Count > 1 && gimicks[1] is MapGimic_2_Cow cowGimic)
         {
-            // 다른 애들처럼 함수 호출로 값만 전달
             cowGimic.ReceiveCowSync(packet.actionType);
         }
     }
 
-
-    public void ExecuteGimic_Tiger(Packet_3_Tiger packet)
+    public void ExecuteGimic_Tiger(Packet_3_Tiger packet) // Index 2 (매우 중요: On/Off)
     {
-        if (currentGimmick is MapGimic_3_Tiger tiger)
+        if (gimicks.Count > 2 && gimicks[2] is MapGimic_3_Tiger tiger)
         {
             tiger.ReceiveTigerSync(packet.isStart);
         }
     }
 
-    public void ExecuteGimic_Rabbit(Packet_4_Rabbit packet)
+    public void ExecuteGimic_Rabbit(Packet_4_Rabbit packet) // Index 3 (매우 중요: On/Off)
     {
-        if (currentGimmick is MapGimic_4_Rabbit rabbit)
+        if (gimicks.Count > 3 && gimicks[3] is MapGimic_4_Rabbit rabbit)
         {
             rabbit.ReceiveRabbitSync(packet.isStart);
         }
     }
 
-    public void ExecuteGimic_Dragon(Packet_5_Dragon packet)
+    public void ExecuteGimic_Dragon(Packet_5_Dragon packet) // Index 4
     {
-        if (currentGimmick is MapGimic_5_Dragon dragon)
+        if (gimicks.Count > 4 && gimicks[4] is MapGimic_5_Dragon dragon)
         {
             dragon.ReceiveSpawnSync(packet.x, packet.y, packet.z, packet.angleZ);
         }
     }
 
-
-    public void ExecuteGimic_Snake(Packet_6_Snake packet)
+    public void ExecuteGimic_Snake(Packet_6_Snake packet) // Index 5
     {
-        if (currentGimmick is MapGimic_6_Snake snake)
+        if (gimicks.Count > 5 && gimicks[5] is MapGimic_6_Snake snake)
         {
             snake.ReceiveSpawnSync(packet.x, packet.y, packet.z);
         }
     }
 
-
-    public void ExecuteGimic_Horse(Packet_7_Horse packet)
+    public void ExecuteGimic_Horse(Packet_7_Horse packet) // Index 6 (매우 중요: On/Off)
     {
-        if (currentGimmick is MapGimic_7_Horse horse)
+        if (gimicks.Count > 6 && gimicks[6] is MapGimic_7_Horse horse)
         {
             horse.ReceiveHorseSync(packet.isStart);
         }
     }
 
-    public void ExecuteGimic_Sheep(Packet_8_Sheep packet)
+    public void ExecuteGimic_Sheep(Packet_8_Sheep packet) // Index 7
     {
-        if (currentGimmick is MapGimic_8_Sheep sheep)
+        if (gimicks.Count > 7 && gimicks[7] is MapGimic_8_Sheep sheep)
         {
             sheep.ReceiveSpawnSync(packet.x, packet.y, packet.z);
         }
     }
 
-
-    public void ExecuteGimic_Monkey(Packet_9_Monkey packet)
+    public void ExecuteGimic_Monkey(Packet_9_Monkey packet) // Index 8
     {
-        if (currentGimmick is MapGimic_9_Monkey monkey)
+        if (gimicks.Count > 8 && gimicks[8] is MapGimic_9_Monkey monkey)
         {
             monkey.ReceiveMonkeySync();
         }
     }
 
-    public void ExecuteGimic_Chicken(Packet_10_Chicken packet)
+    public void ExecuteGimic_Chicken(Packet_10_Chicken packet) // Index 9
     {
-        if (currentGimmick is MapGimic_10_Chicken chicken)
+        if (gimicks.Count > 9 && gimicks[9] is MapGimic_10_Chicken chicken)
         {
-            // 비율과 회전값을 넘겨줍니다.
             chicken.ReceiveSpawnSync(packet.spawnRatio, packet.randomRotationZ);
         }
     }
 
-
-    public void ExecuteGimic_Dog(Packet_11_Dog packet)
+    public void ExecuteGimic_Dog(Packet_11_Dog packet) // Index 10 (매우 중요: On/Off)
     {
-        if (currentGimmick is MapGimic_11_Dog dog)
+        if (gimicks.Count > 10 && gimicks[10] is MapGimic_11_Dog dog)
         {
             dog.ReceiveDogSync(packet.isActive);
         }
     }
 
-    public void ExecuteGimic_Pig(Packet_12_Pig packet)
+    public void ExecuteGimic_Pig(Packet_12_Pig packet) // Index 11
     {
-        if (currentGimmick is MapGimic_12_Pig pig)
+        if (gimicks.Count > 11 && gimicks[11] is MapGimic_12_Pig pig)
         {
             pig.ReceiveSpawnSync(packet.x, packet.y, packet.z);
         }
     }
-
 
 
     public void ExecuteScreenEffect(Packet_ScreenEffect packet)

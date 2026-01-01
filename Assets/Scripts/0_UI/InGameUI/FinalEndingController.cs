@@ -93,10 +93,12 @@ public class FinalEndingController : MonoBehaviour
     }
 
 
-
     public void ShowFinalEnding(int _iWinnerPlayerNum)
     {
         InGameUiController.bFinalEndingStart = true;
+
+        InGameUiController.PlayBGM(InGameUiController.bgmClips[3]);
+
 
         // [추가] 승리한 플레이어 번호와 내 번호를 비교하여 닉네임 설정
         if (text_PlayerName != null)
@@ -111,25 +113,22 @@ public class FinalEndingController : MonoBehaviour
         {
             obj_FinalPanel.SetActive(true);
 
-            DOVirtual.DelayedCall(2.0f, () =>
+            DOVirtual.DelayedCall(1.0f, () =>
             {
                 FadePanelOnOff(false, () =>
                 {
                     // [수정] 매개변수가 있는 함수는 이렇게 람다식으로 감싸야 합니다.
-                    DOVirtual.DelayedCall(1.0f, () => PlayMainSequence(_iWinnerPlayerNum));
+                    DOVirtual.DelayedCall(0.5f, () => PlayMainSequence(_iWinnerPlayerNum));
                 });
             });
         });
     }
-
 
     private void PlayMainSequence(int _winnerPlayerNum)
     {
         RectTransform rtPanel = obj_FinalPanel.GetComponent<RectTransform>();
         RectTransform rtPlate = objPlate.GetComponent<RectTransform>();
 
-        // [변경] 기존에 여기서 승리 이미지를 미리 켜던 코드는 삭제했습니다.
-        // 나중에 시퀀스 마지막에 켤 것이므로, 승패에 따른 "내부 이미지(Red/Blue)"만 세팅해둡니다.
         bool isRedWinForBg = (_winnerPlayerNum == 1);
         if (obj_CatRedWinnerImage != null) obj_CatRedWinnerImage.SetActive(isRedWinForBg);
         if (obj_CatBlueWinnerImage != null) obj_CatBlueWinnerImage.SetActive(!isRedWinForBg);
@@ -138,12 +137,34 @@ public class FinalEndingController : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
 
-        // 1. 패널 이동 (-4400) & 접시 회전
+        // [순서 변경 1] 애니메이션을 먼저 정의합니다. (0초부터 즉시 시작됨)
         seq.Append(rtPanel.DOAnchorPosY(-4400f, 2.5f).SetEase(Ease.InOutQuad));
         rtPlate.localRotation = Quaternion.Euler(0, 0, 300f);
         seq.Join(rtPlate.DORotate(Vector3.zero, 3.5f, RotateMode.FastBeyond360).SetEase(Ease.OutQuad));
 
-        // 2. 대기
+
+        // [순서 변경 2] 소리 예약을 애니메이션 정의 후에 Insert합니다.
+        // InsertCallback은 절대 시간(0초 기준)을 사용하므로, 애니메이션 순서에 영향을 주지 않고 끼어듭니다.
+
+        // ▼▼▼▼▼ 시간 조절은 여기서 하세요 ▼▼▼▼▼
+        float soundStartDelay = 1f;  // 패널 움직이고 0.8초 뒤에 소리 시작
+        float soundInterval = 0.55f;    // 소리 간격
+                                       // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+        for (int i = 0; i < 3; i++)
+        {
+            float playTime = soundStartDelay + (i * soundInterval);
+
+            // InsertCallback: 0초를 기준으로 playTime초에 실행 (애니메이션과 병렬 실행됨)
+            seq.InsertCallback(playTime, () =>
+            {
+                if (InGameUiController != null)
+                    InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[4]);
+            });
+        }
+
+
+        // 2. 대기 (여기서부턴 위 애니메이션(2.5초)이 끝난 뒤에 이어짐)
         seq.AppendInterval(0.8f);
 
         // 3. 떨림
@@ -157,15 +178,21 @@ public class FinalEndingController : MonoBehaviour
             if (obj_CatBlueFigure != null) obj_CatBlueFigure.SetActive(!isRedWin);
         });
 
-        // 5. 띠요아
+        // 5. 띠요아 (커지는 연출) 직전에 5번 소리 재생
+        seq.AppendCallback(() =>
+        {
+            if (InGameUiController != null)
+                InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[5]);
+        });
+
         seq.Append(rtPlate.DOScale(1.02f, 0.1f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutQuad));
 
-        // 6. 위로 이동 (-7700) (기존 코드)
+        // 6. 위로 이동 (-7700)
         seq.AppendInterval(1.1f);
         seq.Append(rtPanel.DOAnchorPosY(-7700f, 1.0f).SetEase(Ease.InBack));
 
         // =========================================================
-        // [추가됨] 7. 이동 후 1초 대기 -> 팝업 연출
+        // 7. 이동 후 1초 대기 -> 팝업 연출
         // =========================================================
 
         // 7-1. 1초 대기
@@ -177,20 +204,18 @@ public class FinalEndingController : MonoBehaviour
             if (obj_WinnnerCatImage != null)
             {
                 obj_WinnnerCatImage.SetActive(true);
-                obj_WinnnerCatImage.transform.localScale = Vector3.zero; // 크기 0 시작
+                obj_WinnnerCatImage.transform.localScale = Vector3.zero;
             }
 
             if (obj_TextArray != null)
             {
                 obj_TextArray.SetActive(true);
-                obj_TextArray.transform.localScale = Vector3.zero; // 크기 0 시작
+                obj_TextArray.transform.localScale = Vector3.zero;
             }
         });
 
-        // 7-3. 1단계: 커지기 (Overshoot 목표치까지)
-        // Image: 0 -> 10.5
-        // Text:  0 -> 1.15
-        float popDuration = 0.2f; // 커지는 시간 (빠르게)
+        // 7-3. 1단계: 커지기 (Overshoot)
+        float popDuration = 0.2f;
 
         seq.AppendCallback(() => StartFirecracker());
 
@@ -200,8 +225,7 @@ public class FinalEndingController : MonoBehaviour
         if (obj_TextArray != null)
             seq.Join(obj_TextArray.transform.DOScale(1.25f, popDuration).SetEase(Ease.OutQuad));
 
-
-        float settleDuration = 0.1f; // 자리 잡는 시간 (짧게)
+        float settleDuration = 0.1f;
 
         if (obj_WinnnerCatImage != null)
             seq.Append(obj_WinnnerCatImage.transform.DOScale(9.5f, settleDuration).SetEase(Ease.OutQuad));
@@ -209,35 +233,25 @@ public class FinalEndingController : MonoBehaviour
         if (obj_TextArray != null)
             seq.Join(obj_TextArray.transform.DOScale(1.0f, settleDuration).SetEase(Ease.OutQuad));
 
-
-
         seq.AppendInterval(2.0f);
 
         // 8-2. 커튼 닫기 및 다음 동작 예약
         seq.AppendCallback(() =>
         {
-            // 커튼을 닫습니다 (true). 
-            // 만약 커튼을 여는 걸 원하셨다면 false로 바꾸세요.
             FadePanelOnOff_2(true, () =>
             {
-                // 또 2초 대기 후 다음 로직 실행
                 DOVirtual.DelayedCall(2.0f, () =>
                 {
-                    // TODO: 여기에 원하는 기능을 구현하세요.
-                    // 예: 씬 이동, 게임 재시작, 로비로 이동 등
-                    Debug.Log("모든 엔딩 종료. 2초 뒤 다음 로직 실행!");
-
-                    InGameUIController.Instance.gameManager.ReturnToTrainingByDisconnect();
-
-
+                    Debug.Log("모든 엔딩 종료. 로비로 이동!");
+                    if (InGameUIController.Instance != null && InGameUIController.Instance.gameManager != null)
+                    {
+                        InGameUiController.PlayBGM(null);
+                        InGameUIController.Instance.gameManager.ReturnToTrainingByDisconnect();
+                    }
                 });
             });
         });
     }
-
-
-
-
 
     public void FadePanelOnOff(bool _bbb, System.Action onComplete = null)
     {
@@ -302,6 +316,8 @@ public class FinalEndingController : MonoBehaviour
 
             SpawnFromPoint(currentSpawnPoint);
         }
+
+        InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[10]);
     }
 
     private void SpawnFromPoint(RectTransform point)

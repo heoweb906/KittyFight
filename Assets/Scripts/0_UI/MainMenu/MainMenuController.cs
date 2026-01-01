@@ -20,10 +20,9 @@ public class MainMenuController : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource sfxSource;
     public AudioClip[] sfxClips;
-    // 
-
     [SerializeField] private AudioSource bgmSource;
     public AudioClip[] bgmClips;
+
     
 
 
@@ -64,6 +63,8 @@ public class MainMenuController : MonoBehaviour
     public GameObject[] panelMenu;
     private int iPanelNum;    // 패널 번호
     private bool bOtherPanel;       // 닉네임 수정 중 or 매칭 중
+
+    public Button_MainMenu[] buttonsMainMenu;
   
   
 
@@ -75,10 +76,12 @@ public class MainMenuController : MonoBehaviour
         }
 
         OpenSceneChangePanel(image_LeftBackGround.rectTransform, image_RightBackGround.rectTransform, 0f);
-        OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0f);
-        OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f);
 
-        if(MatchResultStore.myNickname == null) matchManager.MyNickname = "Kitty";
+        // 여기 false 추가 (소리 안 남)
+        OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0f, false);
+        OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f, false);
+
+        if (MatchResultStore.myNickname == null) matchManager.MyNickname = "Kitty";
 
 
 
@@ -91,6 +94,12 @@ public class MainMenuController : MonoBehaviour
 
         iPanelNum = 0;
         scriptPlayerCharacter.bCanControl = false;
+
+
+        for(int i = 0; i < buttonsMainMenu.Length; ++i)
+        {
+            buttonsMainMenu[i].mainMenuController = this;
+        }
     }
 
 
@@ -119,6 +128,12 @@ public class MainMenuController : MonoBehaviour
 
 
     public void ChangePanel(int _iPanelIdx)
+    {
+        ChangePanel(_iPanelIdx, true);
+    }
+
+
+    public void ChangePanel(int _iPanelIdx, bool bSoundOn = true)
     {
         if (panelMenu == null) return;
        
@@ -155,7 +170,7 @@ public class MainMenuController : MonoBehaviour
             }
         }
 
-        // for (int i = 0; i < buttons_Menu.Length; i++) buttons_Menu[i].OnClearButton();
+        if(bSoundOn) PlaySFX(sfxClips[1]);
     }
 
 
@@ -267,11 +282,15 @@ public class MainMenuController : MonoBehaviour
         if (bOtherPanel) return;
 
         bOtherPanel = true;
-        ChangePanel(0);
+        ChangePanel(0, false);
+
 
         // 0.3초 동안 문이 닫히는 애니메이션 실행 -> 끝난 후(Lambda) 내부 코드 실행
-        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.3f, () =>
+        CloseInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f, () =>
         {
+
+          
+
             // 애니메이션 종료 후 플레이어 이동
             // (SettingRoomNickName에서 other를 넘길 필요 없이, 이미 알고 있는 scriptPlayerCharacter 사용)
             if (scriptPlayerCharacter != null)
@@ -283,6 +302,8 @@ public class MainMenuController : MonoBehaviour
 
     public void CloseInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration, System.Action onComplete = null)
     {
+        PlaySFX(sfxClips[3]);
+
         topImage.gameObject.SetActive(true);
         bottomImage.gameObject.SetActive(true);
 
@@ -307,6 +328,8 @@ public class MainMenuController : MonoBehaviour
     {
         if (isButtonCooldown) return;
         StartCoroutine(ButtonCooldown());
+
+        PlaySFX(sfxClips[1]);
 
         if (nicknameConfirmButtonRect == null)
         {
@@ -393,21 +416,27 @@ public class MainMenuController : MonoBehaviour
         float bottomClosedPosY = -(bottomImageHeight / 2f);
         topImage.DOAnchorPosY(topClosedPosY, fDuration).SetEase(Ease.OutQuart);
         bottomImage.DOAnchorPosY(bottomClosedPosY, fDuration).SetEase(Ease.OutQuart);
+
+        PlaySFX(sfxClips[3]);
     }
 
-    public void OpenInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
+    public void OpenInputnickNamePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration, bool bSound = true)
     {
         RectTransform canvasRect = mainCanVas.GetComponent<RectTransform>();
         float canvasHeight = canvasRect.rect.height;
         float imageHeight = topImage.rect.height;
         float topTargetY = (canvasHeight / 2f) + (imageHeight / 2f);
         float bottomTargetY = -(canvasHeight / 2f) - (imageHeight / 2f);
+
         topImage.DOAnchorPosY(topTargetY, fDuration).SetEase(Ease.InQuint)
             .OnComplete(() => {
                 topImage.gameObject.SetActive(false);
                 bottomImage.gameObject.SetActive(false);
             });
         bottomImage.DOAnchorPosY(bottomTargetY, fDuration).SetEase(Ease.InQuint);
+
+        // bSound가 true일 때만 소리 재생
+        if (bSound) PlaySFX(sfxClips[3]);
     }
 
 
@@ -422,22 +451,20 @@ public class MainMenuController : MonoBehaviour
 
         scriptPlayerCharacter.bCanControl = false;
         bOtherPanel = true;
-        ChangePanel(0);
+        ChangePanel(0, false);
 
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
 
         // 1. 매칭 UI 닫기 애니메이션 시작 (0.3초)
         matchManager.logText.text = "";
-        CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.3f);
+        CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f);
 
         panels[1].SetActive(false); // Player UI 비활성화
 
-        // 2. 패널 닫힘 시간(0.3초) + 추가 지연 시간(0.1초) = 총 0.4초 후 실행
         DOVirtual.DelayedCall(0.8f, () =>
         { 
             OnSpinImage(image_LoadingSpiner);
 
-            // 3. 매칭 로직 시작 (기존 로직)
             matchManager.OnMatchButtonClicked();
             SetNickName(matchManager.MyNickname);
         });
@@ -451,6 +478,8 @@ public class MainMenuController : MonoBehaviour
 
         if (isButtonCooldown) return;
         StartCoroutine(ButtonCooldown());
+
+        PlaySFX(sfxClips[1]);
    
 
         if (stopMatchingButtonRect == null)
@@ -695,39 +724,47 @@ public class MainMenuController : MonoBehaviour
 
     public void PlayBGM(AudioClip clip)
     {
-        if (!clip || !bgmSource) return;
+        if (!bgmSource) return;
 
-        if (bgmSource.clip == clip && bgmSource.isPlaying) return;
+        // clip이 있는데 이미 재생 중인 것과 같으면 리턴
+        if (clip != null && bgmSource.clip == clip && bgmSource.isPlaying) return;
 
-        // 혹시 이전에 실행 중이던 BGM 관련 트윈이 있다면 즉시 중단 (중복 실행 방지)
         bgmSource.DOKill();
 
-        // 1. 복구할 목표 볼륨값 저장
-        // (현재 볼륨이 0이면 꺼져있는 상태니 1로 가정, 아니면 현재 볼륨 유지)
         float targetVolume = bgmSource.volume > 0.01f ? bgmSource.volume : 1f;
 
         Sequence bgmSeq = DOTween.Sequence();
 
-        // 2. [Fade Out] 현재 재생 중이라면 볼륨을 0으로 줄임
+        // 1. [Fade Out] 현재 재생 중이면 줄임
         if (bgmSource.isPlaying)
         {
             bgmSeq.Append(bgmSource.DOFade(0f, 1.0f).SetEase(Ease.Linear));
         }
 
-        // 3. [Swap] 볼륨이 0이 된 후 클립 교체 및 재생
+        // 2. [Callback] 정지 및 교체
         bgmSeq.AppendCallback(() =>
         {
             bgmSource.Stop();
-            bgmSource.clip = clip;
-            bgmSource.loop = true;
-            bgmSource.volume = 0f; // 확실하게 0에서 시작
-            bgmSource.Play();
+
+            if (clip != null)
+            {
+                bgmSource.clip = clip;
+                bgmSource.loop = true;
+                bgmSource.volume = 0f;
+                bgmSource.Play();
+            }
+            else
+            {
+                bgmSource.clip = null; // clip이 null이면 비우고 끝 (재생 안 함)
+            }
         });
 
-        // 4. [Fade In] 다시 원래 볼륨으로 복구
-        bgmSeq.Append(bgmSource.DOFade(targetVolume, 1.0f).SetEase(Ease.Linear));
+        // 3. [Fade In] 새 음악이 있을 때만 볼륨 복구
+        if (clip != null)
+        {
+            bgmSeq.Append(bgmSource.DOFade(targetVolume, 1.0f).SetEase(Ease.Linear));
+        }
     }
-
 
 
 

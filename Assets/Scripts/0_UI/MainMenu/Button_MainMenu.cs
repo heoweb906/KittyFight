@@ -8,6 +8,8 @@ using DG.Tweening;
 
 public class Button_MainMenu : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [HideInInspector] public MainMenuController mainMenuController;
+
     public Button buttton;
     public TMP_Text text_ButtonText;
 
@@ -80,6 +82,9 @@ public class Button_MainMenu : MonoBehaviour, IPointerEnterHandler, IPointerExit
             text_ButtonText.DOKill();
             text_ButtonText.DOColor(Color.black, 0.1f);
         }
+
+
+        mainMenuController.PlaySFX(mainMenuController.sfxClips[0]);
     }
 
     public void OnPointerExit(PointerEventData eventData)
