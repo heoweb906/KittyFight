@@ -72,8 +72,13 @@ public class SK_TailWhipline : Skill
             v.x = 0f; v.z = 0f;
             rb.velocity = v;
         }
-        if (controller) controller.enabled = false;
-        if (movement) movement.enabled = false;
+
+        bool isMine = playerAbility.playerNumber == MatchResultStore.myPlayerNumber;
+        if (isMine)
+        {
+            if (controller) controller.enabled = false;
+            if (movement) movement.enabled = false;
+        }
 
 
         GameObject tail = null;
@@ -238,8 +243,13 @@ public class SK_TailWhipline : Skill
             v.x = 0f; v.z = 0f;
             rb.velocity = v;
         }
-        if (controller) controller.enabled = true;
-        if (movement) movement.enabled = true;
+
+        bool isMine = playerAbility.playerNumber == MatchResultStore.myPlayerNumber;
+        if (isMine)
+        {
+            if (controller) controller.enabled = true;
+            if (movement) movement.enabled = true;
+        }
     }
     private IEnumerator ResetAttackAnimState()
     {

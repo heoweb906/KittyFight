@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6777267630284458099}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -124,4 +124,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallCheckMode: 1
+  bMiddleState: 0
   damage: 30

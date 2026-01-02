@@ -85,6 +85,8 @@ public class PlayerAbility : MonoBehaviour
         if (!events) events = GetComponent<AbilityEvents>();
         if (!meshTrail) meshTrail = GetComponent<VFX_MeshTrail>();
         movement = GetComponent<PlayerMovement>();
+
+        ResolveSfxSource();
     }
 
     void Start()
@@ -379,6 +381,24 @@ public class PlayerAbility : MonoBehaviour
 
         cooldowns[slot] = st;
         OnCooldownChanged?.Invoke(slot);
+    }
+
+    private void ResolveSfxSource()
+    {
+        if (sfxSource) return;
+
+        var go = GameObject.Find("Audio_SFX");
+        if (go == null)
+        {
+            Debug.LogWarning("[PlayerAbility] Audio_SFX GameObject not found in scene");
+            return;
+        }
+
+        sfxSource = go.GetComponent<AudioSource>();
+        if (sfxSource == null)
+        {
+            Debug.LogWarning("[PlayerAbility] Audio_SFX has no AudioSource");
+        }
     }
 
     public void PlaySFX(AudioClip clip)

@@ -14,6 +14,9 @@ public class SK_MeleeAttack : Skill
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] meleeSfxClips;
+
     private void Awake()
     {
         if (!events && playerAbility) events = playerAbility.events;
@@ -27,9 +30,10 @@ public class SK_MeleeAttack : Skill
 
     public override void Execute(Vector3 origin, Vector3 direction)
     {
-        if (playerAbility != null && sfxClip != null)
+        if (playerAbility != null && meleeSfxClips != null && meleeSfxClips.Length > 0)
         {
-            playerAbility.PlaySFX(sfxClip);
+            int idx = Random.Range(0, meleeSfxClips.Length);
+            playerAbility.PlaySFX(meleeSfxClips[idx]);
         }
 
         Vector3 spawnPos = origin;

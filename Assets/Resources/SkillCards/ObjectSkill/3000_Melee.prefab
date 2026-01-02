@@ -58,3 +58,7 @@ MonoBehaviour:
   shakeAmount: 0.3
   shakeDeration: 0.7
   attackAnimDuration: 0.2
+  meleeSfxClips:
+  - {fileID: 8300000, guid: 1f6630da1cb891347ab7b54a1db5da1a, type: 3}
+  - {fileID: 8300000, guid: 9a6bdba896d3d0b4aaee6fe214d0a742, type: 3}
+  - {fileID: 8300000, guid: 4b34f287055f7414b8f16db8397935af, type: 3}

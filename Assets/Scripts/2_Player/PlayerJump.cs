@@ -23,6 +23,9 @@ public class PlayerJump : MonoBehaviour
 
     private bool visualFlippedForHang = false;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip jumpSfx;
+
     [Header("Effects")]
     [SerializeField] public GameObject jumpEffectPrefab;
     [SerializeField] public GameObject landEffectPrefab;  // ÂøÁö ÀÌÆåÆ®
@@ -62,7 +65,7 @@ public class PlayerJump : MonoBehaviour
 
                 visualFlippedForHang = !isHangRight;
             }
-            else if(rb.velocity.y >= 0f)
+            else if (rb.velocity.y >= 0f)
             {
                 if (visualFlippedForHang &&
                     movementScript != null && movementScript.visualPivot != null)
@@ -113,6 +116,12 @@ public class PlayerJump : MonoBehaviour
             Vector3 velocity = rb.velocity;
             velocity.y = ability.jumpForce;
             rb.velocity = velocity;
+
+            // Jump SFX
+            if (ability != null && jumpSfx != null)
+            {
+                ability.PlaySFX(jumpSfx);
+            }
 
             // PS_KickStart
             ability.events?.EmitJump();
@@ -190,4 +199,9 @@ public class PlayerJump : MonoBehaviour
     }
 
     public bool IsWallSlideDisabled => wallSlideDisableCount > 0;
+    public void PlayJumpSfx()
+    {
+        if (ability != null && jumpSfx != null)
+            ability.PlaySFX(jumpSfx);
+    }
 }
