@@ -30,6 +30,10 @@ public class PlayerHealth : MonoBehaviour
 
     private bool hitEffectPending;   // 데미지 점멸
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] hitSfxClips;   // 맞을 때 (랜덤 3개)
+    [SerializeField] private AudioClip deathSfx;        // 죽을 때
+
     [Header("Effects")]
     [SerializeField] public GameObject hitEffectPrefab;
     private Vector3? pendingSourcePos;        // 원거리/근거리에서 넘겨주는 공격 소스 위치
@@ -125,6 +129,12 @@ public class PlayerHealth : MonoBehaviour
         OnHPChanged?.Invoke(currentHP, maxHP);
         ability.effect?.PlayDoubleShakeAnimation(5, 6); // 내 HP
 
+        if (ability != null && hitSfxClips != null && hitSfxClips.Length > 0)
+        {
+            int idx = UnityEngine.Random.Range(0, hitSfxClips.Length);
+            ability.PlaySFX(hitSfxClips[idx]);
+        }
+
         float selfShake = 0.3f + Mathf.FloorToInt(amount / 10) * 0.08f;
 
         Vector3 dir = pendingPunchDir
@@ -143,6 +153,11 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            if (ability != null && deathSfx != null)
+            {
+                ability.PlaySFX(deathSfx);
+            }
+
             Debug.Log("Lose");
             FindObjectOfType<GameManager>()?.EndGame(MatchResultStore.myPlayerNumber);
         }
@@ -269,6 +284,12 @@ public class PlayerHealth : MonoBehaviour
         {
             pendingSourcePos = sourceWorldPos;
 
+            if (ability != null && hitSfxClips != null && hitSfxClips.Length > 0)
+            {
+                int idx = UnityEngine.Random.Range(0, hitSfxClips.Length);
+                ability.PlaySFX(hitSfxClips[idx]);
+            }
+
             int dealt = prev - currentHP;
             float oppHitShake = 0.09f + Mathf.FloorToInt(dealt / 10f) * 0.08f;
 
@@ -282,6 +303,11 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            if (ability != null && deathSfx != null)
+            {
+                ability.PlaySFX(deathSfx);
+            }
+
             int winnerPlayerNum = MatchResultStore.myPlayerNumber == 1 ? 2 : 1;
             FindObjectOfType<GameManager>()?.EndGame(winnerPlayerNum);
         }
