@@ -28,6 +28,7 @@ public class AudioOptionsUI : MonoBehaviour
 
     private const float MIN_LINEAR = 0.0001f;
     private const float MIN_DB = -80f;
+    private const float SFX_MAX_DB = -10f;
 
     private bool _syncing;
 
@@ -201,7 +202,16 @@ public class AudioOptionsUI : MonoBehaviour
         }
 
         float clamped = Mathf.Clamp(linear01, MIN_LINEAR, 1f);
-        float db = Mathf.Log10(clamped) * 20f;
+
+        float minDb = MIN_DB;
+        float maxDb = 0f;
+
+        if (param == SFX_PARAM)
+        {
+            maxDb = SFX_MAX_DB;
+        }
+
+        float db = Mathf.Lerp(minDb, maxDb, clamped);
         mixer.SetFloat(param, db);
     }
 

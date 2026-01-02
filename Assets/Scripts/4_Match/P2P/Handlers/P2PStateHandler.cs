@@ -54,6 +54,8 @@ public class P2PStateHandler : IP2PMessageHandler
                     opponentPlayer.transform.position,
                     Quaternion.Euler(-90f, 0f, 0f)
                 );
+
+                pj.PlayJumpSfx();
             }
         }
 

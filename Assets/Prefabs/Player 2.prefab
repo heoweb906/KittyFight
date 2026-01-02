@@ -1262,6 +1262,7 @@ MonoBehaviour:
   initialPassives: []
   playerNumber: 2
   effect: {fileID: 0}
+  sfxSource: {fileID: 0}
   meshTrail: {fileID: 0}
 --- !u!114 &5848055480860405593
 MonoBehaviour:
@@ -1305,6 +1306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSlideSpeed: 0.5
+  jumpSfx: {fileID: 8300000, guid: b47425116f51e3947a9541fe452be0d8, type: 3}
   jumpEffectPrefab: {fileID: 4416081766080871484, guid: ccf088e1898f62a4b9dad139b520a145,
     type: 3}
   landEffectPrefab: {fileID: 6286749971552671923, guid: d2563cce268314c45a29918a8be1910d,
@@ -1328,6 +1330,11 @@ MonoBehaviour:
   maxHP: 90
   invincibleTime: 0.3
   events: {fileID: 0}
+  hitSfxClips:
+  - {fileID: 8300000, guid: ee5f386429c03e54a8569b42b5b654a8, type: 3}
+  - {fileID: 8300000, guid: acca6d60742733f4cae9ffdf3b2e4994, type: 3}
+  - {fileID: 8300000, guid: 772e05b883a964946b96dd2c40f39ded, type: 3}
+  deathSfx: {fileID: 8300000, guid: 2319e89006be9a64da68b0458581676c, type: 3}
   hitEffectPrefab: {fileID: 1999268582685235191, guid: d4b2290e18bec714495ee33392590fda,
     type: 3}
   flashTargets:
@@ -1337,6 +1344,7 @@ MonoBehaviour:
   - {fileID: 6548917709833839645}
   flashMaterial: {fileID: 2100000, guid: cea1a668d43a78b41a78d6aee3023222, type: 2}
   flashDuration: 0.2
+  bDogGimickOn: 0
 --- !u!114 &1559159667772888511
 MonoBehaviour:
   m_ObjectHideFlags: 0

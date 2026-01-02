@@ -54,6 +54,10 @@ MonoBehaviour:
   duration: 5
   speedMultiplier: 1.8
   visualObjects: []
+  normalP1: {fileID: 2100000, guid: b758b2ea8f4277d438786cc2d9bcafaf, type: 2}
+  normalP2: {fileID: 2100000, guid: dd72805caf0e3c54eb610c5f9fa533de, type: 2}
+  transparentP1: {fileID: 2100000, guid: 32c155d8e8f034b4189f0fef690f583f, type: 2}
+  transparentP2: {fileID: 2100000, guid: a078cc4573786ec43b14d9632f491481, type: 2}
   effectPrefab: {fileID: 6670015322275300116, guid: 8d407e80c54e9d846ac629c02ee385f5,
     type: 3}
   shakeAmount: 0.2
