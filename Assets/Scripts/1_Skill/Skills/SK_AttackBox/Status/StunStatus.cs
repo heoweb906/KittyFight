@@ -4,11 +4,13 @@ using UnityEngine;
 public class StunStatus : MonoBehaviour
 {
     private MonoBehaviour controller;
+    private PlayerAbility ability;
     private Coroutine stunRoutine;
     private Animator anim;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+        ability = GetComponent<PlayerAbility>();
     }
 
     public void ApplyStun(float duration)
@@ -43,10 +45,12 @@ public class StunStatus : MonoBehaviour
     private IEnumerator StunTimer(float duration)
     {
         yield return new WaitForSeconds(duration);
-        if (controller != null)
+        if (controller != null && ability != null &&
+            ability.playerNumber == MatchResultStore.myPlayerNumber)
         {
             controller.enabled = true;
         }
+
         anim.SetBool("isShock", false);
         Destroy(this);
     }

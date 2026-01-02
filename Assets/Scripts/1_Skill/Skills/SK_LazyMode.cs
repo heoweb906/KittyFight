@@ -72,16 +72,24 @@ public class SK_LazyMode : Skill
             rb.velocity = v;
         }
 
-        if (controller) controller.enabled = false;
-        if (movement) movement.enabled = false;
+        bool isMine = playerAbility.playerNumber == MatchResultStore.myPlayerNumber;
+        if (isMine)
+        {
+            if (controller) controller.enabled = false;
+            if (movement) movement.enabled = false;
+        }
+
         anim.SetTrigger("Attack");
         anim.SetBool("isAttack", true);
         anim.SetInteger("AttackType", 5);
 
         yield return new WaitForSeconds(lazyDuration);
 
-        if (controller) controller.enabled = true;
-        if (movement) movement.enabled = true;
+        if (isMine)
+        {
+            if (controller) controller.enabled = false;
+            if (movement) movement.enabled = false;
+        }
 
         if (barrierInstance != null)
         {
