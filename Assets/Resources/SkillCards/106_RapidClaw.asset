@@ -69,5 +69,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 7bfcbeabae35bda4581f24c42739f34f,
     type: 3}
   AnimationType: 33
-  description: <color=#FFFFFF>Sharpen your claws to extend melee attack range by
-    <color=#66CCFF>40%</color></color>
+  description: "<color=#FFFFFF>Can\u2019t wait to attack! Melee cooldown down by
+    <color=#66CCFF>1</color> second</color>"

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3365488371481765013}
-  - component: {fileID: -495565762542888887}
+  - component: {fileID: 548842436309762447}
   m_Layer: 0
-  m_Name: 106_RazorTalons
+  m_Name: 106_RapidClaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-495565762542888887
+--- !u!114 &548842436309762447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5783421907839214963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f9e59ba036b3fc4ba4eefa2bb4f6e73, type: 3}
+  m_Script: {fileID: 11500000, guid: 104d6fcdeca0d114e99e8f13841c27d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIcon: {fileID: 21300000, guid: d6314baf776d1b140ad93244a681d587, type: 3}
-  rangeIncreaseRate: 0.4
-  effectPrefab: {fileID: 4464168552390993566, guid: 98913ad244bce354fbc912ae85d8f247,
+  skillIcon: {fileID: 21300000, guid: acd7f17809616134b9062ea7d2e26e90, type: 3}
+  reduceSeconds: 1
+  effectPrefab: {fileID: 2208865949994688372, guid: e1f64f8908f5cfb4f8d29f1755ea8ff1,
     type: 3}

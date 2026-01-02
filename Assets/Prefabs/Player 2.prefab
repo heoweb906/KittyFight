@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 5
+  jumpForce: 9
   meleeSkill: {fileID: 0}
   rangedSkill: {fileID: 0}
   dash: {fileID: 0}
@@ -1262,6 +1262,7 @@ MonoBehaviour:
   initialPassives: []
   playerNumber: 2
   effect: {fileID: 0}
+  sfxSource: {fileID: 0}
   meshTrail: {fileID: 0}
 --- !u!114 &5848055480860405593
 MonoBehaviour:
@@ -1292,6 +1293,10 @@ MonoBehaviour:
   maxSlopeAngle: 50
   mulSlopeSpeed: 1.2
   groundCheck: {fileID: 350022922035580808}
+  fallMultiplier: 4
+  lowJumpMultiplier: 4
+  jumpMultiplier: 2
+  maxFallSpeed: 8
 --- !u!114 &8667721077074239387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,6 +1342,7 @@ MonoBehaviour:
   - {fileID: 6548917709833839645}
   flashMaterial: {fileID: 2100000, guid: cea1a668d43a78b41a78d6aee3023222, type: 2}
   flashDuration: 0.2
+  bDogGimickOn: 0
 --- !u!114 &1559159667772888511
 MonoBehaviour:
   m_ObjectHideFlags: 0

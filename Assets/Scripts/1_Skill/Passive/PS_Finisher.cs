@@ -6,7 +6,7 @@ public class PS_Finisher : Passive
 {
     public override int PassiveId => 133;
 
-    [Range(0f, 1f)] public float threshold = 0.10f;
+    [Range(0f, 1f)] public float threshold = 0.20f;
 
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;

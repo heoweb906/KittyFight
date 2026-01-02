@@ -260,31 +260,58 @@ public class SkillCardController : MonoBehaviour
         }
         else
         {
-            // 책갈피
-            // 책갈피// 책갈피// 책갈피
-
-
-            // 조건에 맞는 스킬만 필터링
             List<int> filteredIndices = new List<int>();
             int[] excludedSkillIndices = { 1, 2, 101, 102, 139 };
 
-            for (int i = 0; i < skillDataList.Count; i++)
+
+            // Block 1
+
+            //for (int i = 0; i < skillDataList.Count; i++)
+            //{
+            //    int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
+
+            //    // 1. 하드코딩된 제외 스킬 확인
+            //    if (excludedSkillIndices.Contains(currentSkillID)) continue;
+
+            //    // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
+            //    if (usedSkillIDs.Contains(currentSkillID)) continue;
+
+            //    // 3. 액티브/패시브 구분
+            //    bool isActive = currentSkillID < 100;
+            //    if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+            //    {
+            //        filteredIndices.Add(i);
+            //    }
+            //}
+
+            // Block 1
+
+
+
+
+
+            // Block 2
+
+            int[] mandatorySkillIDs = { 102, 139, 1, 2};
+
+            // 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
+            foreach (int id in mandatorySkillIDs)
             {
-                int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
+                // 리스트에서 iSkillIndex가 일치하는 첫 번째 요소의 인덱스를 찾음
+                int dataIdx = skillDataList.FindIndex(x => x.iSkillIndex == id);
 
-                // 1. 하드코딩된 제외 스킬 확인
-                if (excludedSkillIndices.Contains(currentSkillID)) continue;
-
-                // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
-                if (usedSkillIDs.Contains(currentSkillID)) continue;
-
-                // 3. 액티브/패시브 구분
-                bool isActive = currentSkillID < 100;
-                if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+                if (dataIdx != -1)
                 {
-                    filteredIndices.Add(i);
+                    filteredIndices.Add(dataIdx);
                 }
             }
+
+            // Block 2
+
+
+
+
+
 
             if (filteredIndices.Count == 0)
             {
@@ -328,46 +355,54 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-    // 실제 카드 표시 로직을 분리한 함수
     private void StartShowingCards(List<int> selectedIndices)
     {
         int completed = 0;
         int total = instances.Length;
         bool hasError = false;
 
-
-        FadeImage(1f, 0f).OnComplete(() =>
+        // 1. 화면을 즉시 흰색으로 가림
+        FadeImage(1f, 0.2f).OnComplete(() =>
         {
-            InGameUiController.scoreBoardUIController.ActiveFalseBones();
-
-
-            text_Timer.gameObject.SetActive(true);
-            iTimerForSelect = 15;
-            fTimerInternal = 15.0f;
-            bTimerCheck = true;
-            text_Timer.text = iTimerForSelect.ToString();
-
-            InGameUiController.scoreBoardUIController.OnOffScoreTextObj(false);
-
-
-            for (int i = 0; i < total; i++)
+            // [핵심 수정] 어떤 로직 에러가 발생하더라도 화면은 다시 원래대로 돌아오도록 최상단에서 예약
+            DOVirtual.DelayedCall(0.1f, () =>
             {
-                var card = instances[i];
-                if (card == null || targetPoints[i] == null)
+                FadeImage(0f, 0.5f);
+            });
+
+            try
+            {
+                // UI 정리 및 초기화
+                if (InGameUiController?.scoreBoardUIController != null)
                 {
-                    completed++;
-                    if (completed >= total && !hasError)
-                    {
-                        CompleteCardShow();
-                    }
-                    continue;
+                    InGameUiController.scoreBoardUIController.ActiveFalseBones();
+                    InGameUiController.scoreBoardUIController.OnOffScoreTextObj(false);
                 }
 
-                if (i < selectedIndices.Count)
+                // 타이머 설정
+                if (text_Timer != null)
                 {
-                    int idx = selectedIndices[i];
-                    try
+                    text_Timer.gameObject.SetActive(true);
+                    iTimerForSelect = 15;
+                    fTimerInternal = 15.0f;
+                    bTimerCheck = true;
+                    text_Timer.text = iTimerForSelect.ToString();
+                }
+
+                // 카드 배치 및 애니메이션 실행
+                for (int i = 0; i < total; i++)
+                {
+                    var card = instances[i];
+                    if (card == null || targetPoints[i] == null)
                     {
+                        completed++;
+                        continue;
+                    }
+
+                    if (i < selectedIndices.Count)
+                    {
+                        int idx = selectedIndices[i];
+
                         card.ApplyData(skillDataList[idx], false);
                         card.ResetCardAnim();
                         card.gameObject.SetActive(true);
@@ -377,54 +412,39 @@ public class SkillCardController : MonoBehaviour
                         card.transform.DOMove(targetPoints[i].position, 0.3f)
                             .OnComplete(() =>
                             {
-                                if (!hasError)
-                                {
-                                    currentCard.StartFloatingAnimation();
-                                    completed++;
-                                    if (completed >= total)
-                                    {
-                                        CompleteCardShow();
-                                    }
-                                }
+                                currentCard.StartFloatingAnimation();
+                                completed++;
+                                if (completed >= total) CompleteCardShow();
                             })
                             .OnKill(() =>
                             {
-                                // Tween이 중단된 경우에도 completed 증가
-                                if (!hasError)
-                                {
-                                    completed++;
-                                    if (completed >= total)
-                                    {
-                                        CompleteCardShow();
-                                    }
-                                }
+                                completed++;
+                                if (completed >= total) CompleteCardShow();
                             });
                     }
-                    catch (System.Exception e)
+                    else
                     {
-                        Debug.LogError($"[SkillCardController] Error showing card {i}: {e.Message}");
-                        hasError = true;
-                        IsAnimating = false;
-                        return;
+                        completed++;
                     }
                 }
-                else
+
+                // 루프 종료 후 카운트 체크 (안전장치)
+                if (completed >= total)
                 {
-                    completed++;
-                    if (completed >= total && !hasError)
-                    {
-                        CompleteCardShow();
-                    }
+                    CompleteCardShow();
                 }
             }
-
-
-            DOVirtual.DelayedCall(0.1f, () =>
+            catch (System.Exception e)
             {
-                FadeImage(0f, 1f);
-            });
+                Debug.LogError($"[SkillCardController] StartShowingCards 내부 에러: {e.Message}\n{e.StackTrace}");
+                IsAnimating = false;
+                // 에러 발생 시에도 화면은 볼 수 있어야 하므로 강제 페이드 인
+                FadeImage(0f, 0.2f);
+            }
         });
     }
+
+
 
     // 카드 표시 완료 처리를 별도 함수로 분리
     private void CompleteCardShow()

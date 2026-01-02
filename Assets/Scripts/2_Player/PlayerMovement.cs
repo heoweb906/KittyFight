@@ -29,7 +29,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 lockedForward;
     private float lockedYaw;
 
-    Vector3 moveDirection;
+    private Vector3 moveDirection;
+
+
+    [Header("딱딱한 점프 설정")]
+    public float fallMultiplier = 5.0f;      // 하강 시 중력 배수 (매우 높게)
+    public float lowJumpMultiplier = 4.0f;   // 점프 버튼을 살짝 눌렀을 때 중력 배수
+    public float jumpMultiplier = 2.0f;      // 상승 중 기본 중력 배수
+    public float maxFallSpeed = 25f;         // 최대 낙하 속도 제한
 
     private void Awake()
     {
@@ -39,11 +46,35 @@ public class PlayerMovement : MonoBehaviour
         jumpScript = GetComponent<PlayerJump>();
 
     }
+
+
     void FixedUpdate()
     {
+        ApplyCustomGravity();
+    }
+
+    private void ApplyCustomGravity()
+    {
+        // 1. 하강 중일 때 (가장 무겁게)
         if (rb.velocity.y < 0)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (2.0f - 1) * Time.deltaTime;
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        // 2. 상승 중인데 점프 버튼을 뗐을 때 (가변 점프를 딱딱하게)
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+        // 3. 일반 상승 중일 때 (기본 중력보다 더 무겁게)
+        else if (rb.velocity.y > 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (jumpMultiplier - 1) * Time.deltaTime;
+        }
+
+        // 최고 낙하 속도 제한 (바닥 뚫기 방지)
+        if (rb.velocity.y < -maxFallSpeed)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, -maxFallSpeed, rb.velocity.z);
         }
     }
 

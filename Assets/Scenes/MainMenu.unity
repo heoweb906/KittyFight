@@ -27574,6 +27574,10 @@ MonoBehaviour:
   maxSlopeAngle: 50
   mulSlopeSpeed: 1.2
   groundCheck: {fileID: 350022921322029862}
+  fallMultiplier: 4
+  lowJumpMultiplier: 4
+  jumpMultiplier: 2
+  maxFallSpeed: 8
 --- !u!33 &6586406224143922573
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27595,7 +27599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 5
+  jumpForce: 9
   meleeSkill: {fileID: 1266430599}
   rangedSkill: {fileID: 1323632689}
   dash: {fileID: 1536973415}
