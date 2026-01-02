@@ -27746,7 +27746,7 @@ MonoBehaviour:
   fallMultiplier: 4
   lowJumpMultiplier: 4
   jumpMultiplier: 2
-  maxFallSpeed: 8
+  maxFallSpeed: 9
 --- !u!33 &6586406224143922573
 MeshFilter:
   m_ObjectHideFlags: 0
