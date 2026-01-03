@@ -102,6 +102,14 @@ public class PlayerMovement : MonoBehaviour
         bool grounded = (jumpScript != null && jumpScript.IsGrounded);
         bool isJump = (jumpScript != null && jumpScript.IsJump);
 
+        if (jumpScript != null && jumpScript.IsTouchingWall && !grounded)
+        {
+            float wallDir = Mathf.Sign(transform.forward.x);
+
+            if (Mathf.Abs(input.x) > 0.0001f && Mathf.Sign(input.x) == wallDir)
+                input.x = 0f;
+        }
+
         moveDirection = new Vector3(input.x * ability.moveSpeed, rb.velocity.y, 0);
         bool onSlope = OnSlope() && grounded;
 
