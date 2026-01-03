@@ -406,4 +406,11 @@ public class PlayerAbility : MonoBehaviour
         if (!clip || !sfxSource) return;
         sfxSource.PlayOneShot(clip);
     }
+
+    public void NotifySkillUIChanged(SkillType slot)
+    {
+        var s = GetSkill(slot);
+        if (s == null) return;
+        OnSkillEquipped?.Invoke(slot, s);
+    }
 }
