@@ -3,8 +3,8 @@ using UnityEngine;
 using DG.Tweening;
 public class AB_Ranged : AB_HitboxBase
 {
-    [Header("피해/제어")]
-    public int damage = 20;
+    [Header("피해/제어")] 
+    public int damage = 20; 
 
     [Header("동작")]
     public bool destroyOnHit = true;
@@ -20,6 +20,11 @@ public class AB_Ranged : AB_HitboxBase
 
     [SerializeField] private Material p1Material;
     [SerializeField] private Material p2Material;
+
+    [Header("사운드")]
+    public AudioClip audioClip_Destory;
+
+
 
     void Start()
     {
@@ -59,6 +64,11 @@ public class AB_Ranged : AB_HitboxBase
     private void OnDisappearEffect()
     {
         obj_Bone.transform.DOKill();
+
+
+        ownerAbility.PlaySFX(audioClip_Destory);
+
+    
 
         particle_Line.StopTrailGeneration();
         GameObject obj = particle_Line.GetComponent<GameObject>();

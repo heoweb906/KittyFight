@@ -105,6 +105,8 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
+  wallCheckMode: 0
+  bMiddleState: 0
   damage: 40
   destroyOnHit: 1
   mat: {fileID: 2100000, guid: 1e7de53e07b41c846b51e15995d3f9bb, type: 2}
@@ -126,6 +128,7 @@ MonoBehaviour:
   - {fileID: 899155304700910655}
   p1Material: {fileID: 2100000, guid: 1e7de53e07b41c846b51e15995d3f9bb, type: 2}
   p2Material: {fileID: 2100000, guid: 06f2e09741860c545b7445412e103abd, type: 2}
+  audioClip_Destory: {fileID: 8300000, guid: 286382da0d9d3d44aa5d3a1f3231fae9, type: 3}
 --- !u!135 &-3784288238528303530
 SphereCollider:
   m_ObjectHideFlags: 0

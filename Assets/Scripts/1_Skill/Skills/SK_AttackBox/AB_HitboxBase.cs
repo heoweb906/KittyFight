@@ -14,15 +14,15 @@ public abstract class AB_HitboxBase : MonoBehaviour
 {
     [Header("공통 데이터")]
     [Tooltip("소유자 Ability(생성자)")]
-    protected PlayerAbility ownerAbility;
+    protected PlayerAbility ownerAbility; 
 
-    [Tooltip("한 번만 맞게 할지")]
+    [Tooltip("한 번만 맞게 할지")] 
     [SerializeField] protected bool singleHit = true;
 
     [Tooltip("수명(초). 0 이하이면 자동 파괴하지 않음")]
-    [SerializeField] public float lifeTime = 0.2f;
+    [SerializeField] public float lifeTime = 0.2f; 
 
-    [Header("환경 충돌 설정")]
+    [Header("환경 충돌 설정")] 
     [Tooltip("환경으로 간주할 레이어(벽/바닥 등)")]
     [SerializeField] protected LayerMask environmentMask;
     [SerializeField] protected WallCheckMode wallCheckMode = WallCheckMode.None;
