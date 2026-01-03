@@ -87,8 +87,8 @@ public class SK_LazyMode : Skill
 
         if (isMine)
         {
-            if (controller) controller.enabled = false;
-            if (movement) movement.enabled = false;
+            if (controller) controller.enabled = true;
+            if (movement) movement.enabled = true;
         }
 
         if (barrierInstance != null)
