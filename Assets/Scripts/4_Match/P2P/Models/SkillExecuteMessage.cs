@@ -11,4 +11,8 @@ public class SkillExecuteMessage
 
     // direction
     public float dx, dy, dz;
+
+    // RandomDraw Àü¿ë
+    public bool isStateOnly;
+    public int randomPickIndex;
 }

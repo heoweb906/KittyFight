@@ -25,11 +25,21 @@ public class SkillExecuteHandler : IP2PMessageHandler
         // 내가 보낸 건 무시(루프 방지)
         if (data.player == myPlayerNumber) return;
 
-        Vector3 origin = new Vector3(data.ox, data.oy, data.oz);
-        Vector3 dir = new Vector3(data.dx, data.dy, data.dz);
         var type = (SkillType)data.skillType;
 
-        // 원격 기원: 강제 실행(쿨타임/조건 동일 적용)
+        if (data.isStateOnly)
+        {
+            var s = opponentAbility.GetSkill(type);
+            if (s is SK_RandomDraw rd)
+            {
+                rd.ApplyRemotePick(data.randomPickIndex);
+            }
+            return;
+        }
+
+        Vector3 origin = new Vector3(data.ox, data.oy, data.oz);
+        Vector3 dir = new Vector3(data.dx, data.dy, data.dz);
+
         opponentAbility.TryExecuteSkill(type, origin, dir, force: true);
     }
 }
