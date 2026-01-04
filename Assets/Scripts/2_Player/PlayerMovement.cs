@@ -157,13 +157,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 origin = groundCheck.position;
         Debug.DrawRay(origin, Vector3.down * 0.2f, Color.yellow);
+
         if (Physics.Raycast(origin, Vector3.down, out slopeHit, 0.2f))
         {
+            if (!slopeHit.collider.CompareTag("Wall"))
+                return false;
+
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            Debug.Log($"Hit: {slopeHit.collider.name}, tag={slopeHit.collider.tag}, normal={slopeHit.normal}, angle={angle}");
-            return angle < maxSlopeAngle && angle != 0;
+            return angle < maxSlopeAngle && angle != 0f;
         }
-        Debug.Log(false);
         return false;
     }
 
