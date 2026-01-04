@@ -1843,6 +1843,8 @@ MonoBehaviour:
   playerNumber: 1
   effect: {fileID: 0}
   sfxSource: {fileID: 0}
+  obj_AlrmArrow: {fileID: 6420989733321751249, guid: 8590f8613dd38b84ba08e5b64006e90d,
+    type: 3}
   meshTrail: {fileID: 0}
 --- !u!114 &5848055480860405593
 MonoBehaviour:
@@ -1912,7 +1914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 90
-  invincibleTime: 0.3
+  invincibleTime: 0.1
   events: {fileID: 0}
   hitSfxClips:
   - {fileID: 8300000, guid: ee5f386429c03e54a8569b42b5b654a8, type: 3}

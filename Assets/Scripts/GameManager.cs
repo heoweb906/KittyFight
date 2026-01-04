@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
     public Transform spawnPoint2;
 
     [Header("UI/업데이트")]
-
     public InGameUIController ingameUIController;
     public UpdateManager updateManager;
     public MapManager mapManager;
+
 
     [Header("카메라")]
     public CameraManager cameraManager;
@@ -452,6 +452,9 @@ public class GameManager : MonoBehaviour
         if (IntScorePlayer_1 == 0 && IntScorePlayer_2 == 0) // 최초 실행이라면 
         {
             ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);
+
+
+
         }
 
         // 화면이 보이지 않을 때 처리해야 하는 것들

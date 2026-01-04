@@ -44,6 +44,9 @@ public class PlayerAbility : MonoBehaviour
 
     private PlayerMovement movement;
 
+    [Header("AlrmArrow")]
+    public GameObject obj_AlrmArrow;
+
     // Re-peek 용
     private bool _hasLastActionType;
     private SkillType _lastActionType;
@@ -92,6 +95,26 @@ public class PlayerAbility : MonoBehaviour
     void Start()
     {
         AutoEquipInitialPassives(); // 개발용
+
+
+        if (MatchResultStore.myPlayerNumber == playerNumber)
+        {
+            if (obj_AlrmArrow != null)
+            {
+                Vector3 spawnOffset = new Vector3(0.5f, 0f, 0f);
+
+                // [수정] Quaternion.identity -> obj_AlrmArrow.transform.rotation
+                GameObject arrowInstance = Instantiate(obj_AlrmArrow, transform.position + spawnOffset, obj_AlrmArrow.transform.rotation);
+
+                AlrmArrow arrowScript = arrowInstance.GetComponent<AlrmArrow>();
+
+                if (arrowScript != null)
+                {
+                    arrowScript.SetTarget(transform, spawnOffset);
+                }
+            }
+        }
+
     }
 
     void AutoEquipInitialPassives()
