@@ -193,7 +193,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // 마우스 올렸을 때 나오는 애니메이션 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        if (!bCanInteract /*|| skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber */) return;
 
         transform.DOScale(originalScale * scaleFactor, tweenDuration);
 
@@ -221,7 +221,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+        if (!bCanInteract /*|| skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber */) return;
 
         transform.DOScale(originalScale, tweenDuration);
 
@@ -239,6 +239,7 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         image_BorderLine_Left.DOFade(1f, tweenDuration);
         image_BorderLine_Right.DOFade(1f, tweenDuration);
     }
+
 
     public void ResetCardAnim()
     {

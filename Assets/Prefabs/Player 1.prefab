@@ -1873,10 +1873,10 @@ MonoBehaviour:
   maxSlopeAngle: 50
   mulSlopeSpeed: 1.2
   groundCheck: {fileID: 350022922035580808}
-  fallMultiplier: 4
+  fallMultiplier: 2.5
   lowJumpMultiplier: 4
   jumpMultiplier: 2
-  maxFallSpeed: 9
+  maxFallSpeed: 9.5
 --- !u!114 &8667721077074239387
 MonoBehaviour:
   m_ObjectHideFlags: 0

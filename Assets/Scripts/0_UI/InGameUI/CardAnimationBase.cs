@@ -10872,6 +10872,13 @@ public class CardAnimation_Num_134 : CardAnimationBase
             SetRect(images[2], -166f, -169f, 0.5f);
         }
 
+        // 2번 요소 (Index 2): 위치 및 크기 설정
+        if (images.Count > 3)
+        {
+            SetRect(images[3], 0f, -50f, 1f);
+        }
+
+
         // 4번 요소 (Index 4): 위치 및 크기 설정
         if (images.Count > 4)
         {

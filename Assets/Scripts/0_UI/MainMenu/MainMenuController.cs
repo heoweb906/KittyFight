@@ -449,13 +449,16 @@ public class MainMenuController : MonoBehaviour
     {
         if (bOtherPanel) return;
 
-        scriptPlayerCharacter.bCanControl = false;
         bOtherPanel = true;
+
+        // 1. 패널 변경을 먼저 실행 (여기서 내부적으로 bCanControl = true가 됨)
         ChangePanel(0, false);
 
+        // 2. 그 다음 확실하게 다시 잠금
+        scriptPlayerCharacter.bCanControl = false;
         scriptPlayerCharacter.GetComponent<Rigidbody>().isKinematic = true;
 
-        // 1. 매칭 UI 닫기 애니메이션 시작 (0.3초)
+        // ... 나머지 로직 ...
         matchManager.logText.text = "";
         CloseInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f);
 

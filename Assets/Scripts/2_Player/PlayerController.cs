@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     Coroutine disableRoutine;
 
+    private GameManager gameManager;
+
     private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
@@ -26,8 +28,20 @@ public class PlayerController : MonoBehaviour
         ability = GetComponent<PlayerAbility>();
     }
 
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
+
     private void Update()
     {
+        if (gameManager != null && gameManager.gameEnded)
+        {
+            moveInput = Vector2.zero; // 이동 입력 초기화
+            return;
+        }
+
         if (InGameUIController.Instance.iPanelNum != 0)
         {
             moveInput = Vector2.zero; 
