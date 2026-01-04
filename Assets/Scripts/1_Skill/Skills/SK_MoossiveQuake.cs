@@ -14,7 +14,8 @@ public class SK_MoossiveQuake : Skill
     public float shakeDuration;
 
     [Header("Effects")]
-    [SerializeField] private GameObject effectPrefab;
+    [SerializeField] private GameObject effectPrefab_Charging;
+    [SerializeField] private GameObject effectPrefab_Use;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
@@ -25,12 +26,14 @@ public class SK_MoossiveQuake : Skill
         anim.SetInteger("AttackType", 5);
 
         if (objSkillEntity == null) return;
+
         Instantiate(
-            effectPrefab,
+            effectPrefab_Charging,
             playerAbility.gameObject.transform.position,
             Quaternion.identity,
             playerAbility.gameObject.transform
         );
+
         StartCoroutine(Co_Cast(origin));
     }
 
@@ -47,6 +50,15 @@ public class SK_MoossiveQuake : Skill
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+
+        playerAbility.PlaySFX(sfxClip);
+        Instantiate(
+         effectPrefab_Use,
+         playerAbility.gameObject.transform.position,
+         Quaternion.identity,
+         playerAbility.gameObject.transform
+     );
+
 
         anim.SetTrigger("Attack");
         anim.SetBool("isAttack", true);
