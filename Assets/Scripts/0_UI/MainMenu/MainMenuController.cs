@@ -65,8 +65,11 @@ public class MainMenuController : MonoBehaviour
     private bool bOtherPanel;       // 닉네임 수정 중 or 매칭 중
 
     public Button_MainMenu[] buttonsMainMenu;
-  
-  
+
+
+
+
+
 
     void Start()
     {
@@ -96,7 +99,10 @@ public class MainMenuController : MonoBehaviour
         scriptPlayerCharacter.bCanControl = false;
 
 
-        for(int i = 0; i < buttonsMainMenu.Length; ++i)
+        // Cursor.lockState = CursorLockMode.Confined;
+
+
+        for (int i = 0; i < buttonsMainMenu.Length; ++i)
         {
             buttonsMainMenu[i].mainMenuController = this;
         }
@@ -153,7 +159,8 @@ public class MainMenuController : MonoBehaviour
         {
             if (_iPanelIdx == 1)
             {
-                // 1번: 켜기
+                // Cursor.lockState = CursorLockMode.None;
+
                 obj_Gausian.SetActive(true);
                 obj_PlayerPanel.SetActive(false);
                 scriptPlayerCharacter.bCanControl = false;
@@ -161,7 +168,7 @@ public class MainMenuController : MonoBehaviour
             }
             else if (_iPanelIdx == 0)
             {
-              
+                // Cursor.lockState = CursorLockMode.Confined;
 
                 obj_Gausian.SetActive(false);
                 obj_PlayerPanel.SetActive(true);

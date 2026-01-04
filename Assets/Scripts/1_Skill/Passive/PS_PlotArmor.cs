@@ -11,6 +11,8 @@ public class PS_PlotArmor : Passive
 
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
+  
+    
 
     [Header("카메라 연출")]
     public float shakeAmount;
@@ -61,6 +63,9 @@ public class PS_PlotArmor : Passive
             pos,
             Quaternion.Euler(-90f, 0f, 0f)
         );
+
+        ability.PlaySFX(audioClip);
+
 
         // [수정] 부모 관계 해제
         instance.transform.SetParent(null);

@@ -143,6 +143,10 @@ public class PlayerAbility : MonoBehaviour
     public void SetSkill(SkillType type, Skill skill)
     {
         if (skill == null) return;
+
+        skill.transform.SetParent(this.transform);
+        skill.transform.localPosition = Vector3.zero;
+
         skill.SetNewBasicValue(this);
         skill.Bind(this);
         skill.SetAssignedSlot(type);

@@ -7,6 +7,8 @@ public abstract class Passive : MonoBehaviour
 
     public Sprite skillIcon;
 
+    public AudioClip audioClip;
+
     public abstract int PassiveId { get; } // °íÀ¯ id
     protected bool IsAuthority =>
         ability != null && ability.playerNumber == MatchResultStore.myPlayerNumber;

@@ -111,6 +111,7 @@ public class PS_SpeedRoulette : Passive
         if (prefab == null) return;
 
         Instantiate(prefab, transform.position, Quaternion.Euler(-90f, 0f, 0f));
+        ability.PlaySFX(audioClip);
     }
 
     public override void RemoteExecute(PassiveProcMessage msg)

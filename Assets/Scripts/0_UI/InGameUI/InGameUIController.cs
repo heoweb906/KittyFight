@@ -106,6 +106,8 @@ public class InGameUIController : MonoBehaviour
         obj_Gausian.SetActive(false);
         iPanelNum = 0;
 
+        // Cursor.lockState = CursorLockMode.Confined;
+
 
         PlayBGM(bgmClips[0]);
     }
@@ -148,12 +150,16 @@ public class InGameUIController : MonoBehaviour
         {
             if (_iPanelIdx == 1)
             {
-                // 1¹ø: ÄÑ±â
+                // Cursor.lockState = CursorLockMode.None;
+
+
                 obj_Gausian.SetActive(true);
                 obj_PlayerPanel.SetActive(false);
             }
             else if (_iPanelIdx == 0)
             {
+                // Cursor.lockState = CursorLockMode.Confined;
+
                 obj_Gausian.SetActive(false);
                 obj_PlayerPanel.SetActive(true);
  
