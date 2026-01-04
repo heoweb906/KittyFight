@@ -24,6 +24,11 @@ public class GroundCheck : MonoBehaviour
                 movementScript.AttachToPlatform(other.transform);
             }
         }
+
+        if (other.CompareTag("Player"))
+        {
+            jumpScript.SetGrounded(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -37,6 +42,11 @@ public class GroundCheck : MonoBehaviour
             {
                 movementScript.AttachToPlatform(null);
             }
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            jumpScript.SetGrounded(false);
         }
     }
 }
