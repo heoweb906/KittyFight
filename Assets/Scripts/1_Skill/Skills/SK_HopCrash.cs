@@ -29,6 +29,10 @@ public class SK_HopCrash : Skill
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
+
+    [Header("Effect")]
+    public GameObject effectUse;
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity || playerAbility == null) return;
@@ -40,6 +44,17 @@ public class SK_HopCrash : Skill
         // 공중에서만 사용 가능
         bool isGround = anim.GetBool("isGround");
         if (isGround) return;
+
+
+        playerAbility.PlaySFX(sfxClip);
+        Instantiate(
+       effectUse,
+       playerAbility.gameObject.transform.position,
+       Quaternion.identity,
+       playerAbility.gameObject.transform
+   );
+
+
 
         StartCoroutine(Co_HopCrash(owner, direction));
     }

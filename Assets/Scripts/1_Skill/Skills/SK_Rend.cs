@@ -24,16 +24,12 @@ public class SK_Rend : Skill
         var ab = go.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
-        else if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
-        {
-            var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration, direction);
-        }
-        else
-        {
-            var gm = FindObjectOfType<GameManager>();
-            gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
-        }
+
+        var gm = FindObjectOfType<GameManager>();
+        gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
+
+
+        playerAbility.PlaySFX(sfxClip);
 
     }
     private IEnumerator ResetAttackAnimState()

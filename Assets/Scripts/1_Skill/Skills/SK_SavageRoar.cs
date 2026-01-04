@@ -36,6 +36,8 @@ public class SK_SavageRoar : Skill
         {
             gm?.cameraManager?.ShakeCameraPunch(shakeAmount * 0.5f, shakeDuration * 0.5f, direction);
         }
+
+        playerAbility.PlaySFX(sfxClip);
     }
     private IEnumerator ResetAttackAnimState()
     {

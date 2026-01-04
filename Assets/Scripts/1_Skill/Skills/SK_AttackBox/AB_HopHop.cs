@@ -22,6 +22,7 @@ public class AB_HopHop : AB_HitboxBase
         if (effectRoot != null)
         {
             effectRoot.SetParent(null, true);
+
         }
     }
 }
