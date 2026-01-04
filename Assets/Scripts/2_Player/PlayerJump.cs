@@ -23,6 +23,10 @@ public class PlayerJump : MonoBehaviour
 
     private bool visualFlippedForHang = false;
 
+    [SerializeField] private PlayerController controlScript;
+    [SerializeField] private bool stopOnlyWhenGrounded = true;
+    [SerializeField] private bool stopOnlyWhenNotTouchingWall = true;
+
     [Header("Audio")]
     [SerializeField] private AudioClip jumpSfx;
 
@@ -44,6 +48,7 @@ public class PlayerJump : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         ability = GetComponent<PlayerAbility>();
         movementScript = GetComponent<PlayerMovement>();
+        controlScript = GetComponent<PlayerController>();
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -99,6 +104,8 @@ public class PlayerJump : MonoBehaviour
                 if (walkLoopFx.isPlaying) walkLoopFx.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
         }
+
+        ApplyDisabledControlGroundHardStop();
     }
 
     public void SetWalking(bool flag)
@@ -203,5 +210,18 @@ public class PlayerJump : MonoBehaviour
     {
         if (ability != null && jumpSfx != null)
             ability.PlaySFX(jumpSfx);
+    }
+
+    private void ApplyDisabledControlGroundHardStop()
+    {
+        if (controlScript == null) return;
+        if (controlScript.enabled) return;
+
+        if (stopOnlyWhenGrounded && !isGrounded) return;
+        if (stopOnlyWhenNotTouchingWall && isTouchingWall) return;
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.Sleep();
     }
 }
