@@ -298,6 +298,18 @@ public class GameManager : MonoBehaviour
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
+        var mv1 = player1.GetComponent<PlayerMovement>();
+        if (mv1 != null)
+        {
+            mv1.LockFacing(new Vector3(1f, 0f, 0f), 0.1f);
+        }
+
+        var mv2 = player2.GetComponent<PlayerMovement>();
+        if (mv2 != null)
+        {
+            mv2.LockFacing(new Vector3(-1f, 0f, 0f), 0.1f);
+        }
+
         //yield return new WaitForSeconds(0.5f);
         //ResetGame();
     }
@@ -492,6 +504,18 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2); 
 
         gameEnded = false;
+
+        var mv1 = player1.GetComponent<PlayerMovement>();
+        if (mv1 != null)
+        {
+            mv1.LockFacing(new Vector3(1f, 0f, 0f), 0.1f);
+        }
+
+        var mv2 = player2.GetComponent<PlayerMovement>();
+        if (mv2 != null)
+        {
+            mv2.LockFacing(new Vector3(-1f, 0f, 0f), 0.1f);
+        }
 
         var myRb = myPlayer.GetComponent<Rigidbody>();
         if (myRb != null) myRb.isKinematic = false;
