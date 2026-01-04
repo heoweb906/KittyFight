@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 96e4736c4c895cf4fbd8e5977fd42f18, type: 3}
+  audioClip: {fileID: 8300000, guid: 16d445bab72f0784e974b6431d0374c2, type: 3}
   intervalSeconds: 6
   minMoveSpeed: 1.5
   maxMoveSpeed: 12.5

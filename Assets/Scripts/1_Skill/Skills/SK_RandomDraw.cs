@@ -15,6 +15,9 @@ public class SK_RandomDraw : Skill
     private bool skillsInitialized = false;
     private float nextChangeTime = 0f;
 
+    [Header("Effects")]
+    [SerializeField] private GameObject effectPrefab;
+
     private void Update()
     {
         if (!playerAbility) return;
@@ -78,6 +81,8 @@ public class SK_RandomDraw : Skill
     private void RollInitialSkill()
     {
         RollNextSkill(resetCooldown: false);
+
+      
     }
 
     private void RollNextSkill(bool resetCooldown)
@@ -102,6 +107,11 @@ public class SK_RandomDraw : Skill
         {
             playerAbility.NotifySkillUIChanged(assignedSlot);
         }
+
+        playerAbility.PlaySFX(sfxClip);
+
+        if (effectPrefab == null) return;
+        Instantiate(effectPrefab, transform.position, Quaternion.Euler(-90f, 0f, 0f));
 
         // 다음 변경 시각 갱신
         nextChangeTime = Time.time + changeInterval;

@@ -49,6 +49,12 @@ public class SkillCardController : MonoBehaviour
     public Transform rasnform_RatIconRight;
     private Dictionary<int, Sprite> skillIconMap = new Dictionary<int, Sprite>();
 
+    private Sequence ratSequence;
+    private GameObject currentTargetIcon;
+    private GameObject currentHeartObj;
+    private GameObject currentRewardIcon;
+
+
     public HashSet<int> usedSkillIDs = new HashSet<int>();
 
     public void Initialize(InGameUIController temp, Transform parent)
@@ -268,23 +274,23 @@ public class SkillCardController : MonoBehaviour
 
             // Block 1
 
-            for (int i = 0; i < skillDataList.Count; i++)
-            {
-                int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
+            //for (int i = 0; i < skillDataList.Count; i++)
+            //{
+            //    int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
 
-                // 1. 하드코딩된 제외 스킬 확인
-                if (excludedSkillIndices.Contains(currentSkillID)) continue;
+            //    // 1. 하드코딩된 제외 스킬 확인
+            //    if (excludedSkillIndices.Contains(currentSkillID)) continue;
 
-                // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
-                if (usedSkillIDs.Contains(currentSkillID)) continue;
+            //    // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
+            //    if (usedSkillIDs.Contains(currentSkillID)) continue;
 
-                // 3. 액티브/패시브 구분
-                bool isActive = currentSkillID < 100;
-                if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
-                {
-                    filteredIndices.Add(i);
-                }
-            }
+            //    // 3. 액티브/패시브 구분
+            //    bool isActive = currentSkillID < 100;
+            //    if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+            //    {
+            //        filteredIndices.Add(i);
+            //    }
+            //}
 
             // Block 1
 
@@ -294,19 +300,19 @@ public class SkillCardController : MonoBehaviour
 
             // Block 2
 
-            //int[] mandatorySkillIDs = { 102, 139, 1, 2 }; 
+            int[] mandatorySkillIDs = { 3, 5, 6, 7 };
 
-            //// 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
-            //foreach (int id in mandatorySkillIDs)
-            //{
-            //    // 리스트에서 iSkillIndex가 일치하는 첫 번째 요소의 인덱스를 찾음
-            //    int dataIdx = skillDataList.FindIndex(x => x.iSkillIndex == id);
+            // 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
+            foreach (int id in mandatorySkillIDs)
+            {
+                // 리스트에서 iSkillIndex가 일치하는 첫 번째 요소의 인덱스를 찾음
+                int dataIdx = skillDataList.FindIndex(x => x.iSkillIndex == id);
 
-            //    if (dataIdx != -1)
-            //    {
-            //        filteredIndices.Add(dataIdx);
-            //    }
-            //}
+                if (dataIdx != -1)
+                {
+                    filteredIndices.Add(dataIdx);
+                }
+            }
 
             // Block 2
 
@@ -617,161 +623,210 @@ public class SkillCardController : MonoBehaviour
     public void HIdeSkillCardList_ForRat(int iSkillIndex, Vector3 clickedWorldPosition, int iRaySkillIndex)
     {
         if (IsAnimating) return;
+
+        // 1. [안전장치] 이전 연출 강제 종료 및 청소
+        CleanupRatEffects();
+
         IsAnimating = true;
         SetBoolAllCardInteract(false);
-
         InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[9]);
 
         Vector2 uiAnchoredPos = WorldToCanvasPoint(clickedWorldPosition);
 
-        // 1. 초기 페이드 아웃/인
-        FadeImage(1f, 0f).OnComplete(() => 
-        { 
-            text_Timer.gameObject.SetActive(false); 
-            iTimerForSelect = 0; 
-            fTimerInternal = 0f; 
-            bTimerCheck = false; 
-            DOVirtual.DelayedCall(0.1f, () => FadeImage(0f, 1f)); 
-        }); 
+        // 2. 시퀀스 생성 (모든 연출을 하나의 타임라인으로 묶음)
+        ratSequence = DOTween.Sequence();
 
-        // 기존 카드들 숨기기 
-        for (int i = 0; i < instances.Length; i++) 
-        { 
-            if (instances[i] != null) instances[i].gameObject.SetActive(false); 
-        } 
+        // --- [Step 1] 초기 페이드 및 UI 정리 ---
+        ratSequence.AppendCallback(() =>
+        {
+            FadeImage(1f, 0f).OnComplete(() =>
+            {
+                text_Timer.gameObject.SetActive(false);
+                iTimerForSelect = 0;
+                fTimerInternal = 0f;
+                bTimerCheck = false;
+                // 페이드 인은 시퀀스와 별개로 즉시 실행되지 않도록 주의 (여기서는 시각적 효과만)
+                DOVirtual.DelayedCall(0.1f, () => FadeImage(0f, 1f));
+            });
 
-        // 2. 타겟 아이콘 생성
-        Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex); 
-        GameObject targetIconObj = CreateEffectImage("TargetSkillIcon", skillIconSprite, uiAnchoredPos, new Vector2(200f, 200f)); 
-        RectTransform targetIconRect = targetIconObj.GetComponent<RectTransform>(); 
+            // 기존 카드 숨기기
+            for (int i = 0; i < instances.Length; i++)
+            {
+                if (instances[i] != null) instances[i].gameObject.SetActive(false);
+            }
+        });
 
-        targetIconRect.SetParent(InGameUiController.image_FadeOut_White.transform.parent); 
-        InGameUiController.image_FadeOut_White.transform.SetAsLastSibling(); 
+        // --- [Step 2] 타겟 아이콘 생성 ---
+        ratSequence.AppendCallback(() =>
+        {
+            Sprite skillIconSprite = GetSkillIconBySkillIndex(iSkillIndex);
+            currentTargetIcon = CreateEffectImage("TargetSkillIcon", skillIconSprite, uiAnchoredPos, new Vector2(200f, 200f));
 
-        // 3. 하트 투척 연출 
-        DOVirtual.DelayedCall(0.5f, () =>
+            if (currentTargetIcon != null)
+            {
+                RectTransform targetIconRect = currentTargetIcon.GetComponent<RectTransform>();
+                targetIconRect.SetParent(InGameUiController.image_FadeOut_White.transform.parent);
+                InGameUiController.image_FadeOut_White.transform.SetAsLastSibling();
+            }
+        });
+
+        // 0.5초 대기
+        ratSequence.AppendInterval(0.5f);
+
+        // --- [Step 3] 하트 미사일 생성 및 발사 ---
+        ratSequence.AppendCallback(() =>
         {
             float canvasHeight = InGameUiController.canvasMain.GetComponent<RectTransform>().rect.height;
             Vector2 startHeartPos = new Vector2(0f, canvasHeight / 2f + 300f);
 
-            GameObject heartObj = CreateEffectImage("RatHeartMissile", sprite_RatHeart, startHeartPos, new Vector2(150f, 150f));
-            RectTransform heartRect = heartObj.GetComponent<RectTransform>();
-            heartRect.SetParent(InGameUiController.image_FadeOut_White.transform.parent);
+            currentHeartObj = CreateEffectImage("RatHeartMissile", sprite_RatHeart, startHeartPos, new Vector2(150f, 150f));
 
-            // 2. ⭐ 핵심: 여기서도 흰색 이미지를 다시 한번 맨 위로 올려서 하트를 덮음
-            InGameUiController.image_FadeOut_White.transform.SetAsLastSibling();
+            if (currentHeartObj != null)
+            {
+                RectTransform heartRect = currentHeartObj.GetComponent<RectTransform>();
+                heartRect.SetParent(InGameUiController.image_FadeOut_White.transform.parent);
+                InGameUiController.image_FadeOut_White.transform.SetAsLastSibling();
 
-            heartRect.DORotate(new Vector3(0, 0, 360 * 2), 0.6f, RotateMode.FastBeyond360).SetEase(Ease.Linear);
-            heartRect.DOAnchorPos(uiAnchoredPos, 0.6f).SetEase(Ease.InQuad)
-                .OnComplete(() =>
+                // 하트 애니메이션 (시퀀스에 Insert하지 않고 자체적으로 돔, 하지만 관리를 위해 변수에 할당)
+                heartRect.DORotate(new Vector3(0, 0, 360 * 2), 0.6f, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+                heartRect.DOAnchorPos(uiAnchoredPos, 0.6f).SetEase(Ease.InQuad);
+            }
+        });
+
+        // 0.6초 대기 (하트 이동 시간)
+        ratSequence.AppendInterval(0.6f);
+
+        // --- [Step 4] 아이콘 추락 ---
+        ratSequence.AppendCallback(() =>
+        {
+            float canvasHeight = InGameUiController.canvasMain.GetComponent<RectTransform>().rect.height;
+            if (currentTargetIcon != null)
+            {
+                RectTransform targetIconRect = currentTargetIcon.GetComponent<RectTransform>();
+                targetIconRect.DORotate(new Vector3(0, 0, 720), 0.8f, RotateMode.FastBeyond360);
+                targetIconRect.DOAnchorPosY(-canvasHeight, 0.8f).SetEase(Ease.InBack);
+            }
+        });
+
+        // 0.8초 대기 (추락 시간) + 0.7초 여유 = 1.5초
+        ratSequence.AppendInterval(1.5f);
+
+        // --- [Step 5] 화면 전환 및 쥐 카드 생성 ---
+        ratSequence.AppendCallback(() =>
+        {
+            // 하트, 타겟 아이콘 제거
+            if (currentTargetIcon != null) Destroy(currentTargetIcon);
+            if (currentHeartObj != null) Destroy(currentHeartObj);
+
+            FadeImage(1f, 0.1f).OnComplete(() =>
+            {
+                bool isRight = (uiAnchoredPos.x > 0);
+                Transform targetParent = isRight ? ransform_RatCardRight : ransform_RatCardLeft;
+                Transform targetIconTransform = isRight ? rasnform_RatIconRight : rasnform_RatIconLeft;
+
+                int realID = iRaySkillIndex;
+
+                // 쥐 카드 생성
+                CreateRatCardAtTransform(targetParent, realID);
+
+                // 보상 아이콘 생성
+                Sprite rewardIcon = GetSkillIconBySkillIndex(realID);
+                Vector2 iconPos = Vector2.zero;
+                if (targetIconTransform != null) iconPos = WorldToCanvasPoint(targetIconTransform.position);
+
+                currentRewardIcon = CreateEffectImage("RewardSkillIcon", rewardIcon, iconPos, new Vector2(200f, 200f));
+                if (currentRewardIcon != null)
                 {
-                    // 아이콘 추락
-                    targetIconRect.DORotate(new Vector3(0, 0, 720), 0.8f, RotateMode.FastBeyond360);
-                    targetIconRect.DOAnchorPosY(-canvasHeight, 0.8f).SetEase(Ease.InBack)
-                        .OnComplete(() => Destroy(targetIconObj));
+                    currentRewardIcon.GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+                }
 
-                    DOVirtual.DelayedCall(1.5f, () =>
-                    {
-                        FadeImage(1f, 0.1f).OnComplete(() =>
-                        {
-                            if (heartObj != null) Destroy(heartObj);
+                // 화면 밝아짐
+                DOVirtual.DelayedCall(0.1f, () => FadeImage(0f, 0.5f));
+            });
+        });
 
-                            bool isRight = (uiAnchoredPos.x > 0);
-                            Transform targetParent = isRight ? ransform_RatCardRight : ransform_RatCardLeft; 
-                            Transform targetIconTransform = isRight ? rasnform_RatIconRight : rasnform_RatIconLeft; 
+        // 4.3초 대기 (쥐 카드 보여주는 시간)
+        ratSequence.AppendInterval(4.4f); // 페이드 시간 고려하여 약간 넉넉하게
 
-                            // =================================================================
-                            // ⭐ [핵심 수정] "ID 변환 로직"을 전부 삭제했습니다.
-                            // 이제 UI에서도 ID를 주고, P2P에서도 ID를 주므로 그냥 그대로 쓰면 됩니다.
-                            // =================================================================
-                            int realID = iRaySkillIndex; 
+        // --- [Step 6] 최종 아이콘 획득 및 게임 리셋 ---
+        ratSequence.AppendCallback(() =>
+        {
+            if (currentRewardIcon != null)
+            {
+                RectTransform iconRect = currentRewardIcon.GetComponent<RectTransform>();
+                iconRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
+                {
+                    FinishRatSequence(true);
+                });
+            }
+            else
+            {
+                // 아이콘이 없어도 게임은 진행되어야 함
+                FinishRatSequence(false);
+            }
+        });
+    }
 
-                            // 카드 생성 (ID 기준) 
-                            CreateRatCardAtTransform(targetParent, realID); 
+    private void FinishRatSequence(bool hasIcon)
+    {
+        FadeImage(1f, 0f).OnComplete(() =>
+        {
+            // 점수판 이미지 변경 등 UI 업데이트
+            if (hasIcon && currentRewardIcon != null)
+            {
+                Sprite iconSprite = currentRewardIcon.GetComponent<Image>().sprite;
+                InGameUiController.scoreBoardUIController.scoreImageElement_Player1.imageSkillIcon.sprite = iconSprite;
+                InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = iconSprite;
+                InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
 
-                            // 2. 보상 아이콘 준비
-                            // 여기서도 Index인지 의심하는 코드 삭제. 그냥 ID로 찾습니다.
-                            Sprite rewardIcon = GetSkillIconBySkillIndex(realID); 
+                InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1);
+                InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2);
+                InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[7]);
+            }
 
-                            Vector2 iconPos = Vector2.zero;
-                            if (targetIconTransform != null) iconPos = WorldToCanvasPoint(targetIconTransform.position); 
+            // 생성된 임시 오브젝트들 제거
+            CleanupRatEffects();
 
-                            GameObject rewardIconObj = CreateEffectImage("RewardSkillIcon", rewardIcon, iconPos, new Vector2(200f, 200f)); 
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
+                FadeImage(0f, 1f);
+                IsAnimating = false;
 
-                            RectTransform iconRect = null; 
-                            if (rewardIconObj != null) 
-                            {
-                                iconRect = rewardIconObj.GetComponent<RectTransform>(); 
-                                iconRect.localScale = Vector3.one * 1.5f; 
-                            }
-                              
-                            DOVirtual.DelayedCall(0.1f, () => 
-                            {
+                DOVirtual.DelayedCall(0.9f, () =>
+                {
+                    InGameUiController.gameManager.ResetGame();
+                });
+            });
+        });
+    }
 
-                                FadeImage(0f, 0.5f);
+    // [핵심] 쥐 연출 관련 모든 트윈과 오브젝트를 강제 정리하는 함수
+    private void CleanupRatEffects()
+    {
+        // 1. 실행 중인 시퀀스 종료
+        if (ratSequence != null)
+        {
+            ratSequence.Kill();
+            ratSequence = null;
+        }
 
-                                DOVirtual.DelayedCall(4.3f, () => 
-                                {
+        // 2. 생성된 임시 오브젝트들 파괴
+        if (currentTargetIcon != null) Destroy(currentTargetIcon);
+        if (currentHeartObj != null) Destroy(currentHeartObj);
+        if (currentRewardIcon != null) Destroy(currentRewardIcon);
 
-                                    // 아이콘이 정상적으로 있을 때만 애니메이션 실행
-                                    if (rewardIconObj != null && iconRect != null) 
-                                    {
-                                        iconRect.DOAnchorPos(Vector2.zero, 0.6f).SetEase(Ease.InBack).OnComplete(() => 
-                                        {
-                                            FadeImage(1f, 0f).OnComplete(() => 
-                                            {
-                                                int myPlayerNum = MatchResultStore.myPlayerNumber; 
+        // 이름으로 찾아서 혹시 모를 잔재 제거 (중복 생성 방지)
+        GameObject oldTarget = GameObject.Find("TargetSkillIcon");
+        if (oldTarget) Destroy(oldTarget);
+        GameObject oldHeart = GameObject.Find("RatHeartMissile");
+        if (oldHeart) Destroy(oldHeart);
+        GameObject oldReward = GameObject.Find("RewardSkillIcon");
+        if (oldReward) Destroy(oldReward);
 
-                                                InGameUiController.scoreBoardUIController.scoreImageElement_Player1.ChangePlayerImage(4, false, 1); 
-                                                InGameUiController.scoreBoardUIController.scoreImageElement_Player2.ChangePlayerImage(4, false, 2); 
-
-                                                InGameUiController.scoreBoardUIController.scoreImageElement_Player1.imageSkillIcon.sprite = rewardIcon; 
-                                                InGameUiController.scoreBoardUIController.scoreImageElement_Player2.imageSkillIcon.sprite = rewardIcon; 
-                                                InGameUiController.scoreBoardUIController.SkillIconImageOnOff(true);
-
-                                                InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[7]);
-
-                                                DOVirtual.DelayedCall(0.1f, () => 
-                                                { 
-                                                    FadeImage(0f, 1f); 
-                                                    IsAnimating = false; 
-                                                    foreach (Transform child in targetParent) Destroy(child.gameObject); 
-                                                    Destroy(rewardIconObj); 
-
-                                                    DOVirtual.DelayedCall(0.9f, () => 
-                                                    {
-                                                        InGameUiController.gameManager.ResetGame(); 
-                                                        DOVirtual.DelayedCall(0.6f, () => 
-                                                        {
-                                                            // InGameUiController.scoreBoardUIController.OpenScorePanel(); 
-                                                        });
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    }
-                                    else
-                                    {
-                                        // ⚠️ 아이콘이 없더라도 게임이 멈추지 않게 강제 리셋 진행
-                                        FadeImage(0f, 1f); 
-                                        IsAnimating = false; 
-                                        InGameUiController.gameManager.ResetGame(); 
-                                    }
-                                }); 
-                            }); 
-
-                       
-
-                     
-                    
-                        }); 
-                    }); 
-                }); 
-        }); 
-    } 
-
-
-
+        currentTargetIcon = null;
+        currentHeartObj = null;
+        currentRewardIcon = null;
+    }
 
 
 

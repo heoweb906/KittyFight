@@ -15,6 +15,7 @@ public class SK_MysteryFruit : Skill
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         anim.SetTrigger("Attack");
@@ -22,12 +23,10 @@ public class SK_MysteryFruit : Skill
         anim.SetInteger("AttackType", 3);
         StartCoroutine(ResetAttackAnimState());
 
-        Instantiate(
-            effectPrefab,
-            playerAbility.gameObject.transform.position,
-            Quaternion.identity,
-            playerAbility.gameObject.transform
-        );
+
+        if (effectPrefab == null) return;
+        Instantiate(effectPrefab, transform.position, Quaternion.Euler(-90f, 0f, 0f));
+
 
         int pn = playerAbility != null ? playerAbility.playerNumber : 0;
         if (pn != MatchResultStore.myPlayerNumber) return;
@@ -43,6 +42,10 @@ public class SK_MysteryFruit : Skill
 
         Debug.Log(newHP);
         ph.RemoteSetHP(newHP);
+
+
+        playerAbility.PlaySFX(sfxClip);
+
 
         P2PMessageSender.SendMessage(
             DamageMessageBuilder.Build(pn, newHP, 0, null)
