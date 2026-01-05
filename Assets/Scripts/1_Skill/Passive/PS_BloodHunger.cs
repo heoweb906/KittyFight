@@ -66,6 +66,8 @@ public class PS_BloodHunger : Passive
 
         GameObject effect = Instantiate(objEffect_Use, pos, Quaternion.Euler(-90, 0, 0));
         effect.transform.localScale = Vector3.one;
+
+        ability.PlaySFX(audioClip);
     }
     public override void RemoteExecute(PassiveProcMessage msg)
     {

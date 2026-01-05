@@ -64,6 +64,6 @@ Material:
     - _fPulling: 0.1
     - _fPulling_2: 0.5
     m_Colors:
-    - _Color: {r: 0.6037736, g: 0.5111508, b: 0.42435032, a: 1}
+    - _Color: {r: 0.7169812, g: 0.60228777, b: 0.49715206, a: 1}
     - _Color_1: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
   m_BuildTextureStacks: []

@@ -4882,3 +4882,5 @@ MonoBehaviour:
   spawnPrefab: {fileID: 4395600050402442438, guid: b6107c125c2a6cb418b7ce5e4043c830,
     type: 3}
   spawnInterval: 3
+  manager: {fileID: 0}
+  sfxClip: {fileID: 8300000, guid: 46fef47a56d4f2647a99950195ef440d, type: 3}

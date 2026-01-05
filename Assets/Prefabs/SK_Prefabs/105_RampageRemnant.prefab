@@ -126,3 +126,4 @@ MonoBehaviour:
   wallCheckMode: 2
   bMiddleState: 0
   damageToOthers: 20
+  sfxAudio: {fileID: 8300000, guid: 5a1e1a2bc8514db4dae470f098ed2a73, type: 3}

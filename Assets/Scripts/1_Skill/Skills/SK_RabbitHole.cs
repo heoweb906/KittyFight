@@ -125,6 +125,9 @@ public class SK_RabbitHole : Skill
             Quaternion.Euler(-90, 0, 0)
         );
 
+        playerAbility.PlaySFX(sfxClip);
+
+
         isCasting = false;
     }
 }

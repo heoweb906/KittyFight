@@ -85,6 +85,8 @@ public class PS_FuryBlast : Passive
             Quaternion.Euler(-90, 0, 0),
             transform
         );
+
+  
     }
 
     private void TriggerBlast_Local()

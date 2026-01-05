@@ -59,6 +59,8 @@ public class PS_Kickstart : Passive
     {
         if (!effectPrefab) return;
         Instantiate(effectPrefab, pos, Quaternion.identity);
+
+        ability.PlaySFX(audioClip);
     }
 
     public override void RemoteExecute(PassiveProcMessage msg)

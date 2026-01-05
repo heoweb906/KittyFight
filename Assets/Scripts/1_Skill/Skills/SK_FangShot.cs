@@ -24,6 +24,8 @@ public class SK_FangShot : Skill
         var rot = Quaternion.LookRotation(direction, Vector3.up);
         var proj = Instantiate(objSkillEntity, origin, rot);
 
+        playerAbility.PlaySFX(sfxClip);
+
         var abBase = proj.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);
 

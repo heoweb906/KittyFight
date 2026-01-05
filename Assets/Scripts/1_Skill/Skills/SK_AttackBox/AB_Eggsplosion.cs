@@ -18,6 +18,10 @@ public class AB_Eggsplosion : AB_HitboxBase
     public GameObject[] objs_Piece;
 
 
+    [Header("»ç¿îµå")]
+    public AudioClip sfxClip;
+
+
     void Start()
     {
         if (obj_Egg != null)
@@ -63,6 +67,8 @@ public class AB_Eggsplosion : AB_HitboxBase
     {
         obj_Egg.transform.DOKill();
 
+        ownerAbility.PlaySFX(sfxClip);
+
         particle_Line.StopTrailGeneration();
         GameObject obj = particle_Line.GetComponent<GameObject>();
         particle_Line.transform.SetParent(null);
@@ -74,7 +80,7 @@ public class AB_Eggsplosion : AB_HitboxBase
             GameObject effect = Instantiate(objEffect_Hit, transform);
             effect.transform.localPosition = Vector3.zero;
             effect.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            effect.transform.localScale = new Vector3(2f, 2f, 2f);
+            effect.transform.localScale = new Vector3(3f, 3f, 3f);
             effect.transform.SetParent(null);
         }
 

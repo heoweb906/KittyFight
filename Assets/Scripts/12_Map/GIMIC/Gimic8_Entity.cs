@@ -6,7 +6,13 @@ public class Gimic8_Entity : MonoBehaviour
 {
     [Header("Settings")]
     public GameObject spawnPrefab; 
-    public float spawnInterval = 3.0f; 
+    public float spawnInterval = 3.0f;
+
+    [Header("»ç¿îµå")]
+    [HideInInspector] public GameManager manager;
+    public AudioClip sfxClip;
+
+
 
     void Start()
     {
@@ -34,6 +40,8 @@ public class Gimic8_Entity : MonoBehaviour
                     hitbox.Init(null);
                 }
             }
+
+            manager.playerAbility_1.PlaySFX(sfxClip);
         }
     }
 }

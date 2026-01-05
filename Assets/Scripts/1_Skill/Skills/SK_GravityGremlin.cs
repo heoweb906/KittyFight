@@ -45,6 +45,8 @@ public class SK_GravityGremlin : Skill
             Quaternion.LookRotation(direction, Vector3.up)
         );
 
+        playerAbility.PlaySFX(sfxClip);
+
         var projHitbox = proj.GetComponent<AB_GravityGremlin>();
         if (projHitbox == null)
         {

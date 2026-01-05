@@ -12,6 +12,7 @@ public class AB_Blackhole : AB_HitboxBase
     [SerializeField] private float tickInterval = 1f;
     [SerializeField] private int damagePerTick = 1;
 
+
     private float duration;
 
     private readonly Dictionary<PlayerHealth, float> timers = new Dictionary<PlayerHealth, float>();
@@ -31,6 +32,9 @@ public class AB_Blackhole : AB_HitboxBase
     private IEnumerator Co_Blackhole()
     {
         float elapsed = 0f;
+
+
+
 
         while (elapsed < duration)
         {

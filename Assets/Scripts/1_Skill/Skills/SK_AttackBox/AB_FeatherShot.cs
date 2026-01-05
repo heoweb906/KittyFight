@@ -16,6 +16,9 @@ public class AB_FeatherShot : AB_HitboxBase
     public GameObject particle_Destroy;
     public GameObject obj_Featfer;
 
+    [Header("»ç¿îµå")]
+    public AudioClip sfxClip;
+
 
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
@@ -42,6 +45,8 @@ public class AB_FeatherShot : AB_HitboxBase
 
     private void OnDisappearEffect()
     {
+        ownerAbility.PlaySFX(sfxClip);  
+
         particle_Line.StopTrailGeneration();
         GameObject obj = particle_Line.GetComponent<GameObject>();
         particle_Line.transform.SetParent(null);

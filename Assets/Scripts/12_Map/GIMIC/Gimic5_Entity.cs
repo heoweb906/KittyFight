@@ -1,3 +1,4 @@
+using MagicaCloth2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,10 @@ public class Gimic5_Entity : MonoBehaviour
 
     public GameObject obj_1;
     public GameObject obj_2;
+
+    [Header("»ç¿îµå")]
+    [HideInInspector] public GameManager manager;
+    public AudioClip sfxClip;
 
     void Start()
     {
@@ -49,6 +54,9 @@ public class Gimic5_Entity : MonoBehaviour
         if (targetObject != null)
         {
             targetObject.SetActive(true);
+
+            manager.playerAbility_1.PlaySFX(sfxClip);
+
 
             GameObject gas = targetObject;
 

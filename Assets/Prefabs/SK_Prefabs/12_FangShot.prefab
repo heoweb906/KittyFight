@@ -253,6 +253,8 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
+  wallCheckMode: 0
+  bMiddleState: 0
   duration: 3
   tickInterval: 1
   damagePerTick: 7
@@ -271,6 +273,7 @@ MonoBehaviour:
   - {fileID: 4180457575034876599}
   - {fileID: 2714846809766061348}
   - {fileID: 268487941679611608}
+  audioClip: {fileID: 8300000, guid: 286382da0d9d3d44aa5d3a1f3231fae9, type: 3}
 --- !u!65 &3358811976722198787
 BoxCollider:
   m_ObjectHideFlags: 0

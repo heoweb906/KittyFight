@@ -32,6 +32,9 @@ public class SK_BAA : Skill
         anim.SetInteger("AttackType", 4);
         StartCoroutine(ResetAttackAnimState());
 
+        playerAbility.PlaySFX(sfxClip);
+
+
         var gm = FindObjectOfType<GameManager>();
         if (!gm) return;
 

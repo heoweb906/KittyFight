@@ -23,6 +23,8 @@ public class SK_HoofOut : Skill
         Quaternion rot = Quaternion.LookRotation(direction, Vector3.up);
 
         GameObject hitbox = Instantiate(objSkillEntity, spawnPos, rot);
+        playerAbility.PlaySFX(sfxClip);
+
 
         var ab = hitbox.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);

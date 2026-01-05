@@ -16,6 +16,10 @@ public class AB_Banana : AB_HitboxBase
     [Tooltip("¹Ù´Ú ¹Ù³ª³ª")]
     [SerializeField] private GameObject installedVisual;
 
+    [Tooltip("ÀÌÆåÆ®")]
+    public GameObject obj_Installation;
+    public GameObject obj_HitPlayer;
+
     protected override void Awake()
     {
         base.Awake();

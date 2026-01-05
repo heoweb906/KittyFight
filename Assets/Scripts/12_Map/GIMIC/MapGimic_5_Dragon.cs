@@ -121,6 +121,14 @@ public class MapGimic_5_Dragon : AbstractMapGimic
 
             var obj = Instantiate(laserPrefab, pos, rot);
 
+            var entity = obj.GetComponent<Gimic5_Entity>();
+            if (entity != null)
+            {
+                // 여기서 mapManager.gameManager 또는 FindObjectOfType을 사용합니다.
+                // 기믹 매니저에 이미 참조가 있다면 그것을 쓰고, 없다면 아래처럼 찾아서 넣어줍니다.
+                entity.manager = FindObjectOfType<GameManager>();
+            }
+
             // 필요 시 히트박스 중립 설정 추가
             // var hitbox = obj.GetComponent<AB_HitboxBase>();
             // if (hitbox) hitbox.bMiddleState = true; 

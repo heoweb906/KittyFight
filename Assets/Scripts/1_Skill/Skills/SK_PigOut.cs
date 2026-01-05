@@ -34,6 +34,7 @@ public class SK_PigOut : Skill
             playerAbility.gameObject.transform.position,
             Quaternion.Euler(-90f, 0, 0)
         );
+        playerAbility.PlaySFX(sfxClip);
 
         int pn = playerAbility.playerNumber;
         if (pn != MatchResultStore.myPlayerNumber) return;

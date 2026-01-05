@@ -45,6 +45,8 @@ public class SK_Ghostride : Skill
         bool isMine = playerAbility.playerNumber == MatchResultStore.myPlayerNumber;
         hideVisual = !isMine;
 
+        playerAbility.PlaySFX(sfxClip);
+
         if (visualObjects == null || visualObjects.Length == 0)
         {
             var all = playerAbility.GetComponentsInChildren<Transform>(true);

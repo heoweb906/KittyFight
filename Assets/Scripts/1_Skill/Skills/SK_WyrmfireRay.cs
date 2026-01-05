@@ -27,31 +27,17 @@ public class SK_WyrmfireRay : Skill
         if (dir.sqrMagnitude < 0.0001f) return;
         dir.Normalize();
 
-        float maxDist = aimRange > 0f ? aimRange : 6.0f;
-        float hitDist = maxDist;
-
-        RaycastHit hit;
-        if (obstacleMask.value != 0 &&
-            Physics.Raycast(start, dir, out hit, maxDist, obstacleMask, QueryTriggerInteraction.Ignore))
-        {
-            hitDist = hit.distance;
-        }
-
-        Vector3 center = start + dir * (hitDist * 0.5f);
-        center.z = start.z;
-
+        // 사이즈 조절 로직 삭제로 인해 hitDist 계산 및 center 계산 불필요
+        // 회전값만 계산
         float angleZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.Euler(0f, 0f, angleZ);
 
-        var go = Instantiate(objSkillEntity, center, rot);
+        // 생성 위치를 center(중간 지점)가 아닌 start(시작점)로 변경
+        var go = Instantiate(objSkillEntity, start, rot);
 
-        var t = go.transform;
-        var s = t.localScale;
-        s.x = hitDist;
-        s.y = 0.05f;
-        t.localScale = s;
+        playerAbility.PlaySFX(sfxClip);
 
-        var ab = go.GetComponent<AB_HitboxBase>();
+        var ab = go.GetComponentInChildren<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
         var gm = FindObjectOfType<GameManager>();

@@ -35,7 +35,12 @@ public class AB_BouncingFire : AB_HitboxBase
     [Header("카메라 연출")]
     public float shakeAmount;
     public float shakeDuration;
+
+    [Header("사운드")]
+    public AudioClip sfxBouncing;
+    public AudioClip sfxExplosion;
     
+
 
     protected override void Awake()
     {
@@ -102,6 +107,9 @@ public class AB_BouncingFire : AB_HitboxBase
             Destroy(gameObject);
             return;
         }
+
+        ownerAbility.PlaySFX(sfxBouncing);
+
 
         // 충돌 직전 속도
         Vector3 incoming = lastVelocity;
@@ -206,6 +214,8 @@ public class AB_BouncingFire : AB_HitboxBase
             effect.transform.localScale = new Vector3(fEffectSize, fEffectSize, fEffectSize);
             effect.transform.SetParent(null);
         }
+
+        ownerAbility.PlaySFX(sfxExplosion);
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);

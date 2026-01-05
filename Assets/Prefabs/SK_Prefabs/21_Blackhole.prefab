@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.3567}
-  m_LocalScale: {x: 5.5, y: 5.5, z: 5.5}
+  m_LocalScale: {x: 10.16675, y: 10.16675, z: 10.16675}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2035108330268191761}
@@ -124,6 +124,8 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 0
+  wallCheckMode: 0
+  bMiddleState: 0
   pullStrength: 13
   pullRadius: 2.75
   tickInterval: 1
@@ -140,6 +142,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VFX_21_GravityGremlin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552239459639012982, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.13655308
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.13655308
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.13655308
       objectReference: {fileID: 0}
     - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
         type: 3}
@@ -190,6 +212,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6385839928348304581, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480284425871206142, guid: 415d9445ee3210747bd809e6457303ff,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

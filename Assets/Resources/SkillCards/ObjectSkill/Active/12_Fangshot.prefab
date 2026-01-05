@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
   anim: {fileID: 0}
-  sfxClip: {fileID: 0}
+  sfxClip: {fileID: 8300000, guid: 6b7ef4f27744b0a46adaea2ce26476a3, type: 3}
   coolTime: 5.5
   objSkillEntity: {fileID: 748453906331876544, guid: 56b9e01a7956a9446b1a4f18cc532c47,
     type: 3}

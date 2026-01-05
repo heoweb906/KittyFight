@@ -31,6 +31,7 @@ public class SK_FeatherBarrage : Skill
             playerAbility.gameObject.transform.position,
             Quaternion.identity
         );
+        playerAbility.PlaySFX(sfxClip);
 
         Vector3 center = playerAbility.transform.position;
         center.z = playerAbility.transform.position.z;

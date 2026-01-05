@@ -701,7 +701,10 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
+  wallCheckMode: 0
+  bMiddleState: 0
   blindnessDuration: 2.5
+  destroyOnHit: 1
   particle_Line: {fileID: 6155575225409394546}
   obj_Egg: {fileID: 6333613553916496374}
   objEffect_Hit: {fileID: 2844923944877570796, guid: 846c9add3d6ad5444ba9f59fdeeadce7,
@@ -714,6 +717,7 @@ MonoBehaviour:
   - {fileID: 5662957364852633544}
   - {fileID: 7374331464707910177}
   - {fileID: 3228442829576118436}
+  sfxClip: {fileID: 8300000, guid: 286382da0d9d3d44aa5d3a1f3231fae9, type: 3}
 --- !u!135 &8432678206243887411
 SphereCollider:
   m_ObjectHideFlags: 0

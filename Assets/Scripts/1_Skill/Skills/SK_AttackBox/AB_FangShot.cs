@@ -18,6 +18,9 @@ public class AB_FangShot : AB_HitboxBase
     public GameObject objEffect_Hit;
     public GameObject[] objs_Piece;
 
+    [Header("»ç¿îµå")]
+    public AudioClip audioClip;
+
 
     protected override void StartEffect()
     {
@@ -73,6 +76,9 @@ public class AB_FangShot : AB_HitboxBase
             effect.transform.localScale = new Vector3(5f, 5f, 5f);
             effect.transform.SetParent(null);
         }
+
+        ownerAbility.PlaySFX(audioClip);
+
 
 
         Explode(0.5f, 5f);

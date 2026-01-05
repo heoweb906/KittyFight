@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 04502fc3787efcd4db27383a0b1310ef, type: 3}
+  audioClip: {fileID: 8300000, guid: 760d7fceebc3c2b40a93f5db7b817e6e, type: 3}
   interval: 15
   effectPrefab: {fileID: 5033839102069641448, guid: 9f5b37de0567d0b409a212c7aee5550f,
     type: 3}

@@ -40,6 +40,7 @@ public class PS_FluffyHindrance : Passive
             dir: Vector3.up,
             i0: victimAbility.playerNumber
         );
+        ability.PlaySFX(audioClip);
 
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);

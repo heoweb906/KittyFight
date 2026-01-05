@@ -128,6 +128,8 @@ public class PS_FurFlick : Passive
             effect.transform.SetParent(null);
         }
 
+        ability.PlaySFX(audioClip);
+
         var rb = proj.GetComponent<Rigidbody>();
         if (rb != null)
         {

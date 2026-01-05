@@ -12,6 +12,10 @@ public class AB_GravityGremlin : AB_HitboxBase
 
     private bool exploded = false;
 
+
+    [Header("사운드")]
+    public AudioClip sfxClip;
+
     public void InitProjectile(
         PlayerAbility owner,
         GameObject blackholePrefab,
@@ -49,6 +53,8 @@ public class AB_GravityGremlin : AB_HitboxBase
         // 카메라 쉐이크
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration);
+
+        ownerAbility.PlaySFX(sfxClip);
 
         // 투사체 제거
         Destroy(gameObject);

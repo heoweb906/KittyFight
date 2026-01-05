@@ -30,6 +30,8 @@ public class SK_WoolWall : Skill
             go.transform
         );
 
+        playerAbility.PlaySFX(sfxClip);
+
       
 
 

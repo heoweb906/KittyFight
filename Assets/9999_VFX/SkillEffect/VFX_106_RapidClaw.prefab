@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7258044368984800058}
   - component: {fileID: 8776989229362458484}
   m_Layer: 0
-  m_Name: VFX_135_RapidClaw
+  m_Name: VFX_106_RapidClaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.57587075, y: -0.41033265, z: 0.41033265, w: 0.57587075}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4698588690147427673}

@@ -18,6 +18,9 @@ public class SK_TailWhipline : Skill
     [Header("¿Ã∆Â∆Æ")]
     public GameObject objEffect;
 
+
+
+
     [SerializeField] private float attackAnimDuration = 0.5f;
 
     public override void Execute(Vector3 origin, Vector3 direction)
@@ -39,6 +42,8 @@ public class SK_TailWhipline : Skill
         if (maxDist <= 0f) maxDist = 6f;
 
         var owner = playerAbility.gameObject;
+
+        playerAbility.PlaySFX(sfxClip);
 
         var gm = FindObjectOfType<GameManager>();
         if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
@@ -135,6 +140,8 @@ public class SK_TailWhipline : Skill
                 hasHit = true;
                 hitPoint = hit.point;
                 hitPoint.z = origin.z;
+
+                playerAbility.PlaySFX(sfxClip);
 
                 if (tailTr) tailTr.position = hitPoint;
 

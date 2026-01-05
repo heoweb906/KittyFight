@@ -4876,6 +4876,8 @@ MonoBehaviour:
   targetObject: {fileID: 4221725559905779800}
   delayTime: 1.75
   fDestroyDelay: 7
+  manager: {fileID: 0}
+  sfxClip: {fileID: 8300000, guid: 18735969cd737e5419d954d3f8605836, type: 3}
 --- !u!1 &3346895310013046632
 GameObject:
   m_ObjectHideFlags: 0

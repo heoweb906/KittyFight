@@ -72,6 +72,8 @@ public class PS_DataDump : Passive
             pos,
             Quaternion.Euler(-90f, 0f, 0f)
         );
+
+        ability.PlaySFX(audioClip);
     }
 
     public override void RemoteExecute(PassiveProcMessage msg)

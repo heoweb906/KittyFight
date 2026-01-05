@@ -32,6 +32,8 @@ public class SK_FeatherShot : Skill
         throwGroup.Add(FireOne(origin, dirC));
         throwGroup.Add(FireOne(origin, dirR));
 
+        playerAbility.PlaySFX(sfxClip);
+
         for (int i = 0; i < throwGroup.Count; i++)
         {
             for (int j = i + 1; j < throwGroup.Count; j++)

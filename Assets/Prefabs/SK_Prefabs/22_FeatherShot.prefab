@@ -153,12 +153,15 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
+  wallCheckMode: 0
+  bMiddleState: 0
   damage: 7
   destroyOnHit: 1
   particle_Line: {fileID: 5486025720906068977}
   particle_Destroy: {fileID: 2844923944877570796, guid: 846c9add3d6ad5444ba9f59fdeeadce7,
     type: 3}
   obj_Featfer: {fileID: 4469806222834610022}
+  sfxClip: {fileID: 8300000, guid: 5c9f16716912e2f4d957cdec9c9f518b, type: 3}
 --- !u!1 &8455039343275259395
 GameObject:
   m_ObjectHideFlags: 0

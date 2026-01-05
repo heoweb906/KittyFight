@@ -119,6 +119,16 @@ public class MapGimic_8_Sheep : AbstractMapGimic
             Vector3 spawnPos = new Vector3(x, y, z);
             GameObject obj = Instantiate(sheepObj, spawnPos, Quaternion.identity);
 
+
+            var entity = obj.GetComponent<Gimic8_Entity>();
+            if (entity == null) entity = obj.GetComponentInChildren<Gimic8_Entity>(); // 자식 중에 있을 수도 있으므로
+
+            if (entity != null)
+            {
+                // 기믹 클래스 내에 이미 manager 참조가 있다면 그것을 쓰고, 없다면 Find 사용
+                entity.manager = FindObjectOfType<GameManager>();
+            }
+
             spawnedObjects.Add(obj);
         }
     }

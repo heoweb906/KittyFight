@@ -27,6 +27,8 @@ public class SK_BouncingFire : Skill
 
         GameObject proj = Instantiate(objSkillEntity, spawnPos, rot);
 
+        playerAbility.PlaySFX(sfxClip);
+
         var ab = proj.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 

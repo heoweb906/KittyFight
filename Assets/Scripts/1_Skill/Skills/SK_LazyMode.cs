@@ -30,6 +30,7 @@ public class SK_LazyMode : Skill
         {
             health.SetSkillInvincible(lazyDuration);
         }
+        playerAbility.PlaySFX(sfxClip);
 
 
         var gm = FindObjectOfType<GameManager>();

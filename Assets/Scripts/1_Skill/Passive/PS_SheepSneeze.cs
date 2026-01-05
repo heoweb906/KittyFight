@@ -90,6 +90,10 @@ public class PS_SheepSneeze : Passive
         Vector3 dirLeft = new Vector3(-1f, 1f, 0f).normalized;
         Vector3 dirRight = new Vector3(1f, 1f, 0f).normalized;
 
+        ability.PlaySFX(audioClip);
+        
+
+
         SpawnOne(origin, dirLeft);
         SpawnOne(origin, dirRight);
 

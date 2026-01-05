@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: f98e5aa6fa33b24448acc3a819fc0acc, type: 3}
+  audioClip: {fileID: 8300000, guid: e7dc0408625e03448b2062e8451d564b, type: 3}
   hotProjectilePrefab: {fileID: 6777267630284458099, guid: 793c5078cb452444dae0878544be4317,
     type: 3}
   hotCooldown: 5

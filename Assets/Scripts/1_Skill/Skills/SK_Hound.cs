@@ -35,6 +35,8 @@ public class SK_Hound : Skill
             playerAbility.gameObject.transform
         );
 
+        playerAbility.PlaySFX(sfxClip);
+
         var gm = FindObjectOfType<GameManager>();
         if (!gm) return;
 

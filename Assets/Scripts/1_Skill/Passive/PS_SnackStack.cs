@@ -55,5 +55,7 @@ public class PS_SnackStack : Passive
         var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeAmount, shakeDuration);
 
+        ability.PlaySFX(audioClip);
+
     }
 }

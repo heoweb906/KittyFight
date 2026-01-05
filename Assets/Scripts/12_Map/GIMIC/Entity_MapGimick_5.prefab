@@ -14808,6 +14808,8 @@ MonoBehaviour:
   targetObject: {fileID: 7334882201322721560}
   obj_1: {fileID: 6811404646753969496}
   obj_2: {fileID: 7475474808257357103}
+  manager: {fileID: 0}
+  sfxClip: {fileID: 8300000, guid: 3eb4368507f5d3f4f874abfdab314445, type: 3}
 --- !u!1 &7245209939447606456
 GameObject:
   m_ObjectHideFlags: 0

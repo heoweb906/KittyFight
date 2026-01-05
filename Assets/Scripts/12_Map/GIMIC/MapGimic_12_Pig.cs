@@ -133,7 +133,18 @@ public class MapGimic_12_Pig : AbstractMapGimic
         {
             Vector3 spawnPos = new Vector3(x, y, z);
             // [수정] X축 -90도 회전 적용
-            Instantiate(warningPrefab, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+            GameObject go = Instantiate(warningPrefab, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+
+
+            var entity = go.GetComponent<Gimic12_Entity>();
+            if (entity == null) entity = go.GetComponentInChildren<Gimic12_Entity>(); // 자식 중에 있을 수도 있으므로
+
+            if (entity != null)
+            {
+                // 기믹 클래스 내에 이미 manager 참조가 있다면 그것을 쓰고, 없다면 Find 사용
+                entity.manager = FindObjectOfType<GameManager>();
+            }
+
         }
     }
 

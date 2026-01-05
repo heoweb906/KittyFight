@@ -19,6 +19,9 @@ public class SK_MadDash : Skill
     public float shakeAmount;
     public float shakeDuration;
 
+    [Header("사운드")]
+    public AudioClip[] audioClips; 
+
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (isRunning) return;
@@ -123,6 +126,13 @@ public class SK_MadDash : Skill
 
             anim.SetInteger("AttackType", 2);
             effectIndex = 0;
+        }
+
+
+        if (audioClips != null && audioClips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, audioClips.Length);
+            playerAbility.PlaySFX(audioClips[randomIndex]);
         }
 
         // 패시브 보정

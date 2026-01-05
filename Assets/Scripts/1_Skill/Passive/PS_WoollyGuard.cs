@@ -40,6 +40,8 @@ public class PS_WoollyGuard : Passive
             pos: transform.position,
             dir: Vector3.up
         );
+
+        ability.PlaySFX(audioClip);
     }
 
     private void PlayFx(Vector3 pos)

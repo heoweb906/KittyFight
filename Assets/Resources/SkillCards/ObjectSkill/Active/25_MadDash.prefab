@@ -45,20 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAbility: {fileID: 0}
+  anim: {fileID: 0}
+  sfxClip: {fileID: 8300000, guid: 1f6630da1cb891347ab7b54a1db5da1a, type: 3}
   coolTime: 8
   objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: 02f3b97369921b5418f5450e3f1453a0, type: 3}
   aimRange: 1
-  dashSpeed: 5
-  maxDuration: 20
-  wallCheckDistance: 0.5
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 768
+  attackDuration: 2.5
+  meleeInterval: 0.3
   meleeHitboxPrefab1: {fileID: 7030629527735423589, guid: c68e6c8ca9cfd9d4f8a3d5b79450ac65,
     type: 3}
   meleeHitboxPrefab2: {fileID: 7030629527735423589, guid: 70ad68d5c782d7043b113ba6ee5db8ed,
     type: 3}
-  meleeInterval: 0.3
   shakeAmount: 0.3
   shakeDuration: 0.6
+  audioClips:
+  - {fileID: 8300000, guid: 1f6630da1cb891347ab7b54a1db5da1a, type: 3}
+  - {fileID: 8300000, guid: 9a6bdba896d3d0b4aaee6fe214d0a742, type: 3}
+  - {fileID: 8300000, guid: 4b34f287055f7414b8f16db8397935af, type: 3}

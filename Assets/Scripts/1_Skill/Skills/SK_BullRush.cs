@@ -46,6 +46,7 @@ public class SK_BullRush : Skill
             playerAbility.gameObject.transform.position,
             Quaternion.Euler(0, rot.eulerAngles.y + 180f, 0)
         );
+        playerAbility.PlaySFX(sfxClip);
 
         var abBase = hb.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);

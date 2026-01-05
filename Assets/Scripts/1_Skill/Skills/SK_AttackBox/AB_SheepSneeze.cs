@@ -7,6 +7,7 @@ public class AB_SheepSneeze : AB_HitboxBase
 
     [Header("Effects")]
     [SerializeField] private GameObject stunEffectPrefab;
+    public AudioClip sfxAudio;
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
@@ -20,5 +21,7 @@ public class AB_SheepSneeze : AB_HitboxBase
             Quaternion.identity,
             victim.transform
         );
+
+        ownerAbility.PlaySFX(sfxAudio);
     }
 }

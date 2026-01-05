@@ -132,7 +132,16 @@ public class MapGimic_6_Snake : AbstractMapGimic
         if (warningPrefab != null)
         {
             Vector3 spawnPos = new Vector3(x, y, z);
-            Instantiate(warningPrefab, spawnPos, Quaternion.identity);
+            GameObject go = Instantiate(warningPrefab, spawnPos, Quaternion.identity);
+
+            var entity = go.GetComponent<Gimic6_Entity>();
+            if (entity == null) entity = go.GetComponentInChildren<Gimic6_Entity>(); // 자식 중에 있을 수도 있으므로
+
+            if (entity != null)
+            {
+                // 기믹 클래스 내에 이미 manager 참조가 있다면 그것을 쓰고, 없다면 Find 사용
+                entity.manager = FindObjectOfType<GameManager>();
+            }
         }
     }
 

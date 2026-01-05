@@ -126,3 +126,4 @@ MonoBehaviour:
   wallCheckMode: 1
   bMiddleState: 0
   damageToOthers: 20
+  audioClip: {fileID: 8300000, guid: 11d341aa385d2a3429dabaffb011e471, type: 3}

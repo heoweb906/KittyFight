@@ -1244,6 +1244,8 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 140032
+  wallCheckMode: 0
+  bMiddleState: 0
   maxBounces: 5
   bounceSpeedMultiplier: 1.2
   damage: 40
@@ -1268,6 +1270,8 @@ MonoBehaviour:
   - {fileID: 2103469853704188922}
   shakeAmount: 0.4
   shakeDuration: 0.8
+  sfxBouncing: {fileID: 8300000, guid: 5a7beba25049ec441b75c06e1f3b6dfd, type: 3}
+  sfxExplosion: {fileID: 8300000, guid: 18735969cd737e5419d954d3f8605836, type: 3}
 --- !u!1 &7766016238420592866
 GameObject:
   m_ObjectHideFlags: 0

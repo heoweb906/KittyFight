@@ -45,11 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 984f99ab9055b914893a540341229c7d, type: 3}
+  audioClip: {fileID: 0}
   maxChargeSeconds: 10
   minMul: 1
   maxMul: 3
   idleSinceDash: 10
-  effectPrefab: {fileID: 8757022347555400010, guid: f727b8fd4a097354990cb9e6ac789eb3,
+  effectPrefab: {fileID: 5758885005837969039, guid: fcdcdd91cf0e62d4fbff59392c08f88b,
     type: 3}
   useEffectPrefab: {fileID: 5557450061180954906, guid: 377b872a5cd6c084882eb03d15322271,
     type: 3}

@@ -59,7 +59,12 @@ public class PS_BunnyBounce : Passive
         if (hb != null) hb.Init(ownerAbility);
 
         if (effectPrefab != null)
-            Instantiate(effectPrefab, pos, Quaternion.Euler(-90f, 0f, 0f));
+        {
+            GameObject eff = Instantiate(effectPrefab, pos, Quaternion.Euler(-90f, 0f, 0f));
+            eff.transform.SetParent(null); // 부모 관계 해제
+        }
+        ability.PlaySFX(audioClip);
+
     }
 
     public override void RemoteExecute(PassiveProcMessage msg)

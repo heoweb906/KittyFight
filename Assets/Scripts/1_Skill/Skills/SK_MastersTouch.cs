@@ -19,6 +19,7 @@ public class SK_MastersTouch : Skill
         anim.SetInteger("AttackType", 6);
         StartCoroutine(ResetAttackAnimState());
 
+        playerAbility.PlaySFX(sfxClip);
 
         Instantiate(
             effectPrefab,

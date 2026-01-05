@@ -24,6 +24,8 @@ public class SK_ShearShock : Skill
         var ab = shock.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
+        playerAbility.PlaySFX(sfxClip);
+
         var gm = FindObjectOfType<GameManager>();
         if (playerAbility.playerNumber == MatchResultStore.myPlayerNumber)
         {

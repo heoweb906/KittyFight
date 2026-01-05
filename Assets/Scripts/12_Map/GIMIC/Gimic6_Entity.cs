@@ -8,6 +8,10 @@ public class Gimic6_Entity : MonoBehaviour
     public float delayTime;
     public float fDestroyDelay;
 
+    [Header("»ç¿îµå")]
+    [HideInInspector] public GameManager manager;
+    public AudioClip sfxClip;
+
     void Start()
     {
         StartCoroutine(Co_SpawnProcess());
@@ -39,6 +43,8 @@ public class Gimic6_Entity : MonoBehaviour
             var gm = FindObjectOfType<GameManager>();
             gm?.cameraManager?.ShakeCameraPunch(0.6f, 0.4f);
         }
+
+        manager.playerAbility_1.PlaySFX(sfxClip);
 
         yield return new WaitForSeconds(fDestroyDelay);
 

@@ -4840,7 +4840,7 @@ GameObject:
   - component: {fileID: 264710740314373945}
   - component: {fileID: 5007224839891483701}
   m_Layer: 0
-  m_Name: VFX_106_RazorTalons
+  m_Name: VFX_135_RazorTalons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

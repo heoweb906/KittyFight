@@ -364,75 +364,71 @@ public class GameManager : MonoBehaviour
         player1?.GetComponentInChildren<WallCheck>()?.ForceClearContacts();
         player2?.GetComponentInChildren<WallCheck>()?.ForceClearContacts();
 
+        // --- [공통 로직] BGM 테마 결정 (플레이어 1, 2 모두 수행) ---
+        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
+        int newThemeIndex = 0;
+
+        if (totalScore < 5) newThemeIndex = 0;
+        else if (totalScore < 14) newThemeIndex = 1;
+        else newThemeIndex = 2;
+
+        if (newThemeIndex != currentThemeIndex)
+        {
+            currentThemeIndex = newThemeIndex;
+            if (ingameUIController.bgmClips.Length > newThemeIndex)
+            {
+                ingameUIController.PlayBGM(ingameUIController.bgmClips[newThemeIndex]);
+            }
+        }
+
+        // --- [호스트 로직] 맵/기믹 결정 및 패킷 전송 ---
         if (MatchResultStore.myPlayerNumber == 1)
         {
-            int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
-
             int mapIdx = 0;
             int bgIdx = 0;
-            int newThemeIndex = 0;
 
-            // --- [테마/BGM 결정 로직 (기존 동일)] ---
-            if (totalScore < 5)
+            // 테마별 맵/배경 랜덤 선택
+            if (currentThemeIndex == 0)
             {
-                newThemeIndex = 0;
                 mapIdx = Random.Range(0, 8);
                 bgIdx = Random.Range(0, 4);
             }
-            else if (totalScore >= 5 && totalScore < 14)
+            else if (currentThemeIndex == 1)
             {
-                newThemeIndex = 1;
                 mapIdx = Random.Range(8, 16);
                 bgIdx = Random.Range(4, 8);
             }
             else
             {
-                newThemeIndex = 2;
                 mapIdx = Random.Range(16, 24);
                 bgIdx = Random.Range(8, 10);
             }
 
-            if (newThemeIndex != currentThemeIndex)
-            {
-                currentThemeIndex = newThemeIndex;
-                if (ingameUIController.bgmClips.Length > newThemeIndex)
-                {
-                    ingameUIController.PlayBGM(ingameUIController.bgmClips[newThemeIndex]);
-                }
-            }
-            // ------------------------------------
-
-            // [수정된 부분] 5의 배수마다 기믹 교체 & 유지 로직
-
-            // 1. 5점 이상부터 기믹 활성화
+            // 기믹 교체 로직 (5의 배수마다)
             if (totalScore >= 5)
             {
-                // 2. 5의 배수일 때만 '새로운' 기믹 번호 뽑기 (5, 10, 15...)
-                // 5의 배수가 아닐 땐(6, 7...) 기존 IntMapGimicnumber 값이 그대로 유지됨
                 if (totalScore % 5 == 0)
                 {
-                    // 기믹 ID는 1~12번 (Random.Range 정수는 Max 제외이므로 1, 13)
-                    IntMapGimicnumber = Random.Range(1, 13);
+                    IntMapGimicnumber = Random.Range(1, 13); // 현재 드래곤 기믹 고정
                 }
-
                 mapManager.SetMapGimicIndex(IntMapGimicnumber);
                 BoolAcitveMapGimic = true;
             }
             else
             {
-                // 5점 미만일 때는 기믹 없음
                 BoolAcitveMapGimic = false;
-                IntMapGimicnumber = 0; // 혹은 초기화
+                IntMapGimicnumber = 0;
             }
 
-            // 패킷 전송 시, 기믹이 비활성화 상태면 0을 보냄
             int gimicToSend = BoolAcitveMapGimic ? IntMapGimicnumber : 0;
 
+            // 상대방에게 맵 정보 전송
             P2PMessageSender.SendMessage(
                 BackgroundColorMessageBuilder.Build(mapIdx, bgIdx, gimicToSend)
             );
 
-            ApplyBackground(mapIdx, bgIdx, 0);
+            // 자신의 화면 적용
+            ApplyBackground(mapIdx, bgIdx, gimicToSend);
         }
     }
 
@@ -460,24 +456,24 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ApplyBackground_(int mapIndex, int backgroundIndex, int iMapGimicNum)
     {
-
-        if (IntScorePlayer_1 == 0 && IntScorePlayer_2 == 0) // 최초 실행이라면 
+        // 최초 실행 시 페이드 인
+        if (IntScorePlayer_1 == 0 && IntScorePlayer_2 == 0)
         {
             ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);
-
-
-
         }
 
-        // 화면이 보이지 않을 때 처리해야 하는 것들
+        // 맵 및 배경 변경 (전달받은 인덱스 기반)
         mapManager.ChangeMap(mapIndex);
         mapManager.ChangeBackground(backgroundIndex);
+        mapManager.SetMapGimicIndex(iMapGimicNum); // 기믹 인덱스 동기화
 
+        // 플레이어 스폰 위치 및 체력 초기화
         var sp1 = mapManager.GetSpawnPoint(1);
         var sp2 = mapManager.GetSpawnPoint(2);
 
         if (player1 && sp1) player1.transform.position = sp1.position;
         if (player2 && sp2) player2.transform.position = sp2.position;
+
         player1.GetComponent<PlayerHealth>()?.ResetHealth();
         player2.GetComponent<PlayerHealth>()?.ResetHealth();
 
@@ -487,44 +483,36 @@ public class GameManager : MonoBehaviour
         playerAbility_1.ResetAllCooldowns();
         playerAbility_2.ResetAllCooldowns();
 
-
         ingameUIController?.StartGameTimer(61f);
 
-        yield return new WaitForSeconds(0.6f);                         
-        ingameUIController.scoreBoardUIController.OpenScorePanel();    
+        yield return new WaitForSeconds(0.6f);
+        ingameUIController.scoreBoardUIController.OpenScorePanel();
 
-        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;     
+        int totalScore = IntScorePlayer_1 + IntScorePlayer_2;
 
-        if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);     
-        else  yield return new WaitForSeconds(1f);                                          
+        // 5의 배수 점수일 때만 대기 시간 연장
+        if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);
+        else yield return new WaitForSeconds(1f);
 
+        // 준비/시작 연출 및 제어권 할당
         ingameUIController.ChangeReadyStartSprite(1);
-
         ingameUIController.PlaySFX(ingameUIController.sfxClips_InGameSystem[2]);
+        ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform);
 
-        ingameUIController.PlayStartPriteAnimation(ingameUIController.image_ReadyStart.rectTransform); 
-        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1); 
-        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2); 
+        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 1);
+        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(myNum == 2);
 
         gameEnded = false;
 
-        var mv1 = player1.GetComponent<PlayerMovement>();
-        if (mv1 != null)
-        {
-            mv1.LockFacing(new Vector3(1f, 0f, 0f), 0.1f);
-        }
+        // 초기 바라보는 방향 설정
+        player1.GetComponent<PlayerMovement>()?.LockFacing(new Vector3(1f, 0f, 0f), 0.1f);
+        player2.GetComponent<PlayerMovement>()?.LockFacing(new Vector3(-1f, 0f, 0f), 0.1f);
 
-        var mv2 = player2.GetComponent<PlayerMovement>();
-        if (mv2 != null)
-        {
-            mv2.LockFacing(new Vector3(-1f, 0f, 0f), 0.1f);
-        }
-
-        var myRb = myPlayer.GetComponent<Rigidbody>();
-        if (myRb != null) myRb.isKinematic = false;
+        if (myPlayer.GetComponent<Rigidbody>() != null)
+            myPlayer.GetComponent<Rigidbody>().isKinematic = false;
 
         myAbility.events?.EmitRoundStart(0);
-        mapManager.StartCurrentGimmick();
+        mapManager.StartCurrentGimmick(); // 동기화된 기믹 시작
     }
 
 

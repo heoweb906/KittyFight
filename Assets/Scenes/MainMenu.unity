@@ -27880,6 +27880,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSlideSpeed: 0.5
+  controlScript: {fileID: 0}
+  stopOnlyWhenGrounded: 1
+  stopOnlyWhenNotTouchingWall: 1
   jumpSfx: {fileID: 8300000, guid: b47425116f51e3947a9541fe452be0d8, type: 3}
   jumpEffectPrefab: {fileID: 4416081766080871484, guid: ccf088e1898f62a4b9dad139b520a145,
     type: 3}
