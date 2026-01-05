@@ -49,7 +49,7 @@ MonoBehaviour:
   featherProjectilePrefab: {fileID: 551775367249106992, guid: df0ecc19bb7e4324cb9ce190349a348c,
     type: 3}
   interval: 3
-  spawnOffset: 0.6
+  spawnOffset: 1.6
   projectileSpeed: 20
   objEffect_Use: {fileID: 6041927523125233054, guid: d6500bc8c2540a54f89428d9abf6b377,
     type: 3}

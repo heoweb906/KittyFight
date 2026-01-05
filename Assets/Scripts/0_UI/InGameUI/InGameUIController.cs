@@ -22,8 +22,10 @@ public class InGameUIController : MonoBehaviour
     public SkillEffectAnimation effectPlayer1;
     public PassiveSlotUI passiveUI1_Player1; // ½½·Ô 0
     public PassiveSlotUI passiveUI2_Player1; // ½½·Ô 1
+    public PassiveSlotUI passiveUI3_Player1; // ½½·Ô 2
 
-        
+
+
     public Image image_UpperArea;       // ±âº» °¡¸²¸· (À§)   
     public Image image_LowerArea;       // ±âº» °¡¸²¸· (¾Æ·¡) 
     // ingameUIController.CloseFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0f);   
@@ -43,6 +45,7 @@ public class InGameUIController : MonoBehaviour
     public SkillEffectAnimation effectPlayer2;
     public PassiveSlotUI passiveUI1_Player2; // ½½·Ô 0
     public PassiveSlotUI passiveUI2_Player2; // ½½·Ô 1
+    public PassiveSlotUI passiveUI3_Player2; // ½½·Ô 2
 
     [Header("Game UI etc")]
     public GameTimer gameTimer;
@@ -201,6 +204,7 @@ public class InGameUIController : MonoBehaviour
         skillUI5_Player1?.Bind(player1Ability, SkillType.Skill2);
         passiveUI1_Player1?.Bind(player1Ability, 0);
         passiveUI2_Player1?.Bind(player1Ability, 1);
+        passiveUI3_Player1?.Bind(player1Ability, 2);
 
         // Player2 (¿À¸¥ÂÊ)
         hpUI_Player2?.Bind(player2Ability);
@@ -211,6 +215,7 @@ public class InGameUIController : MonoBehaviour
         skillUI5_Player2?.Bind(player2Ability, SkillType.Skill2);
         passiveUI1_Player2?.Bind(player2Ability, 0);
         passiveUI2_Player2?.Bind(player2Ability, 1);
+        passiveUI3_Player2?.Bind(player2Ability, 2);
 
 
         if (player1Ability != null) player1Ability.effect = effectPlayer1;

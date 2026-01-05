@@ -16,6 +16,9 @@ public class AB_Banana : AB_HitboxBase
     [Tooltip("바닥 바나나")]
     [SerializeField] private GameObject installedVisual;
 
+    [Header("회전 설정")]
+    [SerializeField] private float rotateSpeedX = 720f;
+
     [Tooltip("이펙트")]
     public GameObject obj_Installation;
     public GameObject obj_HitPlayer;
@@ -27,6 +30,15 @@ public class AB_Banana : AB_HitboxBase
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
 
+        if (rb != null)
+        {
+            rb.angularVelocity = new Vector3(
+                rotateSpeedX * Mathf.Deg2Rad,
+                rotateSpeedX * Mathf.Deg2Rad,
+                rotateSpeedX * Mathf.Deg2Rad
+            );
+        }
+
         var gm = FindObjectOfType<GameManager>();
         if (gm != null)
             gm.RegisterRoundObject(this.gameObject);
@@ -36,6 +48,10 @@ public class AB_Banana : AB_HitboxBase
     {
         if (victim == null) return;
         victim.TakeDamage(damage, ownerAbility, transform.position);
+        Destroy(gameObject);
+    }
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
         Destroy(gameObject);
     }
 

@@ -37,7 +37,7 @@ public class PS_Finisher : Passive
         float ratio = (float)cur / max;
         if (ratio > threshold) return;
 
-        dmg = cur;
+        dmg = 9999;
         Vector3 fxPos = victimGO.transform.position;
 
         PlayFx(fxPos);

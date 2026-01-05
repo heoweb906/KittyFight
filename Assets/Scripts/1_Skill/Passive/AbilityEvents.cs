@@ -11,6 +11,7 @@ public delegate void HitboxSpawnedHandler(AB_HitboxBase hb);
 public delegate void RoundHandler(int roundIndex);
 public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
 public delegate void BeforeTakeDamageHandler(ref int dmg, GameObject attacker);
+public delegate void TookDamageHandler(int dealt);
 public delegate void DealtDamageHandler();
 
 public struct DashParams { public float distance; public float speed; public Vector3 direction; }
@@ -31,6 +32,7 @@ public class AbilityEvents : MonoBehaviour
     public event DashFinishedHandler OnDashFinished; // 대쉬 종료
     public event BeforeDealDamageHandler OnBeforeDealDamage; // 데미지 계산 전 공격자용 (133)
     public event BeforeTakeDamageHandler OnBeforeTakeDamage; // 데미지 계산 전 수비자용 (102, 118, 120)
+    public event TookDamageHandler OnTookDamage; // Remote Set HP (118)
     public event DealtDamageHandler OnDealtDamage;          // 상대한테 피해를 줄 때 나 (107)
     public event MeleeDamageIntHandler OnMeleeDamageInt;    // 근접데미지 계산시 (108)
     public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위 (106)
@@ -61,6 +63,8 @@ public class AbilityEvents : MonoBehaviour
 
     public void EmitBeforeTakeDamage(ref int dmg, GameObject attacker)
         => OnBeforeTakeDamage?.Invoke(ref dmg, attacker);
+
+    public void EmitTookDamage(int dealt) => OnTookDamage?.Invoke(dealt);
 
     public void EmitDealtDamage()
         => OnDealtDamage?.Invoke();

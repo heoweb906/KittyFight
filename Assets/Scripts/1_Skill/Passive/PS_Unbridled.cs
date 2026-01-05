@@ -63,6 +63,7 @@ public class PS_Unbridled : Passive
 
         e.OnTick += OnTick;
         e.OnBeforeTakeDamage += OnBeforeTakeDamage;
+        e.OnTookDamage += OnTookDamage;
         e.OnRoundStart += OnRoundStart;
     }
 
@@ -70,6 +71,7 @@ public class PS_Unbridled : Passive
     {
         e.OnTick -= OnTick;
         e.OnBeforeTakeDamage -= OnBeforeTakeDamage;
+        e.OnTookDamage -= OnTookDamage;
         e.OnRoundStart -= OnRoundStart;
     }
 
@@ -93,6 +95,12 @@ public class PS_Unbridled : Passive
     private void OnBeforeTakeDamage(ref int dmg, GameObject attacker)
     {
         if (dmg <= 0) return;
+        ResetBonus(true);
+    }
+
+    private void OnTookDamage(int dealt)
+    {
+        if (dealt <= 0) return;
         ResetBonus(true);
     }
 

@@ -21,6 +21,9 @@ public class PlayerJump : MonoBehaviour
     public float wallSlideSpeed = 0.5f;
     private int wallSlideDisableCount = 0;
 
+    private float hardStopIgnoreUntil;
+    [SerializeField] private float hardStopIgnoreAfterImpulse = 0.12f;
+
     private bool visualFlippedForHang = false;
 
     [SerializeField] private PlayerController controlScript;
@@ -214,6 +217,8 @@ public class PlayerJump : MonoBehaviour
 
     private void ApplyDisabledControlGroundHardStop()
     {
+        if (Time.time < hardStopIgnoreUntil) return;
+
         if (controlScript == null) return;
         if (controlScript.enabled) return;
 
@@ -224,4 +229,10 @@ public class PlayerJump : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.Sleep();
     }
+
+    public void IgnoreHardStopFor(float sec)
+    {
+        hardStopIgnoreUntil = Mathf.Max(hardStopIgnoreUntil, Time.time + sec);
+    }
+
 }

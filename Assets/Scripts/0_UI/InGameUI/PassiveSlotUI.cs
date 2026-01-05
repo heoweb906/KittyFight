@@ -5,7 +5,7 @@ public class PassiveSlotUI : MonoBehaviour
 {
     [Header("참조")]
     public PlayerAbility ability;
-    [Tooltip("패시브 슬롯 인덱스 (0 또는 1)")]
+    [Tooltip("패시브 슬롯 인덱스 (0, 1, 2)")]
     public int slotIndex = 0;
 
     [Header("이미지")]

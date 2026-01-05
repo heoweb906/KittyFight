@@ -36,11 +36,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager != null && gameManager.gameEnded)
-        {
-            moveInput = Vector2.zero; // 이동 입력 초기화
-            return;
-        }
+        //if (gameManager != null && gameManager.gameEnded)
+        //{
+        //    moveInput = Vector2.zero; // 이동 입력 초기화
+        //    return;
+        //}
 
         if (InGameUIController.Instance.iPanelNum != 0)
         {

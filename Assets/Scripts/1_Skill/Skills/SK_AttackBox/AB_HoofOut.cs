@@ -46,6 +46,13 @@ public class AB_HoofOut : AB_HitboxBase
             rb.velocity = Vector3.zero;
             rb.AddForce(kbDir * knockbackForce, ForceMode.Impulse);
         }
+
+        var pj = victim.GetComponent<PlayerJump>();
+        if (pj != null)
+        {
+            pj.IgnoreHardStopFor(0.12f);
+        }
+
         // 컨트롤 차단 (피격자 쪽에서만 실행됨: AB_HitboxBase 권위 규칙)
         var controller = victim.GetComponent<PlayerController>();
         if (controller != null)

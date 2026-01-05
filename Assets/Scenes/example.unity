@@ -51066,7 +51066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1341763634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79706,6 +79706,7 @@ MonoBehaviour:
   effectPlayer1: {fileID: 186811138}
   passiveUI1_Player1: {fileID: 1508079669}
   passiveUI2_Player1: {fileID: 1834630884}
+  passiveUI3_Player1: {fileID: 0}
   image_UpperArea: {fileID: 1394260127}
   image_LowerArea: {fileID: 1376611085}
   image_ReadyStart: {fileID: 1068344328}
@@ -79721,6 +79722,7 @@ MonoBehaviour:
   effectPlayer2: {fileID: 762045383}
   passiveUI1_Player2: {fileID: 24549044}
   passiveUI2_Player2: {fileID: 312349076}
+  passiveUI3_Player2: {fileID: 0}
   gameTimer: {fileID: 1336604041}
   blindEggOverlay: {fileID: 990749952}
   skillCardController: {fileID: 2097744493}

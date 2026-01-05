@@ -32,6 +32,8 @@ public class SK_BullRush : Skill
     {
         if (!objSkillEntity || playerAbility == null) return;
 
+        direction = GetAutoDirectionToOpponent(direction);
+        if (direction.sqrMagnitude < 0.0001f) return;
 
         // 러시 히트박스 스폰(양쪽 모두): 플레이어 위치에 붙이고 방향 전달
         var spawnPos = playerAbility.transform.position;
@@ -41,12 +43,16 @@ public class SK_BullRush : Skill
         anim.SetBool("isDash", true);
         anim.SetTrigger("Dash");
 
-        Instantiate(
-            effectPrefab,
-            playerAbility.gameObject.transform.position,
-            Quaternion.Euler(0, rot.eulerAngles.y + 180f, 0)
-        );
-        playerAbility.PlaySFX(sfxClip);
+        if (effectPrefab != null)
+        {
+            Vector2 d2 = new Vector2(direction.x, direction.y);
+            if (d2.sqrMagnitude < 0.0001f) d2 = Vector2.right;
+            d2.Normalize();
+            float xAngle = Mathf.Atan2(d2.y, d2.x) * Mathf.Rad2Deg;
+            Quaternion fxRot = Quaternion.Euler(xAngle, -90f, 0f);
+
+            Instantiate(effectPrefab, playerAbility.transform.position, fxRot);
+        }
 
         var abBase = hb.GetComponent<AB_HitboxBase>();
         if (abBase != null) abBase.Init(playerAbility);
@@ -84,7 +90,8 @@ public class SK_BullRush : Skill
         }
 
         var startPos = rb.position;
-        var dirNorm = new Vector3(direction.x, 0f, direction.z).normalized;
+        var dirNorm = new Vector3(direction.x, direction.y, direction.z).normalized;
+        if (dirNorm.sqrMagnitude < 0.0001f) return;
         float maxDist = aimRange;
 
         if (Physics.BoxCast(startPos, boxHalfExtents, dirNorm, out var hit,
@@ -117,5 +124,45 @@ public class SK_BullRush : Skill
         if (disableGravityDuringDash) rb.useGravity = origUseGravity;
         rb.velocity = Vector3.zero;
         anim.SetBool("isDash", false);
+    }
+
+    private PlayerAbility FindOpponentAbility()
+    {
+        if (playerAbility == null) return null;
+
+        var gm = FindObjectOfType<GameManager>();
+        if (gm == null) return null;
+
+        var pa1 = gm.playerAbility_1;
+        var pa2 = gm.playerAbility_2;
+
+        if (pa1 == null || pa2 == null) return null;
+
+        if (playerAbility == pa1) return pa2;
+        if (playerAbility == pa2) return pa1;
+
+        if (playerAbility.playerNumber == 1) return pa2;
+        if (playerAbility.playerNumber == 2) return pa1;
+
+        return null;
+    }
+
+    private Vector3 GetAutoDirectionToOpponent(Vector3 fallbackDir)
+    {
+        var opp = FindOpponentAbility();
+        if (opp == null)
+            return fallbackDir;
+
+        Vector3 dir = opp.transform.position - playerAbility.transform.position;
+        dir.z = 0f;
+
+        if (dir.sqrMagnitude < 0.0001f)
+            return fallbackDir;
+
+        return dir.normalized;
+    }
+    public Vector3 GetAutoDirection(Vector3 fallbackDir)
+    {
+        return GetAutoDirectionToOpponent(fallbackDir);
     }
 }

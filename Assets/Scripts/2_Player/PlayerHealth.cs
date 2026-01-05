@@ -235,6 +235,7 @@ public class PlayerHealth : MonoBehaviour
                 ability.PlaySFX(hitSfxClips[idx]);
             }
             int dealt = prev - currentHP;
+            events?.EmitTookDamage(dealt);
             float oppHitShake = 0.09f + Mathf.FloorToInt(dealt / 10f) * 0.08f;
             Vector3 dir = sourceWorldPos.HasValue ? ComputePunchDirFromSource(sourceWorldPos.Value) : (Vector3.Dot(transform.forward, Vector3.right) >= 0f ? Vector3.right : Vector3.left);
             ShakeCameraPunch(oppHitShake, dir);

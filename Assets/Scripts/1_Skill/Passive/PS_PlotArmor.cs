@@ -33,7 +33,7 @@ public class PS_PlotArmor : Passive
     private void OnBeforeTakeDamage(ref int dmg, GameObject attackerObj)
     {
         if (!IsAuthority) return;
-        if (dmg <= 0) return;
+        if (dmg <= 0 || dmg >= 9000) return;
         if (Random.value < ignoreChance)
         {
             dmg = 0;

@@ -462,6 +462,8 @@ public class GameManager : MonoBehaviour
             ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);
         }
 
+        ClearRoundObjects();
+
         // 맵 및 배경 변경 (전달받은 인덱스 기반)
         mapManager.ChangeMap(mapIndex);
         mapManager.ChangeBackground(backgroundIndex);
@@ -511,7 +513,8 @@ public class GameManager : MonoBehaviour
         if (myPlayer.GetComponent<Rigidbody>() != null)
             myPlayer.GetComponent<Rigidbody>().isKinematic = false;
 
-        myAbility.events?.EmitRoundStart(0);
+        playerAbility_1.events?.EmitRoundStart(0);
+        playerAbility_2.events?.EmitRoundStart(0);
         mapManager.StartCurrentGimmick(); // 동기화된 기믹 시작
     }
 

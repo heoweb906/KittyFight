@@ -25,7 +25,7 @@ public class PS_PiggyBank : Passive
     private void OnSkillExecuted(SkillType type)
     {
         if (ability == null) return;
-        if (type == SkillType.Dash) return;
+        if (type == SkillType.Dash || type == SkillType.Melee || type == SkillType.Ranged) return;
 
         var hp = ability.Health;
         if (hp == null) return;

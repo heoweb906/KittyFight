@@ -51,6 +51,9 @@ public class PlayerAbility : MonoBehaviour
     private bool _hasLastActionType;
     private SkillType _lastActionType;
 
+    // 스킬 잠금용
+    public bool SkillExecLocked { get; private set; }
+
     // Health 참조 (HP의 유일한 소유자)
     public PlayerHealth Health { get; private set; }
 
@@ -165,6 +168,8 @@ public class PlayerAbility : MonoBehaviour
 
     public void TryExecuteSkill(SkillType type, Vector3 origin, Vector3 direction, bool force = false, float? overrideDuration = null)
     {
+        if (!force && SkillExecLocked) return;
+
         var s = GetSkill(type);
         if (s == null) return;
 
@@ -197,6 +202,14 @@ public class PlayerAbility : MonoBehaviour
         events?.EmitCooldownFinalized(type, duration);
         StartCooldown(type, duration);
 
+        Vector3 execDir = direction;
+
+        // BullRush는 자동 조준 방향
+        if (s is SK_BullRush bullRush)
+        {
+            execDir = bullRush.GetAutoDirection(direction);
+        }
+
         // 바로 효과 실행
         s.Execute(origin, direction);
         if (effect != null) effect.PlayShakeAnimation(SlotToIndex(type));
@@ -209,15 +222,17 @@ public class PlayerAbility : MonoBehaviour
         if (movement != null)
         {
             if (s is SK_Dash dashSkill)
-                movement.LockFacing(direction, dashSkill.dashDuration);
+                movement.LockFacing(execDir, dashSkill.dashDuration);
+            else if (s is SK_BullRush br)
+                movement.LockFacing(execDir, br.dashDuration);
             else
-                movement.LockFacing(direction);
+                movement.LockFacing(execDir);
         }
 
         if (!force)
         {
             P2PMessageSender.SendMessage(
-                SkillMessageBuilder.Build(origin, direction, type, playerNumber)
+                SkillMessageBuilder.Build(origin, execDir, type, playerNumber)
             );
         }
     }
@@ -308,7 +323,7 @@ public class PlayerAbility : MonoBehaviour
             inst.OnEquip(this);
             passives.Add(inst);
 
-            int slotIndex = Mathf.Clamp(passives.Count - 1, 0, 1);
+            int slotIndex = Mathf.Clamp(passives.Count - 1, 0, 2);
             OnPassiveSlotChanged?.Invoke(slotIndex, inst);
         }
 
@@ -439,5 +454,10 @@ public class PlayerAbility : MonoBehaviour
         var s = GetSkill(slot);
         if (s == null) return;
         OnSkillEquipped?.Invoke(slot, s);
+    }
+
+    public void SetSkillExecLocked(bool locked)
+    {
+        SkillExecLocked = locked;
     }
 }

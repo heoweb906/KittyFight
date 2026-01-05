@@ -41,7 +41,7 @@ public class AB_VenomTrail : AB_HitboxBase
         int ownerPN = ownerAbility.playerNumber;
         int victimPN = victimAbility.playerNumber;
 
-        if (victimPN == ownerPN) return;
+        //if (victimPN == ownerPN) return;
         if (victimPN != MatchResultStore.myPlayerNumber) return;
 
         RefreshPoison(victimHealth);
@@ -58,7 +58,7 @@ public class AB_VenomTrail : AB_HitboxBase
         int ownerPN = ownerAbility.playerNumber;
         int victimPN = victimAbility.playerNumber;
 
-        if (victimPN == ownerPN) return;
+        //if (victimPN == ownerPN) return;
         if (victimPN != MatchResultStore.myPlayerNumber) return;
 
         var venom = victimHealth.GetComponent<VenomTrailDoT>();

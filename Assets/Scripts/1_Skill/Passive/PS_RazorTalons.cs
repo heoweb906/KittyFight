@@ -36,6 +36,7 @@ public class PS_RazorTalons : Passive
         
         s.x *= factor;
         s.y *= factor;
+        s.z *= factor;
 
         tr.localScale = s;
 

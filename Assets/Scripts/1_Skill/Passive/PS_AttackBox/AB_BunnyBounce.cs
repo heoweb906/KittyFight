@@ -34,6 +34,12 @@ public class AB_BunnyBounce : AB_HitboxBase
             rb.AddForce(kbDir * knockbackForce, ForceMode.Impulse);
         }
 
+        var pj = victim.GetComponent<PlayerJump>();
+        if (pj != null)
+        {
+            pj.IgnoreHardStopFor(0.12f);
+        }
+
         if (disableControlSeconds > 0f)
         {
             var controller = victim.GetComponent<PlayerController>();

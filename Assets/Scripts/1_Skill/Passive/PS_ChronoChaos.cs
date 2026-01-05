@@ -66,6 +66,9 @@ public class PS_ChronoChaos : Passive
     {
         if (!IsAuthority) return;
         if (duration <= 0f) return;
+        if (type == SkillType.Dash || type == SkillType.Melee || type == SkillType.Ranged)
+            return;
+
         if (offsets == null || offsets.Length == 0) return;
 
         int delta = offsets[Random.Range(0, offsets.Length)];

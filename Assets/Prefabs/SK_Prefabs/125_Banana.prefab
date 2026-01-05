@@ -134,7 +134,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 72
+  m_Constraints: 104
   m_CollisionDetection: 0
 --- !u!114 &-3846359352631327438
 MonoBehaviour:
@@ -153,9 +153,14 @@ MonoBehaviour:
   environmentMask:
     serializedVersion: 2
     m_Bits: 768
+  wallCheckMode: 0
+  bMiddleState: 0
   damage: 40
   flyingVisual: {fileID: 9011498391938913040}
   installedVisual: {fileID: 4085878491624308455}
+  rotateSpeedX: 500
+  obj_Installation: {fileID: 0}
+  obj_HitPlayer: {fileID: 0}
 --- !u!1001 &8216715175293308709
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -125,6 +125,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallCheckMode: 2
+  bMiddleState: 0
   maxDurationInCloud: 1
   tickInterval: 1
   damagePerTick: 10
