@@ -47,17 +47,14 @@ MonoBehaviour:
   playerAbility: {fileID: 0}
   anim: {fileID: 0}
   sfxClip: {fileID: 8300000, guid: fdd9bcae613d6de4ca07d4209b115eb6, type: 3}
-  coolTime: 9.5
+  coolTime: 7
   objSkillEntity: {fileID: 6777267630284458099, guid: 5e953e5dc90f9124ea3e9c5863d41caf,
     type: 3}
   skillIcon: {fileID: 21300000, guid: b88fd640dbb9cd14a99ca7020b9290c9, type: 3}
   aimRange: 0
   castDelay: 0.7
-  stunDuration: 3
+  stunDuration: 2
   shakeAmount: 1
   shakeDuration: 1.5
-  effectPrefab_Charging: {fileID: 3171919834755390836, guid: a049d4e8268754d45bce9d63c8fcf3da,
-    type: 3}
-  effectPrefab_Use: {fileID: 379146230458361355, guid: 0c45d65fceb6ac14aa73330f185e2c9e,
-    type: 3}
+  effectPrefab: {fileID: 0}
   attackAnimDuration: 0.5

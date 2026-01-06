@@ -133,5 +133,5 @@ MonoBehaviour:
     type: 3}
   AnimationType: 26
   description: <color=#FFFFFF>Gobble up <color=#00FF00>4</color> health instantly,
-    but your movement speed drops by <color=#FF0000>40%</color> for <color=#FF0000>3</color>
+    but your movement speed drops by <color=#FF0000>40%</color> for <color=#FF0000>3.5</color>
     seconds as you waddle</color>

@@ -126,7 +126,7 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 2
   bMiddleState: 0
-  damage: 45
+  damage: 40
   obj_Effect: {fileID: 3153580070589141453}
   audioClip_Land: {fileID: 8300000, guid: 60e768e1344ccb44a9fdaa3b6bac8576, type: 3}
 --- !u!1001 &2465966157912383614

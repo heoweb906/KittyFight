@@ -112,4 +112,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 6
   description: <color=#FFFFFF>Bounce high into the air, landing with a thump that
-    deals <color=#FF0000>3</color> damage to nearby foes</color>
+    deals <color=#FF0000>3.5</color> damage to nearby foes</color>

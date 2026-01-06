@@ -126,7 +126,7 @@ MonoBehaviour:
     m_Bits: 768
   wallCheckMode: 1
   bMiddleState: 0
-  damage: 40
+  damage: 30
   objEffect: {fileID: 7773734228143141044}
 --- !u!1 &7305858789489133679
 GameObject:

@@ -63,4 +63,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 34
   description: <color=#FFFFFF>Every <color=#66CCFF>3</color> hits on prey, you heal
-    <color=#00FF00>2.5</color> HP. The hunt keeps you alive</color>
+    <color=#00FF00>2</color> HP. The hunt keeps you alive</color>

@@ -209,5 +209,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: f6f8d3d304d7e754090e64b1d1c2e898,
     type: 3}
   AnimationType: 40
-  description: <color=#FFFFFF>Ranged attack cooldown is reduced by <color=#66CCFF>1</color>
+  description: <color=#FFFFFF>Ranged attack cooldown is reduced by <color=#66CCFF>0.7</color>
     second, and projectiles fly straight and fast</color>

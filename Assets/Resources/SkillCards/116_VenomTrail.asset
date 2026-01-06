@@ -196,4 +196,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 41
   description: <color=#FFFFFF>Leaves poison clouds in the wake of ranged attacks.
-    Enemies touching these clouds take <color=#FF0000>1</color> damage per second</color>
+    Enemies touching these clouds take <color=#FF0000>0.5</color> damage per second</color>

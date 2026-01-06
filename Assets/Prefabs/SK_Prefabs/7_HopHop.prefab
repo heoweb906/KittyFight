@@ -126,7 +126,7 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 2
   bMiddleState: 0
-  damage: 30
+  damage: 35
   effectRoot: {fileID: 6854636022559137752}
 --- !u!1001 &5373732491387858745
 PrefabInstance:

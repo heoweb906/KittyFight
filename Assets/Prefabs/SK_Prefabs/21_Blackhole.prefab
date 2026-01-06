@@ -129,7 +129,7 @@ MonoBehaviour:
   pullStrength: 13
   pullRadius: 2.75
   tickInterval: 1
-  damagePerTick: 10
+  damagePerTick: 8
 --- !u!1001 &6826972739917436266
 PrefabInstance:
   m_ObjectHideFlags: 0

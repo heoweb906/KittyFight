@@ -139,5 +139,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: bbbf4d18ced2e844b96581a5f375f7b9,
     type: 3}
   AnimationType: 15
-  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>2</color>
+  description: <color=#FFFFFF>Zap! Stuns nearby enemies for <color=#FF0000>1.2</color>
     seconds with a burst of static electricity</color>

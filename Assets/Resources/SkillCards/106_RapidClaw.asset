@@ -70,4 +70,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 33
   description: "<color=#FFFFFF>Can\u2019t wait to attack! Melee cooldown down by
-    <color=#66CCFF>1</color> second</color>"
+    <color=#66CCFF>0.7</color> second</color>"

@@ -125,7 +125,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallCheckMode: 1
-  damage: 40
+  bMiddleState: 0
+  damage: 30
   objEffect: {fileID: 0}
 --- !u!1001 &8548278773429381787
 PrefabInstance:

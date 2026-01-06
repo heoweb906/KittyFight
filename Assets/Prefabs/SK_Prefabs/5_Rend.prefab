@@ -126,7 +126,7 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 1
   bMiddleState: 0
-  damage: 35
+  damage: 40
 --- !u!1001 &4246509762621896874
 PrefabInstance:
   m_ObjectHideFlags: 0

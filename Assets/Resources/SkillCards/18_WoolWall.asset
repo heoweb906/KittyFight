@@ -84,5 +84,5 @@ MonoBehaviour:
     type: 3}
   AnimationType: 17
   description: <color=#FFFFFF>Summon a giant woolly wall ahead. Enemies that bump
-    into it are stunned for <color=#FF0000>3</color> seconds. You pass through just
+    into it are stunned for <color=#FF0000>2</color> seconds. You pass through just
     fine</color>

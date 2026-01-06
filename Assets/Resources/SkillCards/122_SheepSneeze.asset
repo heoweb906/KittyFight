@@ -181,5 +181,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 7383e57bf90215146b9a0a60e109e526,
     type: 3}
   AnimationType: 46
-  description: <color=#FFFFFF>Launches wool puffs every <color=#FF0000>4</color>
+  description: <color=#FFFFFF>Launches wool puffs every <color=#FF0000>5</color>
     seconds that stun any enemy they touch</color>

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: acd7f17809616134b9062ea7d2e26e90, type: 3}
-  reduceSeconds: 1
+  audioClip: {fileID: 0}
+  reduceSeconds: 0.7
   effectPrefab: {fileID: 2208865949994688372, guid: e1f64f8908f5cfb4f8d29f1755ea8ff1,
     type: 3}

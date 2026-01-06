@@ -124,6 +124,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   wallCheckMode: 1
-  damage: 35
+  bMiddleState: 0
+  damage: 30
   knockbackForce: 24
   upwardFactor: 0.4

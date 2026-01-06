@@ -91,5 +91,5 @@ MonoBehaviour:
     type: 3}
   AnimationType: 7
   description: <color=#FFFFFF>Leap into the air, dive down, and slam the ground,
-    dealing <color=#FF0000>4.5</color> damage to nearby enemies. The higher the jump,
+    dealing <color=#FF0000>4</color> damage to nearby enemies. The higher the jump,
     the louder the thump!</color>

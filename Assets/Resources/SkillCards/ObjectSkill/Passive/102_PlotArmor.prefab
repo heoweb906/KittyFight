@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 21a266209ad7e5a4cbfdaaa3fac0498f, type: 3}
   audioClip: {fileID: 8300000, guid: d3e63f73afcce3c4ba1e201908966bf2, type: 3}
-  ignoreChance: 0.25
+  ignoreChance: 0.35
   effectPrefab: {fileID: 6605471995031134500, guid: b9065c2e8ff162f4d95178f3cbe6bf5a,
     type: 3}
   shakeAmount: 0.2

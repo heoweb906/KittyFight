@@ -11554,34 +11554,9 @@ PrefabInstance:
       objectReference: {fileID: 2003471708}
     - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
         type: 3}
-      propertyPath: sfxClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 4e6e006e52ebbf7479ef63b219489ee9, type: 3}
-    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
-        type: 3}
       propertyPath: playerAbility
       value: 
       objectReference: {fileID: 6589624400339541464}
-    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
-        type: 3}
-      propertyPath: meleeSfxClips.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
-        type: 3}
-      propertyPath: meleeSfxClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 1f6630da1cb891347ab7b54a1db5da1a, type: 3}
-    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
-        type: 3}
-      propertyPath: meleeSfxClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 9a6bdba896d3d0b4aaee6fe214d0a742, type: 3}
-    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
-        type: 3}
-      propertyPath: meleeSfxClips.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: 4b34f287055f7414b8f16db8397935af, type: 3}
     - target: {fileID: 1657814523355016355, guid: 00e097bd3773c7845ba69fa274e50624,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12258,11 +12233,6 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 2003471708}
-    - target: {fileID: -4546785363898826399, guid: 6f47b12c03c55404f8a6b8e597487ba0,
-        type: 3}
-      propertyPath: sfxClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 1ab959a0844c3094b83d1a637ebdf260, type: 3}
     - target: {fileID: -4546785363898826399, guid: 6f47b12c03c55404f8a6b8e597487ba0,
         type: 3}
       propertyPath: playerAbility
@@ -24463,7 +24433,6 @@ MonoBehaviour:
   meshDestroyDelay: 1
   mat_Red: {fileID: 0}
   mat_Blue: {fileID: 0}
-  shaderVarRef: _Alpha
   shaderVarRate: 0.1
   shadervarRefreshRate: 0.05
   vec3_1: {x: 0, y: 0, z: 0}
@@ -25394,11 +25363,6 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 2003471708}
-    - target: {fileID: 3102405268382342704, guid: 5358a6fb035a3af4fbcbe1abc2798469,
-        type: 3}
-      propertyPath: sfxClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 5cd433f85b22f524288b28386e291dc8, type: 3}
     - target: {fileID: 3102405268382342704, guid: 5358a6fb035a3af4fbcbe1abc2798469,
         type: 3}
       propertyPath: playerAbility
@@ -27880,6 +27844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSlideSpeed: 0.5
+  hardStopIgnoreAfterImpulse: 0.12
   controlScript: {fileID: 0}
   stopOnlyWhenGrounded: 1
   stopOnlyWhenNotTouchingWall: 1
@@ -27972,7 +27937,6 @@ MonoBehaviour:
   meshDestroyDelay: 2
   mat_Red: {fileID: 2100000, guid: 3e9f4e7ccca987346aed1c819380245a, type: 2}
   mat_Blue: {fileID: 2100000, guid: ae2d23e8ab30d05418b7b09c0f2b334b, type: 2}
-  shaderVarRef: _Alpha
   shaderVarRate: 0.2
   shadervarRefreshRate: 0.03
   vec3_1: {x: 0, y: 50, z: 90}

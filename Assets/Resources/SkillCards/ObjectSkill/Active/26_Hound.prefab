@@ -51,7 +51,7 @@ MonoBehaviour:
   objSkillEntity: {fileID: 0}
   skillIcon: {fileID: 21300000, guid: ae1ae703d7e119f478f1ca5c49fc5337, type: 3}
   aimRange: 0
-  slowDuration: 3
+  slowDuration: 3.5
   slowPercent: 50
   effectPrefab: {fileID: 9175777528781449006, guid: ea73794f0c99b5944b509661b4800ca1,
     type: 3}

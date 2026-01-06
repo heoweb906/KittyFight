@@ -105,4 +105,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 2
   description: <color=#FFFFFF>Bull-dozes the entire map! Stuns enemies on terrain
-    for <color=#FF0000>3</color> seconds</color>
+    for <color=#FF0000>2</color> seconds</color>

@@ -14661,7 +14661,7 @@ MonoBehaviour:
   bMiddleState: 0
   maxDurationInCloud: 1
   tickInterval: 1
-  damagePerTick: 1
+  damagePerTick: 5
 --- !u!1 &6021597002768892407
 GameObject:
   m_ObjectHideFlags: 0

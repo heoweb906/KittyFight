@@ -47,7 +47,7 @@ MonoBehaviour:
   playerAbility: {fileID: 0}
   anim: {fileID: 0}
   sfxClip: {fileID: 8300000, guid: 952bb7eeffe213445b8b6e2378a1a04a, type: 3}
-  coolTime: 5.5
+  coolTime: 5
   objSkillEntity: {fileID: 6777267630284458099, guid: 2b6bb27f5d5d9a543885f727126ea164,
     type: 3}
   skillIcon: {fileID: 21300000, guid: 3bfa05622a9b3d14cb447d12c1dfce8b, type: 3}

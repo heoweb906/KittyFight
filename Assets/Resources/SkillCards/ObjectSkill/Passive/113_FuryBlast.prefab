@@ -47,7 +47,7 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: adc606adab068c646bed6c2b8c6abc54, type: 3}
   audioClip: {fileID: 8300000, guid: 11d341aa385d2a3429dabaffb011e471, type: 3}
   interval: 8
-  selfDamage: 10
+  selfDamage: 15
   selfDamageLocalOnly: 0
   blastHitboxPrefab: {fileID: 6777267630284458099, guid: 4893bcb7972e8e341ae6afbd9daa19aa,
     type: 3}

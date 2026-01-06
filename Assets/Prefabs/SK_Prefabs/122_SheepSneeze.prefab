@@ -154,7 +154,7 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 2
   bMiddleState: 0
-  stunDuration: 1
+  stunDuration: 2
   stunEffectPrefab: {fileID: 5364587883125947957, guid: d06ddee8428869644aa7e8167d87a33e,
     type: 3}
   sfxAudio: {fileID: 8300000, guid: 46fef47a56d4f2647a99950195ef440d, type: 3}

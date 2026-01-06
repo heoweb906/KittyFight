@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Bits: 140032
   wallCheckMode: 0
   bMiddleState: 0
-  damage: 40
+  damage: 25
   destroyOnHit: 1
   mat: {fileID: 2100000, guid: 1e7de53e07b41c846b51e15995d3f9bb, type: 2}
   particle_Line: {fileID: 2344451819824495953}

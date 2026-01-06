@@ -83,5 +83,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: bc4630b5c3a1973468d5f28c3796f69a,
     type: 3}
   AnimationType: 54
-  description: <color=#FFFFFF>Got a weak prey? Snap it up immediately if under <color=#FF0000>20%</color>
+  description: <color=#FFFFFF>Got a weak prey? Snap it up immediately if under <color=#FF0000>15%</color>
     health!</color>

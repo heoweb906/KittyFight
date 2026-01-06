@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: 55947f47f7a0eb44782f810de58d6769, type: 3}
-  cooldownReduction: 1
+  audioClip: {fileID: 0}
+  cooldownReduction: 0.7

@@ -19795,7 +19795,7 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 0
   bMiddleState: 0
-  damage: 30
+  damage: 20
 --- !u!1 &7475474808257357103
 GameObject:
   m_ObjectHideFlags: 0

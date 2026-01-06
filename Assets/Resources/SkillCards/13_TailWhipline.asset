@@ -224,4 +224,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 12
   description: <color=#FFFFFF>Whips your long tail in a straight line, stunning and
-    dealing <color=#FF0000>2</color> damage to enemies hit</color>
+    dealing <color=#FF0000>2.5</color> damage to enemies hit</color>
