@@ -2396,7 +2396,7 @@ public class CardAnimation_Num_14 : CardAnimationBase
         // 3번 요소: 5, 20
         if (images.Count > 3)
         {
-            images[3].rectTransform.anchoredPosition = new UnityEngine.Vector2(5f, 20f);
+            images[3].rectTransform.anchoredPosition = new UnityEngine.Vector2(5f, 0f);
         }
 
         // 4번 요소: -300, -93, 0.5배

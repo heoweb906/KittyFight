@@ -156,6 +156,9 @@ public class SkillCardController : MonoBehaviour
                 SelectRandomCard();
             }
         }
+
+
+
     }
     // 애니메이션 제작할 때 사용하는 테스트용 함수
     public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
