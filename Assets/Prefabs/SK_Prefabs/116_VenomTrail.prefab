@@ -128,7 +128,7 @@ MonoBehaviour:
   bMiddleState: 0
   maxDurationInCloud: 1
   tickInterval: 1
-  damagePerTick: 5
+  damagePerTick: 3
 --- !u!1001 &7522838597738310662
 PrefabInstance:
   m_ObjectHideFlags: 0

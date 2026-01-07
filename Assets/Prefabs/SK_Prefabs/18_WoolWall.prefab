@@ -157,6 +157,7 @@ MonoBehaviour:
   stunDuration: 2
   stunEffectPrefab: {fileID: 5129599679803903138, guid: bf3166d569fc9a1428ad633f5b49bc94,
     type: 3}
+  destroySfxAudio: {fileID: 8300000, guid: c497552a0e3448549b22ee4c95f6805f, type: 3}
 --- !u!1001 &4093052926523385143
 PrefabInstance:
   m_ObjectHideFlags: 0

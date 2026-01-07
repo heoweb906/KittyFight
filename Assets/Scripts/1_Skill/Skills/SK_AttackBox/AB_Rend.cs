@@ -5,20 +5,13 @@ public class AB_Rend : AB_HitboxBase
 {
     [Header("«««ÿ/¡¶æÓ")]
     public int damage = 35;
-    //[Header("¿Ã∆Â∆Æ")]
-    //public GameObject aobjEffect;
+    [Header("¿Ã∆Â∆Æ")]
+    public GameObject aobjEffect;
 
-    //protected override void StartEffect()
-    //{
-    //    if (aobjEffect != null)
-    //    {
-    //        GameObject effect = Instantiate(aobjEffect, transform);
-    //        effect.transform.localPosition = Vector3.zero;
-    //        effect.transform.localRotation = Quaternion.Euler(-58, -90, 0);
-    //        effect.transform.localScale = new Vector3(0.35f, 1f, 1f);
-    //        effect.transform.SetParent(null);
-    //    }
-    //}
+    private void Start()
+    {
+        aobjEffect.transform.SetParent(null);
+    }
 
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)

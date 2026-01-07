@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9029638583740771387
 Transform:
   m_ObjectHideFlags: 0
@@ -4855,8 +4855,8 @@ Transform:
   m_GameObject: {fileID: 4464168552390993566}
   serializedVersion: 2
   m_LocalRotation: {x: -0.62013, y: 0.6170003, z: 0.328265, w: 0.35635868}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3975301, y: -1.4906385, z: 0.3975301}
+  m_LocalPosition: {x: 0.10476, y: -0.0016106, z: 0.0038686}
+  m_LocalScale: {x: 0.5, y: -1.3, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9029638583740771387}
@@ -6126,14 +6126,14 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 0.87064373, b: 0.7028302, a: 1}
         key1: {r: 1, g: 0.5643389, b: 0, a: 1}
-        key2: {r: 0.7941176, g: 0.9148073, b: 1, a: 0}
+        key2: {r: 0.8396226, g: 0.423316, b: 0.011881431, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 771
-        ctime1: 34502
+        ctime1: 21010
         ctime2: 65535
         ctime3: 0
         ctime4: 0
@@ -9684,13 +9684,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6428897838790306155}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0037268104, y: -0.16115676, z: -0.0052593057, w: 0.9869078}
-  m_LocalPosition: {x: 0.36, y: -0.198, z: 0.31}
-  m_LocalScale: {x: 1.0412993, y: 1.0412993, z: 1.0412993}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09, y: -0.201, z: 0.74}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4625519829480114774}
-  m_LocalEulerAnglesHint: {x: -0.519, y: -18.546, z: -0.526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &920064746976288449
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -10954,15 +10954,15 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 0.87064373, b: 0.7028302, a: 1}
         key1: {r: 1, g: 0.5643389, b: 0, a: 1}
-        key2: {r: 0.7941176, g: 0.9148073, b: 1, a: 0}
+        key2: {r: 1, g: 0.4636076, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 771
-        ctime1: 34502
-        ctime2: 65535
+        ctime1: 21588
+        ctime2: 64957
         ctime3: 0
         ctime4: 0
         ctime5: 0
