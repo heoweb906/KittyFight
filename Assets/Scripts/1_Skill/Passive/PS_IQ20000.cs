@@ -30,8 +30,10 @@ public class PS_IQ20000 : Passive
         e.OnModifyCooldown -= HandleModifyCooldown;
     }
 
-    private void HandleModifyCooldown(SkillType slot, ref float seconds)
+    private void HandleModifyCooldown(SkillType type, ref float seconds)
     {
+        if (type == SkillType.Dash || type == SkillType.Melee || type == SkillType.Ranged) return;
+
         if (reduceBySeconds <= 0f) return;
         seconds = Mathf.Max(0f, seconds - reduceBySeconds);
     }

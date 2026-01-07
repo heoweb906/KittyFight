@@ -36,6 +36,8 @@ public class AB_GravityGremlin : AB_HitboxBase
         if (exploded) return;
         exploded = true;
 
+        var gm = FindObjectOfType<GameManager>();
+
         // 충돌 지점 추출
         Vector3 hitPos = other.ClosestPoint(transform.position);
 
@@ -48,10 +50,11 @@ public class AB_GravityGremlin : AB_HitboxBase
             {
                 blackhole.Init(ownerAbility, blackholeDuration);
             }
+
+            gm.RegisterRoundObject(bhObj);
         }
 
         // 카메라 쉐이크
-        var gm = FindObjectOfType<GameManager>();
         gm?.cameraManager?.ShakeCameraPunch(shakeStrength, shakeDuration);
 
         ownerAbility.PlaySFX(sfxClip);

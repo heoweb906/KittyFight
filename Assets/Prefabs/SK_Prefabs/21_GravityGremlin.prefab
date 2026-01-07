@@ -9826,7 +9826,7 @@ MonoBehaviour:
   lifeTime: 7
   environmentMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 8960
   wallCheckMode: 0
   bMiddleState: 0
   blackholePrefab: {fileID: 6777267630284458099, guid: 5fcd118e5fd74784e9402f23d885df6b,

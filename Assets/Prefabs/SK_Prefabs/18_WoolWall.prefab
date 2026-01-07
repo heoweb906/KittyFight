@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6606744992455327735}
   - component: {fileID: 6035604921414015399}
   - component: {fileID: -3389273814461848224}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: 18_WoolWall
-  m_TagString: Wall
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 2.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8657113492739906810}
+  - {fileID: 5030715022702863369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8477820941212723235
@@ -160,7 +160,7 @@ MonoBehaviour:
   destroySfxAudio: {fileID: 8300000, guid: c497552a0e3448549b22ee4c95f6805f, type: 3}
   hitShakeAmount: 0.3
   hitShakeDuration: 0.7
---- !u!1001 &9200440243545553681
+--- !u!1001 &5817949498115718818
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -168,84 +168,84 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4740516541934953470}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 97392035337813059, guid: 3704868f767718844b66abbf8de12cc2,
+        type: 3}
+      propertyPath: m_Name
+      value: CottonWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 0.28
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.124444455
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.28
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+    - target: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: b7e9067da2c48394d8f7a68f7b411028,
-        type: 3}
-      propertyPath: m_Name
-      value: CottonWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b7e9067da2c48394d8f7a68f7b411028, type: 3}
---- !u!4 &8657113492739906810 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 3704868f767718844b66abbf8de12cc2, type: 3}
+--- !u!4 &5030715022702863369 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b7e9067da2c48394d8f7a68f7b411028,
+  m_CorrespondingSourceObject: {fileID: 1543945869805853355, guid: 3704868f767718844b66abbf8de12cc2,
     type: 3}
-  m_PrefabInstance: {fileID: 9200440243545553681}
+  m_PrefabInstance: {fileID: 5817949498115718818}
   m_PrefabAsset: {fileID: 0}
