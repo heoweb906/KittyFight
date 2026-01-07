@@ -15,6 +15,7 @@ public class SK_MoossiveQuake : Skill
 
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
+    [SerializeField] private GameObject effectPrefab2;
 
     [SerializeField] private float attackAnimDuration = 0.5f;
 
@@ -56,6 +57,11 @@ public class SK_MoossiveQuake : Skill
             anim.SetTrigger("Attack");
             anim.SetBool("isAttack", true);
             anim.SetInteger("AttackType", 6);
+            Instantiate(
+                effectPrefab2,
+                playerAbility.gameObject.transform.position,
+                Quaternion.identity
+            );
             StartCoroutine(ResetAttackAnimState());
         }
         finally
