@@ -76,7 +76,7 @@ public class PS_Frenzy : Passive
         Instantiate(
             effectPrefab,
             hb.transform.position,
-            hb.transform.rotation
+            hb.transform.rotation * Quaternion.Euler(-120f, -90f, 90f)
         );
     }
 }

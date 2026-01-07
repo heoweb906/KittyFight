@@ -6,7 +6,7 @@ public class PassiveProcHandler : IP2PMessageHandler
     private readonly PlayerAbility opponentAbility;
     private readonly int myPlayerNumber;
 
-    public PassiveProcHandler(PlayerAbility opponentAbility, int myPlayerNumber)
+    public PassiveProcHandler(PlayerAbility myAbility, PlayerAbility opponentAbility, int myPlayerNumber)
     {
         this.myAbility = myAbility;
         this.opponentAbility = opponentAbility;
