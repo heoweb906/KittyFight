@@ -4,14 +4,43 @@ public class PS_RazorTalons : Passive
 {
     public override int PassiveId => 106;
 
-    [Header("범위 증가 설정")]
-    [Tooltip("근접 범위 증가율 (0.4 = 40% 증가)")]
-    [Range(0f, 2f)]
-    public float rangeIncreaseRate = 0.4f;
+    [Header("수치 설정")]
+    [Tooltip("히트박스 크기 증가율 (0.4 = 40%)")]
+    public float sizeIncreaseRate = 0.4f;
+
+    [Tooltip("스킬 사거리(AimRange) 고정 증가값")]
+    public float bonusAimRange = 0.5f; // 0.5 더하기
 
     [Header("Effects")]
     [SerializeField] private GameObject effectPrefab;
 
+    // 1. 장착 시: 0.5 더하기
+    public override void OnEquip(PlayerAbility a)
+    {
+        base.OnEquip(a);
+
+        var meleeSkill = a.GetComponentInChildren<SK_MeleeAttack>();
+        if (meleeSkill != null)
+        {
+            meleeSkill.aimRange += bonusAimRange;
+        }
+    }
+
+    // 2. 해제 시: 0.5 빼기 (원상복구)
+    public override void OnUnequip()
+    {
+        if (ability != null)
+        {
+            var meleeSkill = ability.GetComponentInChildren<SK_MeleeAttack>();
+            if (meleeSkill != null)
+            {
+                meleeSkill.aimRange -= bonusAimRange;
+            }
+        }
+        base.OnUnequip();
+    }
+
+    // --- 기존 히트박스 크기 로직 유지 ---
 
     protected override void Subscribe(AbilityEvents e)
     {
@@ -29,21 +58,18 @@ public class PS_RazorTalons : Passive
     {
         if (hb == null) return;
 
-        float factor = 1f + rangeIncreaseRate;   // 기본 1.4배
+        float factor = 1f + sizeIncreaseRate;
 
         var tr = hb.transform;
-        Vector3 s = tr.localScale;
-        
-        s.x *= factor;
-        s.y *= factor;
-        s.z *= factor;
+        tr.localScale *= factor;
 
-        tr.localScale = s;
-
-        Instantiate(
-      effectPrefab,
-      hb.transform.position,
-      hb.transform.rotation * Quaternion.Euler(-120f, -90f, 90f)
-  );
+        if (effectPrefab != null)
+        {
+            Instantiate(
+               effectPrefab,
+               hb.transform.position,
+               hb.transform.rotation * Quaternion.Euler(-120f, -90f, 90f)
+           );
+        }
     }
 }

@@ -11627,6 +11627,11 @@ PrefabInstance:
       objectReference: {fileID: 2003471708}
     - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
         type: 3}
+      propertyPath: aimRange
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7408899166155909078, guid: 00e097bd3773c7845ba69fa274e50624,
+        type: 3}
       propertyPath: playerAbility
       value: 
       objectReference: {fileID: 6589624400339541464}
