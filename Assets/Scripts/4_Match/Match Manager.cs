@@ -30,7 +30,7 @@ public class MatchManager : MonoBehaviour
 
     public bool BoolMatchSucces { get; set; }    // ¸ÅÄª ¼º°ø
 
-    private const float MATCH_TIMEOUT_SECONDS = 59f;
+    private const float MATCH_TIMEOUT_SECONDS = 60f;
 
 
     private void Awake()
