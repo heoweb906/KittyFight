@@ -287,6 +287,9 @@ public class GameManager : MonoBehaviour
 
         mapManager.StopCurrentGimmick();
 
+        playerAbility_1.events?.EmitRoundEnd(0);
+        playerAbility_2.events?.EmitRoundEnd(0);
+
         StartCoroutine(EndGameSequence(iLosePlayerNum));
     }
 

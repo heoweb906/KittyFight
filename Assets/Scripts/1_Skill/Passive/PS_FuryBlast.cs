@@ -30,6 +30,8 @@ public class PS_FuryBlast : Passive
     protected override void Subscribe(AbilityEvents e)
     {
         e.OnTick += OnTick;
+        e.OnRoundStart += OnRoundStart;
+        e.OnRoundEnd += OnRoundEnd;
         timer = 0f; // 장착 후 interval 뒤 첫 발동
         isCharging = false;
     }
@@ -37,6 +39,8 @@ public class PS_FuryBlast : Passive
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnTick -= OnTick;
+        e.OnRoundStart -= OnRoundStart;
+        e.OnRoundEnd -= OnRoundEnd;
     }
 
     private void OnTick(float dt)
@@ -72,6 +76,17 @@ public class PS_FuryBlast : Passive
             dir: Vector3.up,
             i0: PROC_BLAST
         );
+    }
+    private void OnRoundStart(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        timer = 0f;
+    }
+
+    private void OnRoundEnd(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        timer = -999f;
     }
 
     private void SpawnChargeFx_Local()
