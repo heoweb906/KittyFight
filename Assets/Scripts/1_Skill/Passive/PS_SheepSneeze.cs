@@ -22,6 +22,7 @@ public class PS_SheepSneeze : Passive
     public float verticalOffset = 0.5f;
 
     private float _timer = 0f;
+    private bool roundActive = false;
 
     [Header("Effects")]
     [SerializeField] private GameObject useEffectPrefab;
@@ -36,12 +37,16 @@ public class PS_SheepSneeze : Passive
     {
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+        roundActive = false;
+        _timer = 0f;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnTick -= OnTick;
         e.OnRoundStart -= OnRoundStart;
+        roundActive = true;
+        _timer = 0f;
     }
 
     private void OnRoundStart(int roundIndex)
@@ -53,6 +58,7 @@ public class PS_SheepSneeze : Passive
     private void OnTick(float dt)
     {
         if (!IsAuthority) return;
+        if (!roundActive) return;
         if (ability == null) return;
         if (objSheepSneeze == null) return;
 

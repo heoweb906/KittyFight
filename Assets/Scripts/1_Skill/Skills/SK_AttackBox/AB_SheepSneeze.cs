@@ -9,6 +9,9 @@ public class AB_SheepSneeze : AB_HitboxBase
     [SerializeField] private GameObject stunEffectPrefab;
     public AudioClip sfxAudio;
 
+    [Header("»ç¿îµå")]
+    [SerializeField] private AudioClip destroySfxAudio;
+
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)
     {
         var stun = victim.GetComponent<StunStatus>();
@@ -23,5 +26,19 @@ public class AB_SheepSneeze : AB_HitboxBase
         );
 
         ownerAbility.PlaySFX(sfxAudio);
+
+        if (this)
+        {
+            ownerAbility?.PlaySFX(destroySfxAudio);
+            Destroy(gameObject);
+        }
+    }
+    protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
+    {
+        if (this)
+        {
+            ownerAbility?.PlaySFX(destroySfxAudio);
+            Destroy(gameObject);
+        }
     }
 }
