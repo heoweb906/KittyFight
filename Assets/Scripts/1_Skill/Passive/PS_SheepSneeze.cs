@@ -37,6 +37,7 @@ public class PS_SheepSneeze : Passive
     {
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+        e.OnRoundEnd += OnRoundEnd;
         roundActive = false;
         _timer = 0f;
     }
@@ -45,6 +46,7 @@ public class PS_SheepSneeze : Passive
     {
         e.OnTick -= OnTick;
         e.OnRoundStart -= OnRoundStart;
+        e.OnRoundEnd -= OnRoundEnd;
     }
 
     private void OnRoundStart(int roundIndex)
@@ -52,6 +54,13 @@ public class PS_SheepSneeze : Passive
         if (!IsAuthority) return;
         roundActive = true;
         _timer = 0f;
+    }
+
+    private void OnRoundEnd(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        roundActive = false;
+        _timer = -999f;
     }
 
     private void OnTick(float dt)

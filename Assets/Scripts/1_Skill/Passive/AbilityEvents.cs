@@ -9,6 +9,7 @@ public delegate void MeleeDamageIntHandler(ref int damage);
 public delegate void MeleeHitboxSpawnedHandler(AB_MeleeHitbox hb);
 public delegate void HitboxSpawnedHandler(AB_HitboxBase hb);
 public delegate void RoundHandler(int roundIndex);
+public delegate void RoundEndHandler(int roundIndex);
 public delegate void BeforeDealDamageHandler(ref int dmg, GameObject victim);
 public delegate void BeforeTakeDamageHandler(ref int dmg, GameObject attacker);
 public delegate void TookDamageHandler(int dealt);
@@ -38,6 +39,7 @@ public class AbilityEvents : MonoBehaviour
     public event MeleeHitboxSpawnedHandler OnMeleeHitboxSpawned; // 근접공격 범위 (106)
     public event HitboxSpawnedHandler OnHitboxSpawned; // 원거리 공격 (114)
     public event RoundHandler OnRoundStart;                 // 라운드 시작 (101, 108, 118)
+    public event RoundEndHandler OnRoundEnd;                 // 라운드 시작 (101, 108, 118)
 
     public void EmitTick(float dt) => OnTick?.Invoke(dt);
 
@@ -79,4 +81,5 @@ public class AbilityEvents : MonoBehaviour
 
     public void EmitRoundStart(int roundIndex) => OnRoundStart?.Invoke(roundIndex);
 
+    public void EmitRoundEnd(int roundIndex) => OnRoundEnd?.Invoke(roundIndex);
 }

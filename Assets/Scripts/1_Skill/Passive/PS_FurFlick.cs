@@ -35,6 +35,7 @@ public class PS_FurFlick : Passive
     {
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+        e.OnRoundEnd += OnRoundEnd;
 
         roundActive = false;
         timer = 0f;
@@ -44,6 +45,7 @@ public class PS_FurFlick : Passive
     {
         e.OnTick -= OnTick;
         e.OnRoundStart -= OnRoundStart;
+        e.OnRoundEnd -= OnRoundEnd;
     }
 
     private void OnRoundStart(int roundIndex)
@@ -51,6 +53,12 @@ public class PS_FurFlick : Passive
         if (!IsAuthority) return;
         roundActive = true;
         timer = 0f;
+    }
+    private void OnRoundEnd(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        roundActive = false;
+        timer = -999f;
     }
 
     private void OnTick(float dt)

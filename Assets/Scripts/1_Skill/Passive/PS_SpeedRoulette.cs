@@ -47,12 +47,14 @@ public class PS_SpeedRoulette : Passive
 
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+        e.OnRoundEnd += OnRoundEnd;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnTick -= OnTick;
         e.OnRoundStart -= OnRoundStart;
+        e.OnRoundEnd -= OnRoundEnd;
 
         if (IsAuthority && ability != null && hasSavedOriginal)
         {
@@ -80,6 +82,12 @@ public class PS_SpeedRoulette : Passive
         if (!IsAuthority) return;
         timer = 0f;      // 라운드 시작할 때 타이머 초기화
         RollNewSpeed();
+    }
+
+    private void OnRoundEnd(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        timer = -999f;
     }
 
     private void RollNewSpeed()

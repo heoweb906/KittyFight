@@ -22,18 +22,25 @@ public class PS_DataDump : Passive
     {
         e.OnTick += OnTick;
         e.OnRoundStart += OnRoundStart;
+        e.OnRoundEnd += OnRoundEnd;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnTick -= OnTick;
         e.OnRoundStart -= OnRoundStart;
+        e.OnRoundEnd -= OnRoundEnd;
     }
 
     private void OnRoundStart(int roundIndex)
     {
         if (!IsAuthority) return;
         timer = 0f;
+    }
+    private void OnRoundEnd(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        timer = -999f;
     }
 
     private void OnTick(float dt)

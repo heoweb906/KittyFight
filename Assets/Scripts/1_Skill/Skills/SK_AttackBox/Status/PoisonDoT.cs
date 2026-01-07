@@ -31,6 +31,6 @@ public class PoisonDoT : MonoBehaviour
             elapsed += interval;
         }
 
-        Destroy(this);
+        if(this != null) Destroy(this);
     }
 }
