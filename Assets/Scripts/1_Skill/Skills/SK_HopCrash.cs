@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class SK_HopCrash : Skill
 {
-    private void Awake()
-    {
-        coolTime = 9.0f;
-        aimRange = 0.1f;
-    }
-
     [Header("낙하 제어")]
     [SerializeField] private float diveSpeed = 26f;
     [SerializeField] private bool lockHorizontal = true; // 낙하 중 X 속도 0으로 고정
@@ -38,6 +32,7 @@ public class SK_HopCrash : Skill
         if (!objSkillEntity || playerAbility == null) return;
 
         GameObject owner = playerAbility.gameObject;
+
         var anim = owner.GetComponentInChildren<Animator>();
         if (!anim) return;
 
@@ -65,6 +60,9 @@ public class SK_HopCrash : Skill
         var ph = owner.GetComponent<PlayerHealth>();
         var anim = owner.GetComponentInChildren<Animator>();
         var pj = owner.GetComponent<PlayerJump>();
+
+        var pm = owner.GetComponent<PlayerMovement>();
+        if (pm != null) pm.SetExternalFallControl(true);
 
         if (!rb || !anim || !ph) yield break;
         if (pj != null) pj.PushDisableWallSlide();
@@ -119,6 +117,7 @@ public class SK_HopCrash : Skill
         }
 
         if (pj != null) pj.PopDisableWallSlide();
+        if (pm != null) pm.SetExternalFallControl(false);
 
         float endY = playerAbility.gameObject.transform.position.y;
         float fallDist = Mathf.Max(0f, startY - endY);

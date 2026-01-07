@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     public float lowJumpMultiplier = 4.0f;   // 점프 버튼을 살짝 눌렀을 때 중력 배수
     public float jumpMultiplier = 2.0f;      // 상승 중 기본 중력 배수
     public float maxFallSpeed = 25f;         // 최대 낙하 속도 제한
+    
+    private bool externalFallControl;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (externalFallControl) return;
         ApplyCustomGravity();
     }
 
@@ -214,5 +217,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (visualPivot != null)
             visualPivot.localRotation = Quaternion.Euler(0f, lockedYaw, 0f);
+    }
+    public void SetExternalFallControl(bool enabled)
+    {
+        externalFallControl = enabled;
     }
 }
