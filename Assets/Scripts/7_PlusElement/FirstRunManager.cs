@@ -55,9 +55,6 @@ public class FirstRunManager : MonoBehaviour
 
 
 
-
-
-
     private void CheckFirstRun()
     {
         UserData data = LoadUserData();
@@ -238,7 +235,7 @@ public class FirstRunManager : MonoBehaviour
                 image_Plate.rectTransform.anchoredPosition = new Vector2(originalPlatePos.x, -5940f);
             }
 
-            if (sprites_Plate.Length > 1) image_Plate.sprite = sprites_Plate[1];
+            // if (sprites_Plate.Length > 1) image_Plate.sprite = sprites_Plate[1];
             sprite_QuestionMark.gameObject.SetActive(false);
 
             Sequence popSeq = DOTween.Sequence();

@@ -41,9 +41,9 @@ public class PS_RazorTalons : Passive
         tr.localScale = s;
 
         Instantiate(
-            effectPrefab,
-            hb.transform.position,
-            hb.transform.rotation
-        );
+      effectPrefab,
+      hb.transform.position,
+      hb.transform.rotation * Quaternion.Euler(-120f, -90f, 90f)
+  );
     }
 }
