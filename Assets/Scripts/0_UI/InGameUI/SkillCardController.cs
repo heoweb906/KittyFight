@@ -159,18 +159,6 @@ public class SkillCardController : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (skillDataList.Count > 0 && !IsAnimating)
-            {
-                // 테스트 데이터 설정
-                int testSkillID = skillDataList[0].iSkillIndex; // 첫 번째 스킬 ID
-                Vector3 centerWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 10f));
-
-                Debug.Log($"[Test] 쥐 연출 시작 - SkillID: {testSkillID}");
-                HIdeSkillCardList_ForRat(testSkillID, centerWorldPos, testSkillID);
-            }
-        }
 
 
 
