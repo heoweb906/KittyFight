@@ -44,9 +44,9 @@ public class SkillCardController : MonoBehaviour
     public Sprite[] sprites_Icons;
     public Sprite sprite_RatHeart;
     public Transform ransform_RatCardLeft;
-    public Transform rasnform_RatIconLeft;
+    public RectTransform rasnform_RatIconLeft;
     public Transform ransform_RatCardRight;
-    public Transform rasnform_RatIconRight;
+    public RectTransform rasnform_RatIconRight;
     private Dictionary<int, Sprite> skillIconMap = new Dictionary<int, Sprite>();
 
     private Sequence ratSequence;
@@ -154,6 +154,21 @@ public class SkillCardController : MonoBehaviour
                 bTimerCheck = false;
 
                 SelectRandomCard();
+            }
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (skillDataList.Count > 0 && !IsAnimating)
+            {
+                // 테스트 데이터 설정
+                int testSkillID = skillDataList[0].iSkillIndex; // 첫 번째 스킬 ID
+                Vector3 centerWorldPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 10f));
+
+                Debug.Log($"[Test] 쥐 연출 시작 - SkillID: {testSkillID}");
+                HIdeSkillCardList_ForRat(testSkillID, centerWorldPos, testSkillID);
             }
         }
 
@@ -627,16 +642,14 @@ public class SkillCardController : MonoBehaviour
     {
         if (IsAnimating) return;
 
-        // 1. [안전장치] 이전 연출 강제 종료 및 청소
         CleanupRatEffects();
-
         IsAnimating = true;
         SetBoolAllCardInteract(false);
         InGameUiController.PlaySFX(InGameUiController.sfxClips_InGameSystem[9]);
 
+        // 클릭 지점 (타겟 아이콘이 처음 생길 위치)
         Vector2 uiAnchoredPos = WorldToCanvasPoint(clickedWorldPosition);
 
-        // 2. 시퀀스 생성 (모든 연출을 하나의 타임라인으로 묶음)
         ratSequence = DOTween.Sequence();
 
         // --- [Step 1] 초기 페이드 및 UI 정리 ---
@@ -717,33 +730,44 @@ public class SkillCardController : MonoBehaviour
         // --- [Step 5] 화면 전환 및 쥐 카드 생성 ---
         ratSequence.AppendCallback(() =>
         {
-            // 하트, 타겟 아이콘 제거
             if (currentTargetIcon != null) Destroy(currentTargetIcon);
             if (currentHeartObj != null) Destroy(currentHeartObj);
 
             FadeImage(1f, 0.1f).OnComplete(() =>
             {
                 bool isRight = (uiAnchoredPos.x > 0);
-                Transform targetParent = isRight ? ransform_RatCardRight : ransform_RatCardLeft;
-                Transform targetIconTransform = isRight ? rasnform_RatIconRight : rasnform_RatIconLeft;
-
                 int realID = iRaySkillIndex;
 
                 // 쥐 카드 생성
-                CreateRatCardAtTransform(targetParent, realID);
+                CreateRatCardAtTransform(
+                    isRight ? ransform_RatCardRight : ransform_RatCardLeft,
+                    realID
+                );
 
                 // 보상 아이콘 생성
                 Sprite rewardIcon = GetSkillIconBySkillIndex(realID);
-                Vector2 iconPos = Vector2.zero;
-                if (targetIconTransform != null) iconPos = WorldToCanvasPoint(targetIconTransform.position);
 
-                currentRewardIcon = CreateEffectImage("RewardSkillIcon", rewardIcon, iconPos, new Vector2(200f, 200f));
+                currentRewardIcon = CreateEffectImage(
+                    "RewardSkillIcon",
+                    rewardIcon,
+                    Vector2.zero,               // 일단 0
+                    new Vector2(200f, 200f)
+                );
+
                 if (currentRewardIcon != null)
                 {
-                    currentRewardIcon.GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+                    RectTransform rewardRect = currentRewardIcon.GetComponent<RectTransform>();
+
+                    // 🔥 핵심: Canvas 기준으로 고정 좌표 지정
+                    rewardRect.SetParent(InGameUiController.canvasMain.transform, false);
+
+                    rewardRect.anchoredPosition = isRight
+                        ? new Vector2(457f, 410f)
+                        : new Vector2(-457f, 410f);
+
+                    rewardRect.localScale = Vector3.one * 1.4f;
                 }
 
-                // 화면 밝아짐
                 DOVirtual.DelayedCall(0.1f, () => FadeImage(0f, 0.5f));
             });
         });
@@ -806,33 +830,24 @@ public class SkillCardController : MonoBehaviour
     // [핵심] 쥐 연출 관련 모든 트윈과 오브젝트를 강제 정리하는 함수
     private void CleanupRatEffects()
     {
-        // 1. 실행 중인 시퀀스 종료
-        if (ratSequence != null)
-        {
-            ratSequence.Kill();
-            ratSequence = null;
-        }
+        if (ratSequence != null) { ratSequence.Kill(); ratSequence = null; }
 
-        // 2. 생성된 임시 오브젝트들 파괴
         if (currentTargetIcon != null) Destroy(currentTargetIcon);
         if (currentHeartObj != null) Destroy(currentHeartObj);
         if (currentRewardIcon != null) Destroy(currentRewardIcon);
 
-        // 이름으로 찾아서 혹시 모를 잔재 제거 (중복 생성 방지)
-        GameObject oldTarget = GameObject.Find("TargetSkillIcon");
-        if (oldTarget) Destroy(oldTarget);
-        GameObject oldHeart = GameObject.Find("RatHeartMissile");
-        if (oldHeart) Destroy(oldHeart);
-        GameObject oldReward = GameObject.Find("RewardSkillIcon");
-        if (oldReward) Destroy(oldReward);
+        // RectTransform 자식들 정리
+        if (ransform_RatCardLeft != null) foreach (Transform child in ransform_RatCardLeft) Destroy(child.gameObject);
+        if (ransform_RatCardRight != null) foreach (Transform child in ransform_RatCardRight) Destroy(child.gameObject);
+
+        // 추가된 RectTransform 포인트들도 정리 (필요 시)
+        if (rasnform_RatIconLeft != null) foreach (Transform child in rasnform_RatIconLeft) Destroy(child.gameObject);
+        if (rasnform_RatIconRight != null) foreach (Transform child in rasnform_RatIconRight) Destroy(child.gameObject);
 
         currentTargetIcon = null;
         currentHeartObj = null;
         currentRewardIcon = null;
     }
-
-
-
 
 
     private void CreateRatCardAtTransform(Transform targetParent, int skillID)
@@ -902,6 +917,7 @@ public class SkillCardController : MonoBehaviour
 
     }
 
+
     private Vector2 WorldToCanvasPoint(Vector3 worldPosition)
     {
         Canvas canvas = InGameUiController.canvasMain;
@@ -930,11 +946,13 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
     // #. Skill 이름으로 찾아와서 카드 생성하기
     public SkillCard_SO FindSkillCardByName(string skillName)
     {
         return skillDataList.Find(card => card.sSkillName == skillName);
     }
+
 
     // #. SkillCard 인스턴스 생성
     public GameObject CreateSkillInstance(SkillCard_SO card)
@@ -969,6 +987,7 @@ public class SkillCardController : MonoBehaviour
         return skillObj;
     }
 
+
     public Tween FadeImage(float fTargetAlpha, float duration)
     {
         // 시작할 때, 목표 알파값이 0이 아니라면 활성화
@@ -988,6 +1007,7 @@ public class SkillCardController : MonoBehaviour
                 }
             });
     }
+
 
     // #. 시간 초과되면 랜덤으로 선택되게 하는 함수
     private void SelectRandomCard()
@@ -1012,10 +1032,12 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
     public SkillCard_SO FindSkillCardByIndex(int skillIndex)
     {
         return skillDataList.Find(card => card.iSkillIndex == skillIndex);
     }
+
 
     private void MapSkillIcons()
     {
@@ -1038,10 +1060,12 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
+
     public Sprite GetSkillIconBySkillIndex(int skillIndex)
     {
         return skillIconMap.ContainsKey(skillIndex) ? skillIconMap[skillIndex] : null;
     }
+
 
     private void OnRatAnimationComplete()
     {
@@ -1063,6 +1087,7 @@ public class SkillCardController : MonoBehaviour
         });
     }
 
+
     private GameObject CreateEffectImage(string objName, Sprite sprite, Vector2 anchoredPos, Vector2 size)
     {
         if (sprite == null) return null;
@@ -1080,6 +1105,7 @@ public class SkillCardController : MonoBehaviour
         rect.localScale = Vector3.one * 1.5f;
         return effectObj;
     }
+
 
     public void MarkSkillAsUsed(int skillID)
     {

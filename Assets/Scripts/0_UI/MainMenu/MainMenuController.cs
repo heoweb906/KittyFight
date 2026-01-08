@@ -99,7 +99,7 @@ public class MainMenuController : MonoBehaviour
         scriptPlayerCharacter.bCanControl = false;
 
 
-        // Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Confined;
 
 
         for (int i = 0; i < buttonsMainMenu.Length; ++i)
@@ -159,7 +159,7 @@ public class MainMenuController : MonoBehaviour
         {
             if (_iPanelIdx == 1)
             {
-                // Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None;
 
                 obj_Gausian.SetActive(true);
                 obj_PlayerPanel.SetActive(false);
@@ -168,7 +168,7 @@ public class MainMenuController : MonoBehaviour
             }
             else if (_iPanelIdx == 0)
             {
-                // Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.Confined;
 
                 obj_Gausian.SetActive(false);
                 obj_PlayerPanel.SetActive(true);
