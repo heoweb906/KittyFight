@@ -61,6 +61,7 @@ public class InGameUIController : MonoBehaviour
     [Header("연출용")]
     public Image image_FadeOut_White;
     public bool bFinalEndingStart;
+    public GameObject text_disconnectWarning;
 
     [Header("사운드")]
     [SerializeField] private AudioSource sfxSource;

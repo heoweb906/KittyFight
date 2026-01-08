@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
         // 중복 호출 방지
         if (returningToMenu) return;
         returningToMenu = true;
+        ingameUIController.text_disconnectWarning.SetActive(true);
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 

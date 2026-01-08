@@ -306,7 +306,7 @@ public class SkillCardController : MonoBehaviour
 
             // Block 2
 
-            int[] mandatorySkillIDs = { 137, 102, 131, 114 };
+            int[] mandatorySkillIDs = { 108, 102, 131, 114 };
 
             // 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
             foreach (int id in mandatorySkillIDs)

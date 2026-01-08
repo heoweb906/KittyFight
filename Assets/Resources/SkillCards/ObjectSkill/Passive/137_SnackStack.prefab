@@ -48,7 +48,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 21478e587f9d2af43af714d6d34239f8, type: 3}
   initialMaxHP: 40
   growPerRound: 15
-  keepRatioOnChange: 0
+  keepRatioOnChange: 1
   objEffect_Use: {fileID: 6571195345819596782, guid: 8120b356ab4f8c9478d3225fb5fd9274,
     type: 3}
   shakeAmount: 0.3
