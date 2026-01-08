@@ -7,7 +7,7 @@ public class PS_SnackStack : Passive
     [Header("Snack & Stack")]
     public int initialMaxHP = 50;   // 장착 즉시 5
     public int growPerRound = 20;    // 라운드 시작마다 +2
-    public bool keepRatioOnChange = false; // 보통 false: 힐은 안 됨
+    public bool keepRatioOnChange = true; // 보통 false: 힐은 안 됨
 
 
     [Header("이펙트")]
