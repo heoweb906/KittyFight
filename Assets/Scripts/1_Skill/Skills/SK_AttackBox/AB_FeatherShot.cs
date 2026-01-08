@@ -35,15 +35,20 @@ public class AB_FeatherShot : AB_HitboxBase
 
     protected override void OnEnvironmentHit(Collider other)
     {
-        OnDisappearEffect();
-
-        Destroy(gameObject);
+        if (destroyOnHit && this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
 
     protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
     {
-        OnDisappearEffect();
-        Destroy(gameObject);
+        if (destroyOnHit && this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
 
 

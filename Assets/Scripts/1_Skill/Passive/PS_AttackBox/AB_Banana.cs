@@ -55,7 +55,7 @@ public class AB_Banana : AB_HitboxBase
         );
         ob.transform.SetParent(null);
 
-        Destroy(gameObject);
+        if (this) Destroy(gameObject);
     }
     protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
     {
@@ -66,7 +66,7 @@ public class AB_Banana : AB_HitboxBase
         );
         ob.transform.SetParent(null);
 
-        Destroy(gameObject);
+        if (this) Destroy(gameObject);
     }
 
     protected override void OnEnvironmentHit(Collider other)

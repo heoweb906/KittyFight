@@ -69,7 +69,7 @@ public class AB_BouncingFire : AB_HitboxBase
             lowSpeedTime = 0f;
         }
 
-        if (timeAlive > minAliveTime && lowSpeedTime > lowSpeedDurationToDestroy)
+        if (timeAlive > minAliveTime && lowSpeedTime > lowSpeedDurationToDestroy && this)
         {
             OnDisappearEffect();
             Destroy(gameObject);
@@ -78,8 +78,11 @@ public class AB_BouncingFire : AB_HitboxBase
 
     protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
     {
-        OnDisappearEffect();
-        Destroy(gameObject);
+        if (this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
 
 
@@ -88,20 +91,23 @@ public class AB_BouncingFire : AB_HitboxBase
         if (victim == null) return;
 
         victim.TakeDamage(damage, ownerAbility);
-        OnDisappearEffect();
-        Destroy(gameObject);
+        if (this)
+        {
+            OnDisappearEffect();
+            Destroy(gameObject);
+        }
     }
 
     protected override void OnEnvironmentHit(Collider other)
     {
-        if (rb == null)
+        if (rb == null && this)
         {
             OnDisappearEffect();
             Destroy(gameObject);
             return;
         }
 
-        if (remainingBounces <= 0)
+        if (remainingBounces <= 0 && this)
         {
             OnDisappearEffect();
             Destroy(gameObject);
@@ -116,7 +122,7 @@ public class AB_BouncingFire : AB_HitboxBase
         if (incoming.sqrMagnitude < 0.0001f)
             incoming = rb.velocity;
 
-        if (incoming.sqrMagnitude < 0.0001f)
+        if (incoming.sqrMagnitude < 0.0001f && this)
         {
             OnDisappearEffect();
             Destroy(gameObject);
@@ -192,7 +198,7 @@ public class AB_BouncingFire : AB_HitboxBase
 
         // ¼Óµµ 1.7¹è
         float newSpeed = incoming.magnitude * bounceSpeedMultiplier;
-        if (!float.IsFinite(newSpeed) || newSpeed < 0.01f)
+        if ((!float.IsFinite(newSpeed) || newSpeed < 0.01f) && this)
         {
             OnDisappearEffect();
             Destroy(gameObject);

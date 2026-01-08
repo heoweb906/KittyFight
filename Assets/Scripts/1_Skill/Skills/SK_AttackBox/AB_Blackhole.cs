@@ -43,7 +43,7 @@ public class AB_Blackhole : AB_HitboxBase
             yield return null;
         }
 
-        Destroy(gameObject);
+        if (this) Destroy(gameObject);
     }
     private void StepBlackhole(float dt)
     {
