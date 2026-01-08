@@ -79,7 +79,7 @@ public class MapGimic_7_Horse : AbstractMapGimic
         if (myAbility != null)
         {
             originalMoveSpeed = myAbility.moveSpeed; // 실행 시점의 속도 저장
-            myAbility.moveSpeed *= 1.5f;             // 1.5배 증가
+            myAbility.moveSpeed *= 1.35f;             // 1.5배 증가
         }
     }
 

@@ -65,7 +65,7 @@ public class DisplayOptionsUI : MonoBehaviour
     {
         _syncing = true;
 
-        int index = PlayerPrefs.GetInt(PREF_RESOLUTION_INDEX, 1);
+        int index = PlayerPrefs.GetInt(PREF_RESOLUTION_INDEX, 5);
         index = Mathf.Clamp(index, 0, _resolutions.Length - 1);
 
         bool fullscreen = PlayerPrefs.GetInt(PREF_FULLSCREEN, 1) == 1;
@@ -96,7 +96,7 @@ public class DisplayOptionsUI : MonoBehaviour
     {
         if (_syncing) return;
 
-        int index = resolutionDropdown ? resolutionDropdown.value : 1;
+        int index = resolutionDropdown ? resolutionDropdown.value : 5;
         index = Mathf.Clamp(index, 0, _resolutions.Length - 1);
 
         ApplyResolution(index, isFullscreen);
