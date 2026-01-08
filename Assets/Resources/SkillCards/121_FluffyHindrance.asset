@@ -147,4 +147,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 45
   description: <color=#FFFFFF>Your attacks leave sticky wool on enemies, slowing
-    them for <color=#FF0000>3</color> seconds</color>
+    them for <color=#FF0000>5</color> seconds</color>

@@ -118,5 +118,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 015d13c308485dc4c9127e2f762284d1,
     type: 3}
   AnimationType: 14
-  description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>4</color>
+  description: <color=#FFFFFF>Hits enemies with a mighty kick, dealing <color=#FF0000>3.5</color>
     damage and launching them away</color>

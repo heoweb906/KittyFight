@@ -84,4 +84,5 @@ MonoBehaviour:
     type: 3}
   AnimationType: 39
   description: "<color=#FFFFFF>Explosive fury erupts every <color=#66CCFF>8</color>
-    seconds! <color=#FF0000>3</color> damage to all around you \u2014 yourself included!!</color>"
+    seconds! <color=#FF0000>2.5</color> damage to all around you \u2014 yourself
+    included!!</color>"

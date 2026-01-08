@@ -83,5 +83,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 23a0ec8aa1e3645419e770700aff8cf5,
     type: 3}
   AnimationType: 13
-  description: <color=#FFFFFF>Become invisible and dash swiftly for <color=#66CCFF>5</color>
+  description: <color=#FFFFFF>Become invisible and dash swiftly for <color=#66CCFF>4</color>
     seconds. Appear instantly when you attack or get hit</color>

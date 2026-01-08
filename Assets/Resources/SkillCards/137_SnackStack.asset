@@ -125,5 +125,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 33a106da42635e34e9626e0a47472443,
     type: 3}
   AnimationType: 57
-  description: <color=#FFFFFF>Max HP drops by <color=#FF0000>5</color> then rises
+  description: <color=#FFFFFF>Max HP drops by <color=#FF0000>4</color> then rises
     by <color=#66CCFF>1.5</color> each round. Eating your way to strength</color>

@@ -112,4 +112,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 10
   description: <color=#FFFFFF>Launches a fiery orb that bounces <color=#66CCFF>5</color>
-    times, scorching enemies for <color=#FF0000>4</color> damage each hit</color>
+    times, scorching enemies for <color=#FF0000>5</color> damage each hit</color>

@@ -111,5 +111,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 8932615c49f21ad47b85e7c35ac3dbbc,
     type: 3}
   AnimationType: 58
-  description: <color=#FFFFFF>Using skills fills you with joy, restoring <color=#00FF00>1</color>
+  description: <color=#FFFFFF>Using skills fills you with joy, restoring <color=#00FF00>1.2</color>
     health each time</color>

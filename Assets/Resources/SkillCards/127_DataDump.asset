@@ -160,5 +160,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 00cbe8ba27531dd46ae042a8725f8ed0,
     type: 3}
   AnimationType: 50
-  description: <color=#FFFFFF>Every <color=#66CCFF>15</color> seconds, flushes all
+  description: <color=#FFFFFF>Every <color=#66CCFF>11</color> seconds, flushes all
     cooldowns. Calculated chaos!</color>

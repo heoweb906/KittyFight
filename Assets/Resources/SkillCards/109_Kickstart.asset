@@ -69,6 +69,6 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: e0554d4f364dbbb429dd9b909d12e306,
     type: 3}
   AnimationType: 36
-  description: <color=#FFFFFF>Skills slow down by <color=#FF0000>3</color> seconds,
+  description: <color=#FFFFFF>Skills slow down by <color=#FF0000>2.5</color> seconds,
     but each hop cuts cooldowns by <color=#66CCFF>0.8</color> seconds. Keep jumping
     to speed things up!</color>

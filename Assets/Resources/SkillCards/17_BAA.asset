@@ -90,5 +90,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: ca0265893682e684bb20c57b4feff017,
     type: 3}
   AnimationType: 16
-  description: <color=#FFFFFF>Both you and your target are frozen for <color=#FF0000>1.2</color>
+  description: <color=#FFFFFF>Both you and your target are frozen for <color=#FF0000>1</color>
     seconds. Talk about a mutual standstill!</color>

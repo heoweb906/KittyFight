@@ -55,5 +55,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: b89080137fd498347bd3c697368bedee,
     type: 3}
   AnimationType: 3
-  description: <color=#FFFFFF>Charges with unstoppable force! Deals <color=#FF0000>3</color>
+  description: <color=#FFFFFF>Charges with unstoppable force! Deals <color=#FF0000>2</color>
     damage to enemies hit and sends them flying</color>

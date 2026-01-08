@@ -69,5 +69,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 1cb370e9026d506478a444e42ef10d92,
     type: 3}
   AnimationType: 55
-  description: <color=#FFFFFF>Deal <color=#FF0000>2</color> more damage, but take
-    <color=#66CCFF>2</color> more as well. The wild calls, but beware the cost</color>
+  description: <color=#FFFFFF>Deal <color=#FF0000>1.5</color> more damage, but take
+    <color=#66CCFF>1</color> more as well. The wild calls, but beware the cost</color>

@@ -90,5 +90,5 @@ MonoBehaviour:
   sprite_BorderLine_Right: {fileID: 21300000, guid: 590e2e6601d404740a364b431befce35,
     type: 3}
   AnimationType: 32
-  description: <color=#FFFFFF>Explodes your dash path moments later, dealing <color=#FF0000>2</color>
+  description: <color=#FFFFFF>Explodes your dash path moments later, dealing <color=#FF0000>2.5</color>
     damage to foes</color>
