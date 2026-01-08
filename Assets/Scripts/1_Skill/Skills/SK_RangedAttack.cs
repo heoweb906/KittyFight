@@ -34,12 +34,6 @@ public class SK_RangedAttack : Skill
         var ab = proj.GetComponent<AB_HitboxBase>();
         if (ab != null) ab.Init(playerAbility);
 
-        // 중력 끌수 있는 TailMail 용
-        if (ab != null && playerAbility != null && playerAbility.events != null)
-        {
-            playerAbility.events.EmitHitboxSpawned(ab);
-        }
-
         if (playerAbility.playerNumber == 2)
         {
             var range = proj.GetComponent<AB_Ranged>();
@@ -57,6 +51,12 @@ public class SK_RangedAttack : Skill
         // 힘/속도 부여(그저 앞으로 날리기)
         var rb = proj.GetComponent<Rigidbody>();
         if (rb) rb.velocity = direction * projectileSpeed;
+
+        // 중력 끌수 있는 TailMail 용
+        if (ab != null && playerAbility != null && playerAbility.events != null)
+        {
+            playerAbility.events.EmitHitboxSpawned(ab);
+        }
 
         // 훈련장용
         if (playerAbility.playerNumber == 0)

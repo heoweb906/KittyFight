@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: c27641bacb4f551468963b2e9f68a7e4, type: 3}
   audioClip: {fileID: 8300000, guid: 127ea0c5aa4e3974e823e13d293c72bb, type: 3}
-  penaltyPerUse: 3
+  penaltyPerUse: 2.5
   reducePerJump: 0.8
   effectPrefab: {fileID: 7684307510729435506, guid: 8422c90592cbe994289b2e15bc055f6e,
     type: 3}

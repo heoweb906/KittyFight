@@ -48,7 +48,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: c26ea3fd50a1704459a64b46539b65d6, type: 3}
   objSheepSneeze: {fileID: 6777267630284458099, guid: e29204c70b186f449a275cff4bcb579a,
     type: 3}
-  interval: 5
+  interval: 6.5
   spawnOffsetDistance: 1
   verticalOffset: 0.5
   useEffectPrefab: {fileID: 6604110065057846880, guid: 65db925685b4cfc438d036cad92b2dc9,

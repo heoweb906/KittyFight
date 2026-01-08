@@ -1247,8 +1247,8 @@ MonoBehaviour:
   wallCheckMode: 0
   bMiddleState: 0
   maxBounces: 5
-  bounceSpeedMultiplier: 1.2
-  damage: 40
+  bounceSpeedMultiplier: 1.25
+  damage: 50
   stopSpeedThreshold: 0.2
   minAliveTime: 0.3
   lowSpeedDurationToDestroy: 0.5

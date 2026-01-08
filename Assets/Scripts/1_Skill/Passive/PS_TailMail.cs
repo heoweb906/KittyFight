@@ -7,6 +7,7 @@ public class PS_TaiMail : Passive
     [Header("Tai Mail Settings")]
     [Tooltip("원거리 공격 쿨타임 감소량 (초 단위)")]
     public float cooldownReduction = 1.0f;
+    public float mulSpeed = 1.5f;
 
     protected override void Subscribe(AbilityEvents e)
     {
@@ -35,5 +36,6 @@ public class PS_TaiMail : Passive
         if (!rb) return;
 
         rb.useGravity = false;
+        rb.velocity *= mulSpeed;
     }
 }

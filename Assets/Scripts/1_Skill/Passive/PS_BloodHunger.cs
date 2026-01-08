@@ -26,11 +26,13 @@ public class PS_BloodHunger : Passive
             ownerHealth = ability.GetComponent<PlayerHealth>();
 
         e.OnDealtDamage += OnDealtDamage;
+        e.OnRoundStart += OnRoundStart;
     }
 
     protected override void Unsubscribe(AbilityEvents e)
     {
         e.OnDealtDamage -= OnDealtDamage;
+        e.OnRoundStart -= OnRoundStart;
         base.Unsubscribe(e);
     }
 
@@ -73,5 +75,11 @@ public class PS_BloodHunger : Passive
     {
         var pos = new Vector3(msg.px, msg.py, msg.pz);
         PlayFx(pos);
+    }
+
+    private void OnRoundStart(int roundIndex)
+    {
+        if (!IsAuthority) return;
+        hitCount = 0;
     }
 }

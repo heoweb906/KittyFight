@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: b1c602c335680c048a65f0435c549503, type: 3}
   audioClip: {fileID: 0}
-  basePoints: 10
-  addPerUse: 4
+  basePoints: 5
+  addPerUse: 7
   baseShake: 0.1
   shakeStep: 0.07
   maxShake: 0.45

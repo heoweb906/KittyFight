@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.3567}
-  m_LocalScale: {x: 0.85, y: 0.55, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.99999994, y: 0.6470588, z: 1.1764705}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1139929834063647224}
   - {fileID: 2637074181698826579}
@@ -155,12 +155,12 @@ MonoBehaviour:
     m_Bits: 768
   wallCheckMode: 0
   bMiddleState: 0
-  damage: 25
+  damage: 30
   flyingVisual: {fileID: 9011498391938913040}
   installedVisual: {fileID: 4085878491624308455}
-  rotateSpeedX: 500
-  obj_Installation: {fileID: 0}
-  obj_HitPlayer: {fileID: 0}
+  rotateSpeedX: 1000
+  obj_HitPlayer: {fileID: 8396456053703947573, guid: 0c86fe3704c6a54468c40e6917b83538,
+    type: 3}
 --- !u!1001 &8216715175293308709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,12 +182,17 @@ PrefabInstance:
     - target: {fileID: 6241819852922191478, guid: a16fcd37647b351488f4c4ac2651a0e1,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.11764705
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6241819852922191478, guid: a16fcd37647b351488f4c4ac2651a0e1,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.18181817
+      value: 0.23181817
+      objectReference: {fileID: 0}
+    - target: {fileID: 6241819852922191478, guid: a16fcd37647b351488f4c4ac2651a0e1,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1275
       objectReference: {fileID: 0}
     - target: {fileID: 6241819852922191478, guid: a16fcd37647b351488f4c4ac2651a0e1,
         type: 3}
@@ -268,6 +273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Banana1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4928098512733259177, guid: 28ae52ca8deba5b49b369a127b20ee52,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8917458476623855382, guid: 28ae52ca8deba5b49b369a127b20ee52,
         type: 3}

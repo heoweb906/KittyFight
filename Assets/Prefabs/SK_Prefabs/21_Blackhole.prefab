@@ -126,8 +126,8 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 0
   bMiddleState: 0
-  pullStrength: 13
-  pullRadius: 2.75
+  pullStrength: 20
+  pullRadius: 3.7
   tickInterval: 1
   damagePerTick: 8
 --- !u!1001 &6826972739917436266
@@ -151,17 +151,17 @@ PrefabInstance:
     - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.13655308
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.13655308
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.13655308
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 4791952836619352443, guid: 415d9445ee3210747bd809e6457303ff,
         type: 3}
