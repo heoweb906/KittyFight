@@ -103,7 +103,9 @@ public class MapGimic_1_Rat : AbstractMapGimic
 
         if (hp1 == averageHP && hp2 == averageHP) return;
 
-        ApplyHP(p1Health, averageHP);
+        //ApplyHP(p1Health, averageHP);
+        p1Health.RemoteSetHP(averageHP);
+        p2Health.RemoteSetHP(averageHP);
 
         string packet = MapGimicBuilder.BuildRat_SyncHP(gameManager.mapManager.GetMapGimicIndex(), averageHP);
         P2PMessageSender.SendMessage(packet);
@@ -111,11 +113,17 @@ public class MapGimic_1_Rat : AbstractMapGimic
 
     public void ReceiveSyncHP(int targetHP)
     {
-        var p2Health = gameManager.playerAbility_2.GetComponent<PlayerHealth>();
-        if (p2Health != null)
-        {
-            ApplyHP(p2Health, targetHP);
-        }
+        //var p2Health = gameManager.playerAbility_2.GetComponent<PlayerHealth>();
+        //if (p2Health != null)
+        //{
+        //    ApplyHP(p2Health, targetHP);
+        //}
+
+        var p1 = gameManager.playerAbility_1.GetComponent<PlayerHealth>();
+        var p2 = gameManager.playerAbility_2.GetComponent<PlayerHealth>();
+
+        if (p1 != null) p1.RemoteSetHP(targetHP);
+        if (p2 != null) p2.RemoteSetHP(targetHP);
     }
 
     private void ApplyHP(PlayerHealth target, int targetValue)

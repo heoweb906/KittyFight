@@ -22,12 +22,6 @@ public class SK_BullRush : Skill
     public float shakeAmount;
     public float shakeDuration;
 
-    private void Awake()
-    {
-        coolTime = 4.0f;
-        if (obstacleMask == 0) obstacleMask = LayerMask.GetMask("Default", "Ground");
-    }
-
     public override void Execute(Vector3 origin, Vector3 direction)
     {
         if (!objSkillEntity || playerAbility == null) return;

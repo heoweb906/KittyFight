@@ -51,12 +51,12 @@ MonoBehaviour:
   objSkillEntity: {fileID: 6777267630284458099, guid: 2b6bb27f5d5d9a543885f727126ea164,
     type: 3}
   skillIcon: {fileID: 21300000, guid: 3bfa05622a9b3d14cb447d12c1dfce8b, type: 3}
-  aimRange: 2.5
+  aimRange: 7
   dashDuration: 0.12
   boxHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 8960
   disableGravityDuringDash: 1
   hitboxLifetimePadding: 0.02
   effectPrefab: {fileID: 6879201674162243803, guid: 6731405501d88fd448ff335c7ddb16e7,
