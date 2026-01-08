@@ -57,7 +57,7 @@ public class MapGimic_10_Chicken : AbstractMapGimic
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(1f);
 
             if (point_Left != null && point_Right != null)
             {
