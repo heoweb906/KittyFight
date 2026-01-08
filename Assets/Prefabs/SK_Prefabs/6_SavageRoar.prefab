@@ -446,50 +446,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2773210806866915264}
     m_Modifications:
-    - target: {fileID: 2148736227753397671, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: stopAction
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2261916564679526856, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: stopAction
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2280320979103937004, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2280320979103937004, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: stopAction
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3281482585883660875, guid: 0e837d2d1399a604abc6e7189aa7b597,
         type: 3}
       propertyPath: m_Name
       value: VFX_6_SavageRoar
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281482585883660875, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958989239660283573, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958989239660283573, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958989239660283573, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 3958989239660283573, guid: 0e837d2d1399a604abc6e7189aa7b597,
         type: 3}
@@ -540,16 +500,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3958989239660283573, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7525993540562673072, guid: 0e837d2d1399a604abc6e7189aa7b597,
-        type: 3}
-      propertyPath: stopAction
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

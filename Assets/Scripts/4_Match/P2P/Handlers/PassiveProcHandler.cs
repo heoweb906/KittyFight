@@ -25,7 +25,7 @@ public class PassiveProcHandler : IP2PMessageHandler
 
         if (data.player == myPlayerNumber) return;
 
-        if (data.passiveId == 133)
+        if (data.passiveId == 133 || data.passiveId == 134)
         {
             if (myAbility == null) return;
             myAbility.RemoteExecutePassive(data);
