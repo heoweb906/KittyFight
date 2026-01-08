@@ -280,23 +280,23 @@ public class SkillCardController : MonoBehaviour
 
             // Block 1
 
-            for (int i = 0; i < skillDataList.Count; i++)
-            {
-                int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
+            //for (int i = 0; i < skillDataList.Count; i++)
+            //{
+            //    int currentSkillID = skillDataList[i].iSkillIndex; // ID 캐싱
 
-                // 1. 하드코딩된 제외 스킬 확인
-                if (excludedSkillIndices.Contains(currentSkillID)) continue;
+            //    // 1. 하드코딩된 제외 스킬 확인
+            //    if (excludedSkillIndices.Contains(currentSkillID)) continue;
 
-                // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
-                if (usedSkillIDs.Contains(currentSkillID)) continue;
+            //    // 2. [추가] 이미 사용된 스킬인지 확인 (여기서 걸러냄!)
+            //    if (usedSkillIDs.Contains(currentSkillID)) continue;
 
-                // 3. 액티브/패시브 구분
-                bool isActive = currentSkillID < 100;
-                if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
-                {
-                    filteredIndices.Add(i);
-                }
-            }
+            //    // 3. 액티브/패시브 구분
+            //    bool isActive = currentSkillID < 100;
+            //    if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
+            //    {
+            //        filteredIndices.Add(i);
+            //    }
+            //}
 
             // Block 1
 
@@ -306,19 +306,19 @@ public class SkillCardController : MonoBehaviour
 
             // Block 2
 
-            //int[] mandatorySkillIDs = { 133, 132, 135, 17 };
+            int[] mandatorySkillIDs = { 137, 102, 131, 114 };
 
-            //// 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
-            //foreach (int id in mandatorySkillIDs)
-            //{
-            //    // 리스트에서 iSkillIndex가 일치하는 첫 번째 요소의 인덱스를 찾음
-            //    int dataIdx = skillDataList.FindIndex(x => x.iSkillIndex == id);
+            // 2. 지정된 ID들을 순회하며 skillDataList에서 해당 데이터의 인덱스(i)를 찾아 추가
+            foreach (int id in mandatorySkillIDs)
+            {
+                // 리스트에서 iSkillIndex가 일치하는 첫 번째 요소의 인덱스를 찾음
+                int dataIdx = skillDataList.FindIndex(x => x.iSkillIndex == id);
 
-            //    if (dataIdx != -1)
-            //    {
-            //        filteredIndices.Add(dataIdx);
-            //    }
-            //}
+                if (dataIdx != -1)
+                {
+                    filteredIndices.Add(dataIdx);
+                }
+            }
 
             // Block 2
 

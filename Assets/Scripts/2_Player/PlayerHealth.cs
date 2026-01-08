@@ -249,9 +249,60 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     public void ResetHealth() { currentHP = maxHP; OnHPChanged?.Invoke(currentHP, maxHP); }
-    public void SetMaxHP(int newMax, bool keepCurrentRatio = false) { /* 기존 내용 유지 */ }
-    public void AddMaxHP(int delta, bool keepCurrentRatio = false) { /* 기존 내용 유지 */ }
-    private Quaternion ComputeHitEffectRotation() { /* 기존 내용 유지 */ return Quaternion.identity; }
+
+    public void SetMaxHP(int newMax, bool keepCurrentRatio = false)
+    {
+        newMax = Mathf.Max(1, newMax);
+
+        if (keepCurrentRatio)
+        {
+            float ratio = maxHP > 0 ? (float)currentHP / maxHP : 1f;
+            currentHP = Mathf.Clamp(Mathf.RoundToInt(newMax * ratio), 0, newMax);
+        }
+        else
+        {
+            currentHP = Mathf.Clamp(currentHP, 0, newMax);
+        }
+
+        maxHP = newMax;
+        OnHPChanged?.Invoke(currentHP, maxHP);
+    }
+
+    public void AddMaxHP(int delta, bool keepCurrentRatio = false)
+    {
+        SetMaxHP(maxHP + delta, keepCurrentRatio);
+    }
+    private Quaternion ComputeHitEffectRotation()
+    {
+        const float fixedY = 90f;
+        const float fixedZ = -90f;
+        float xAngle;
+
+        if (pendingSourcePos.HasValue)
+        {
+            Vector3 away = transform.position - pendingSourcePos.Value;
+
+            float x = away.x;
+            float y = away.y;
+
+            if (Mathf.Abs(x) > 1e-5f || Mathf.Abs(y) > 1e-5f)
+            {
+                xAngle = Mathf.Atan2(-y, x) * Mathf.Rad2Deg;
+                if (xAngle < 0f) xAngle += 360f;  // 0~360°로 정규화
+            }
+            else
+            {
+                xAngle = (transform.forward.x >= 0f) ? 180f : 0f;
+            }
+        }
+        else
+        {
+            xAngle = (transform.forward.x >= 0f) ? 180f : 0f;
+        }
+
+        return Quaternion.Euler(xAngle, fixedY, fixedZ);
+    }
+
     public void SetSkillInvincible(float duration) { StartCoroutine(Co_SkillInvincible(duration)); }
     private IEnumerator Co_SkillInvincible(float duration) { skInvincible = true; yield return new WaitForSeconds(duration); skInvincible = false; }
 
