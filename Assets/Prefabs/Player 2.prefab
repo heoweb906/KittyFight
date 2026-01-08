@@ -1312,6 +1312,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallSlideSpeed: 0.5
+  hardStopIgnoreAfterImpulse: 0.12
+  controlScript: {fileID: 0}
+  stopOnlyWhenGrounded: 1
+  stopOnlyWhenNotTouchingWall: 1
   jumpSfx: {fileID: 8300000, guid: b47425116f51e3947a9541fe452be0d8, type: 3}
   jumpEffectPrefab: {fileID: 4416081766080871484, guid: ccf088e1898f62a4b9dad139b520a145,
     type: 3}
@@ -1398,7 +1402,6 @@ MonoBehaviour:
   meshDestroyDelay: 2
   mat_Red: {fileID: 2100000, guid: 3e9f4e7ccca987346aed1c819380245a, type: 2}
   mat_Blue: {fileID: 2100000, guid: ae2d23e8ab30d05418b7b09c0f2b334b, type: 2}
-  shaderVarRef: _Alpha
   shaderVarRate: 0.2
   shadervarRefreshRate: 0.03
   vec3_1: {x: 0, y: 50, z: 90}

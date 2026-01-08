@@ -125,6 +125,6 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 1
   bMiddleState: 0
-  damage: 30
+  damage: 20
   knockbackForce: 24
   upwardFactor: 0.4

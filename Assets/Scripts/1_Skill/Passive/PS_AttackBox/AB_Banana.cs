@@ -20,7 +20,6 @@ public class AB_Banana : AB_HitboxBase
     [SerializeField] private float rotateSpeedX = 720f;
 
     [Tooltip("¿Ã∆Â∆Æ")]
-    public GameObject obj_Installation;
     public GameObject obj_HitPlayer;
 
     protected override void Awake()
@@ -48,10 +47,25 @@ public class AB_Banana : AB_HitboxBase
     {
         if (victim == null) return;
         victim.TakeDamage(damage, ownerAbility, transform.position);
+
+        var ob = Instantiate(
+            obj_HitPlayer,
+            transform.position,
+            Quaternion.identity
+        );
+        ob.transform.SetParent(null);
+
         Destroy(gameObject);
     }
     protected override void OnRemoteHit(PlayerHealth victim, Collider victimCollider)
     {
+        var ob = Instantiate(
+           obj_HitPlayer,
+           transform.position,
+           Quaternion.identity
+        );
+        ob.transform.SetParent(null);
+
         Destroy(gameObject);
     }
 
@@ -81,5 +95,12 @@ public class AB_Banana : AB_HitboxBase
 
         if (installedVisual != null)
             installedVisual.SetActive(true);
+
+        var ob = Instantiate(
+           obj_HitPlayer,
+           transform.position,
+           Quaternion.identity
+        );
+        ob.transform.SetParent(null);
     }
 }

@@ -24360,8 +24360,8 @@ MonoBehaviour:
     m_Bits: 0
   wallCheckMode: 1
   bMiddleState: 0
-  damage: 40
-  knockbackForce: 10
+  damage: 35
+  knockbackForce: 17
   disableControlSeconds: 0.5
   lateralFactor: 1
   upwardFactor: 1

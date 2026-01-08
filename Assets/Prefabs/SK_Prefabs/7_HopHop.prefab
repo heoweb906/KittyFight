@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.3567}
-  m_LocalScale: {x: 2, y: 1.3388674, z: 2.2108085}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3.7, y: 2.4769049, z: 4.089996}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6854636022559137752}
   m_Father: {fileID: 0}
@@ -139,17 +139,17 @@ PrefabInstance:
     - target: {fileID: 1563833326301491425, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.03915
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1563833326301491425, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.9400634
+      value: 0.45232326
       objectReference: {fileID: 0}
     - target: {fileID: 1563833326301491425, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5522822
+      value: 0.74689996
       objectReference: {fileID: 0}
     - target: {fileID: 1563833326301491425, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
@@ -201,15 +201,60 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1563833326301491425, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1778921495922924052, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
       propertyPath: stopAction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1873243401133557763, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873243401133557763, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873243401133557763, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873243401133557763, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2930662050524701825, guid: aeeba38c2c38002468621132e1e127d2,
         type: 3}
       propertyPath: m_Name
       value: VFX_7_HopHop
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922680888145834363, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922680888145834363, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922680888145834363, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922680888145834363, guid: aeeba38c2c38002468621132e1e127d2,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
