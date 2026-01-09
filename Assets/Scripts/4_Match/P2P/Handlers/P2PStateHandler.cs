@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class P2PStateHandler : IP2PMessageHandler
 {
+    private const string Prefix = "[MOVE]";
+
     private GameObject opponentPlayer;
     private Animator anim;
     private int myPlayerNumber;
@@ -10,25 +13,47 @@ public class P2PStateHandler : IP2PMessageHandler
     public P2PStateHandler(GameObject opponentObj, int myNumber, GameManager gm)
     {
         opponentPlayer = opponentObj;
-        anim = opponentObj.GetComponentInChildren<Animator>();
+        anim = opponentObj != null ? opponentObj.GetComponentInChildren<Animator>() : null;
         myPlayerNumber = myNumber;
         gameManager = gm;
     }
 
-    public bool CanHandle(string msg) => msg.StartsWith("[MOVE]");
+    public bool CanHandle(string msg) => !string.IsNullOrEmpty(msg) && msg.StartsWith(Prefix);
 
     public void Handle(string msg)
     {
         if (AppLifecycle.IsDisconnecting) return;
+        if (string.IsNullOrEmpty(msg)) return;
+
+        if (!msg.StartsWith(Prefix)) return;
+        if (msg.Length <= Prefix.Length) return;
 
         gameManager?.NotifyOpponentStateReceived();
 
-        var state = JsonUtility.FromJson<PlayerState>(msg.Substring(6));
+        string json = msg.Substring(Prefix.Length);
+        if (string.IsNullOrWhiteSpace(json)) return;
+
+        PlayerState state;
+        try
+        {
+            state = JsonUtility.FromJson<PlayerState>(json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[P2P][MOVE] JSON parse failed. msgLen={msg.Length} err={e.Message}");
+            return;
+        }
+
+        if (state == null) return;
         if (state.player == myPlayerNumber) return;
+
         if (opponentPlayer == null) return;
 
-        opponentPlayer.transform.position = state.position;
-        opponentPlayer.transform.rotation = Quaternion.Euler(0, state.rotationY, 0);
+        var tr = opponentPlayer.transform;
+        if (tr == null) return;
+
+        tr.position = state.position;
+        tr.rotation = Quaternion.Euler(0, state.rotationY, 0);
 
         var dir = Quaternion.Euler(0f, state.rotationY, 0f) * Vector3.forward;
         bool facingRight = dir.x > 0f;
@@ -40,20 +65,25 @@ public class P2PStateHandler : IP2PMessageHandler
             pm.visualPivot.localRotation = Quaternion.Euler(0f, yaw, 0f);
         }
 
-        // ¿Ã∆Â∆Æ √≥∏Æ
         var pj = opponentPlayer.GetComponent<PlayerJump>();
         if (pj != null)
         {
             pj.SetWalking(state.walking);
 
-            // Jump ø¯º¶ ¿Ã∆Â∆Æ
             if (!string.IsNullOrEmpty(state.anim) && state.anim == "Jump" && pj.jumpEffectPrefab != null)
             {
-                Object.Instantiate(
-                    pj.jumpEffectPrefab,
-                    opponentPlayer.transform.position,
-                    Quaternion.Euler(-90f, 0f, 0f)
-                );
+                try
+                {
+                    UnityEngine.Object.Instantiate(
+                        pj.jumpEffectPrefab,
+                        tr.position,
+                        Quaternion.Euler(-90f, 0f, 0f)
+                    );
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[P2P][MOVE] Instantiate jumpEffect failed: {e.Message}");
+                }
 
                 pj.PlayJumpSfx();
             }

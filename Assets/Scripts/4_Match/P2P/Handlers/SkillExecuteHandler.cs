@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SkillExecuteHandler : IP2PMessageHandler
@@ -11,19 +12,47 @@ public class SkillExecuteHandler : IP2PMessageHandler
         this.myPlayerNumber = myPlayerNumber;
     }
 
-    public bool CanHandle(string msg) => msg.StartsWith(SkillMessageBuilder.Prefix);
+    public bool CanHandle(string msg)
+    {
+        var prefix = SkillMessageBuilder.Prefix;
+        return !string.IsNullOrEmpty(prefix) && !string.IsNullOrEmpty(msg) && msg.StartsWith(prefix);
+    }
 
     public void Handle(string msg)
     {
         if (AppLifecycle.IsDisconnecting) return;
+        if (string.IsNullOrEmpty(msg)) return;
         if (opponentAbility == null) return;
 
-        var json = msg.Substring(SkillMessageBuilder.Prefix.Length);
-        var data = JsonUtility.FromJson<SkillExecuteMessage>(json);
+        var prefix = SkillMessageBuilder.Prefix;
+        if (string.IsNullOrEmpty(prefix)) return;
+
+        if (!msg.StartsWith(prefix)) return;
+        if (msg.Length <= prefix.Length) return;
+
+        var json = msg.Substring(prefix.Length);
+        if (string.IsNullOrWhiteSpace(json)) return;
+
+        SkillExecuteMessage data;
+        try
+        {
+            data = JsonUtility.FromJson<SkillExecuteMessage>(json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[P2P][SKILL] JSON parse failed. msgLen={msg.Length} err={e.Message}");
+            return;
+        }
+
         if (data == null) return;
 
-        // 내가 보낸 건 무시(루프 방지)
         if (data.player == myPlayerNumber) return;
+
+        if (!Enum.IsDefined(typeof(SkillType), data.skillType))
+        {
+            Debug.LogWarning($"[P2P][SKILL] Invalid skillType={data.skillType}. Skip.");
+            return;
+        }
 
         var type = (SkillType)data.skillType;
 
@@ -40,6 +69,13 @@ public class SkillExecuteHandler : IP2PMessageHandler
         Vector3 origin = new Vector3(data.ox, data.oy, data.oz);
         Vector3 dir = new Vector3(data.dx, data.dy, data.dz);
 
-        opponentAbility.TryExecuteSkill(type, origin, dir, force: true);
+        try
+        {
+            opponentAbility.TryExecuteSkill(type, origin, dir, force: true);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[P2P][SKILL] TryExecuteSkill crashed. type={type} err={e.Message}");
+        }
     }
 }

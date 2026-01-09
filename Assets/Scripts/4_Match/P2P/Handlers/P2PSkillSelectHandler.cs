@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class P2PSkillSelectHandler : IP2PMessageHandler
 {
+    private const string Prefix = "[SKILL_SELECT]";
+
     private readonly PlayerAbility playerAbilityOpponent;
     private readonly SkillCardController skillCardController;
     private readonly int myPlayerNumber;
@@ -13,44 +16,76 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
         myPlayerNumber = myNumber;
     }
 
-    public bool CanHandle(string msg) => msg.StartsWith("[SKILL_SELECT]");
+    public bool CanHandle(string msg) => !string.IsNullOrEmpty(msg) && msg.StartsWith(Prefix);
 
     public void Handle(string msg)
     {
         if (AppLifecycle.IsDisconnecting) return;
+        if (string.IsNullOrEmpty(msg)) return;
 
-        var model = JsonUtility.FromJson<Model_SkillSelect>(msg.Substring("[SKILL_SELECT]".Length));
-        if (model.iPlayer == myPlayerNumber) return;
+        if (!msg.StartsWith(Prefix)) return;
+        if (msg.Length <= Prefix.Length) return;
 
-        // 1. 장착할 스킬 ID 확인
-        int equipSkillID = model.bIsRat ? model.iRandomSkillIndex : model.iSkillIndex;
+        string json = msg.Substring(Prefix.Length);
+        if (string.IsNullOrWhiteSpace(json)) return;
 
-        // [추가] 상대방이 이 스킬을 가져갔으므로, 내 게임에서도 앞으로 안 나오게 등록
-        skillCardController.MarkSkillAsUsed(equipSkillID);
-
-        // =================================================================================
-        // 1. [장착용 데이터 결정] 
-        // 쥐라면 '숨겨진 스킬(RandomIndex)'을 장착하고, 아니면 '보낸 스킬(SkillIndex)'을 장착
-        // =================================================================================
-
-        SkillCard_SO skillToEquip = skillCardController.FindSkillCardByIndex(equipSkillID);
-
-        if (skillToEquip == null)
+        Model_SkillSelect model;
+        try
         {
-            Debug.LogError($"[P2P] 스킬을 찾을 수 없습니다. ID: {equipSkillID}");
+            model = JsonUtility.FromJson<Model_SkillSelect>(json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[P2P][SKILL_SELECT] JSON parse failed. msgLen={msg.Length} err={e.Message}");
             return;
         }
 
-        // 스킬 생성 및 장착 (실제 게임 로직용)
+        if (model == null) return;
+        if (model.iPlayer == myPlayerNumber) return;
+
+        if (skillCardController == null)
+        {
+            Debug.LogWarning("[P2P][SKILL_SELECT] skillCardController is null. Skip.");
+            return;
+        }
+
+        if (playerAbilityOpponent == null)
+        {
+            Debug.LogWarning("[P2P][SKILL_SELECT] playerAbilityOpponent is null. Skip equip.");
+            return;
+        }
+
+        int equipSkillID = model.bIsRat ? model.iRandomSkillIndex : model.iSkillIndex;
+
+        skillCardController.MarkSkillAsUsed(equipSkillID);
+
+        SkillCard_SO skillToEquip = skillCardController.FindSkillCardByIndex(equipSkillID);
+        if (skillToEquip == null)
+        {
+            Debug.LogError($"[P2P][SKILL_SELECT] SkillCard not found. ID: {equipSkillID}");
+            return;
+        }
+
         GameObject objSkill = skillCardController.CreateSkillInstance(skillToEquip);
+        if (objSkill == null)
+        {
+            Debug.LogWarning($"[P2P][SKILL_SELECT] CreateSkillInstance returned null. ID: {equipSkillID}");
+            return;
+        }
 
         if (skillToEquip.cardType == CardType.Active)
         {
             Skill skillComponent = objSkill.GetComponent<Skill>();
             if (skillComponent != null)
             {
-                SkillType targetSlot = playerAbilityOpponent.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
+                SkillType targetSlot =
+                    playerAbilityOpponent.GetSkill(SkillType.Skill1) == null ? SkillType.Skill1 : SkillType.Skill2;
+
                 playerAbilityOpponent.SetSkill(targetSlot, skillComponent);
+            }
+            else
+            {
+                Debug.LogWarning($"[P2P][SKILL_SELECT] Skill component missing on instance. ID: {equipSkillID}");
             }
         }
         else if (skillToEquip.cardType == CardType.Passive)
@@ -60,32 +95,38 @@ public class P2PSkillSelectHandler : IP2PMessageHandler
             {
                 playerAbilityOpponent.EquipPassive(passiveComponent);
             }
+            else
+            {
+                Debug.LogWarning($"[P2P][SKILL_SELECT] Passive component missing on instance. ID: {equipSkillID}");
+            }
         }
 
         skillCardController.SetBoolAllCardInteract(false);
         skillCardController.iAuthorityPlayerNum = 0;
 
-        // =================================================================================
-        // 2. [연출 실행]
-        // 쥐라면: '껍데기(model.iSkillIndex)'를 보여주고 -> 나중에 '알맹이(model.iRandomSkillIndex)' 획득
-        // =================================================================================
         if (model.bIsRat)
         {
-            // 좌표 변환
-            Transform canvasTransform = skillCardController.InGameUiController.canvasMain.transform;
-            Vector3 worldPos = canvasTransform.TransformPoint(model.cardPosition);
+            var ui = skillCardController.InGameUiController;
+            var canvas = ui != null ? ui.canvasMain : null;
 
-            // 1번째 인자: model.iSkillIndex (보낸 사람이 클릭한 '호랑이' ID)
-            // 3번째 인자: model.iRandomSkillIndex (실제 획득한 '쥐' ID)
-            skillCardController.HIdeSkillCardList_ForRat(
-                model.iSkillIndex,
-                worldPos,
-                model.iRandomSkillIndex
-            );
+            if (canvas != null)
+            {
+                Transform canvasTransform = canvas.transform;
+                Vector3 worldPos = canvasTransform.TransformPoint(model.cardPosition);
+
+                skillCardController.HIdeSkillCardList_ForRat(
+                    model.iSkillIndex,
+                    worldPos,
+                    model.iRandomSkillIndex
+                );
+            }
+            else
+            {
+                Debug.LogWarning("[P2P][SKILL_SELECT] canvasMain is null. Skip RAT visual.");
+            }
         }
         else
         {
-            // 쥐가 아니면 그냥 해당 스킬 연출
             skillCardController.HideSkillCardList(model.iSkillIndex, model.cardPosition);
         }
     }
