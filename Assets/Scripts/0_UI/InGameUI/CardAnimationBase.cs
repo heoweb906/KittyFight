@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,23 +21,9 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
     // 2. 자식들이 쓰는 animationImages라는 이름은 그대로 두되, '프로퍼티'로 바꿉니다.
     // ==================================================================================
 
-    private List<Image> _realList; // 실제 데이터 저장소
-
-    // 자식 클래스는 여전히 'animationImages'라고 부르면 됩니다. (수정 불필요)
-    protected List<Image> animationImages
-    {
-        get
-        {
-            // 자식이 이 변수를 쓸 때마다(foreach 돌릴 때), 안전한 복사본을 즉석에서 만들어 줍니다.
-            if (_realList == null) return null;
-            return new List<Image>(_realList);
-        }
-        set
-        {
-            // 값을 넣을 때는 원본에 저장합니다.
-            _realList = value;
-        }
-    }
+    protected List<Image> animationImages;
+    protected bool isStopping;
+    private Coroutine killCoroutine;
 
     protected bool isPlaying = false;
     protected Dictionary<RectTransform, Vector2> originalPositions = new Dictionary<RectTransform, Vector2>();
@@ -45,7 +32,8 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
     {
         if (isPlaying) return;
 
-        animationImages = images; // 프로퍼티 set 호출 -> _realList에 저장됨
+        isStopping = false;
+        animationImages = images;
         isPlaying = true;
 
         SaveOriginalPositions(images);
@@ -54,14 +42,13 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
 
     public void StopAnimation()
     {
-        isPlaying = false;
+        if (!isPlaying) return;
 
-        // 원본 리스트(_realList) 체크
-        if (_realList != null)
-        {
-            KillAllTweens();
-            RestoreOriginalPositions();
-        }
+        isPlaying = false;
+        isStopping = true;
+
+        KillAllTweens();
+        RestoreOriginalPositions();
     }
 
     private void SaveOriginalPositions(List<Image> images)
@@ -108,17 +95,24 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
     // 부모의 안전장치 (자식에서 override 안 해도 됨)
     protected virtual void KillAllTweens()
     {
-        if (_realList != null)
+        if (killCoroutine != null)
+            StopCoroutine(killCoroutine);
+
+        killCoroutine = StartCoroutine(KillNextFrame());
+    }
+
+    private IEnumerator KillNextFrame()
+    {
+        yield return null;
+
+        if (animationImages == null) yield break;
+
+        for (int i = 0; i < animationImages.Count; i++)
         {
-            // 원본 리스트(_realList)를 기반으로 안전하게 종료
-            foreach (var img in _realList.ToList())
+            if (animationImages[i] != null)
             {
-                if (img != null)
-                {
-                    img.rectTransform.DOKill();
-                    CanvasGroup cg = img.GetComponent<CanvasGroup>();
-                    if (cg != null) cg.DOKill();
-                }
+                animationImages[i].DOKill();
+                animationImages[i].rectTransform.DOKill();
             }
         }
     }
@@ -218,20 +212,21 @@ public class CardAnimation_Num_1 : CardAnimationBase
     // 3, 4, 5번: 기준 위치에서 상하좌우 30 거리 내 랜덤 이동
     private void StartFloatingAnimation(RectTransform rt, Vector2 originPos)
     {
-        // 30 거리 내의 랜덤한 위치 계산
-        float range = 30f;
-        float randomX = Random.Range(-range, range);
-        float randomY = Random.Range(-range, range);
-        Vector2 targetPos = originPos + new Vector2(randomX, randomY);
+        if (isStopping) return;
 
-        // 랜덤한 이동 시간 (1.5 ~ 2.5초)
+        float range = 30f;
+        Vector2 targetPos = originPos + new Vector2(
+            Random.Range(-range, range),
+            Random.Range(-range, range)
+        );
+
         float duration = Random.Range(1.5f, 2.5f);
 
         rt.DOAnchorPos(targetPos, duration)
             .SetEase(Ease.InOutQuad)
             .OnComplete(() =>
             {
-                // 도착하면 다시 새로운 랜덤 위치로 이동 (재귀 호출)
+                if (isStopping) return;
                 StartFloatingAnimation(rt, originPos);
             })
             .SetTarget(rt);
@@ -248,7 +243,6 @@ public class CardAnimation_Num_1 : CardAnimationBase
         }
     }
 }
-
 
 public class CardAnimation_Num_2 : CardAnimationBase
 {
@@ -363,7 +357,6 @@ public class CardAnimation_Num_2 : CardAnimationBase
     }
 }
 
-
 public class CardAnimation_Num_3 : CardAnimationBase
 {
     protected override void ExecuteAnimation(System.Collections.Generic.List<UnityEngine.UI.Image> images)
@@ -471,8 +464,10 @@ public class CardAnimation_Num_3 : CardAnimationBase
         // 6. 흔들림이 멈추고 2초 뒤에 애니메이션을 처음부터 다시 반복해
         mainSequence.AppendInterval(2.0f);
 
-        mainSequence.OnComplete(() => {
-            ExecuteAnimation(images); // 전체 재시작
+        mainSequence.OnComplete(() =>
+        {
+            if (isStopping) return;
+            ExecuteAnimation(images);
         });
     }
 
@@ -510,7 +505,6 @@ public class CardAnimation_Num_3 : CardAnimationBase
         }
     }
 }
-
 
 public class CardAnimation_Num_4 : CardAnimationBase
 {
@@ -617,8 +611,11 @@ public class CardAnimation_Num_4 : CardAnimationBase
         seq.Join(img2.DOFade(0f, 0.5f));
         seq.Join(img3.DOFade(0f, 0.5f));
 
-        // 알파 0이 된 후 리셋 및 복귀 루프 실행
-        seq.OnComplete(() => StartResetAndLoop(images));
+        seq.OnComplete(() =>
+        {
+            if (isStopping) return;
+            StartResetAndLoop(images);
+        });
     }
 
     // ===================================
@@ -653,7 +650,8 @@ public class CardAnimation_Num_4 : CardAnimationBase
 
         resetSeq.OnComplete(() =>
         {
-            ExecuteAnimation(images); // 처음부터 다시 시작
+            if (isStopping) return;
+            ExecuteAnimation(images);
         });
     }
 
@@ -690,200 +688,127 @@ public class CardAnimation_Num_4 : CardAnimationBase
     }
 }
 
-
 public class CardAnimation_Num_5 : CardAnimationBase
 {
     protected override void ExecuteAnimation(List<Image> images)
     {
-        // ====================================================================
-        // 1. 초기 위치 및 스케일 설정 (8번부터 15번까지)
-        // 기존 8번부터 19번까지의 설정은 삭제하고 아래 값으로 대체
-        // ====================================================================
+        KillAllTweens();
 
-        // 8번: -325 470 / 0.6배
-        if (images.Count > 8)
-        {
-            RectTransform rt = images[8].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(-325f, 470f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 9번: -822 173 / 0.478배
-        if (images.Count > 9)
-        {
-            RectTransform rt = images[9].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(-822f, 173f);
-            rt.localScale = Vector3.one * 0.478f;
-        }
-        // 10번: -716 -408 / 0.6배
-        if (images.Count > 10)
-        {
-            RectTransform rt = images[10].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(-716f, -408f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 11번: -391 -539 / 0.6배
-        if (images.Count > 11)
-        {
-            RectTransform rt = images[11].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(-391f, -539f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 12번: 566 -551 / 0.6배
-        if (images.Count > 12)
-        {
-            RectTransform rt = images[12].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(566f, -551f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 13번: 791 -274 / 0.6배
-        if (images.Count > 13)
-        {
-            RectTransform rt = images[13].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(791f, -274f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 14번: 787 180 / 0.6배
-        if (images.Count > 14)
-        {
-            RectTransform rt = images[14].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(787f, 180f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
-        // 15번: 401 478 / 0.6배
-        if (images.Count > 15)
-        {
-            RectTransform rt = images[15].GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(401f, 478f);
-            rt.localScale = Vector3.one * 0.6f;
-        }
+        // ===============================
+        // 1. 위치 / 스케일 세팅 (8~15)
+        // ===============================
+        Set(images, 8, -325, 470, 0.6f);
+        Set(images, 9, -822, 173, 0.478f);
+        Set(images, 10, -716, -408, 0.6f);
+        Set(images, 11, -391, -539, 0.6f);
+        Set(images, 12, 566, -551, 0.6f);
+        Set(images, 13, 791, -274, 0.6f);
+        Set(images, 14, 787, 180, 0.6f);
+        Set(images, 15, 401, 478, 0.6f);
 
-        // 16번 이후의 설정은 삭제됨
+        // ===============================
+        // 2. 애니메이션
+        // ===============================
 
-        // ====================================================================
-        // 2. 애니메이션 시작 (0~8번 요소 애니메이션 유지)
-        // ====================================================================
-
-        // 2번 요소 (index 1) 알파 애니메이션
+        // 알파
         if (images.Count > 1)
-        {
             StartAlphaAnimation(images[1]);
+
+        // 발톱
+        int[] claws = { 6, 5, 4, 3 };
+        for (int i = 0; i < claws.Length; i++)
+        {
+            if (claws[i] < images.Count)
+                StartClawAnimation(images[claws[i]].rectTransform, i);
         }
 
-        // 4, 5, 6, 7번 요소 (index 3, 4, 5, 6) 발톱 애니메이션
-        int[] clawIndices = { 6, 5, 4, 3 };
-        for (int i = 0; i < clawIndices.Length; i++)
+        // 풀 흔들림
+        int[] grass = { 8, 9, 10, 11, 12, 13, 14, 15 };
+        foreach (int i in grass)
         {
-            int clawIndex = clawIndices[i];
-            if (clawIndex < images.Count)
-            {
-                StartClawAnimation(images[clawIndex].GetComponent<RectTransform>(), i);
-            }
-        }
-
-        // 풀 회전 애니메이션 (8번 인덱스만 유지, 9번 이후 요소는 삭제됨)
-        int[] grassIndices = { 8, 9, 10,11,12,13,14,15 };
-        foreach (int index in grassIndices)
-        {
-            if (index < images.Count)
-            {
-                StartGrassRotation(images[index].GetComponent<RectTransform>());
-            }
+            if (i < images.Count)
+                StartGrassRotation(images[i].rectTransform);
         }
     }
 
-    // 풀처럼 Z축 로테이션으로 흔들리는 애니메이션
+    // ===============================
+    // Grass
+    // ===============================
     private void StartGrassRotation(RectTransform grassRect)
     {
-        // 랜덤한 로테이션 각도 (-4 ~ 4도)
-        float randomAngle = Random.Range(-10f, 10f);
-        // 랜덤한 회전 속도 (0.5 ~ 1.5초)
-        float randomSpeed = Random.Range(1f, 2.3f);
-        // 랜덤한 시작 지연 시간 (0 ~ 1초)
-        float randomDelay = Random.Range(0f, 1f);
+        float angle = Random.Range(-10f, 10f);
+        float speed = Random.Range(1f, 2.3f);
+        float delay = Random.Range(0f, 1f);
 
-        // 시퀀스 생성
-        Sequence rotationSequence = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence();
+        seq.SetTarget(grassRect);   // 🔴 핵심
 
-        // 랜덤한 지연 시간 설정
-        rotationSequence.AppendInterval(randomDelay);
-        rotationSequence.Append(grassRect.DOLocalRotate(new Vector3(0, 0, -randomAngle), randomSpeed).SetEase(Ease.InOutSine));
-        rotationSequence.Append(grassRect.DOLocalRotate(new Vector3(0, 0, randomAngle), randomSpeed * 2).SetEase(Ease.InOutSine));
-        rotationSequence.Append(grassRect.DOLocalRotate(Vector3.zero, randomSpeed).SetEase(Ease.InOutSine));
+        seq.AppendInterval(delay);
+        seq.Append(grassRect.DOLocalRotate(new Vector3(0, 0, -angle), speed));
+        seq.Append(grassRect.DOLocalRotate(new Vector3(0, 0, angle), speed * 2));
+        seq.Append(grassRect.DOLocalRotate(Vector3.zero, speed));
 
-        // 시퀀스 무한 반복
-        rotationSequence.SetLoops(-1);
+        seq.SetLoops(-1);
     }
 
-
-    // 발톱 애니메이션
+    // ===============================
+    // Claw
+    // ===============================
     private void StartClawAnimation(RectTransform claw, int order)
     {
-        Vector2 originalPos = GetOriginalPosition(claw); // CardAnimationBase에 정의되어 있다고 가정
-        float moveDistance = Random.Range(30f, 50f);
-        float animSpeed = 0.4f;
-        float delayBetweenClaws = 0.2f;
-        float cyclePause = 3f;
-        int totalClaws = 4;
-        float startDelay = order * delayBetweenClaws + 2;
+        Vector2 origin = GetOriginalPosition(claw);
+        float move = Random.Range(30f, 50f);
 
-        Sequence clawSequence = DOTween.Sequence();
-        clawSequence.AppendInterval(startDelay);
-        clawSequence.Append(claw.DOAnchorPos(originalPos + new Vector2(0, moveDistance), animSpeed).SetEase(Ease.OutSine));
-        clawSequence.Append(claw.DOAnchorPos(originalPos, animSpeed).SetEase(Ease.InSine));
-        float totalWaitTime = cyclePause + (totalClaws * delayBetweenClaws) - startDelay;
-        clawSequence.AppendInterval(totalWaitTime);
-        clawSequence.SetLoops(-1);
+        Sequence seq = DOTween.Sequence();
+        seq.SetTarget(claw);        // 🔴 핵심
+
+        seq.AppendInterval(order * 0.2f + 2f);
+        seq.Append(claw.DOAnchorPos(origin + Vector2.up * move, 0.4f));
+        seq.Append(claw.DOAnchorPos(origin, 0.4f));
+        seq.AppendInterval(3f);
+        seq.SetLoops(-1);
     }
 
-
-    // 알파 애니메이션
-    private void StartAlphaAnimation(Image element2)
+    // ===============================
+    // Alpha
+    // ===============================
+    private void StartAlphaAnimation(Image img)
     {
-        element2.color = new Color(element2.color.r, element2.color.g, element2.color.b, 0f);
-        Sequence alphaSequence = DOTween.Sequence();
-        alphaSequence.AppendInterval(1.5f);
-        alphaSequence.Append(element2.DOFade(1f, 1f));
-        alphaSequence.AppendInterval(1.5f);
-        alphaSequence.Append(element2.DOFade(0f, 1f));
-        alphaSequence.SetLoops(-1);
+        img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
+
+        Sequence seq = DOTween.Sequence();
+        seq.SetTarget(img);         // 🔴 핵심
+
+        seq.AppendInterval(1.5f);
+        seq.Append(img.DOFade(1f, 1f));
+        seq.AppendInterval(1.5f);
+        seq.Append(img.DOFade(0f, 1f));
+        seq.SetLoops(-1);
+    }
+
+    // ===============================
+    // Utils
+    // ===============================
+    private void Set(List<Image> imgs, int idx, float x, float y, float s)
+    {
+        if (idx >= imgs.Count) return;
+        RectTransform rt = imgs[idx].rectTransform;
+        rt.anchoredPosition = new Vector2(x, y);
+        rt.localScale = Vector3.one * s;
     }
 
     protected override void KillAllTweens()
     {
-        if (animationImages != null)
+        if (animationImages == null) return;
+
+        foreach (var img in animationImages)
         {
-            // 2번 요소 (index 1) 트윈 Kill
-            if (animationImages.Count > 1)
-            {
-                animationImages[1].DOKill();
-            }
-
-            // 발톱 요소 (index 3, 4, 5, 6) 트윈 Kill
-            int[] clawIndices = { 3, 4, 5, 6 };
-            for (int i = 0; i < clawIndices.Length; i++)
-            {
-                int clawIndex = clawIndices[i];
-                if (clawIndex < animationImages.Count)
-                {
-                    animationImages[clawIndex].GetComponent<RectTransform>().DOKill();
-                }
-            }
-
-            // 풀 흔들림 요소 (index 8) 트윈 Kill
-            int[] grassIndices = { 8 };
-            for (int i = 0; i < grassIndices.Length; i++)
-            {
-                int grassIndex = grassIndices[i];
-                if (grassIndex < animationImages.Count)
-                {
-                    animationImages[grassIndex].GetComponent<RectTransform>().DOKill();
-                }
-            }
-            // 9번 이후 요소 정리 로직은 모두 삭제되었습니다.
+            if (img == null) continue;
+            img.DOKill();
+            img.rectTransform.DOKill();
         }
     }
 }
-
 
 public class CardAnimation_Num_6 : CardAnimationBase
 {
@@ -1045,7 +970,6 @@ public class CardAnimation_Num_6 : CardAnimationBase
     }
 }
 
-
 public class CardAnimation_Num_7 : CardAnimationBase
 {
     private const float InitialY_2 = -140f;
@@ -1143,8 +1067,8 @@ public class CardAnimation_Num_7 : CardAnimationBase
             // P1. 2번 요소 떨림 가속 (총 1.5s)
             // ----------------------------------------------------------------------
 
-            Sequence tremorSequence = DOTween.Sequence();
-            tremorSequence.SetTarget(images[2].rectTransform);
+            Sequence tremorSequence = DOTween.Sequence()
+     .SetTarget(images[2].rectTransform);
 
             // 1. 느린 떨림 (0.5s)
             tremorSequence.Append(images[2].rectTransform.DOLocalRotate(new Vector3(0, 0, TremorAngle * 1.5f), 0.25f).SetEase(Ease.OutSine));
@@ -1227,7 +1151,6 @@ public class CardAnimation_Num_7 : CardAnimationBase
     }
 }
 
-
 public class CardAnimation_Num_8 : CardAnimationBase
 {
     protected override void ExecuteAnimation(List<Image> images)
@@ -1305,13 +1228,14 @@ public class CardAnimation_Num_8 : CardAnimationBase
     // ========================================================================
     Sequence CreateEarthquakeShake(RectTransform rt)
     {
+
         float step = 0.05f;   // 빠르고 짧은 시간
         float a1 = 8f;
         float a2 = 6f;
         float a3 = 4f;
         float a4 = 2.5f;
 
-        Sequence s = DOTween.Sequence();
+        Sequence s = DOTween.Sequence().SetTarget(rt);
 
         s.Append(rt.DOLocalRotate(new Vector3(0, 0, -a1), step).SetEase(Ease.Linear));
         s.Append(rt.DOLocalRotate(new Vector3(0, 0, a1), step).SetEase(Ease.Linear));
@@ -1355,7 +1279,6 @@ public class CardAnimation_Num_8 : CardAnimationBase
         DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_9 : CardAnimationBase
 {
@@ -1547,16 +1470,16 @@ public class CardAnimation_Num_9 : CardAnimationBase
             {
                 if (img == null) continue;
                 // rectTransform에 걸린 트윈을 Kill (Scale, Jump, Sequence 모두 포함)
-                img.rectTransform.DOKill();
+                img.rectTransform.DOKill(true);
                 CanvasGroup cg = img.GetComponent<CanvasGroup>();
                 if (cg != null) cg.DOKill();
+
             }
         }
         // 이 스크립트(this)에 걸린 메인 Sequence도 Kill합니다.
         DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_10 : CardAnimationBase
 {
@@ -1620,7 +1543,8 @@ public class CardAnimation_Num_10 : CardAnimationBase
     {
         // 1 사이클 (A 등장 -> 유지 -> 소멸 -> B 등장 -> 유지 -> 소멸)을 위한 메인 시퀀스
         DG.Tweening.Sequence mainSeq = DG.Tweening.DOTween.Sequence()
-            .SetLoops(-1, DG.Tweening.LoopType.Restart); // 무한 반복
+       .SetLoops(-1, DG.Tweening.LoopType.Restart)
+       .SetTarget(this);
 
         // --- A (1번 요소) 페이드 ---
 
@@ -1677,13 +1601,14 @@ public class CardAnimation_Num_10 : CardAnimationBase
             {
                 if (animationImages.Count > i && animationImages[i] != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
+                    animationImages[i].DOKill();
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_11 : CardAnimationBase
 {
@@ -1769,7 +1694,8 @@ public class CardAnimation_Num_11 : CardAnimationBase
         float targetScale6 = 0.46f;
         float overshootRatio = 1.2f;
 
-        DG.Tweening.Sequence seq = DG.Tweening.DOTween.Sequence();
+        DG.Tweening.Sequence seq = DG.Tweening.DOTween.Sequence()
+    .SetTarget(this);
 
         // 1. 처음 1.5초 대기
         seq.AppendInterval(1.5f);
@@ -1840,7 +1766,8 @@ public class CardAnimation_Num_11 : CardAnimationBase
         if (images.Count <= 9) return;
 
         UnityEngine.RectTransform rt1 = images[1].rectTransform;
-        DG.Tweening.Sequence loopSeq = DG.Tweening.DOTween.Sequence();
+        DG.Tweening.Sequence loopSeq = DG.Tweening.DOTween.Sequence()
+     .SetTarget(this);
 
         UnityEngine.Vector2 initialPos1 = new UnityEngine.Vector2(-900f, -496f);
 
@@ -1899,7 +1826,8 @@ public class CardAnimation_Num_11 : CardAnimationBase
 
     private DG.Tweening.Sequence CreatePopinTween(UnityEngine.RectTransform rt, float targetScale, float overshootRatio, float duration)
     {
-        DG.Tweening.Sequence popinSeq = DG.Tweening.DOTween.Sequence();
+        DG.Tweening.Sequence popinSeq = DG.Tweening.DOTween.Sequence()
+    .SetTarget(rt);
         float overshootScale = targetScale * overshootRatio;
         float halfDuration = duration / 2f;
 
@@ -1938,16 +1866,14 @@ public class CardAnimation_Num_11 : CardAnimationBase
             {
                 if (animationImages.Count > i && animationImages[i] != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
-                    DG.Tweening.DOTween.Kill(animationImages[i].rectTransform);
+                    animationImages[i].DOKill(true);
                 }
             }
             // 전체 시퀀스 및 루프 시퀀스 정리
-            DG.Tweening.DOTween.Kill(this);
+            DOTween.Kill(this);
         }
     }
 }
-
 
 public class CardAnimation_Num_12 : CardAnimationBase
 {
@@ -2052,8 +1978,8 @@ public class CardAnimation_Num_12 : CardAnimationBase
                 // 4. 애니메이션 적용 (Yoyo Loop)
                 rt.DOAnchorPos(targetPos, duration)
                   .SetEase(DG.Tweening.Ease.InOutSine)
-                  .SetLoops(-1, DG.Tweening.LoopType.Yoyo)
-                  .SetDelay(delay);
+                   .SetLoops(-1, LoopType.Yoyo)
+  .SetTarget(rt);
             }
         }
     }
@@ -2069,8 +1995,8 @@ public class CardAnimation_Num_12 : CardAnimationBase
 
         target.DOAnchorPosY(originalPos.y + moveY, duration)
               .SetEase(DG.Tweening.Ease.InOutSine)
-              .SetLoops(-1, DG.Tweening.LoopType.Yoyo)
-              .SetDelay(delay);
+               .SetLoops(-1, LoopType.Yoyo)
+      .SetTarget(target);
     }
 
     // ===================================
@@ -2085,8 +2011,8 @@ public class CardAnimation_Num_12 : CardAnimationBase
 
         target.DOAnchorPos(originalPos + randomDir, duration)
               .SetEase(DG.Tweening.Ease.InOutSine)
-              .SetLoops(-1, DG.Tweening.LoopType.Yoyo)
-              .SetDelay(delay);
+                .SetLoops(-1, LoopType.Yoyo)
+      .SetTarget(target);
     }
 
     // ===================================
@@ -2113,14 +2039,13 @@ public class CardAnimation_Num_12 : CardAnimationBase
             {
                 if (animationImages[i] != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
-                    DG.Tweening.DOTween.Kill(animationImages[i].rectTransform);
+                    animationImages[i].DOKill(true);
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_13 : CardAnimationBase
 {
@@ -2205,6 +2130,7 @@ public class CardAnimation_Num_13 : CardAnimationBase
         float deltaY = -330f;
 
         DG.Tweening.Sequence seq = DG.Tweening.DOTween.Sequence();
+        seq.SetTarget(this);
 
         // ==========================================================
         // [STEP 1] 캐릭터: 18번(하단) -> 19번(상단) 점프
@@ -2328,7 +2254,9 @@ public class CardAnimation_Num_13 : CardAnimationBase
         rt.anchoredPosition = startPos;
         rt.localScale = template.rectTransform.localScale;
 
-        rt.DOAnchorPos(targetPos, duration).SetEase(DG.Tweening.Ease.Linear);
+        rt.DOAnchorPos(targetPos, duration)
+   .SetEase(DG.Tweening.Ease.Linear)
+   .SetTarget(this);
     }
 
     private void ClearClones()
@@ -2398,24 +2326,24 @@ public class CardAnimation_Num_13 : CardAnimationBase
     {
         img.color = new UnityEngine.Color(img.color.r, img.color.g, img.color.b, alpha);
     }
-
     protected override void KillAllTweens()
     {
         if (animationImages != null)
         {
-            for (int i = 0; i < animationImages.Count; i++)
+            foreach (var img in animationImages)
             {
-                if (animationImages[i] != null)
+                if (img != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
-                    DG.Tweening.DOTween.Kill(animationImages[i].rectTransform);
+                    img.DOKill(true);
+                    img.rectTransform.DOKill(true);
                 }
             }
         }
+
+        DOTween.Kill(this);   // ⭐ 핵심
         ClearClones();
     }
 }
-
 
 public class CardAnimation_Num_14 : CardAnimationBase
 {
@@ -2484,6 +2412,7 @@ public class CardAnimation_Num_14 : CardAnimationBase
     private void StartMainSequence(System.Collections.Generic.List<UnityEngine.UI.Image> images)
     {
         DG.Tweening.Sequence seq = DG.Tweening.DOTween.Sequence();
+        seq.SetTarget(this);
 
         // 1. 초반 대기 딜레이 1.5초
         seq.SetDelay(1.5f);
@@ -2613,14 +2542,16 @@ public class CardAnimation_Num_14 : CardAnimationBase
             {
                 if (img != null)
                 {
-                    img.DOKill();
-                    img.GetComponent<UnityEngine.RectTransform>().DOKill();
+                    img.DOKill(true);
+                    img.rectTransform.DOKill(true);
                 }
             }
         }
-    }
-}
 
+        DOTween.Kill(this);
+    }
+
+}
 
 public class CardAnimation_Num_15 : CardAnimationBase
 {
@@ -2824,22 +2755,8 @@ public class CardAnimation_Num_15 : CardAnimationBase
             });
     }
 
-    protected override void KillAllTweens()
-    {
-        if (animationImages != null)
-        {
-            foreach (var img in animationImages)
-            {
-                if (img != null)
-                {
-                    img.DOKill();
-                    img.GetComponent<UnityEngine.RectTransform>().DOKill();
-                }
-            }
-        }
-    }
+    
 }
-
 
 public class CardAnimation_Num_16 : CardAnimationBase
 {
@@ -2969,7 +2886,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
 
             // --- [재귀 호출] ---
             StartTriggerLoop(images);
-        });
+        }).SetTarget(this);   // ← 이 줄 추가
     }
 
     // ===================================
@@ -2985,7 +2902,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
 
         target.DOAnchorPos(startPos + randomOffset, duration)
             .SetEase(DG.Tweening.Ease.InOutSine)
-            .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+            .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);
     }
 
     private void StartSwayingEffect(UnityEngine.RectTransform target, float angle)
@@ -2997,7 +2914,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
         // 여기서는 간단하게 Z축 회전 Yoyo
         target.DORotate(new UnityEngine.Vector3(0, 0, angle), duration)
             .SetEase(DG.Tweening.Ease.InOutSine)
-            .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+            .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);
     }
 
     private void CycleActiveElements(System.Collections.Generic.List<UnityEngine.UI.Image> images)
@@ -3025,7 +2942,7 @@ public class CardAnimation_Num_16 : CardAnimationBase
                 UnityEngine.Vector3 baseScale = new UnityEngine.Vector3(0.9f, 0.74f, 1f);
                 images[idx].rectTransform.DOScale(baseScale * 1.2f, 0.1f)
                     .SetLoops(2, DG.Tweening.LoopType.Yoyo)
-                    .SetEase(DG.Tweening.Ease.OutQuad);
+                    .SetEase(DG.Tweening.Ease.OutQuad).SetTarget(this);   // ← 이 줄 추가
             }
             else
             {
@@ -3079,9 +2996,10 @@ public class CardAnimation_Num_16 : CardAnimationBase
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_17 : CardAnimationBase
 {
@@ -3135,7 +3053,7 @@ public class CardAnimation_Num_17 : CardAnimationBase
         rt1.localScale = baseScale1 * 0.95f;
         rt1.DOScale(baseScale1 * 1.05f, 1.0f)
            .SetEase(DG.Tweening.Ease.InOutSine)
-           .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+           .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);   // 추가
 
         // 2. 랜덤 트리거 루프 시작 (2번~8번 요소)
         StartRandomTriggerLoop(images);
@@ -3161,7 +3079,7 @@ public class CardAnimation_Num_17 : CardAnimationBase
                 UnityEngine.Vector3 baseScale2 = new UnityEngine.Vector3(0.9f, 0.9f, 1f); // 초기값 0.9
 
                 // 0.1초 만에 커졌다가, 0.1초 만에 복귀
-                DG.Tweening.Sequence scaleSeq = DG.Tweening.DOTween.Sequence();
+                DG.Tweening.Sequence scaleSeq = DG.Tweening.DOTween.Sequence().SetTarget(this);
                 scaleSeq.Append(rt2.DOScale(baseScale2 * 1.05f, 0.1f).SetEase(DG.Tweening.Ease.OutQuad));
                 scaleSeq.Append(rt2.DOScale(baseScale2, 0.1f).SetEase(DG.Tweening.Ease.InQuad));
             }
@@ -3173,14 +3091,14 @@ public class CardAnimation_Num_17 : CardAnimationBase
                 if (images.Count > i)
                 {
                     // 0.3초 동안 강도 45로 강하게 회전 떨림
-                    images[i].rectTransform.DOShakeRotation(0.3f, 45f, 20, 90f);
+                    images[i].rectTransform.DOShakeRotation(0.3f, 45f, 20, 90f).SetTarget(this);
                 }
             }
 
             // --- [재귀 호출] ---
             // 현재 실행 중인 애니메이션들과 무관하게 다음 텀을 예약
             StartRandomTriggerLoop(images);
-        });
+        }).SetTarget(this);
     }
 
     // ===================================
@@ -3215,14 +3133,14 @@ public class CardAnimation_Num_17 : CardAnimationBase
             {
                 if (animationImages[i] != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
                     DG.Tweening.DOTween.Kill(animationImages[i].rectTransform);
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_18 : CardAnimationBase
 {
@@ -3279,7 +3197,7 @@ public class CardAnimation_Num_18 : CardAnimationBase
         RectTransform rt7 = images[7].rectTransform;
         Image img4 = images[4];
 
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetTarget(this);
 
         // ⭐ 문제 2 해결: 초기 등장 연출 (0.5초 페이드 인)
         // 애니메이션 시작 시 필요한 요소들(1번, 7번)만 먼저 보여줍니다.
@@ -3332,7 +3250,7 @@ public class CardAnimation_Num_18 : CardAnimationBase
 
     private void StartResetAndLoop(List<Image> images)
     {
-        Sequence resetSeq = DOTween.Sequence();
+        Sequence resetSeq = DOTween.Sequence().SetTarget(this);
 
         // ⭐ 문제 1 해결: 2.0초 대기 (확실한 멈춤)
         resetSeq.AppendInterval(2.0f);
@@ -3373,14 +3291,13 @@ public class CardAnimation_Num_18 : CardAnimationBase
             {
                 if (animationImages[i] != null)
                 {
-                    DOTween.Kill(animationImages[i]);
                     DOTween.Kill(animationImages[i].rectTransform);
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
-
 
 public class CardAnimation_Num_19 : CardAnimationBase
 {
@@ -3439,7 +3356,7 @@ public class CardAnimation_Num_19 : CardAnimationBase
         UnityEngine.Vector3 originalScale = img.rectTransform.localScale;
         img.rectTransform.DOScale(originalScale * 1.2f, 4.0f)
             .SetEase(DG.Tweening.Ease.InOutSine)
-            .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+            .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);
     }
 
     private void StartFloating(UnityEngine.UI.Image img, float fMove)
@@ -3453,9 +3370,9 @@ public class CardAnimation_Num_19 : CardAnimationBase
 
         float duration = UnityEngine.Random.Range(2.0f, 3.5f);
 
-        rt.DOAnchorPos(targetPos, duration)
+        rt.DOAnchorPos(targetPos, duration).SetTarget(this)
           .SetEase(DG.Tweening.Ease.InOutSine)
-          .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+          .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);
     }
 
     // ===================================
@@ -3482,13 +3399,18 @@ public class CardAnimation_Num_19 : CardAnimationBase
             {
                 if (animationImages[i] != null)
                 {
-                    DG.Tweening.DOTween.Kill(animationImages[i]);
                     DG.Tweening.DOTween.Kill(animationImages[i].rectTransform);
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
+
+
+
+
 
 
 public class CardAnimation_Num_20 : CardAnimationBase
@@ -3527,7 +3449,7 @@ public class CardAnimation_Num_20 : CardAnimationBase
         DG.Tweening.DOVirtual.DelayedCall(1f, () =>
         {
             StartRouletteAnimation(images);
-        });
+        }).SetTarget(this);
     }
 
     private void SetInitialPositions(System.Collections.Generic.List<UnityEngine.UI.Image> images)
@@ -3567,7 +3489,7 @@ public class CardAnimation_Num_20 : CardAnimationBase
                 {
                     isSpinning = false;
                     StartRouletteAnimation(images);
-                });
+                }).SetTarget(this);
             });
         });
     }
@@ -3598,7 +3520,7 @@ public class CardAnimation_Num_20 : CardAnimationBase
 
         // 물리적 감속 시간 계산
         float totalDuration = 1f + (totalSteps * 0.15f);
-        DG.Tweening.DOVirtual.DelayedCall(totalDuration, onComplete);
+        DG.Tweening.DOVirtual.DelayedCall(totalDuration, onComplete).SetTarget(this);
     }
 
     private void AnimateContinuousRotation(UnityEngine.RectTransform element, int startIndex, int totalSteps)
@@ -3620,7 +3542,8 @@ public class CardAnimation_Num_20 : CardAnimationBase
 
             element.anchoredPosition = interpolatedPosition;
         })
-        .SetEase(DG.Tweening.Ease.OutQuart);
+        .SetEase(DG.Tweening.Ease.OutQuart)
+.SetTarget(this);
     }
 
     private void AnimateSelectedElement(System.Collections.Generic.List<UnityEngine.UI.Image> images, DG.Tweening.TweenCallback onComplete)
@@ -3647,7 +3570,7 @@ public class CardAnimation_Num_20 : CardAnimationBase
         {
             UnityEngine.UI.Image element7Image = images[7];
 
-            DG.Tweening.Sequence selectedSequence = DG.Tweening.DOTween.Sequence();
+            DG.Tweening.Sequence selectedSequence = DG.Tweening.DOTween.Sequence().SetTarget(this);
 
             // ⭐ 수정: 기본 크기가 0.3이므로, 1.2배 커지려면 0.36이 되어야 함
             float baseScale = 0.3f;
@@ -3676,7 +3599,7 @@ public class CardAnimation_Num_20 : CardAnimationBase
 
         element1.DOScale(1.05f, 1.2f)
                 .SetEase(DG.Tweening.Ease.InOutSine)
-                .SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+                .SetLoops(-1, DG.Tweening.LoopType.Yoyo).SetTarget(this);
     }
 
     private void AnimateElement7(UnityEngine.RectTransform element7, UnityEngine.UI.Image element7Image)
@@ -3726,6 +3649,8 @@ public class CardAnimation_Num_20 : CardAnimationBase
         }
 
         isSpinning = false;
+
+        DOTween.Kill(this);
     }
 }
 
@@ -3809,7 +3734,7 @@ public class CardAnimation_Num_21 : CardAnimationBase
         {
             SpawnAndMoveStar(images);
             StartStarSpawningLoop(images); // 재귀 호출
-        }).SetId("StarLoop"); // Kill을 위해 ID 설정
+        }).SetId("StarLoop").SetTarget(this); // Kill을 위해 ID 설정
     }
 
     private void SpawnAndMoveStar(System.Collections.Generic.List<UnityEngine.UI.Image> images)
@@ -3930,6 +3855,8 @@ public class CardAnimation_Num_21 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+
+        DOTween.Kill(this);
     }
 }
 
@@ -3965,7 +3892,7 @@ public class CardAnimation_Num_22 : CardAnimationBase
             Vector2 feather2Target = feather20riginal + new Vector2(-8f, 8);
             feather2.DOAnchorPos(feather2Target, 1.1f) 
                    .SetLoops(-1, LoopType.Yoyo) 
-                   .SetEase(Ease.InOutSine); 
+                   .SetEase(Ease.InOutSine).SetTarget(this);   // 추가
 
 
 
@@ -3975,7 +3902,7 @@ public class CardAnimation_Num_22 : CardAnimationBase
             Vector2 feather3Target = feather3Original + new Vector2(-72f, 0);
             feather3.DOAnchorPos(feather3Target, 1.2f)
                    .SetLoops(-1, LoopType.Yoyo)
-                   .SetEase(Ease.InOutSine);
+                   .SetEase(Ease.InOutSine).SetTarget(this);   // 추가
 
             // 4번째 깃털 - 우측상단, 좌측하단 대각선으로 (좌측하단으로 더 많이)
             RectTransform feather4 = images[4].GetComponent<RectTransform>();
@@ -3983,7 +3910,7 @@ public class CardAnimation_Num_22 : CardAnimationBase
             Vector2 feather4Target = feather4Original + new Vector2(-54f, -45f);
             feather4.DOAnchorPos(feather4Target, 1.4f)
                    .SetLoops(-1, LoopType.Yoyo)
-                   .SetEase(Ease.InOutSine);
+                   .SetEase(Ease.InOutSine).SetTarget(this);   // 추가
 
             // 5번째 깃털 - 우측상단, 좌측하단 대각선으로 더 크게 (좌측하단으로 더 많이)
             RectTransform feather5 = images[5].GetComponent<RectTransform>();
@@ -3991,7 +3918,7 @@ public class CardAnimation_Num_22 : CardAnimationBase
             Vector2 feather5Target = feather5Original + new Vector2(-72f, -63f);
             feather5.DOAnchorPos(feather5Target, 1.3f)
                    .SetLoops(-1, LoopType.Yoyo)
-                   .SetEase(Ease.InOutSine);
+                   .SetEase(Ease.InOutSine).SetTarget(this);   // 추가
         }
     }
 
@@ -4004,6 +3931,7 @@ public class CardAnimation_Num_22 : CardAnimationBase
                 animationImages[i].GetComponent<RectTransform>().DOKill();
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -4228,6 +4156,8 @@ public class CardAnimation_Num_23 : CardAnimationBase
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
 
@@ -4257,7 +4187,7 @@ public class CardAnimation_Num_24 : CardAnimationBase
         DOVirtual.DelayedCall(1f, () =>
         {
             StartMovementAnimation(images);
-        });
+        }).SetTarget(this);
     }
 
     private void StartElement1FloatingEffect(RectTransform element1)
@@ -4507,7 +4437,7 @@ public class CardAnimation_Num_24 : CardAnimationBase
             images[5].DOFade(0f, 2f).SetDelay(1f).OnComplete(() => {
                 DOVirtual.DelayedCall(1.2f, () => {
                     StartAnimationCycle(images);
-                });
+                }).SetTarget(this);
             });
         }
 
@@ -4548,6 +4478,8 @@ public class CardAnimation_Num_24 : CardAnimationBase
                 }
             }
         }
+
+        DOTween.Kill(this);
     }
 }
 
@@ -4588,6 +4520,8 @@ public class CardAnimation_Num_25 : CardAnimationBase
             if (animationImages.Count > 3) animationImages[3].DOKill(true);
             if (animationImages.Count > 4) animationImages[4].DOKill(true);
         }
+
+        DOTween.Kill(this);
     }
 
     // ========================================================================
@@ -4747,7 +4681,7 @@ public class CardAnimation_Num_26 : CardAnimationBase
                 }
             }
         }
-        if (this != null) DG.Tweening.DOTween.Kill(this);
+        DOTween.Kill(this);
     }
 
     // ========================================================================
@@ -4763,7 +4697,7 @@ public class CardAnimation_Num_26 : CardAnimationBase
         UnityEngine.UI.Image img5 = images[5];
         UnityEngine.UI.Image img6 = images[6];
 
-        DG.Tweening.Sequence masterSeq = DG.Tweening.DOTween.Sequence().SetTarget(this);
+        DG.Tweening.Sequence masterSeq = DG.Tweening.DOTween.Sequence().SetTarget(this).SetTarget(this);
 
         // --- 1. 첫 딜레이 1초 ---
         masterSeq.AppendInterval(1.0f);
@@ -5088,6 +5022,7 @@ public class CardAnimation_Num_27 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
         // 배경은 _isBackgroundActive가 false일 때만 다시 실행됨
         // 리셋 시 _isBackgroundActive를 false로 만들지 않으므로 계속 유지됨
     }
@@ -5290,6 +5225,7 @@ public class CardAnimation_Num_28 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -5734,7 +5670,7 @@ public class CardAnimation_Num_103 : CardAnimationBase
         DOVirtual.DelayedCall(0.7f, () =>
         {
             StartElement3ShakeAnimation(images);
-        });
+        }).SetTarget(this);
     }
     private void StartElement3ShakeAnimation(List<Image> images)
     {
@@ -5792,7 +5728,7 @@ public class CardAnimation_Num_103 : CardAnimationBase
                                 DOVirtual.DelayedCall(1f, () =>
                                 {
                                     ExecuteAnimation(images);
-                                });
+                                }).SetTarget(this);
                             });
                         });
                     });
@@ -5823,7 +5759,7 @@ public class CardAnimation_Num_103 : CardAnimationBase
                       images[3].color.b,
                       0f
                   );
-            });
+            }).SetTarget(this);
         }
     }
     private void CreateAndAnimateClones(List<Image> images)
@@ -5888,14 +5824,15 @@ public class CardAnimation_Num_103 : CardAnimationBase
                 Vector2 targetPos = randomPosition + new Vector2(400f, 0f); // 300f를 400f로 변경
 
                 cloneRect.DOAnchorPos(targetPos, 3f).SetEase(Ease.OutQuad); // 전체 애니메이션 시간을 3초로 조정 (1초 유지 + 2초 이동)
-                cloneImage.DOFade(0f, 2f).SetDelay(1f).OnComplete(() => { // 1초 딜레이 후 2초 동안 페이드아웃
+                cloneImage.DOFade(0f, 2f).SetDelay(1f).OnComplete(() =>
+                { // 1초 딜레이 후 2초 동안 페이드아웃
                     if (clone != null) Destroy(clone);
                 });
             }
 
             // 다시 호출해서 계속 생성
             StartContinuousCloneGeneration(images);
-        });
+        }).SetTarget(this);
     }
 
 
@@ -5930,6 +5867,7 @@ public class CardAnimation_Num_103 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -5990,7 +5928,7 @@ public class CardAnimation_Num_104 : CardAnimationBase
         DG.Tweening.DOVirtual.DelayedCall(1.0f, () =>
         {
             StartLoopSequence(images);
-        });
+        }).SetTarget(this);
     }
 
     private void StartLoopSequence(System.Collections.Generic.List<UnityEngine.UI.Image> images)
@@ -6090,6 +6028,7 @@ public class CardAnimation_Num_104 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -6321,6 +6260,7 @@ public class CardAnimation_Num_105 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -6416,6 +6356,7 @@ public class CardAnimation_Num_106 : CardAnimationBase
             }
             _activeCopies.Clear();
         }
+        DOTween.Kill(this);
     }
 
     // ====================================================================
@@ -6753,6 +6694,7 @@ public class CardAnimation_Num_107 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -6833,6 +6775,7 @@ public class CardAnimation_Num_108 : CardAnimationBase
             }
             _activeCopies.Clear();
         }
+        DOTween.Kill(this);
     }
 
     // ====================================================================
@@ -7046,13 +6989,14 @@ public class CardAnimation_Num_109 : CardAnimationBase
         }
 
         // 딜레이 후 애니메이션 시작
-        DOVirtual.DelayedCall(0f, () => {  // 1초 딜레이
+        DOVirtual.DelayedCall(0f, () =>
+        {  // 1초 딜레이
             if (images.Count > 1)
             {
                 RectTransform element1 = images[1].GetComponent<RectTransform>();
                 StartRabbitJumpAnimation(element1, images);
             }
-        });
+        }).SetTarget(this);
     }
     private void StartRabbitJumpAnimation(RectTransform rabbit, List<Image> images)
     {
@@ -7160,17 +7104,19 @@ public class CardAnimation_Num_109 : CardAnimationBase
         if (images.Count > 4)
         {
             RectTransform element4 = images[4].GetComponent<RectTransform>();
-            DOVirtual.DelayedCall(0.05f, () => {
+            DOVirtual.DelayedCall(0.05f, () =>
+            {
                 element4.DOPunchScale(Vector3.one * 0.1f, 0.8f, 10, 0.5f);
-            });
+            }).SetTarget(this);
         }
         // 5번 요소 (index 4) - 0.1초 딜레이
         if (images.Count > 5)
         {
             RectTransform element5 = images[5].GetComponent<RectTransform>();
-            DOVirtual.DelayedCall(0.1f, () => {
+            DOVirtual.DelayedCall(0.1f, () =>
+            {
                 element5.DOPunchScale(Vector3.one * 0.1f, 0.8f, 10, 0.5f);
-            });
+            }).SetTarget(this);
         }
     }
     protected override void KillAllTweens()
@@ -7194,6 +7140,7 @@ public class CardAnimation_Num_109 : CardAnimationBase
                 animationImages[4].GetComponent<RectTransform>().DOKill();
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -7578,7 +7525,7 @@ public class CardAnimation_Num_112 : CardAnimationBase
                     // 모든 트윈이 정리된 상태에서 초기화 및 재귀 호출
                     ExecuteAnimation(images);
                 });
-            });
+            }).SetTarget(this);
         });
     }
 
@@ -7624,6 +7571,7 @@ public class CardAnimation_Num_112 : CardAnimationBase
             _repeatTween.Kill(true);
             _repeatTween = null;
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -7776,7 +7724,7 @@ public class CardAnimation_Num_113 : CardAnimationBase
              UnityEngine.Random.Range(-intensity, intensity)
             );
                 rectTransform.anchoredPosition = originalPosition + randomOffset;
-            });
+            }).SetTarget(this);
 
 
             // 추가 요청 사항: 2초 대기 후 알파값 0으로 만들기
@@ -7803,10 +7751,10 @@ public class CardAnimation_Num_113 : CardAnimationBase
                         ExecuteAnimation(images);
                     });
                 });
-            });
+            }).SetTarget(this);
 
             _shakeTween = null;
-        });
+        }).SetTarget(this);
     }
 
     protected override void KillAllTweens()
@@ -7834,6 +7782,7 @@ public class CardAnimation_Num_113 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -8074,6 +8023,7 @@ public class CardAnimation_Num_114 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -8187,7 +8137,7 @@ public class CardAnimation_Num_116 : CardAnimationBase
             DG.Tweening.DOVirtual.DelayedCall(myDelay, () =>
             {
                 RunSnakeLoopSequence(part, loopPoints, moveSpeed);
-            }).SetId(part);
+            }).SetId(part).SetTarget(this);
         }
 
         // 머리(23번) 맥동 애니메이션
@@ -8285,6 +8235,7 @@ public class CardAnimation_Num_116 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -8404,7 +8355,7 @@ public class CardAnimation_Num_118 : CardAnimationBase
             DG.Tweening.DOVirtual.DelayedCall(i * interval, () =>
             {
                 CreateSingleDust(images);
-            });
+            }).SetTarget(this);
         }
     }
 
@@ -8497,6 +8448,7 @@ public class CardAnimation_Num_118 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -8722,6 +8674,7 @@ public class CardAnimation_Num_119 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -8954,6 +8907,7 @@ public class CardAnimation_Num_120 : CardAnimationBase
             }
             _spawnedParticles.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -9118,6 +9072,7 @@ public class CardAnimation_Num_121 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -9369,6 +9324,7 @@ public class CardAnimation_Num_122 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -9493,6 +9449,7 @@ public class CardAnimation_Num_123 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -9720,6 +9677,7 @@ public class CardAnimation_Num_124 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -9741,7 +9699,7 @@ public class CardAnimation_Num_125 : CardAnimationBase
             DG.Tweening.DOVirtual.DelayedCall(1.2f, () =>
             {
                 StartFireworkSequence(images);
-            });
+            }).SetTarget(this);
         }
     }
 
@@ -9879,7 +9837,7 @@ public class CardAnimation_Num_125 : CardAnimationBase
         DG.Tweening.DOVirtual.DelayedCall(1.2f, () =>
         {
             StartFireworkSequence(images);
-        });
+        }).SetTarget(this);
     }
 
     // ===================================
@@ -9994,6 +9952,7 @@ public class CardAnimation_Num_125 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -10013,7 +9972,7 @@ public class CardAnimation_Num_127 : CardAnimationBase
             DG.Tweening.DOVirtual.DelayedCall(1.0f, () =>
             {
                 StartGaugeAnimation(images);
-            });
+            }).SetTarget(this);
         }
     }
 
@@ -10164,7 +10123,7 @@ public class CardAnimation_Num_127 : CardAnimationBase
         DG.Tweening.DOVirtual.DelayedCall(2.8f, () =>
         {
             ResetAndRestart(images);
-        });
+        }).SetTarget(this);
     }
 
     // ===================================
@@ -10207,7 +10166,7 @@ public class CardAnimation_Num_127 : CardAnimationBase
             DG.Tweening.DOVirtual.DelayedCall(1.5f, () =>
             {
                 StartGaugeAnimation(images);
-            });
+            }).SetTarget(this);
         });
     }
 
@@ -10241,6 +10200,7 @@ public class CardAnimation_Num_127 : CardAnimationBase
             }
         }
         _currentGaugeLevel = 0;
+        DOTween.Kill(this);
     }
 }
 
@@ -10443,6 +10403,7 @@ public class CardAnimation_Num_130 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -10463,7 +10424,7 @@ public class CardAnimation_Num_131 : CardAnimationBase
         // 최초 1.0초 딜레이 후 시작
         DOVirtual.DelayedCall(1.0f, () => {
             StartShakeAndBlinkLoop(images);
-        });
+        }).SetTarget(this);
     }
 
     private void InitElements(List<Image> images)
@@ -10584,6 +10545,7 @@ public class CardAnimation_Num_131 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -10708,6 +10670,7 @@ public class CardAnimation_Num_132 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -10883,6 +10846,7 @@ public class CardAnimation_Num_133 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -11025,6 +10989,7 @@ public class CardAnimation_Num_134 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -11080,6 +11045,7 @@ public class CardAnimation_Num_135 : CardAnimationBase
             }
             _activeCopies.Clear();
         }
+        DOTween.Kill(this);
     }
 
     // ====================================================================
@@ -11363,7 +11329,7 @@ public class CardAnimation_Num_137 : CardAnimationBase
         DOVirtual.DelayedCall(1f, () =>
         {
             SpawnRandomCopy(images);
-        });
+        }).SetTarget(this);
     }
 
     private void SpawnRandomCopy(List<Image> images)
@@ -11437,13 +11403,13 @@ public class CardAnimation_Num_137 : CardAnimationBase
                 }
 
                 if (copy != null) GameObject.Destroy(copy);
-            });
+            }).SetTarget(this);
 
             // 재귀 호출
             DOVirtual.DelayedCall(1f, () =>
             {
                 SpawnRandomCopy(images);
-            });
+            }).SetTarget(this);
         }
     }
 
@@ -11489,6 +11455,7 @@ public class CardAnimation_Num_137 : CardAnimationBase
                 }
             }
         }
+        DOTween.Kill(this);
     }
 }
 
@@ -11512,7 +11479,7 @@ public class CardAnimation_Num_138 : CardAnimationBase
         _spawnerTween = DOVirtual.DelayedCall(1.5f, () =>
         {
             StartLoopingAction(images);
-        });
+        }).SetTarget(this);
     }
 
     private void InitElements(List<Image> images)
@@ -11552,7 +11519,7 @@ public class CardAnimation_Num_138 : CardAnimationBase
         _spawnerTween = DOVirtual.DelayedCall(1.5f, () =>
         {
             StartLoopingAction(images);
-        });
+        }).SetTarget(this);
     }
 
     // ===================================
@@ -11707,6 +11674,7 @@ public class CardAnimation_Num_138 : CardAnimationBase
             }
             _spawnedObjects.Clear();
         }
+        DOTween.Kill(this);
     }
 }
 

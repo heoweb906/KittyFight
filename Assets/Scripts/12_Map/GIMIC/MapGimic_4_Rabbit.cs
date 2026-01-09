@@ -76,7 +76,6 @@ public class MapGimic_4_Rabbit : AbstractMapGimic
 
     private void RestoreGravity()
     {
-        // 저장해둔 값으로 복구
-        Physics.gravity = originalGravity;
+        Physics.gravity = new Vector3(0, -9.81f, 0);
     }
 }

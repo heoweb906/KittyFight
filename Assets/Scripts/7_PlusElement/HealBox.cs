@@ -4,7 +4,6 @@ public class HealBox : AB_HitboxBase
 {
     [Header("Heal Settings")]
     public int healAmount = 30;
-    public GameObject eatEffect;
 
     protected override void Awake()
     {
@@ -25,12 +24,6 @@ public class HealBox : AB_HitboxBase
             if (victimAbility.Health != null)
             {
                 victimAbility.Health.Heal(healAmount);
-
-                // 3. ÀÌÆåÆ® ¹× ÆÄ±« Ã³¸®
-                if (eatEffect != null)
-                {
-                    Instantiate(eatEffect, transform.position, Quaternion.identity);
-                }
 
                 this.gameObject.SetActive(false);
             }

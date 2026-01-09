@@ -214,7 +214,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
             float distance = Vector3.Distance(piece.transform.position, explosionPos);
             if (distance <= range)
             {
-                Debug.Log("조각 발견");
+                // Debug.Log("조각 발견");
                 piece.OnThisPiece();
 
                 // 4. Rigidbody를 찾아 힘을 가합니다.

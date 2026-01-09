@@ -9,6 +9,8 @@ public class Gimic12_Entity : MonoBehaviour
     public float delayTime;
     public float fDestroyDelay;
 
+    public GameObject effect; // Èú¸µ ÇÁ¸®Æé 
+
     [Header("»ç¿îµå")]
     [HideInInspector] public GameManager manager;
     public AudioClip sfxClip;
@@ -21,6 +23,9 @@ public class Gimic12_Entity : MonoBehaviour
     private IEnumerator Co_SpawnProcess()
     {
         yield return new WaitForSeconds(delayTime);
+
+        effect.transform.SetParent(null);
+
 
         if (targetObject != null)
         {
@@ -46,15 +51,12 @@ public class Gimic12_Entity : MonoBehaviour
             gm?.cameraManager?.ShakeCameraPunch(0.6f, 0.3f);
         }
 
-        manager.playerAbility_1.PlaySFX(sfxClip);
+        if(manager.playerAbility_1 != null && sfxClip != null) manager.playerAbility_1.PlaySFX(sfxClip);
 
         yield return new WaitForSeconds(0.5f);
 
-        targetObject.SetActive(false);
-
-
-        yield return new WaitForSeconds(fDestroyDelay);
-
         Destroy(gameObject);
+
+      
     }
 }

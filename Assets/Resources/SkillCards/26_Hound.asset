@@ -77,4 +77,4 @@ MonoBehaviour:
     type: 3}
   AnimationType: 25
   description: <color=#FFFFFF>Hunting instincts kick in! Slow enemy movement speed
-    by <color=#FF0000>50%</color> for <color=#66CCFF>3.5</color> seconds</color>
+    by <color=#FF0000>70%</color> for <color=#66CCFF>3.5</color> seconds</color>
