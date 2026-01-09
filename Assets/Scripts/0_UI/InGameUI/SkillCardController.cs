@@ -289,7 +289,9 @@ public class SkillCardController : MonoBehaviour
             // 3. 보유 스킬 제거 시도
             for (int i = availableIndices.Count - 1; i >= 0; i--)
             {
-                if (IsSkillOwned(currentPlayerAbility, availableIndices[i]) || IsSkillOwned(opponentPlayerAbility, availableIndices[i]))
+                int currentID = skillDataList[availableIndices[i]].iSkillIndex;
+
+                if (IsSkillOwned(currentPlayerAbility, currentID) || IsSkillOwned(opponentPlayerAbility, currentID))
                 {
                     availableIndices.RemoveAt(i);
                 }
@@ -299,22 +301,28 @@ public class SkillCardController : MonoBehaviour
             // 1단계: 보유 스킬 포함 (filteredIndices 활용)
             if (availableIndices.Count < instances.Length)
             {
-                availableIndices = new List<int>(filteredIndices);
+                // 1단계: 보유 여부 무시하고 필터링된 전체 후보(filteredIndices)에서 보충
+                foreach (int idx in filteredIndices)
+                {
+                    if (!availableIndices.Contains(idx)) availableIndices.Add(idx);
+                    if (availableIndices.Count >= instances.Length) break;
+                }
             }
 
-            // 2단계: 만약 사용 안 한 스킬이 아예 말랐다면, 사용했던 스킬(usedSkillIDs)까지 포함
+            // 2단계: 그래도 부족하면 (사용된 스킬까지 포함해서) 타입만 맞으면 다 가져옴
             if (availableIndices.Count < instances.Length)
             {
                 for (int i = 0; i < skillDataList.Count; i++)
                 {
-                    int currentSkillID = skillDataList[i].iSkillIndex;
-                    if (excludedSkillIndices.Contains(currentSkillID)) continue;
+                    int id = skillDataList[i].iSkillIndex;
+                    if (excludedSkillIndices.Contains(id)) continue;
 
-                    bool isActive = currentSkillID < 100;
+                    bool isActive = id < 100;
                     if (((bActivePassive && isActive) || (!bActivePassive && !isActive)) && !availableIndices.Contains(i))
                     {
                         availableIndices.Add(i);
                     }
+                    if (availableIndices.Count >= instances.Length) break;
                 }
             }
 
