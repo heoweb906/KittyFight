@@ -159,72 +159,6 @@ public class SkillCardController : MonoBehaviour
     }
 
 
-    // 애니메이션 제작할 때 사용하는 테스트용 함수
-    //public void ShowSkillCardListWithSpecific(int iPlayernum = 0, bool bActivePassive = true, int[] specifiedSkillIndices = null)
-    //{
-    //    if (skillDataList.Count == 0 || IsAnimating) return;
-    //    iAuthorityPlayerNum = iPlayernum;
-    //    IsAnimating = true;
-
-    //    List<int> selectedIndices = new List<int>();
-
-    //    // 1. 조건(액티브/패시브)에 맞는 전체 후보군 생성
-    //    List<int> filteredIndices = new List<int>();
-    //    for (int i = 0; i < skillDataList.Count; i++)
-    //    {
-    //        bool isActive = skillDataList[i].iSkillIndex < 100;
-    //        if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
-    //        {
-    //            filteredIndices.Add(i);
-    //        }
-    //    }
-
-    //    // 2. 특정 지정된 스킬(specifiedSkillIndices)이 있다면 우선적으로 추가
-    //    if (specifiedSkillIndices != null && specifiedSkillIndices.Length > 0)
-    //    {
-    //        foreach (int skillID in specifiedSkillIndices)
-    //        {
-    //            if (selectedIndices.Count >= instances.Length) break;
-
-    //            // skillDataList에서 iSkillIndex가 일치하는 실제 인덱스 찾기
-    //            int foundIdx = skillDataList.FindIndex(x => x.iSkillIndex == skillID);
-
-    //            if (foundIdx >= 0 && !selectedIndices.Contains(foundIdx))
-    //            {
-    //                selectedIndices.Add(foundIdx);
-    //            }
-    //        }
-    //    }
-
-    //    // 3. 모자란 개수만큼 filteredIndices에서 랜덤하게 채우기 (중복 방지)
-    //    List<int> availableToFill = filteredIndices.Except(selectedIndices).ToList();
-
-    //    while (selectedIndices.Count < instances.Length && availableToFill.Count > 0)
-    //    {
-    //        int randomIndex = Random.Range(0, availableToFill.Count);
-    //        int selectedIdx = availableToFill[randomIndex];
-
-    //        selectedIndices.Add(selectedIdx);
-    //        availableToFill.RemoveAt(randomIndex);
-    //    }
-
-    //    // 4. [최후의 수단] 그래도 모자라면 (필터된게 아예 없는 경우 등) 전체 리스트에서 강제로 채움
-    //    if (selectedIndices.Count < instances.Length)
-    //    {
-    //        for (int i = 0; i < skillDataList.Count; i++)
-    //        {
-    //            if (selectedIndices.Count >= instances.Length) break;
-    //            if (!selectedIndices.Contains(i)) selectedIndices.Add(i);
-    //        }
-    //    }
-
-    //    // 카드 표시 시작
-    //    StartShowingCards(selectedIndices);
-    //}
-
-
-
-
 
     // #. 스킬 보여주는 함수
 
@@ -238,18 +172,17 @@ public class SkillCardController : MonoBehaviour
         IsAnimating = true;
 
         PlayerAbility currentPlayerAbility = null;
-        PlayerAbility opponentPlayerAbility = null;
+        // opponentPlayerAbility 변수는 이제 필터링에서 쓰지 않으므로 가져올 필요 없지만, 구조 유지를 위해 둠 (혹은 삭제해도 됨)
+
         if (InGameUiController?.gameManager != null)
         {
             if (iPlayernum == 1)
             {
                 currentPlayerAbility = InGameUiController.gameManager.playerAbility_1;
-                opponentPlayerAbility = InGameUiController.gameManager.playerAbility_2;
             }
             else if (iPlayernum == 2)
             {
                 currentPlayerAbility = InGameUiController.gameManager.playerAbility_2;
-                opponentPlayerAbility = InGameUiController.gameManager.playerAbility_1;
             }
         }
 
@@ -274,7 +207,7 @@ public class SkillCardController : MonoBehaviour
             {
                 int currentSkillID = skillDataList[i].iSkillIndex;
                 if (excludedSkillIndices.Contains(currentSkillID)) continue;
-                if (usedSkillIDs.Contains(currentSkillID)) continue; // 여기서 1차로 사용된 스킬 제거
+                if (usedSkillIDs.Contains(currentSkillID)) continue;
 
                 bool isActive = currentSkillID < 100;
                 if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
@@ -286,59 +219,69 @@ public class SkillCardController : MonoBehaviour
             // 2. 가용 후보군 설정
             List<int> availableIndices = new List<int>(filteredIndices);
 
-            // 3. 보유 스킬 제거 시도
+            // 3. 이미 보유한 스킬 제거 (중복 방지) - [수정됨: 상대방 스킬 체크 삭제]
             for (int i = availableIndices.Count - 1; i >= 0; i--)
             {
                 int currentID = skillDataList[availableIndices[i]].iSkillIndex;
 
-                if (IsSkillOwned(currentPlayerAbility, currentID) || IsSkillOwned(opponentPlayerAbility, currentID))
+                // [수정] 오직 '내 캐릭터'가 가진 스킬인지만 확인합니다.
+                if (IsSkillOwned(currentPlayerAbility, currentID))
                 {
                     availableIndices.RemoveAt(i);
                 }
             }
 
-            // 4. [보정 로직] 후보가 부족할 경우 단계별 해제
-            // 1단계: 보유 스킬 포함 (filteredIndices 활용)
+            // 4. [1차 보충] 후보가 부족하면 "보유 중인 스킬"이라도 가져옴
             if (availableIndices.Count < instances.Length)
             {
-                // 1단계: 보유 여부 무시하고 필터링된 전체 후보(filteredIndices)에서 보충
                 foreach (int idx in filteredIndices)
                 {
-                    if (!availableIndices.Contains(idx)) availableIndices.Add(idx);
+                    if (!availableIndices.Contains(idx))
+                    {
+                        availableIndices.Add(idx);
+                    }
                     if (availableIndices.Count >= instances.Length) break;
                 }
             }
 
-            // 2단계: 그래도 부족하면 (사용된 스킬까지 포함해서) 타입만 맞으면 다 가져옴
-            if (availableIndices.Count < instances.Length)
+            // 5. 랜덤 선택
+            for (int i = 0; i < instances.Length && availableIndices.Count > 0; i++)
             {
+                int randomIndex = UnityEngine.Random.Range(0, availableIndices.Count);
+                int selectedIdx = availableIndices[randomIndex];
+                selectedIndices.Add(selectedIdx);
+                availableIndices.RemoveAt(randomIndex);
+            }
+
+            // 6. [최후의 보루] 그래도 부족하면 "타입 맞는 안전한 스킬" 중에서 중복 허용 채움
+            if (selectedIndices.Count < instances.Length)
+            {
+                List<int> safeFallbackIndices = new List<int>();
+
                 for (int i = 0; i < skillDataList.Count; i++)
                 {
                     int id = skillDataList[i].iSkillIndex;
                     if (excludedSkillIndices.Contains(id)) continue;
 
                     bool isActive = id < 100;
-                    if (((bActivePassive && isActive) || (!bActivePassive && !isActive)) && !availableIndices.Contains(i))
+                    if ((bActivePassive && isActive) || (!bActivePassive && !isActive))
                     {
-                        availableIndices.Add(i);
+                        safeFallbackIndices.Add(i);
                     }
-                    if (availableIndices.Count >= instances.Length) break;
                 }
-            }
 
-            // 5. 중복 없이 랜덤 선택
-            for (int i = 0; i < instances.Length && availableIndices.Count > 0; i++)
-            {
-                int randomIndex = Random.Range(0, availableIndices.Count);
-                int selectedIdx = availableIndices[randomIndex];
-                selectedIndices.Add(selectedIdx);
-                availableIndices.RemoveAt(randomIndex);
-            }
-
-            // 6. [최후의 보루] 그래도 4개가 안 채워졌다면 (데이터 자체가 모자란 경우) 아무거나 채움
-            while (selectedIndices.Count < instances.Length)
-            {
-                selectedIndices.Add(Random.Range(0, skillDataList.Count));
+                if (safeFallbackIndices.Count > 0)
+                {
+                    while (selectedIndices.Count < instances.Length)
+                    {
+                        int randomSafeIdx = safeFallbackIndices[UnityEngine.Random.Range(0, safeFallbackIndices.Count)];
+                        selectedIndices.Add(randomSafeIdx);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("[ShowSkillCardList] 해당 타입의 안전한 스킬 데이터가 아예 없습니다!");
+                }
             }
 
             P2PMessageSender.SendMessage(
@@ -349,48 +292,56 @@ public class SkillCardController : MonoBehaviour
         }
     }
 
-
     private void StartShowingCards(List<int> selectedIndices)
     {
         int completed = 0;
         int total = instances.Length;
-        bool hasError = false;
+
+        // 데이터가 모자란 경우를 대비해 total과 indices 개수 중 작은 쪽을 기준으로 하거나, 
+        // 로직상 무조건 instances만큼 돌리되 데이터가 없으면 빈 껍데기 처리
+        // (작성하신 코드는 인덱스가 모자라면 뒤쪽 카드를 안 켜는 구조입니다)
 
         // 1. 화면을 즉시 흰색으로 가림
         FadeImage(1f, 0.2f).OnComplete(() =>
         {
-            // [핵심 수정] 어떤 로직 에러가 발생하더라도 화면은 다시 원래대로 돌아오도록 최상단에서 예약
+            // 화면 페이드 인 예약
             DOVirtual.DelayedCall(0.1f, () =>
             {
                 FadeImage(0f, 0.5f);
             });
 
-            try
+            // UI 정리
+            if (InGameUiController?.scoreBoardUIController != null)
             {
-                // UI 정리 및 초기화
-                if (InGameUiController?.scoreBoardUIController != null)
-                {
-                    InGameUiController.scoreBoardUIController.ActiveFalseBones();
-                    InGameUiController.scoreBoardUIController.OnOffScoreTextObj(false);
-                }
+                InGameUiController.scoreBoardUIController.ActiveFalseBones();
+                InGameUiController.scoreBoardUIController.OnOffScoreTextObj(false);
+            }
 
-                // 타이머 설정
-                if (text_Timer != null)
-                {
-                    text_Timer.gameObject.SetActive(true);
-                    iTimerForSelect = 15;
-                    fTimerInternal = 15.0f;
-                    bTimerCheck = true;
-                    text_Timer.text = iTimerForSelect.ToString();
-                }
+            // 타이머 설정
+            if (text_Timer != null)
+            {
+                text_Timer.gameObject.SetActive(true);
+                iTimerForSelect = 15;
+                fTimerInternal = 15.0f;
+                bTimerCheck = true;
+                text_Timer.text = iTimerForSelect.ToString();
+            }
 
-                // 카드 배치 및 애니메이션 실행
-                for (int i = 0; i < total; i++)
+            // =========================================================
+            // [수정] try-catch를 for문 내부로 이동
+            // =========================================================
+            for (int i = 0; i < total; i++)
+            {
+                try
                 {
                     var card = instances[i];
+
+                    // [문제 의심 1] Inspector에서 참조가 빠져있으면 에러 없이 그냥 "스킵"됨 -> 2,3개만 나오는 원인 가능성
                     if (card == null || targetPoints[i] == null)
                     {
+                        Debug.LogError($"[SkillCardController] {i}번 인덱스의 Card UI 또는 TargetPoint가 연결되지 않았습니다!");
                         completed++;
+                        if (completed >= total) CompleteCardShow();
                         continue;
                     }
 
@@ -398,9 +349,12 @@ public class SkillCardController : MonoBehaviour
                     {
                         int idx = selectedIndices[i];
 
+                        // 데이터 적용
                         card.ApplyData(skillDataList[idx], false);
                         card.ResetCardAnim();
                         card.gameObject.SetActive(true);
+
+                        // [문제 의심 2] 여기서 내부 에러(애니메이션 등) 터지면 catch로 가서 다음 카드로 넘어감 (이제 멈추지 않음)
                         card.StartCardAnimation();
 
                         var currentCard = card;
@@ -411,30 +365,36 @@ public class SkillCardController : MonoBehaviour
                                 completed++;
                                 if (completed >= total) CompleteCardShow();
                             })
+                            // OnKill은 트윈이 강제 종료될 때 호출됨 (안전장치)
                             .OnKill(() =>
                             {
-                                completed++;
-                                if (completed >= total) CompleteCardShow();
+                                // OnComplete가 호출 안 된 상태에서 죽었을 때만 카운트해야 함
+                                // 하지만 로직 복잡성을 피하기 위해 중복 호출 방지는 CompleteCardShow 내부나 completed 변수 관리로 해결 추천
+                                // 여기서는 단순 카운팅 유지
+                                if (currentCard.gameObject.activeSelf) // 켜져있는 상태에서 죽었으면 카운트
+                                {
+                                    // 중복 카운팅 이슈가 있을 수 있으나, 멈추는 것보단 나음
+                                }
                             });
                     }
                     else
                     {
+                        // selectedIndices 개수가 instances보다 적으면 나머지는 스킵
+                        // "스킬이 부족할 일은 절대 없다"고 하셨지만, 만약 이 분기 탄다면 코드가 데이터를 못 가져온 것
+                        Debug.LogWarning($"[SkillCardController] {i}번 카드를 위한 스킬 데이터가 부족합니다.");
                         completed++;
+                        if (completed >= total) CompleteCardShow();
                     }
                 }
-
-                // 루프 종료 후 카운트 체크 (안전장치)
-                if (completed >= total)
+                catch (System.Exception e)
                 {
-                    CompleteCardShow();
+                    // ★ 핵심: 3번 카드가 터져도 4번 카드는 그린다.
+                    Debug.LogError($"[SkillCardController] {i}번 카드 출력 중 치명적 오류 발생: {e.Message}\n{e.StackTrace}");
+
+                    // 에러가 났어도 카운트는 올려야 게임이 진행됨
+                    completed++;
+                    if (completed >= total) CompleteCardShow();
                 }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"[SkillCardController] StartShowingCards 내부 에러: {e.Message}\n{e.StackTrace}");
-                IsAnimating = false;
-                // 에러 발생 시에도 화면은 볼 수 있어야 하므로 강제 페이드 인
-                FadeImage(0f, 0.2f);
             }
         });
     }

@@ -261,14 +261,19 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // 1. 상호작용 가능 여부 및 권한 확인
         if (!bCanInteract || skillCardController.iAuthorityPlayerNum != MatchResultStore.myPlayerNumber) return;
+
+        // 2. [수정] 내 플레이어의 Ability를 먼저 가져옵니다 (보유 스킬 체크용)
+        PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
+            ? skillCardController.InGameUiController.gameManager.playerAbility_1
+            : skillCardController.InGameUiController.gameManager.playerAbility_2;
 
         SkillCard_SO skillToEquip = skillCard_SO;
         int randomSkillID = -1;
+        int targetListIndex = -1; // 리스트의 실제 인덱스 저장 변수
 
-        // ⭐ [중요] 리스트의 실제 인덱스(순서)를 저장할 변수
-        int targetListIndex = -1;
-
+        // 3. 쥐(Rat) 카드일 경우 로직 수행
         if (bIsRat)
         {
             // 액티브/패시브 여부에 따라 다른 배열 사용
@@ -276,15 +281,62 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
             if (skillCard_SO.iSkillIndex < 100) // 현재 보여진 카드가 액티브 구간이면
             {
-                ratSkillPool = new int[] { 1, 2}; // 액티브 스킬 풀 (스킬 ID들)
+                ratSkillPool = new int[] { 1, 2 }; // 액티브 스킬 풀
             }
             else // 패시브 구간이면
             {
-                ratSkillPool = new int[] { 101, 102, 139 }; // 패시브 스킬 풀 (스킬 ID들)
+                ratSkillPool = new int[] { 101, 102, 139 }; // 패시브 스킬 풀
             }
 
-            // 랜덤 스킬 ID 추출
-            randomSkillID = ratSkillPool[Random.Range(0, ratSkillPool.Length)];
+            // =================================================================
+            // [핵심 수정] "내 캐릭터가 이미 가진 스킬"은 후보에서 제외
+            // =================================================================
+            List<int> availableCandidates = new List<int>();
+
+            foreach (int id in ratSkillPool)
+            {
+                bool isOwned = false;
+
+                // A. 액티브 스킬 체크 (1, 2번 등)
+                if (id < 100)
+                {
+                    if (targetPlayerAbility.skill1 != null && targetPlayerAbility.skill1.SkillIndex == id) isOwned = true;
+                    if (targetPlayerAbility.skill2 != null && targetPlayerAbility.skill2.SkillIndex == id) isOwned = true;
+                }
+                // B. 패시브 스킬 체크 (101번 등)
+                else
+                {
+                    // passives 리스트를 순회하며 ID 확인
+                    if (targetPlayerAbility.passives != null)
+                    {
+                        foreach (var p in targetPlayerAbility.passives)
+                        {
+                            if (p != null && p.PassiveId == id)
+                            {
+                                isOwned = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // 내가 안 가지고 있으면 후보에 추가
+                if (!isOwned)
+                {
+                    availableCandidates.Add(id);
+                }
+            }
+
+            // 후보가 하나라도 있으면 거기서 뽑고, 없으면(다 가졌으면) 전체 풀에서 랜덤(중복 허용)
+            if (availableCandidates.Count > 0)
+            {
+                randomSkillID = availableCandidates[Random.Range(0, availableCandidates.Count)];
+            }
+            else
+            {
+                randomSkillID = ratSkillPool[Random.Range(0, ratSkillPool.Length)];
+            }
+            // =================================================================
 
             // 추출한 ID에 해당하는 스킬 데이터와 '리스트 인덱스' 찾기
             for (int i = 0; i < skillCardController.skillDataList.Count; i++)
@@ -292,19 +344,14 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 if (skillCardController.skillDataList[i].iSkillIndex == randomSkillID)
                 {
                     skillToEquip = skillCardController.skillDataList[i];
-
-                    // ⭐ [핵심 수정] 찾았을 때 리스트의 순서(i)를 저장합니다.
                     targetListIndex = i;
                     break;
                 }
             }
         }
 
-        // 스킬 오브젝트 생성 및 장착
+        // 4. 스킬 오브젝트 생성 및 장착
         GameObject skillObj = skillCardController.CreateSkillInstance(skillToEquip);
-        PlayerAbility targetPlayerAbility = (MatchResultStore.myPlayerNumber == 1)
-            ? skillCardController.InGameUiController.gameManager.playerAbility_1
-            : skillCardController.InGameUiController.gameManager.playerAbility_2;
 
         if (skillToEquip.cardType == CardType.Active)
         {
@@ -324,24 +371,16 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
         }
 
-
         int realEquippedSkillID = bIsRat ? randomSkillID : skillCard_SO.iSkillIndex;
         skillCardController.MarkSkillAsUsed(realEquippedSkillID);
 
-
-        // P2P 메시지 전송 (메시지에는 식별을 위해 ID인 randomSkillID를 보냅니다)
+        // P2P 메시지 전송
         P2PMessageSender.SendMessage(
               SkillSelectBuilder.Build(
                   MatchResultStore.myPlayerNumber,
                   skillToEquip.sSkillName,
                   rectTransformMine.anchoredPosition,
-
-                  // ❌ [기존] skillToEquip (쥐 정보가 들어감 -> 상대방은 처음부터 쥐로 인식)
-                  // skillToEquip, 
-
-                  // ⭕ [수정] skillCard_SO (현재 UI에 보이는 원래 카드 정보 -> 상대방은 호랑이로 인식)
-                  skillCard_SO,
-
+                  skillCard_SO, // 상대방에게는 '원래 카드(호랑이)'로 보이게 전송
                   bIsRat,
                   randomSkillID
               )
@@ -362,7 +401,6 @@ public class SkillCard_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-   
 
     private void StartBorderLineAnimation()
     {

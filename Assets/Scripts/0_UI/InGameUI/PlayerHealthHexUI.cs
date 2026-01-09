@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,8 @@ public class PlayerHealthHexUI : MonoBehaviour
     /// </summary>
     private void ApplyHP(int cur, int max)
     {
+        Debug.Log("PlayerHealthHexUI_ApplyHP");
+
         if (fillImage == null || max <= 0) return;
 
         float t = Mathf.Clamp01((float)cur / max);
@@ -80,6 +83,8 @@ public class PlayerHealthHexUI : MonoBehaviour
 
         if (fillImage.fillOrigin != (int)Image.OriginHorizontal.Left)
             fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+
+    
 
         fillImage.fillAmount = t;
     }

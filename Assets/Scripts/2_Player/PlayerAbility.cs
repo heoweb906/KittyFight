@@ -140,7 +140,13 @@ public class PlayerAbility : MonoBehaviour
     void Update()
     {
         events?.EmitTick(Time.deltaTime);
+
     }
+
+    //private void FixedUpdate()
+    //{
+    //    Debug.Log(moveSpeed);
+    //}
 
     // ======= ½ºÅ³ ÀåÂø/½ÇÇà/Äð´Ù¿î ============
     public void SetSkill(SkillType type, Skill skill)
