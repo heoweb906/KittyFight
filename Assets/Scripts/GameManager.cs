@@ -506,6 +506,8 @@ public class GameManager : MonoBehaviour
         if (totalScore % 5 == 0 && totalScore > 0) yield return new WaitForSeconds(3f);
         else yield return new WaitForSeconds(1f);
 
+        DOTween.KillAll();
+
         // 준비/시작 연출 및 제어권 할당
         ingameUIController.ChangeReadyStartSprite(1);
         ingameUIController.PlaySFX(ingameUIController.sfxClips_InGameSystem[2]);
@@ -526,6 +528,7 @@ public class GameManager : MonoBehaviour
         playerAbility_1.events?.EmitRoundStart(0);
         playerAbility_2.events?.EmitRoundStart(0);
         mapManager.StartCurrentGimmick(); // 동기화된 기믹 시작
+
     }
 
 

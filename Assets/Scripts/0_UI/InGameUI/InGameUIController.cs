@@ -112,6 +112,7 @@ public class InGameUIController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
 
+        DOTween.useSafeMode = true;
 
         PlayBGM(bgmClips[0]);
     }
@@ -369,6 +370,7 @@ public class InGameUIController : MonoBehaviour
         image_ReadyStart.sprite = sprites_ReadyStart[iIdx];
     }
 
+
     public void PlayStartPriteAnimation(RectTransform targetRect)
     {
         if (targetRect == null) return;
@@ -388,7 +390,7 @@ public class InGameUIController : MonoBehaviour
 
                 targetRect.gameObject.SetActive(false);
                 targetRect.localScale = originalScale;
-            });
+            }).SetLink(targetRect.gameObject, LinkBehaviour.KillOnDisable);
     }
 
     public void CloseFadePanel_Vertical(RectTransform topImage, RectTransform bottomImage, float fDuration)
