@@ -35,7 +35,7 @@ public class SK_BullRush : Skill
         var hb = Instantiate(objSkillEntity, spawnPos, rot);
 
         anim.SetBool("isDash", true);
-        anim.SetTrigger("Dash");
+        //anim.SetTrigger("Dash");
 
         if (effectPrefab != null)
         {

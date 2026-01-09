@@ -105,7 +105,7 @@ public class SK_Dash : Skill
             duration = maxDistance / desiredSpeed;
 
         anim.SetBool("isDash", true);
-        anim.SetTrigger("Dash");
+        //anim.SetTrigger("Dash");
         StartCoroutine(DashLerp(startPos, targetPos, duration));
 
         if (playerAbility.meshTrail != null) playerAbility.meshTrail.ActiveateTrail(playerAbility.playerNumber);
