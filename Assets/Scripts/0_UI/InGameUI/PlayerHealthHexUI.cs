@@ -42,6 +42,22 @@ public class PlayerHealthHexUI : MonoBehaviour
         if (healthRef != null) healthRef.OnHPChanged -= OnHPChanged;
     }
 
+    private void FixedUpdate()
+    {
+        if (healthRef == null)
+        {
+            if (abilityRef != null) Bind(abilityRef);
+            return;
+        }
+
+        Debug.Log(healthRef.CurrentHP);
+        Debug.Log(healthRef.MaxHP);
+        int cur = healthRef.CurrentHP;
+        int max = healthRef.MaxHP;
+        float t = Mathf.Clamp01((float)cur / max);
+        fillImage.fillAmount = t;
+    }
+
     /// <summary>
     /// Ability를 연결하고 HP 변화 이벤트를 구독한다.
     /// </summary>
@@ -74,15 +90,6 @@ public class PlayerHealthHexUI : MonoBehaviour
         if (fillImage == null || max <= 0) return;
 
         float t = Mathf.Clamp01((float)cur / max);
-        if (fillImage.type != Image.Type.Filled)
-            fillImage.type = Image.Type.Filled;
-
-        // 안전세팅(수동으로 못 맞췄을 때도 방어)
-        if (fillImage.fillMethod != Image.FillMethod.Horizontal)
-            fillImage.fillMethod = Image.FillMethod.Horizontal;
-
-        if (fillImage.fillOrigin != (int)Image.OriginHorizontal.Left)
-            fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
 
     
 
