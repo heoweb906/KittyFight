@@ -12,7 +12,7 @@ public class AB_SavageRoar : AB_HitboxBase
 
     private void Start()
     {
-        effect.transform.SetParent(null);
+        if(effect) effect.transform.SetParent(null);
     }
 
 

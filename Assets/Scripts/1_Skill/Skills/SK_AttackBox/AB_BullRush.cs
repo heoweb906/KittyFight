@@ -9,6 +9,7 @@ public class AB_BullRush : AB_HitboxBase
     [Header("넉백")]
     public float knockbackForce = 24f;
     public float upwardFactor = 0.4f;
+    public float disableControlSeconds = 0.5f;
 
     private Vector3 rushDir = Vector3.forward;
 
@@ -31,6 +32,19 @@ public class AB_BullRush : AB_HitboxBase
             Vector3 kb = (rushDir + Vector3.up * upwardFactor).normalized;
             rb.velocity = Vector3.zero;
             rb.AddForce(kb * knockbackForce, ForceMode.Impulse);
+        }
+
+        var pj = victim.GetComponent<PlayerJump>();
+        if (pj != null)
+        {
+            pj.IgnoreHardStopFor(0.12f);
+        }
+        
+        // 컨트롤 차단 (피격자 쪽에서만 실행됨: AB_HitboxBase 권위 규칙)
+        var controller = victim.GetComponent<PlayerController>();
+        if (controller != null)
+        {
+            controller.DisableControlFor(disableControlSeconds);
         }
     }
 }
