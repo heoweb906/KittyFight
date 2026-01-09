@@ -13,9 +13,7 @@ public static class PlayerStateMessageBuilder
         bool isHanging,
         float speedY,
         bool isShock,
-        bool isHangRight,
-        int hp,
-        int maxHp
+        bool isHangRight
     )
     {
         var s = new PlayerState
@@ -30,10 +28,7 @@ public static class PlayerStateMessageBuilder
             isHanging = isHanging,
             speedY = speedY,
             isShock = isShock,
-            isHangRight = isHangRight,
-
-            hp = hp,
-            maxHp = maxHp
+            isHangRight = isHangRight
         };
         return "[MOVE]" + JsonUtility.ToJson(s);
     }

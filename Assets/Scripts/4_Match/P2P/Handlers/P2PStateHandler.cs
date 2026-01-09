@@ -100,10 +100,5 @@ public class P2PStateHandler : IP2PMessageHandler
             anim.SetBool("isShock", state.isShock);
             anim.SetBool("isHangRight", state.isHangRight);
         }
-
-        if (opponentHp != null && state.maxHp > 0)
-        {
-            opponentHp.RemoteSetHPSilent(state.hp, state.maxHp);
-        }
     }
 }
