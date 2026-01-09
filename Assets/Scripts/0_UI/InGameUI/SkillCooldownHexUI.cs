@@ -186,21 +186,29 @@ public class SkillCooldownHexUI : MonoBehaviour
             return;
         }
 
-        if (abilityRef == null || fillImage == null) return;
         var s = abilityRef.GetSkill(slot);
         var c = fillImage.color;
+
         if (s != null && s.skillIcon != null)
         {
-            bgImage.sprite = s.skillIcon;
-            bgImage.color = new Color32(25, 25, 25, 255);
+            if (bgImage != null)
+            {
+                bgImage.sprite = s.skillIcon;
+                bgImage.color = new Color32(25, 25, 25, 255);
+            }
+
             fillImage.sprite = s.skillIcon;
             c.a = visibleAlphaWhenIcon;
             fillImage.color = c;
             fillImage.enabled = true;
-            // fillImage.preserveAspect = true;
         }
         else
         {
+            if (bgImage != null)
+            {
+                bgImage.sprite = null;
+            }
+
             fillImage.sprite = null;
             c.a = noIconAlphaWhenNone;
             fillImage.color = c;

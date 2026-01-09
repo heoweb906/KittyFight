@@ -71,6 +71,8 @@ public class Button_MainMenu : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!isInitialized) InitializeColors();
+
         if (targetImage != null)
         {
             targetImage.DOKill();
@@ -82,9 +84,14 @@ public class Button_MainMenu : MonoBehaviour, IPointerEnterHandler, IPointerExit
             text_ButtonText.DOKill();
             text_ButtonText.DOColor(Color.black, 0.1f);
         }
-
-
-        mainMenuController.PlaySFX(mainMenuController.sfxClips[0]);
+        
+        if (mainMenuController != null &&
+            mainMenuController.sfxClips != null &&
+            mainMenuController.sfxClips.Length > 0 &&
+            mainMenuController.sfxClips[0] != null)
+        {
+            mainMenuController.PlaySFX(mainMenuController.sfxClips[0]);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

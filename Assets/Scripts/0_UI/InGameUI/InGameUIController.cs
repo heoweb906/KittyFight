@@ -146,17 +146,24 @@ public class InGameUIController : MonoBehaviour
     {
         float randomValue = Random.Range(0.3f, 0.5f);
 
+        if (hpUI_Player1 == null || hpUI_Player1.fillImage == null) return;
+        if (hpUI_Player2 == null || hpUI_Player2.fillImage == null) return;
+
+        if (gameManager.playerAbility_1 == null || gameManager.playerAbility_1.Health == null) return;
+        if (gameManager.playerAbility_2 == null || gameManager.playerAbility_2.Health == null) return;
+
+        // Player1
         int cur = gameManager.playerAbility_1.Health.CurrentHP;
         int max = gameManager.playerAbility_1.Health.MaxHP;
-        float t = Mathf.Clamp01((float)cur / max);
+        float t = (max > 0) ? Mathf.Clamp01((float)cur / max) : 0f;
 
         hpUI_Player1.fillImage.fillAmount = randomValue;
         hpUI_Player1.fillImage.fillAmount = t;
 
-
+        // Player2
         int cur_2 = gameManager.playerAbility_2.Health.CurrentHP;
         int max_2 = gameManager.playerAbility_2.Health.MaxHP;
-        float t_2 = Mathf.Clamp01((float)cur_2 / max_2);
+        float t_2 = (max_2 > 0) ? Mathf.Clamp01((float)cur_2 / max_2) : 0f;
 
         hpUI_Player2.fillImage.fillAmount = randomValue;
         hpUI_Player2.fillImage.fillAmount = t_2;
