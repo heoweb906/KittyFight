@@ -433,7 +433,7 @@ MonoBehaviour:
   lifeTime: 0.2
   environmentMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   wallCheckMode: 1
   bMiddleState: 0
   effect: {fileID: 3420710162107371092}

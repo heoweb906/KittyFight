@@ -5009,8 +5009,8 @@ MonoBehaviour:
   lifeTime: 0.2
   environmentMask:
     serializedVersion: 2
-    m_Bits: 0
-  wallCheckMode: 0
+    m_Bits: 768
+  wallCheckMode: 2
   bMiddleState: 0
   stunDuration: 1.2
   obj_Effect: {fileID: 7178487523375811240}

@@ -48,4 +48,4 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   venomCloudPrefab: {fileID: 6777267630284458099, guid: 2b5b727e099726b4c9d29efaaa654170,
     type: 3}
-  spawnInterval: 0.3
+  spawnInterval: 0.2

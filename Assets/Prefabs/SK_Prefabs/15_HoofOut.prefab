@@ -24357,7 +24357,7 @@ MonoBehaviour:
   lifeTime: 0.35
   environmentMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   wallCheckMode: 1
   bMiddleState: 0
   damage: 35
