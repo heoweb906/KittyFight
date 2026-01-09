@@ -17,7 +17,7 @@ public class PlayerHealthHexUI : MonoBehaviour
     [SerializeField] private Image bgImage;
 
     [Header("채움 이미지 (반드시 Filled/Horizontal/Left)")]
-    [SerializeField] private Image fillImage;
+    [SerializeField] public Image fillImage;
 
     private PlayerHealth healthRef;
 
@@ -50,12 +50,16 @@ public class PlayerHealthHexUI : MonoBehaviour
             return;
         }
 
-        Debug.Log(healthRef.CurrentHP);
-        Debug.Log(healthRef.MaxHP);
+        
         int cur = healthRef.CurrentHP;
         int max = healthRef.MaxHP;
         float t = Mathf.Clamp01((float)cur / max);
-        fillImage.fillAmount = t;
+
+        // Debug.Log(healthRef.CurrentHP + " / " + healthRef.MaxHP + " " + fillImage.fillAmount);
+
+        //fillImage.fillAmount = t;
+
+       
     }
 
     /// <summary>
@@ -101,15 +105,15 @@ public class PlayerHealthHexUI : MonoBehaviour
     /// </summary>
     private void EnsureFilledSetup()
     {
-        if (fillImage == null) return;
+        //if (fillImage == null) return;
 
-        if (fillImage.type != Image.Type.Filled)
-            fillImage.type = Image.Type.Filled;
+        //if (fillImage.type != Image.Type.Filled)
+        //    fillImage.type = Image.Type.Filled;
 
-        if (fillImage.fillMethod != Image.FillMethod.Horizontal)
-            fillImage.fillMethod = Image.FillMethod.Horizontal;
+        //if (fillImage.fillMethod != Image.FillMethod.Horizontal)
+        //    fillImage.fillMethod = Image.FillMethod.Horizontal;
 
-        if (fillImage.fillOrigin != (int)Image.OriginHorizontal.Left)
-            fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+        //if (fillImage.fillOrigin != (int)Image.OriginHorizontal.Left)
+        //    fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
     }
 }
