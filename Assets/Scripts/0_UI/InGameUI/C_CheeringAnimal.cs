@@ -34,7 +34,7 @@ public class C_CheeringAnimal : MonoBehaviour
     }
     public void Off()
     {
-        Debug.Log("응원 종료@@@");
+        // Debug.Log("응원 종료@@@");
         isFloating = false;
         rectTransform_Origin.DOKill();
         // 원래 위치로 돌아가기
