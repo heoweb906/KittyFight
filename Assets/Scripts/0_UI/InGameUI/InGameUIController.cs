@@ -140,11 +140,17 @@ public class InGameUIController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HPBarUpdate();
+    }
+    public void HPBarUpdate()
+    {
+        float randomValue = Random.Range(0.3f, 0.5f);
+
         int cur = gameManager.playerAbility_1.Health.CurrentHP;
         int max = gameManager.playerAbility_1.Health.MaxHP;
         float t = Mathf.Clamp01((float)cur / max);
 
-        hpUI_Player1.fillImage.fillAmount = 1f;
+        hpUI_Player1.fillImage.fillAmount = randomValue;
         hpUI_Player1.fillImage.fillAmount = t;
 
 
@@ -152,7 +158,7 @@ public class InGameUIController : MonoBehaviour
         int max_2 = gameManager.playerAbility_2.Health.MaxHP;
         float t_2 = Mathf.Clamp01((float)cur_2 / max_2);
 
-        hpUI_Player2.fillImage.fillAmount = 1f;
+        hpUI_Player2.fillImage.fillAmount = randomValue;
         hpUI_Player2.fillImage.fillAmount = t_2;
     }
 

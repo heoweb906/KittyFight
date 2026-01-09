@@ -462,6 +462,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator ApplyBackground_(int mapIndex, int backgroundIndex, int iMapGimicNum)
     {
         // 최초 실행 시 페이드 인
+        ingameUIController.HPBarUpdate();
+
+
         if (IntScorePlayer_1 == 0 && IntScorePlayer_2 == 0)
         {
             ingameUIController.OpenFadePanel_Vertical(ingameUIController.image_UpperArea.rectTransform, ingameUIController.image_LowerArea.rectTransform, 0.5f);
