@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillIcon: {fileID: 21300000, guid: fb9d08af003d97f4685a88393e54f3eb, type: 3}
+  audioClip: {fileID: 0}
   venomCloudPrefab: {fileID: 6777267630284458099, guid: 2b5b727e099726b4c9d29efaaa654170,
     type: 3}
-  spawnInterval: 0.1
+  spawnInterval: 0.3

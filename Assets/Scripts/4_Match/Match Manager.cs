@@ -48,14 +48,17 @@ public class MatchManager : MonoBehaviour
         isMatching = true;
 
         // 1. 플레이어 ID 생성
+        AppendLog("Generating ID...");
         myPlayerId = Guid.NewGuid().ToString();
 
         // 2. 로컬 포트 확보
+        AppendLog("Acquiring local port...");
         myPort = GetAvailablePort();
         localPort = myPort;
         localIp = GetLocalIPAddress();
 
         // 3. STUN 서버 통해 공인 IP/포트 확인
+        AppendLog("Checking IP...");
         var udp = new UdpClient(myPort);
         var stunResult = await StunClient.QueryAsync(udp, "stun.l.google.com", 19302);
 
@@ -70,6 +73,7 @@ public class MatchManager : MonoBehaviour
         myPort = stunResult.PublicEndPoint.Port;
 
         // 4. 내 정보 Lambda에 저장
+        AppendLog("Saving my Info...");
         await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, MyNickname);
 
         // 5. GameLift 매칭 시작

@@ -101,7 +101,6 @@ public class PlayerHealth : MonoBehaviour
             anim.SetTrigger("TakeDamage");
             StartCoroutine(DamageEffectCoroutine()); // 메인 스레드에서 안전하게 시작
         }
-        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 
     // ... (중간 생략: ShakeCameraPunch, ComputePunchDirFromSource, TakeDamage 등 기존 로직 동일) ...
@@ -392,4 +391,18 @@ public class PlayerHealth : MonoBehaviour
 
     // ComputeHitEffectRotation 함수가 잘려있다면 기존 함수 사용하시면 됩니다.
     // 기존에 있던 private Quaternion ComputeHitEffectRotation() ... 코드는 그대로 두세요.
+
+    public void RemoteSetHPSilent(int hp, int newMaxHp)
+    {
+        if (newMaxHp > 0 && newMaxHp != maxHP)
+            maxHP = Mathf.Max(1, newMaxHp);
+
+        int clamped = Mathf.Clamp(hp, 0, maxHP);
+
+        if (clamped == currentHP) return;
+
+        currentHP = clamped;
+
+        OnHPChanged?.Invoke(currentHP, maxHP);
+    }
 }

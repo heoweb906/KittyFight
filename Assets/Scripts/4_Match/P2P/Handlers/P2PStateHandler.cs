@@ -7,6 +7,7 @@ public class P2PStateHandler : IP2PMessageHandler
 
     private GameObject opponentPlayer;
     private Animator anim;
+    private PlayerHealth opponentHp;
     private int myPlayerNumber;
     private GameManager gameManager;
 
@@ -14,6 +15,7 @@ public class P2PStateHandler : IP2PMessageHandler
     {
         opponentPlayer = opponentObj;
         anim = opponentObj != null ? opponentObj.GetComponentInChildren<Animator>() : null;
+        opponentHp = opponentObj != null ? opponentObj.GetComponent<PlayerHealth>() : null;
         myPlayerNumber = myNumber;
         gameManager = gm;
     }
@@ -97,6 +99,11 @@ public class P2PStateHandler : IP2PMessageHandler
             anim.SetFloat("speedY", state.speedY);
             anim.SetBool("isShock", state.isShock);
             anim.SetBool("isHangRight", state.isHangRight);
+        }
+
+        if (opponentHp != null && state.maxHp > 0)
+        {
+            opponentHp.RemoteSetHPSilent(state.hp, state.maxHp);
         }
     }
 }
