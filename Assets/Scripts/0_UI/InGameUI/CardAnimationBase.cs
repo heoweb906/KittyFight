@@ -107,14 +107,23 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
 
         if (animationImages == null) yield break;
 
-        for (int i = 0; i < animationImages.Count; i++)
+        var snapshot = animationImages.ToArray();
+        for (int i = 0; i < snapshot.Length; i++)
         {
-            if (animationImages[i] != null)
-            {
-                animationImages[i].DOKill();
-                animationImages[i].rectTransform.DOKill();
-            }
+            var img = snapshot[i];
+            if (img == null) continue;
+
+            img.DOKill(true);
+            img.rectTransform.DOKill(true);
         }
+        //for (int i = 0; i < animationImages.Count; i++)
+        //{
+        //    if (animationImages[i] != null)
+        //    {
+        //        animationImages[i].DOKill();
+        //        animationImages[i].rectTransform.DOKill();
+        //    }
+        //}
     }
 }
 
@@ -6338,23 +6347,35 @@ public class CardAnimation_Num_106 : CardAnimationBase
     {
         if (animationImages != null)
         {
-            // 1, 2번 (회전) 및 3, 4번 (페이드) 트윈 정리
-            if (animationImages.Count > 1) animationImages[1].GetComponent<UnityEngine.RectTransform>().DOKill(true);
-            if (animationImages.Count > 2) animationImages[2].GetComponent<UnityEngine.RectTransform>().DOKill(true);
-            if (animationImages.Count > 3) animationImages[3].DOKill(true);
-            if (animationImages.Count > 4) animationImages[4].DOKill(true);
-            if (animationImages.Count > ELEMENT_5_INDEX) animationImages[ELEMENT_5_INDEX].DOKill(true); // 원본 5번 요소 트윈 정리
-
-            // 🌟 동적으로 생성된 5번 요소 복사본들 정리 및 파괴 🌟
-            foreach (UnityEngine.GameObject copy in _activeCopies)
+            var snapshot = animationImages.ToArray();
+            for (int i = 0; i < snapshot.Length; i++)
             {
-                if (copy != null)
-                {
-                    copy.GetComponent<UnityEngine.UI.Image>().DOKill(true);
-                    UnityEngine.GameObject.Destroy(copy);
-                }
+                var img = snapshot[i];
+                if (img == null) continue;
+
+                img.rectTransform.DOKill(true);
+                img.DOKill(true);
+
+                var cg = img.GetComponent<CanvasGroup>();
+                if (cg != null) cg.DOKill(true);
             }
-            _activeCopies.Clear();
+            //// 1, 2번 (회전) 및 3, 4번 (페이드) 트윈 정리
+            //if (animationImages.Count > 1) animationImages[1].GetComponent<UnityEngine.RectTransform>().DOKill(true);
+            //if (animationImages.Count > 2) animationImages[2].GetComponent<UnityEngine.RectTransform>().DOKill(true);
+            //if (animationImages.Count > 3) animationImages[3].DOKill(true);
+            //if (animationImages.Count > 4) animationImages[4].DOKill(true);
+            //if (animationImages.Count > ELEMENT_5_INDEX) animationImages[ELEMENT_5_INDEX].DOKill(true); // 원본 5번 요소 트윈 정리
+
+            //// 🌟 동적으로 생성된 5번 요소 복사본들 정리 및 파괴 🌟
+            //foreach (UnityEngine.GameObject copy in _activeCopies)
+            //{
+            //    if (copy != null)
+            //    {
+            //        copy.GetComponent<UnityEngine.UI.Image>().DOKill(true);
+            //        UnityEngine.GameObject.Destroy(copy);
+            //    }
+            //}
+            //_activeCopies.Clear();
         }
         DOTween.Kill(this);
     }

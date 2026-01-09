@@ -765,13 +765,17 @@ public class SkillCardController : MonoBehaviour
         if (currentHeartObj != null) Destroy(currentHeartObj);
         if (currentRewardIcon != null) Destroy(currentRewardIcon);
 
-        // RectTransform 자식들 정리
-        if (ransform_RatCardLeft != null) foreach (Transform child in ransform_RatCardLeft) Destroy(child.gameObject);
-        if (ransform_RatCardRight != null) foreach (Transform child in ransform_RatCardRight) Destroy(child.gameObject);
+        DestroyAllChildren(ransform_RatCardLeft);
+        DestroyAllChildren(ransform_RatCardRight);
+        DestroyAllChildren(rasnform_RatIconLeft);
+        DestroyAllChildren(rasnform_RatIconRight);
+        //// RectTransform 자식들 정리
+        //if (ransform_RatCardLeft != null) foreach (Transform child in ransform_RatCardLeft) Destroy(child.gameObject);
+        //if (ransform_RatCardRight != null) foreach (Transform child in ransform_RatCardRight) Destroy(child.gameObject);
 
-        // 추가된 RectTransform 포인트들도 정리 (필요 시)
-        if (rasnform_RatIconLeft != null) foreach (Transform child in rasnform_RatIconLeft) Destroy(child.gameObject);
-        if (rasnform_RatIconRight != null) foreach (Transform child in rasnform_RatIconRight) Destroy(child.gameObject);
+        //// 추가된 RectTransform 포인트들도 정리 (필요 시)
+        //if (rasnform_RatIconLeft != null) foreach (Transform child in rasnform_RatIconLeft) Destroy(child.gameObject);
+        //if (rasnform_RatIconRight != null) foreach (Transform child in rasnform_RatIconRight) Destroy(child.gameObject);
 
         currentTargetIcon = null;
         currentHeartObj = null;
@@ -783,7 +787,7 @@ public class SkillCardController : MonoBehaviour
     {
         if (targetParent == null) return;
 
-        foreach (Transform child in targetParent) Destroy(child.gameObject);
+        DestroyAllChildren(targetParent);
 
         GameObject ratCardObj = Instantiate(objSkillCard_Rat, targetParent);
         SkillCard_UI ratCardUI = ratCardObj.GetComponent<SkillCard_UI>();
@@ -1045,7 +1049,16 @@ public class SkillCardController : MonoBehaviour
     }
 
 
+    private static void DestroyAllChildren(Transform parent)
+    {
+        if (parent == null) return;
 
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            var child = parent.GetChild(i);
+            if (child != null) Object.Destroy(child.gameObject);
+        }
+    }
 }
 
 

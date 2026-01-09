@@ -152,7 +152,6 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        Debug.Log("InitializeGame");
         myNum = MatchResultStore.myPlayerNumber;
 
         // 프리팹/스폰 선택

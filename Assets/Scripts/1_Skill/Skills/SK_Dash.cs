@@ -25,7 +25,7 @@ public class SK_Dash : Skill
             rb = playerAbility.GetComponent<Rigidbody>();
         if (!rb) rb = GetComponentInParent<Rigidbody>();
         if (playerAbility != null) events = playerAbility.events;
-        anim = playerAbility.GetComponentInChildren<Animator>();
+        if (playerAbility != null) anim = playerAbility.GetComponentInChildren<Animator>();
     }
 
     public override void Bind(PlayerAbility ability)
