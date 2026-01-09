@@ -155,7 +155,7 @@ MonoBehaviour:
     m_Bits: 768
   wallCheckMode: 0
   bMiddleState: 0
-  damage: 30
+  damage: 15
   flyingVisual: {fileID: 9011498391938913040}
   installedVisual: {fileID: 4085878491624308455}
   rotateSpeedX: 1000
