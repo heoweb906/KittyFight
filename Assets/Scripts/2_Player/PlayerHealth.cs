@@ -101,6 +101,7 @@ public class PlayerHealth : MonoBehaviour
             anim.SetTrigger("TakeDamage");
             StartCoroutine(DamageEffectCoroutine()); // 메인 스레드에서 안전하게 시작
         }
+        OnHPChanged?.Invoke(currentHP, maxHP);
     }
 
     // ... (중간 생략: ShakeCameraPunch, ComputePunchDirFromSource, TakeDamage 등 기존 로직 동일) ...

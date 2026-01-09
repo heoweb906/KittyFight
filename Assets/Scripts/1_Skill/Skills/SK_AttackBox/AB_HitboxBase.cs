@@ -58,14 +58,14 @@ public abstract class AB_HitboxBase : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("OnCollision이 작동함");
+        //Debug.Log("OnCollision이 작동함");
 
         var col = collision.collider;
 
         // 1) 플레이어 피격 시도
         if (TryApplyHit(col)) return;
 
-        Debug.Log("여기까지 잘 작동하고 있음");
+        //Debug.Log("여기까지 잘 작동하고 있음");
 
         // 2) 환경 충돌 처리
         if (IsEnvironment(col.gameObject.layer))
@@ -214,7 +214,7 @@ public abstract class AB_HitboxBase : MonoBehaviour
             float distance = Vector3.Distance(piece.transform.position, explosionPos);
             if (distance <= range)
             {
-                Debug.Log("조각 발견");
+                //Debug.Log("조각 발견");
                 piece.OnThisPiece();
 
                 // 4. Rigidbody를 찾아 힘을 가합니다.
