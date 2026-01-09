@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -10,23 +11,44 @@ public interface ICardAnimation
     void StopAnimation();
 }
 
+
 public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
 {
-    protected List<Image> animationImages;
+    // ==================================================================================
+    // [매직 트릭] 
+    // 1. 실제 데이터는 _realList라는 비밀 변수에 숨깁니다.
+    // 2. 자식들이 쓰는 animationImages라는 이름은 그대로 두되, '프로퍼티'로 바꿉니다.
+    // ==================================================================================
+
+    private List<Image> _realList; // 실제 데이터 저장소
+
+    // 자식 클래스는 여전히 'animationImages'라고 부르면 됩니다. (수정 불필요)
+    protected List<Image> animationImages
+    {
+        get
+        {
+            // 자식이 이 변수를 쓸 때마다(foreach 돌릴 때), 안전한 복사본을 즉석에서 만들어 줍니다.
+            if (_realList == null) return null;
+            return new List<Image>(_realList);
+        }
+        set
+        {
+            // 값을 넣을 때는 원본에 저장합니다.
+            _realList = value;
+        }
+    }
+
     protected bool isPlaying = false;
     protected Dictionary<RectTransform, Vector2> originalPositions = new Dictionary<RectTransform, Vector2>();
 
     public void StartAnimation(List<Image> images)
     {
-        if (isPlaying) return; // 중복 실행 방지
+        if (isPlaying) return;
 
-        animationImages = images;
+        animationImages = images; // 프로퍼티 set 호출 -> _realList에 저장됨
         isPlaying = true;
 
-        // 원래 위치들 저장
         SaveOriginalPositions(images);
-
-        // 실제 애니메이션 로직 실행
         ExecuteAnimation(images);
     }
 
@@ -34,12 +56,10 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
     {
         isPlaying = false;
 
-        if (animationImages != null)
+        // 원본 리스트(_realList) 체크
+        if (_realList != null)
         {
-            // 모든 DOTween 정지
             KillAllTweens();
-
-            // 원래 위치로 복원
             RestoreOriginalPositions();
         }
     }
@@ -47,10 +67,18 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
     private void SaveOriginalPositions(List<Image> images)
     {
         originalPositions.Clear();
+        if (images == null) return;
+
         for (int i = 0; i < images.Count; i++)
         {
-            RectTransform rect = images[i].GetComponent<RectTransform>();
-            originalPositions[rect] = rect.anchoredPosition;
+            if (images[i] != null)
+            {
+                RectTransform rect = images[i].GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    originalPositions[rect] = rect.anchoredPosition;
+                }
+            }
         }
     }
 
@@ -68,12 +96,32 @@ public abstract class CardAnimationBase : MonoBehaviour, ICardAnimation
 
     protected Vector2 GetOriginalPosition(RectTransform rect)
     {
-        return originalPositions.ContainsKey(rect) ? originalPositions[rect] : rect.anchoredPosition;
+        if (rect != null && originalPositions.ContainsKey(rect))
+        {
+            return originalPositions[rect];
+        }
+        return rect != null ? rect.anchoredPosition : Vector2.zero;
     }
 
-    // 하위 클래스에서 구현해야 할 메서드들
     protected abstract void ExecuteAnimation(List<Image> images);
-    protected abstract void KillAllTweens();
+
+    // 부모의 안전장치 (자식에서 override 안 해도 됨)
+    protected virtual void KillAllTweens()
+    {
+        if (_realList != null)
+        {
+            // 원본 리스트(_realList)를 기반으로 안전하게 종료
+            foreach (var img in _realList.ToList())
+            {
+                if (img != null)
+                {
+                    img.rectTransform.DOKill();
+                    CanvasGroup cg = img.GetComponent<CanvasGroup>();
+                    if (cg != null) cg.DOKill();
+                }
+            }
+        }
+    }
 }
 
 
