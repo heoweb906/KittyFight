@@ -16,7 +16,4 @@ public class PlayerState
     public float speedY;
     public bool isShock;
     public bool isHangRight;
-
-    public int hp;
-    public int maxHp;
 }

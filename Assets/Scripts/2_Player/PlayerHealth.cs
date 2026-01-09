@@ -115,12 +115,6 @@ public class PlayerHealth : MonoBehaviour
     // [수정된 부분] 데미지 이펙트 및 머테리얼 점멸 처리
     // --------------------------------------------------------------------------
 
-
-    //private void FixedUpdate()
-    //{
-    //    Debug.Log(currentHP);
-    //}
-
     private void ShakeCameraPunch(float strength, Vector3 dir, float duration = 0.6f)
     {
         var gm = FindObjectOfType<GameManager>();
@@ -146,8 +140,6 @@ public class PlayerHealth : MonoBehaviour
     {
         pendingSourcePos = null;
         TakeDamage(damage, null);
-
-        Debug.Log("PlayerHealth_TakeHit");
     }
 
     public void TakeDamage(int damage, PlayerAbility attacker)
@@ -397,25 +389,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-
     // ComputeHitEffectRotation 함수가 잘려있다면 기존 함수 사용하시면 됩니다.
-    // 기존에 있던 private Quaternion ComputeHitEffectRotation() ... 코드는 그대로 두세요. 
-
-    public void RemoteSetHPSilent(int hp, int newMaxHp)
-    {
-        Debug.Log("aaaaaa");
-
-        if (newMaxHp > 0 && newMaxHp != maxHP)
-            maxHP = Mathf.Max(1, newMaxHp);
-
-        int clamped = Mathf.Clamp(hp, 0, maxHP);
-
-        if (clamped == currentHP) return;
-
-        currentHP = clamped;
-
-
-        OnHPChanged?.Invoke(currentHP, maxHP);
-        Debug.Log("bbbbb");
-    }
+    // 기존에 있던 private Quaternion ComputeHitEffectRotation() ... 코드는 그대로 두세요.
 }

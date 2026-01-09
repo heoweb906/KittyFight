@@ -12,7 +12,6 @@ public class P2PStateSender : P2PManager
         myPlayer = playerObj;
         anim = playerObj != null ? playerObj.GetComponentInChildren<Animator>() : null;
         myPlayerNumber = playerNumber;
-        myHealth = playerObj != null ? playerObj.GetComponent<PlayerHealth>() : null;
     }
 
     public static void SendMyState()
@@ -40,8 +39,6 @@ public class P2PStateSender : P2PManager
         }
 
         if (myHealth == null) myHealth = myPlayer.GetComponent<PlayerHealth>();
-        int hp = myHealth != null ? myHealth.CurrentHP : 0;
-        int maxHp = myHealth != null ? myHealth.MaxHP : 0;
 
         var msg = PlayerStateMessageBuilder.Build(
             myPlayer.transform.position,
@@ -54,9 +51,7 @@ public class P2PStateSender : P2PManager
             isHanging,
             speedY,
             isShock,
-            isHangRight,
-            hp,
-            maxHp
+            isHangRight
         );
 
         P2PMessageSender.SendMessage(msg);

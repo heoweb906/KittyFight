@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class P2PStateHandler : IP2PMessageHandler
 {
-    private const string Prefix = "[MOVE]"; 
+    private const string Prefix = "[MOVE]";
 
     private GameObject opponentPlayer;
     private Animator anim;
@@ -99,12 +99,6 @@ public class P2PStateHandler : IP2PMessageHandler
             anim.SetFloat("speedY", state.speedY);
             anim.SetBool("isShock", state.isShock);
             anim.SetBool("isHangRight", state.isHangRight);
-        }
-
-
-        if (opponentHp != null && state.maxHp > 0)
-        {
-            opponentHp.RemoteSetHPSilent(state.hp, state.maxHp);
         }
     }
 }
