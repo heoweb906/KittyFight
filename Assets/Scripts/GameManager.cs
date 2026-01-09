@@ -299,6 +299,9 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
+        player1.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+        player2.GetComponent<PlayerInputRouter>()?.SetOwnership(false);
+
         int winnerPlayerNum = iLosePlayerNum == 1 ? 2 : 1;
         ingameUIController?.ComeToTheEndGame(winnerPlayerNum);
 
