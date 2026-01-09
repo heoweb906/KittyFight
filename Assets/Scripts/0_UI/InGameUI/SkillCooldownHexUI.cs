@@ -204,10 +204,6 @@ public class SkillCooldownHexUI : MonoBehaviour
         }
         else
         {
-            if (bgImage != null)
-            {
-                bgImage.sprite = null;
-            }
 
             fillImage.sprite = null;
             c.a = noIconAlphaWhenNone;

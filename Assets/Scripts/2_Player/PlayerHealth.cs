@@ -147,7 +147,7 @@ public class PlayerHealth : MonoBehaviour
         if (isInvincible || skInvincible) return;
 
         int amount = Mathf.Max(0, damage);
-        if (bDogGimickOn) amount = Mathf.RoundToInt(damage * 1.3f);
+        if (bDogGimickOn) amount = Mathf.RoundToInt(damage * 1.2f);
 
         attacker?.events?.EmitBeforeDealDamage(ref amount, this.gameObject);
         if (amount <= 0) return;
