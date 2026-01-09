@@ -5,7 +5,7 @@ using DG.Tweening;
 public class SkillEffectAnimation : MonoBehaviour
 {
     [Header("Target Images")]
-    public Image[] targetImages;  // 배열로 변경
+    public Image[] targetImages;
 
     private RectTransform[] targetRectTransforms;
     private Vector3[] originalScales;
@@ -17,13 +17,10 @@ public class SkillEffectAnimation : MonoBehaviour
     {
         InitializeArrays();
     }
+
     void InitializeArrays()
     {
-        if (targetImages == null || targetImages.Length == 0)
-        {
-            Debug.LogWarning("Target Images가 할당되지 않았습니다!");
-            return;
-        }
+        if (targetImages == null || targetImages.Length == 0) return;
 
         int count = targetImages.Length;
         targetRectTransforms = new RectTransform[count];
@@ -43,15 +40,11 @@ public class SkillEffectAnimation : MonoBehaviour
         }
     }
 
-
-   
-
-    // 특정 인덱스의 애니메이션 정리
     private void StopCurrentAnimation(int index)
     {
-        if (index < 0 || index >= targetRectTransforms.Length) return;
+        if (targetRectTransforms == null || index < 0 || index >= targetRectTransforms.Length) return;
 
-        // 해당 인덱스의 RectTransform에 있는 모든 DOTween 애니메이션만 정리
+        // 타겟이 살아있는 경우에만 DOKill 수행
         if (targetRectTransforms[index] != null)
         {
             targetRectTransforms[index].DOKill();
@@ -69,6 +62,7 @@ public class SkillEffectAnimation : MonoBehaviour
             currentShakeSequences[index] = null;
         }
 
+        // 상태 원복 (타겟이 살아있을 때만)
         if (targetRectTransforms[index] != null)
         {
             targetRectTransforms[index].localScale = originalScales[index];
@@ -76,131 +70,117 @@ public class SkillEffectAnimation : MonoBehaviour
         }
     }
 
-    // 매개변수로 인덱스를 받는 Shake 애니메이션
     public void PlayShakeAnimation(int index)
     {
-        Debug.Log($"PlayShakeAnimation called with index: {index}");
-        Debug.Log($"targetRectTransforms length: {targetRectTransforms?.Length}");
-        Debug.Log($"targetRectTransforms[{index}] is null: {targetRectTransforms?[index] == null}");
-
-        if (index < 0 || index >= targetRectTransforms.Length || targetRectTransforms[index] == null) return;
+        if (targetRectTransforms == null || index < 0 || index >= targetRectTransforms.Length) return;
+        RectTransform target = targetRectTransforms[index];
+        if (target == null) return;
 
         StopCurrentAnimation(index);
 
-        // 떨림 애니메이션
+        // 1. 회전 떨림
         currentShakeSequences[index] = DOTween.Sequence();
-        currentShakeSequences[index].Append(targetRectTransforms[index].DOPunchRotation(Vector3.forward * 30f, 0.4f, 30, 0.4f))
-                                   .OnComplete(() => {
-                                       currentShakeSequences[index] = null;
-                                       targetRectTransforms[index].localEulerAngles = originalRotations[index];
-                                   });
+        currentShakeSequences[index]
+            .Append(target.DOPunchRotation(Vector3.forward * 30f, 0.4f, 30, 0.4f))
+            .OnComplete(() =>
+            {
+                currentShakeSequences[index] = null;
+                if (target != null) target.localEulerAngles = originalRotations[index];
+            })
+            .SetLink(target.gameObject); // [중요] 오브젝트 파괴 시 트윈 자동 삭제
 
-        // 스케일 애니메이션
+        // 2. 크기 변화
         currentSequences[index] = DOTween.Sequence();
-        currentSequences[index].Append(targetRectTransforms[index].DOScale(originalScales[index] * 0.7f, 0.04f))
-                              .Append(targetRectTransforms[index].DOScale(originalScales[index] * 1.05f, 0.12f))
-                              .Append(targetRectTransforms[index].DOScale(originalScales[index], 0.08f))
-                              .OnComplete(() => {
-                                  currentSequences[index] = null;
-                                  targetRectTransforms[index].localScale = originalScales[index];
-                              });
+        currentSequences[index]
+            .Append(target.DOScale(originalScales[index] * 0.7f, 0.04f))
+            .Append(target.DOScale(originalScales[index] * 1.05f, 0.12f))
+            .Append(target.DOScale(originalScales[index], 0.08f))
+            .OnComplete(() =>
+            {
+                currentSequences[index] = null;
+                if (target != null) target.localScale = originalScales[index];
+            })
+            .SetLink(target.gameObject); // [중요]
     }
 
-    // 매개변수로 인덱스를 받는 Simple 애니메이션
     public void PlaySimpleAnimation(int index)
     {
-        if (index < 0 || index >= targetRectTransforms.Length || targetRectTransforms[index] == null) return;
+        if (targetRectTransforms == null || index < 0 || index >= targetRectTransforms.Length) return;
+        RectTransform target = targetRectTransforms[index];
+        if (target == null) return;
 
         StopCurrentAnimation(index);
 
         currentSequences[index] = DOTween.Sequence();
-        currentSequences[index].Append(targetRectTransforms[index].DOScale(originalScales[index] * 0.9f, 0.04f))
-                              .Append(targetRectTransforms[index].DOScale(originalScales[index] * 1.2f, 0.1f))
-                              .Append(targetRectTransforms[index].DOScale(originalScales[index], 0.1f))
-                              .OnComplete(() => {
-                                  currentSequences[index] = null;
-                                  targetRectTransforms[index].localScale = originalScales[index];
-                              });
+        currentSequences[index]
+            .Append(target.DOScale(originalScales[index] * 0.9f, 0.04f))
+            .Append(target.DOScale(originalScales[index] * 1.2f, 0.1f))
+            .Append(target.DOScale(originalScales[index], 0.1f))
+            .OnComplete(() =>
+            {
+                currentSequences[index] = null;
+                if (target != null) target.localScale = originalScales[index];
+            })
+            .SetLink(target.gameObject); // [중요]
     }
-
-
 
     public void PlayShakeAnimation(Image targetImage)
     {
+        if (targetImages == null) return;
         int index = System.Array.IndexOf(targetImages, targetImage);
-        if (index >= 0)
-        {
-            PlayShakeAnimation(index);
-        }
+        if (index >= 0) PlayShakeAnimation(index);
     }
+
     public void PlaySimpleAnimation(Image targetImage)
     {
+        if (targetImages == null) return;
         int index = System.Array.IndexOf(targetImages, targetImage);
-        if (index >= 0)
-        {
-            PlaySimpleAnimation(index);
-        }
+        if (index >= 0) PlaySimpleAnimation(index);
     }
 
-
-    // HP바 전용 애니메이션
-    // HP바 전용 애니메이션
     public void PlayDoubleShakeAnimation(int index1, int index2)
     {
-        if (index1 >= 0 && index1 < targetRectTransforms.Length)
-        {
-            StopCurrentAnimation(index1);
-
-            RectTransform rect1 = targetRectTransforms[index1];
-
-            // Z축 떨림
-            currentShakeSequences[index1] = DOTween.Sequence();
-            currentShakeSequences[index1].Append(rect1.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f))
-                    .OnComplete(() => {
-                        currentShakeSequences[index1] = null;
-                        rect1.localEulerAngles = originalRotations[index1];
-                    });
-
-            // 크기 변화
-            currentSequences[index1] = DOTween.Sequence();
-            currentSequences[index1].Append(rect1.DOScale(originalScales[index1] * 1.1f, 0.15f))
-                        .Append(rect1.DOScale(originalScales[index1], 0.15f))
-                        .OnComplete(() => {
-                            currentSequences[index1] = null;
-                            rect1.localScale = originalScales[index1];
-                        });
-        }
-
-        if (index2 >= 0 && index2 < targetRectTransforms.Length)
-        {
-            StopCurrentAnimation(index2);
-
-            RectTransform rect2 = targetRectTransforms[index2];
-
-            // Z축 떨림
-            currentShakeSequences[index2] = DOTween.Sequence();
-            currentShakeSequences[index2].Append(rect2.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f))
-                    .OnComplete(() => {
-                        currentShakeSequences[index2] = null;
-                        rect2.localEulerAngles = originalRotations[index2];
-                    });
-
-            // 크기 변화
-            currentSequences[index2] = DOTween.Sequence();
-            currentSequences[index2].Append(rect2.DOScale(originalScales[index2] * 1.1f, 0.15f))
-                        .Append(rect2.DOScale(originalScales[index2], 0.15f))
-                        .OnComplete(() => {
-                            currentSequences[index2] = null;
-                            rect2.localScale = originalScales[index2];
-                        });
-        }
+        PlaySingleDoubleShake(index1);
+        PlaySingleDoubleShake(index2);
     }
 
+    // 중복 코드 방지를 위한 내부 헬퍼 함수
+    private void PlaySingleDoubleShake(int index)
+    {
+        if (targetRectTransforms == null || index < 0 || index >= targetRectTransforms.Length) return;
+        RectTransform target = targetRectTransforms[index];
+        if (target == null) return;
 
+        StopCurrentAnimation(index);
 
+        // Z축 떨림
+        currentShakeSequences[index] = DOTween.Sequence();
+        currentShakeSequences[index]
+            .Append(target.DOPunchRotation(Vector3.forward * 15f, 0.3f, 30, 0.8f))
+            .OnComplete(() =>
+            {
+                currentShakeSequences[index] = null;
+                if (target != null) target.localEulerAngles = originalRotations[index];
+            })
+            .SetLink(target.gameObject);
+
+        // 크기 변화
+        currentSequences[index] = DOTween.Sequence();
+        currentSequences[index]
+            .Append(target.DOScale(originalScales[index] * 1.1f, 0.15f))
+            .Append(target.DOScale(originalScales[index], 0.15f))
+            .OnComplete(() =>
+            {
+                currentSequences[index] = null;
+                if (target != null) target.localScale = originalScales[index];
+            })
+            .SetLink(target.gameObject);
+    }
 
     void OnDestroy()
     {
+        if (targetRectTransforms == null) return;
+
         for (int i = 0; i < targetRectTransforms.Length; i++)
         {
             StopCurrentAnimation(i);
