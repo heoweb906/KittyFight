@@ -126,6 +126,6 @@ MonoBehaviour:
   wallCheckMode: 1
   bMiddleState: 0
   damage: 20
-  knockbackForce: 10
+  knockbackForce: 7
   upwardFactor: 0.4
   disableControlSeconds: 0.5

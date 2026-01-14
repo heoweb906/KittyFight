@@ -126,7 +126,7 @@ MonoBehaviour:
   wallCheckMode: 1
   bMiddleState: 0
   effect: {fileID: 0}
-  stunDuration: 2.5
+  stunDuration: 1.2
 --- !u!1 &4940818340295206281
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   wallCheckMode: 1
   bMiddleState: 0
   effect: {fileID: 0}
-  stunDuration: 2.5
+  stunDuration: 1.2
 --- !u!1 &5972952298674427652
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
   wallCheckMode: 1
   bMiddleState: 0
   effect: {fileID: 0}
-  stunDuration: 2.5
+  stunDuration: 1.2
 --- !u!1 &6312472998875430883
 GameObject:
   m_ObjectHideFlags: 0

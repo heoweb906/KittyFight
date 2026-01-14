@@ -10,7 +10,8 @@ public class AB_MeleeHitbox : AB_HitboxBase
 
     private void Start()
     {
-        objEffect.transform.SetParent(null);
+        if(objEffect != null)  objEffect.transform.SetParent(null);
+
     }
 
     protected override void ApplyEffects(PlayerHealth victim, Collider victimCollider)

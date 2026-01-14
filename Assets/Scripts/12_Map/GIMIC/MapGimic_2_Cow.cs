@@ -62,6 +62,7 @@ public class MapGimic_2_Cow : AbstractMapGimic
             }
         }
     }
+   
 
     private IEnumerator Co_PlayCowSequence()
     {
