@@ -67114,7 +67114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1806157243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -67154,7 +67154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The opponent has disconnected
+  m_text: Connecting...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d5a3f60badf0d84da60495280bfe2f9, type: 2}
   m_sharedMaterial: {fileID: 8467836614562314789, guid: 8d5a3f60badf0d84da60495280bfe2f9,
@@ -78064,6 +78064,7 @@ MonoBehaviour:
   image_FadeOut_White: {fileID: 477228806}
   bFinalEndingStart: 0
   text_disconnectWarning: {fileID: 1806157242}
+  tmp_disconnectWarning: {fileID: 0}
   sfxSource: {fileID: 401929236}
   sfxClips_InGameSystem:
   - {fileID: 8300000, guid: f62253284cb87d94b8dc3cacd29add97, type: 3}

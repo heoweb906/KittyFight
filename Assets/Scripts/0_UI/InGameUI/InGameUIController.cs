@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.IO;
+using TMPro;
 
 public class InGameUIController : MonoBehaviour
 {
@@ -61,7 +62,9 @@ public class InGameUIController : MonoBehaviour
     [Header("연출용")]
     public Image image_FadeOut_White;
     public bool bFinalEndingStart;
-    public GameObject text_disconnectWarning;
+
+    public GameObject text_disconnectWarning;       // 연결 끊겼을 때 나옴 
+    public TMP_Text tmp_disconnectWarning;          // 연결 끊겼을 때 나오는 텍스트
 
     [Header("사운드")]
     [SerializeField] private AudioSource sfxSource;
