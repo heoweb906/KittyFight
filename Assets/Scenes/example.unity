@@ -54019,6 +54019,7 @@ MonoBehaviour:
   playerAbility_2: {fileID: 0}
   opponentStateTimeout: 3
   fallbackSceneName: MainMenu
+  startHandshakeTimeout: 5
 --- !u!1 &1424016837
 GameObject:
   m_ObjectHideFlags: 0
@@ -78064,7 +78065,7 @@ MonoBehaviour:
   image_FadeOut_White: {fileID: 477228806}
   bFinalEndingStart: 0
   text_disconnectWarning: {fileID: 1806157242}
-  tmp_disconnectWarning: {fileID: 0}
+  tmp_disconnectWarning: {fileID: 1806157244}
   sfxSource: {fileID: 401929236}
   sfxClips_InGameSystem:
   - {fileID: 8300000, guid: f62253284cb87d94b8dc3cacd29add97, type: 3}

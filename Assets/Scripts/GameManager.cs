@@ -143,6 +143,8 @@ public class GameManager : MonoBehaviour
         if (returningToMenu) return;
         returningToMenu = true;
         ingameUIController.text_disconnectWarning.SetActive(true);
+        ingameUIController.tmp_disconnectWarning.text = "The opponent has disconnected";
+
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 
