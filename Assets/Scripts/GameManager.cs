@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
 
         if (P2PManager.IsReadyToStartGame)
         {
+            handshakeStartTime = -1f;
             P2PManager.IsReadyToStartGame = false;
             InitializeGame();
         }
@@ -169,6 +170,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
+        handshakeStartTime = -1f;
         myNum = MatchResultStore.myPlayerNumber;
 
         // 프리팹/스폰 선택
