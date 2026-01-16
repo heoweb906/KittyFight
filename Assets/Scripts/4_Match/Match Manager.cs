@@ -2,12 +2,10 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 
 public class MatchManager : MonoBehaviour
 {
@@ -32,139 +30,184 @@ public class MatchManager : MonoBehaviour
 
     private const float MATCH_TIMEOUT_SECONDS = 60f;
 
+    private UdpClient matchingUdp;
+    private int matchAttemptSeq = 0;
+    private bool lastMatchSucceeded = false;
 
     private void Awake()
     {
         BoolMatchSucces = false;
     }
 
+    private void OnApplicationQuit()
+    {
+        if (!string.IsNullOrEmpty(ticketId))
+        {
+            var quitTicket = ticketId;
+            CleanupLocalMatchingState();
+            _ = GameLiftCancelMatch.CancelMatchmaking(quitTicket);
+        }
+    }
+
+    private void CleanupLocalMatchingState()
+    {
+        isMatching = false;
+        BoolMatchSucces = false;
+        lastMatchSucceeded = false;
+        matchStartTime = 0f;
+
+        StopAllCoroutines();
+
+        ticketId = null;
+
+        if (matchingUdp != null)
+        {
+            try { matchingUdp.Close(); } catch { }
+            matchingUdp = null;
+        }
+    }
 
     public async void OnMatchButtonClicked()
     {
         if (isMatching) return;
+
+        // 이전 상태가 남아있을 가능성까지 고려해서 시작 시 정리
+        CleanupLocalMatchingState();
         MatchResultStore.Reset();
 
-        matchStartTime = 0;
+        // 이번 시도 토큰 발급
+        matchAttemptSeq++;
+        int myAttempt = matchAttemptSeq;
+
         isMatching = true;
+        lastMatchSucceeded = false;
 
-        // 1. 플레이어 ID 생성
-        AppendLog("Generating ID...");
-        myPlayerId = Guid.NewGuid().ToString();
-
-        // 2. 로컬 포트 확보
-        AppendLog("Acquiring local port...");
-        myPort = GetAvailablePort();
-        localPort = myPort;
-        localIp = GetLocalIPAddress();
-
-        // 3. STUN 서버 통해 공인 IP/포트 확인
-        AppendLog("Checking IP...");
-        var udp = new UdpClient(myPort);
-        var stunResult = await StunClient.QueryAsync(udp, "stun.l.google.com", 19302);
-
-        if (stunResult?.PublicEndPoint == null)
+        try
         {
-            //AppendLog("STUN 요청 실패 - 공인 IP/Port 조회 실패");
-            isMatching = false; // 실패 시 플래그 정리
-            return;
+            // 1. 플레이어 ID 생성
+            AppendLog("Generating ID...");
+            myPlayerId = Guid.NewGuid().ToString();
+
+            // 2. 로컬 포트 확보
+            AppendLog("Acquiring local port...");
+            myPort = GetAvailablePort();
+            localPort = myPort;
+            localIp = GetLocalIPAddress();
+
+            // 3. STUN 서버 통해 공인 IP/포트 확인
+            AppendLog("Checking IP...");
+            matchingUdp = new UdpClient(myPort);
+
+            var stunResult = await StunClient.QueryAsync(matchingUdp, "stun.l.google.com", 19302);
+
+            // await 이후: 이미 취소/타임아웃/다른 시도 시작됐으면 즉시 중단
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            if (stunResult?.PublicEndPoint == null)
+            {
+                AppendLog("STUN failed.");
+                return;
+            }
+
+            myIp = stunResult.PublicEndPoint.Address.ToString();
+            myPort = stunResult.PublicEndPoint.Port;
+
+            // 4. 내 정보 Lambda에 저장
+            AppendLog("Saving my Info...");
+            await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, MyNickname);
+
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            // 5. GameLift 매칭 시작
+            ticketId = await GameLiftStartMatch.StartMatchmaking(myPlayerId);
+
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            if (string.IsNullOrEmpty(ticketId))
+            {
+                AppendLog("Failed to start matchmaking.");
+                return;
+            }
+
+            // 6. 매칭 완료까지 대기
+            matchStartTime = Time.time;
+            AppendLog("Match Searching...");
+            StartCoroutine(UpdateMatchElapsedTime());
+
+            bool matchCompleted = await GameLiftWait.WaitForMatchCompletion(ticketId);
+
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            if (!matchCompleted)
+            {
+                AppendLog("Match wait failed or canceled.");
+                return;
+            }
+
+            AppendLog("Match Completed");
+            mainMenuController.PlaySFX(mainMenuController.sfxClips[4]);
+            mainMenuController.PlayBGM(null);
+
+            // 성공 플래그 설정 (finally에서 정리 방지)
+            BoolMatchSucces = true;
+
+            await Task.Delay(1000);
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            mainMenuController.MatchSuccessfEffect();
+
+            // 7. 상대방 정보 조회
+            var opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
+            while ((opponent == null || string.IsNullOrEmpty(opponent.ip)) && isMatching && myAttempt == matchAttemptSeq)
+            {
+                await Task.Delay(500);
+                if (!isMatching || myAttempt != matchAttemptSeq) return;
+                opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
+            }
+
+            if (!isMatching || myAttempt != matchAttemptSeq) return;
+
+            // 8. P2P 연결 및 초기화
+            string targetIp = (opponent.ip == myIp) ? opponent.localIp : opponent.ip;
+            int targetPort = (opponent.ip == myIp) ? opponent.localPort : opponent.port;
+            int myPlayerNumber = opponent.myPlayerNumber;
+
+            MatchResultStore.myPlayerNumber = myPlayerNumber;
+            MatchResultStore.myNickname = MyNickname;
+            MatchResultStore.opponentNickname = opponent.nickname;
+            MatchResultStore.opponentIp = targetIp;
+            MatchResultStore.opponentPort = targetPort;
+            MatchResultStore.myPort = myPort;
+            MatchResultStore.udpClient = matchingUdp;
+
+            lastMatchSucceeded = true;
+
+            // 여기서 isMatching을 false로 내리고 씬 로드
+            isMatching = false;
+            SceneManager.LoadScene("example");
         }
-
-        myIp = stunResult.PublicEndPoint.Address.ToString();
-        myPort = stunResult.PublicEndPoint.Port;
-
-        // 4. 내 정보 Lambda에 저장
-        AppendLog("Saving my Info...");
-        await LambdaStore.StorePlayerInfo(myPlayerId, myIp, myPort, localIp, localPort, MyNickname);
-
-        // 5. GameLift 매칭 시작
-        // AppendLog("Match Search Start!");
-        ticketId = await GameLiftStartMatch.StartMatchmaking(myPlayerId);
-
-        if (ticketId == null)
+        catch (Exception ex)
         {
-            //AppendLog("매칭 티켓 생성 실패");
-            isMatching = false; // 실패 시 플래그 정리
-            return;
+            Debug.LogException(ex);
+            AppendLog("Matching failed due to an error.");
         }
-
-        // 6. 매칭 완료까지 대기
-        matchStartTime = Time.time;
-        AppendLog("Match Searching...");
-        StartCoroutine(UpdateMatchElapsedTime());
-
-        bool matchCompleted = await GameLiftWait.WaitForMatchCompletion(ticketId);
-
-        if (!matchCompleted)
+        finally
         {
-            //AppendLog("매칭 실패 또는 완료되지 않음");
-            isMatching = false; // 실패 시 플래그 정리
-            return;
+            if (myAttempt == matchAttemptSeq && !lastMatchSucceeded)
+            {
+                CleanupLocalMatchingState();
+            }
         }
-
-        AppendLog("Match Completed");
-        mainMenuController.PlaySFX(mainMenuController.sfxClips[4]);
-        mainMenuController.PlayBGM(null);
-
-
-
-        // 매칭 성공 응답 후, 취소 요청이 있었는지 확인 (경쟁 조건 방지)
-        if (!isMatching)
-        {
-            // 취소 버튼을 눌러 isMatching이 false가 되었다면 여기서 종료
-            return;
-        }
-
-        // BoolMatchSucces 플래그를 여기서 설정하여 코루틴을 즉시 종료시킵니다.
-        BoolMatchSucces = true;
-
-        // 1초 지연 (UX 개선) 및 UI 효과 실행
-        await Task.Delay(1000);
-
-        // BoolMatchSucces = true; // 제거됨 (바로 위에서 설정)
-        mainMenuController.MatchSuccessfEffect();
-
-
-        // 7. 상대방 정보 조회
-        var opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
-        while (opponent == null || string.IsNullOrEmpty(opponent.ip))
-        {
-            //AppendLog("상대 정보 조회 실패");
-            // 취소 요청이 있었는지 재확인
-            if (!isMatching) return;
-
-            opponent = await LambdaGet.GetOpponentInfo(myPlayerId);
-            await Task.Delay(500);
-        }
-
-        // 8. P2P 연결 및 채팅 초기화
-        string targetIp = (opponent.ip == myIp) ? opponent.localIp : opponent.ip;
-        int targetPort = (opponent.ip == myIp) ? opponent.localPort : opponent.port;
-        int myPlayerNumber = opponent.myPlayerNumber;
-
-        MatchResultStore.myPlayerNumber = myPlayerNumber;
-        MatchResultStore.myNickname = MyNickname;
-        MatchResultStore.opponentNickname = opponent.nickname;
-        MatchResultStore.opponentIp = targetIp;
-        MatchResultStore.opponentPort = targetPort;
-        MatchResultStore.myPort = myPort;
-        MatchResultStore.udpClient = udp;
-
-        // AppendLog("Game Start!!"); // (선택 사항: 디버그 콘솔에만 기록됨)
-
-        isMatching = false;
-        SceneManager.LoadScene("example");
     }
-
 
     private int GetAvailablePort()
     {
-        System.Net.Sockets.TcpListener listener = new System.Net.Sockets.TcpListener(System.Net.IPAddress.Loopback, 0);
+        TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
         listener.Start();
-        int port = ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
+        int port = ((IPEndPoint)listener.LocalEndpoint).Port;
         listener.Stop();
         return port;
     }
-
 
     private string GetLocalIPAddress()
     {
@@ -179,15 +222,11 @@ public class MatchManager : MonoBehaviour
         throw new Exception("No network adapters with an IPv4 address in the system!");
     }
 
-
     private void AppendLog(string msg)
     {
         Debug.Log(msg);
-        //if (logText != null)
-        //    logText.text += msg + "\n";
         logText.text = msg;
     }
-
 
     private IEnumerator UpdateMatchElapsedTime()
     {
@@ -198,41 +237,33 @@ public class MatchManager : MonoBehaviour
             float elapsed = Time.time - matchStartTime;
             AppendLog($"Match Searching \n{Mathf.FloorToInt(elapsed)} seconds");
 
-            // [추가된 부분] 타임아웃 체크
             if (elapsed >= MATCH_TIMEOUT_SECONDS)
             {
                 AppendLog("Matching Timed Out.");
-                mainMenuController.OnClickStopMatchingButton(); // 취소 버튼 로직 호출
 
-                yield break; // 코루틴 종료
+                var timeoutTicket = ticketId;
+                CleanupLocalMatchingState();
+
+                _ = GameLiftCancelMatch.CancelMatchmaking(timeoutTicket);
+
+                mainMenuController.OnClickStopMatchingButton();
+                yield break;
             }
 
             yield return new WaitForSeconds(1f);
         }
     }
 
-
-
-
     public async void OnCancelMatchButtonClicked()
     {
-        if (!isMatching || string.IsNullOrEmpty(ticketId))
-        {
-            // AppendLog("Currently not matching");
+        if (string.IsNullOrEmpty(ticketId))
             return;
-        }
 
-        // AppendLog("try to cancel matching...");
-        bool success = await GameLiftCancelMatch.CancelMatchmaking(ticketId);
+        var cancelTicket = ticketId;
 
-        if (success)
-        {
-            AppendLog("Match Canceled");
-            isMatching = false;
-        }
-        else
-        {
-            // AppendLog("Matching cancellation failed");
-        }
+        CleanupLocalMatchingState();
+        AppendLog("Match Canceled");
+
+        await GameLiftCancelMatch.CancelMatchmaking(cancelTicket);
     }
 }
