@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
     private bool hasReceivedOpponentStateOnce = false;
     private bool returningToMenu = false;
 
+    [SerializeField] private float startHandshakeTimeout = 5f;
+    private float handshakeStartTime = -1f;
+
     // #. 양측 플레이어 점수
     public int IntScorePlayer_1 { get; set; }
     public int IntScorePlayer_2 { get; set; }
@@ -80,7 +83,9 @@ public class GameManager : MonoBehaviour
         P2PMessageDispatcher.ClearAllHandlers();
 
         P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this); 
-        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort); 
+        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+
+        handshakeStartTime = Time.time;
 
         IntScorePlayer_1 = 0; 
         IntScorePlayer_2 = 0; 
@@ -97,6 +102,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!returningToMenu && !P2PManager.IsReadyToStartGame && handshakeStartTime > 0f)
+        {
+            if (Time.time - handshakeStartTime >= startHandshakeTimeout)
+            {
+                Debug.Log("[P2P] Handshake timeout (no ACK).");
+                ReturnToTrainingByDisconnect();
+                return;
+            }
+        }
+
         if (P2PManager.IsReadyToStartGame)
         {
             P2PManager.IsReadyToStartGame = false;
