@@ -1,9 +1,9 @@
 
 # 목차
-1. [📌 게임 소개](#1-📌-게임-소개)
-2. [👥 팀원 소개](#2-👥-팀원-소개)
-3. [🕹️ 게임 규칙 및 주요 기능](#3-🕹️-게임-규칙-및-주요-기능)
-4. [🛠 기술 구현](#4-🛠-기술-구현)
+1. [📌 게임 소개]
+2. [👥 팀원 소개]
+3. [🕹️ 게임 규칙 및 주요 기능]
+4. [🛠 기술 구현]
    * P2P환경 구축
    * UDP 통신
    * 스킬 관리 시스템
@@ -174,7 +174,44 @@
 
 
 
-* **스킬 관리 시스템**
+
+* **스킬 애니메이션 시스템 (Template Method Pattern)**
+  <br>
+  60종이 넘는 방대한 스킬 데이터를 효율적으로 관리하고, 카드 획득 시의 다양한 연출을 유연하게 처리하기 위해 데이터 기반 설계와 디자인 패턴을 결합했습니다.
+  
+  * **Data-Driven Architecture:** 스킬의 속성(아이콘, 쿨타임, 타입)을 `ScriptableObject`로 분리하여 코드 수정 없이 데이터만으로 콘텐츠 확장이 가능하도록 설계했습니다.
+  * **Smart Filtering & Acquisition:** 런타임에 플레이어의 보유 스킬을 체크(`IsSkillOwned`)하여 중복을 방지하고, 선택된 스킬을 즉시 인스턴스화(`CreateSkillInstance`)하여 메모리 낭비를 최소화했습니다.
+  * **Template Method Pattern (UI):** 카드마다 제각각인 연출을 관리하기 위해 부모 클래스(`CardAnimationBase`)가 생명주기(위치 저장/복구, 트윈 제거)를 관리하고, 자식 클래스가 구체적인 연출(`ExecuteAnimation`)을 담당하는 구조를 적용했습니다.
+
+  ```mermaid
+   classDiagram
+      SkillCardController --> SkillCard_SO : 1. Load Data
+      SkillCardController --> PlayerAbility : 2. Equip Skill
+      SkillCardController ..> SkillCard_UI : 3. Control UI
+      
+      SkillCard_UI --> ICardAnimation : Strategy
+      ICardAnimation <|.. CardAnimationBase : Implements
+      CardAnimationBase <|-- CardAnimation_Num_1 : Inherits
+
+      class SkillCardController{
+          +List~SkillCard_SO~ allSkills
+          -IsSkillOwned()
+          -CreateSkillInstance()
+      }
+
+      class CardAnimationBase{
+          +StartAnimation()
+          +StopAnimation()
+          #ExecuteAnimation()*
+          -SaveOriginalPositions()
+      }
+
+      class PlayerAbility{
+          +SetSkill()
+          +EquipPassive()
+      }
+
+    
 <br><br><br>
 
 
@@ -204,6 +241,7 @@
           +OnGimmickUpdate()
           +OnGimicEnd()
       }
+
 
 
 
