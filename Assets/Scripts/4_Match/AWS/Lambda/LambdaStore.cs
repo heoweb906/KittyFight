@@ -8,16 +8,36 @@ using UnityEngine;
 
 public class LambdaStore : LambdaManager
 {
-    public static async Task StorePlayerInfo(string playerId, string ip, int port, string localIp, int localPort, string nickname)
+    public static async Task StorePlayerInfo(
+        string playerId,
+        string ip,
+        int port,
+        string localIp,
+        int localPort,
+        string nickname,
+        string steamId,
+        string natType,
+        bool relayMarker)
     {
-        string jsonBody = $"{{" +
-            $"\"playerId\":\"{playerId}\"," +
-            $"\"ip\":\"{ip}\"," +
-            $"\"port\":{port}," +
-            $"\"localIp\":\"{localIp}\"," +
-            $"\"localPort\":{localPort}," +
-            $"\"nickname\":\"{nickname}\"" +
-        $"}}";
+        static string Esc(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return "";
+            return s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
+        }
+
+        string jsonBody =
+            "{" +
+                $"\"playerId\":\"{Esc(playerId)}\"," +
+                $"\"ip\":\"{Esc(ip)}\"," +
+                $"\"port\":{port}," +
+                $"\"localIp\":\"{Esc(localIp)}\"," +
+                $"\"localPort\":{localPort}," +
+                $"\"nickname\":\"{Esc(nickname)}\"," +
+
+                $"\"steamId\":\"{Esc(steamId)}\"," +
+                $"\"natType\":\"{Esc(natType)}\"," +
+                $"\"relayMarker\":{(relayMarker ? "true" : "false")}" +
+            "}";
 
         var request = new InvokeRequest
         {

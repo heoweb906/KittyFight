@@ -4,6 +4,9 @@ public static class P2PMessageSender
     {
         if (AppLifecycle.IsDisconnecting) return;
 
-        P2PManager.SendRaw(message); // P2PManager와 직접 연결
+        if (MatchResultStore.useSteam)
+            SteamP2PManager.SendRaw(message);
+        else
+            P2PManager.SendRaw(message);
     }
 }

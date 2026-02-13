@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     private bool hasReceivedOpponentStateOnce = false;
     private bool returningToMenu = false;
 
-    [SerializeField] private float startHandshakeTimeout = 5f;
+    [SerializeField] private float startHandshakeTimeout = 50f;
     private float handshakeStartTime = -1f;
 
     // #. 양측 플레이어 점수
@@ -82,8 +82,26 @@ public class GameManager : MonoBehaviour
         P2PManager.Dispose();
         P2PMessageDispatcher.ClearAllHandlers();
 
-        P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this); 
-        P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+        if (MatchResultStore.useSteam)
+        {
+            var role = (MatchResultStore.myPlayerNumber == 1)
+                ? SteamP2PManager.Role.Host
+                : SteamP2PManager.Role.Client;
+
+            if (!ulong.TryParse(MatchResultStore.opponentSteamId, out var oppId) || oppId == 0)
+            {
+                Debug.LogError($"Invalid opponentSteamId: {MatchResultStore.opponentSteamId}");
+                ReturnToTrainingByDisconnect();
+                return;
+            }
+
+            SteamP2PManager.Init(role, oppId, virtualPort: 0, reliable: true);
+        }
+        else
+        {
+            P2PManager.Init(MatchResultStore.myPort, MatchResultStore.udpClient, this);
+            P2PManager.ConnectToOpponent(MatchResultStore.opponentIp, MatchResultStore.opponentPort);
+        }
 
         handshakeStartTime = Time.time;
 
@@ -102,6 +120,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (MatchResultStore.useSteam)
+        {
+            SteamP2PManager.PollReceive();
+        }
+
         if (!returningToMenu && !P2PManager.IsReadyToStartGame && handshakeStartTime > 0f)
         {
             if (Time.time - handshakeStartTime >= startHandshakeTimeout)
@@ -149,7 +172,9 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("[P2P] Opponent state timeout -> Return to training scene.");
 
-        P2PManager.Dispose();
+        if (MatchResultStore.useSteam) SteamP2PManager.Dispose();
+        else P2PManager.Dispose();
+
         P2PMessageDispatcher.ClearAllHandlers();
         MatchResultStore.Reset();
 
@@ -571,5 +596,10 @@ public class GameManager : MonoBehaviour
     public bool GetGameEnded()
     {
         return gameEnded;
+    }
+    private void OnDestroy()
+    {
+        if (MatchResultStore.useSteam)
+            SteamP2PManager.Dispose();
     }
 }

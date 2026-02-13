@@ -15,6 +15,10 @@ public class OpponentInfo
     public int localPort;
     public string nickname;
     public int myPlayerNumber;
+
+    public string opponentSteamId;
+    public string opponentNatType;
+    public bool opponentRelayMarker;
 }
 
 [Serializable]

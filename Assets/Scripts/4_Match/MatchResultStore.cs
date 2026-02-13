@@ -10,6 +10,13 @@ public static class MatchResultStore
     public static int myPort;
     public static UdpClient udpClient;
 
+    public static bool useSteam;
+    public static string mySteamId;
+    public static string opponentSteamId;
+    public static string myNatType;
+    public static string opponentNatType;
+    public static bool opponentRelayMarker;
+
     public static void Reset()
     {
         try
@@ -34,5 +41,12 @@ public static class MatchResultStore
         opponentIp = null;
         opponentPort = 0;
         myPort = 0;
+
+        useSteam = false;
+        mySteamId = null;
+        opponentSteamId = null;
+        myNatType = null;
+        opponentNatType = null;
+        opponentRelayMarker = false;
     }
 }
