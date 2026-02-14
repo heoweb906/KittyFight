@@ -35,6 +35,7 @@ public class MainMenuController : MonoBehaviour
     private bool isButtonCooldown = false;
 
     public RectTransform nicknameConfirmButtonRect;
+    private const string PREF_NICKNAME = "opt_nickname";
 
 
     [Header("Panel_MatchingLoading 관련")]
@@ -84,8 +85,16 @@ public class MainMenuController : MonoBehaviour
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0f, false);
         OpenInputnickNamePanel_Vertical(iamge_UpperAreaMatching.rectTransform, iamge_LowerAreaMatching.rectTransform, 0.2f, false);
 
-        if (MatchResultStore.myNickname == null) matchManager.MyNickname = "Kitty";
+        string savedNickname = LoadNicknameOrDefault();
+        nicknameInput.text = savedNickname;
 
+        matchManager.MyNickname = savedNickname;
+        MatchResultStore.myNickname = savedNickname;
+
+        if (nicknameInput != null)
+            nicknameInput.SetTextWithoutNotify(savedNickname);
+
+        SetNickName(savedNickname);
 
 
         if (matchStartCollision_1 != null) matchStartCollision_1.mainMenuController = this; 
@@ -351,7 +360,18 @@ public class MainMenuController : MonoBehaviour
             ExecuteOffNickNameInputPanelLogic();
         });
     }
+    private string LoadNicknameOrDefault()
+    {
+        var nick = PlayerPrefs.GetString(PREF_NICKNAME, "Kitty");
+        if (string.IsNullOrWhiteSpace(nick)) nick = "Kitty";
+        return nick.Trim();
+    }
 
+    private void SaveNickname(string nickname)
+    {
+        PlayerPrefs.SetString(PREF_NICKNAME, nickname);
+        PlayerPrefs.Save();
+    }
 
     private void ExecuteOffNickNameInputPanelLogic()
     {
@@ -365,6 +385,10 @@ public class MainMenuController : MonoBehaviour
             nickname = "Kitty";
             matchManager.MyNickname = nickname;
             MatchResultStore.myNickname = nickname;
+            SaveNickname(nickname);
+
+            if (nicknameInput != null)
+                nicknameInput.SetTextWithoutNotify(nickname);
 
             SetNickName(matchManager.MyNickname);
             scriptPlayerCharacter.bCanControl = true;
@@ -399,6 +423,9 @@ public class MainMenuController : MonoBehaviour
 
         // 정상 처리: 닉네임 설정 및 패널 닫기
         matchManager.MyNickname = nickname;
+        MatchResultStore.myNickname = nickname;
+        SaveNickname(nickname);
+
         SetNickName(matchManager.MyNickname);
         scriptPlayerCharacter.bCanControl = true;
         OpenInputnickNamePanel_Vertical(image_UpperArea.rectTransform, image_LowerArea.rectTransform, 0.2f);
