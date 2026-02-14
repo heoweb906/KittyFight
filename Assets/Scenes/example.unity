@@ -54019,7 +54019,7 @@ MonoBehaviour:
   playerAbility_2: {fileID: 0}
   opponentStateTimeout: 3
   fallbackSceneName: MainMenu
-  startHandshakeTimeout: 50
+  startHandshakeTimeout: 10
 --- !u!1 &1424016837
 GameObject:
   m_ObjectHideFlags: 0
