@@ -125,7 +125,7 @@
 
 ## 4. 🛠 기술 구현
 
-> 빠른 이동: [P2P 매칭](#p2p-매칭-시스템) · [UDP 통신](#udp-기반-p2p-실시간-대전-환경-구현) · [스킬 시스템](#스킬-애니메이션-시스템) · [맵 기믹](#전략-패턴을-활용한-맵-기믹-교체)
+> 빠른 이동: [P2P 매칭](#p2p-매칭-시스템) · [네트워크 전송 계층](#네트워크-전송-계층-udp--steam) · [UDP 통신](#udp-기반-p2p-실시간-대전-환경-구현) · [스킬 시스템](#스킬-애니메이션-시스템) · [맵 기믹](#전략-패턴을-활용한-맵-기믹-교체)
 
 ---
 
@@ -139,7 +139,7 @@
 #### 매칭 시스템 흐름
 
 1. **플레이어 접속 정보 등록**  
-   매칭 요청 전, 각 플레이어는 자신의 `IP / Port / Nickname` 정보를  
+   매칭 요청 전, 각 플레이어는 자신의 `IP / Port / Nickname / Steam` 정보 등  
    AWS Lambda를 통해 DynamoDB에 저장합니다.  
    저장된 데이터는 TTL을 적용하여 일정 시간이 지나면 자동 삭제됩니다.
 
@@ -155,11 +155,28 @@
 4. **상대 플레이어 정보 조회**  
    클라이언트는 **자신의 PlayerId만 전달**하여 Lambda를 호출하고,  
    내부적으로 매칭 정보를 조회한 뒤 상대방의  
-   `IP / Port / Nickname` 정보를 전달받습니다.
+   `IP / Port / Nickname / Steam` 정보를 전달받습니다.
 
 5. **P2P 연결 시작**  
    전달받은 네트워크 정보를 기반으로  
    클라이언트 간 **직접 P2P 통신**을 시작하여 실시간 대전을 진행합니다.
+   이때 NAT 환경에 따라 **UDP Hole Punching** 또는 **Steam P2P(릴레이 포함)**를 선택하여 연결합니다.
+   
+---
+
+### 네트워크 전송 계층 (UDP / Steam)
+
+본 프로젝트는 다양한 NAT 환경에서 안정적인 1:1 대전을 제공하기 위해  
+**UDP 기반 P2P**와 **Steam 기반 P2P(SteamNetworkingSockets)**를 모두 지원합니다.
+
+- **UDP P2P**  
+  지연을 최소화하는 것을 최우선으로 하며, 대다수 NAT 환경에서 Hole Punching을 통해 직접 연결을 시도합니다.
+
+- **Steam P2P (릴레이 포함)**  
+  **Symmetric NAT** 등 UDP Hole Punching이 실패할 가능성이 높은 환경에서는  
+  SteamNetworkingSockets의 **P2P 연결 및 Steam Relay 경로**를 사용하여 연결 성공률을 확보합니다.
+
+> 핵심: **게임 메시지 포맷/처리는 동일**하고, “전송 경로(Transport)”만 UDP 또는 Steam으로 분기됩니다.
 
 ---
 
@@ -232,15 +249,60 @@ Hole Punching은 연결이 성립된 이후에는 더 이상 필요하지 않지
 - 불필요한 네트워크 트래픽을 줄이며
 - 실시간 게임 특성에 자연스럽게 부합하는 구조를 구현했습니다.
 
+---
+
+### Steam 기반 P2P 연결 구현 (NAT 우회)
+
+UDP Hole Punching이 동작하지 않는 일부 NAT 환경(특히 **Symmetric NAT**)에서는  
+클라이언트 간 직접 UDP 통신이 성립되지 않을 수 있습니다.
+
+이를 보완하기 위해 본 프로젝트는 **SteamNetworkingSockets 기반 P2P 연결**을 지원합니다.
+
+#### Steam 사용 시 특징
+
+- **전송 계층만 변경 (메시지/핸들러 공통)**  
+  Sender/Dispatcher/Handler 구조 및 메시지 Prefix 프로토콜은 그대로 유지하고,  
+  패킷을 보내는 “통로”만 UDP 소켓 대신 SteamNetworkingSockets로 전환합니다.
+
+- **Hole Punching/ACK 루틴 미사용**  
+  Steam 연결은 내부적으로 라우팅(필요 시 릴레이 포함)을 설정한 뒤 `Connected` 상태가 되면  
+  곧바로 송수신이 가능합니다.  
+  따라서 UDP에서 사용하던 Hole Punching/ACK 기반 `IsReadyToStartGame` 루틴은 Steam 모드에서는 사용하지 않습니다.
+
+- **Host / Client 역할 고정**  
+  PlayerNumber를 기반으로 역할을 결정합니다.  
+  - `PlayerNumber == 1` → Host (Listen + Accept)  
+  - `PlayerNumber == 2` → Client (ConnectP2P)
+
+#### Steam 연결 흐름 요약
+
+1. 매칭 결과로 상대의 `SteamID64`를 교환  
+2. Host는 `ListenSocketP2P`를 열고 Client 접속을 대기  
+3. Client는 `ConnectP2P(opponentSteamId)`로 연결 시도  
+4. `Connected` 상태 진입 시 게임 시작 조건을 만족(Ready)  
+5. 이후는 UDP와 동일하게 `FixedUpdate` 주기의 State 패킷 및 이벤트 메시지를 송수신  
+
+> Steam 모드에서의 “Ready”는 UDP의 Hole Punching 성공 여부가 아니라  
+> **Steam 연결 상태(Connected)** 를 기준으로 판단합니다.
+
+#### Steam 모드에서의 연결 종료 / 재매칭 안정성
+
+SteamNetworkingSockets는 씬 전환만으로 자동 정리되는 것을 전제로 하지 않으므로,  
+재매칭/씬 전환/Disconnect 시점에 **명시적으로 연결을 종료**하여 안정성을 확보했습니다.
+
+- `CloseConnection` / `CloseListenSocket`를 호출하여 리소스를 정리  
+- `static` 매니저 구조에서도 재연결 시 항상 `Dispose → Init` 순서로 초기화
+
 <br>
 
 #### 설계 요약
 
-- UDP 기반 P2P 구조를 통한 **지연 최소화**
-- Sender / Handler / Dispatcher 분리를 통한 **명확한 책임 구조**
-- Prefix 기반 메시지 분기로 **확장성과 가독성 확보**
-- Hole Punching을 통한 NAT 환경 대응
-- State 패킷을 활용한 **연결 유지 및 상태 동기화 일원화**
+- 서버리스 매칭 + 클라이언트 간 P2P 통신 기반 실시간 대전
+- **UDP P2P**: 지연 최소화, Hole Punching으로 NAT 대응
+- **Steam P2P**: Symmetric NAT 등에서 연결 성공률 확보 (릴레이 포함)
+- Sender / Dispatcher / Handler 구조는 **공통 유지**, 전송 계층만 전환
+- UDP는 State 패킷 기반 연결 유지, Steam은 Connected 상태 기반 Ready 처리
+- 재매칭/씬 전환 시 명시적 Dispose로 안정성 확보
 
 ---
 
