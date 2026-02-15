@@ -242,11 +242,11 @@ public class MatchManager : MonoBehaviour
             MatchResultStore.opponentNatType = opponent.opponentNatType;
             MatchResultStore.opponentRelayMarker = opponent.opponentRelayMarker;
 
-            MatchResultStore.useSteam = true;
-            //MatchResultStore.useSteam =
-            //    myNatType == "Symmetric" ||
-            //    opponent.opponentNatType == "Symmetric" ||
-            //    opponent.opponentRelayMarker;
+            //MatchResultStore.useSteam = true;
+            MatchResultStore.useSteam =
+                myNatType == "Symmetric" ||
+                opponent.opponentNatType == "Symmetric" ||
+                opponent.opponentRelayMarker;
 
             lastMatchSucceeded = true;
 
